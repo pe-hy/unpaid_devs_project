@@ -221,3 +221,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,webstorm,react,intellij
+/.idea/.gitignore
+/frontend/.idea/.gitignore
+/frontend/.gitignore
+/frontend/.idea

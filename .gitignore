@@ -225,3 +225,5 @@ $RECYCLE.BIN/
 /frontend/.idea/.gitignore
 /frontend/.gitignore
 /frontend/.idea
+.idea
+/.idea

@@ -1,11 +1,9 @@
-function App() {
-    const name = 'Petr'
-    const xy = true
+import AccordionComponent from "./components/accordion/AccordionComponent";
 
+function App() {
   return (
     <div className="App">
-      <h1>Hello from React</h1>
-        <h2>Hello {xy ? 'Yes' : "No"}</h2>
+      <AccordionComponent />
     </div>
   );
 }

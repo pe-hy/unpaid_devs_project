@@ -2,26 +2,29 @@ import Navbar from 'react-bootstrap/Navbar'
 import React from 'react';
 import {Container, Nav, NavDropdown} from "react-bootstrap";
 import Logo from "../../resources/logo.png";
+import "./HeaderStyles.css"
 
 class HeaderComponent extends React.Component {
     render() {
         return (
             <div>
-                <Navbar bg="light" expand="lg">
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                     <Container>
                         <Navbar.Brand href="#home"><img width="150px" height="auto" className="img-responsive" src={Logo}  alt="logo" /></Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="#home">Home</Nav.Link>
-                                <Nav.Link href="#link">Link</Nav.Link>
-                                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                </NavDropdown>
+                            </Nav>
+                            <Nav className="me-auto">
+                                <h3> Registrace studentů na praxe </h3>
+                            </Nav>
+                            <Nav>
+                                <span className="navbar-text" >
+                                     Nepřihlášený uživatel
+                                </span>
+                                <Nav.Link eventKey={2} href="#registrace">
+                                    Registrace
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

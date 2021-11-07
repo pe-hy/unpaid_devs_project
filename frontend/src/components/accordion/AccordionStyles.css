@@ -1,9 +1,160 @@
-.accordion {
-    margin:10vw;
+.accordion-container {
+    display: block;
+    width: 1820px;
+    max-width: 1820px;
+    min-width: max-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.accordion-title-container {
+    width: 100%;
+}
+
+.accordion-row-container {
+    width: 100%;
+}
+
+.accordion-item-container {
+    display: flex;
+    width: 85%;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.title-element-container {
+    width: 10%;
+    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-element-container:hover {
+    display: block;
+    overflow: visible;
+}
+
+.accordion-header-and-body {
+    width: 100%;
+    max-width: 1600px;
+    display: block;
+}
+
+.button-container {
+    display: block;
+    background-color: rgb(244, 255, 194);
+    width: 10%;
+
+    height: 45px;
+    margin-left: auto;
+}
+
+.button {
+    width: 100%;
+    height: 100%;
+}
+
+.accordion-button.collapsed::after {
+    display: none;
+}
+
+.accordion-button::after {
+    display: none;
+}
+
+.even-spaced {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+
+/* .accordion {
+    margin:4vw;
     margin-top: 2vw;
     margin-bottom: 2vw;
 }
 
-.accordionTitleComponent {
-    margin-left: 5%;
+p {
+    width: 200px;
 }
+
+.accordion-header {
+    width: 100%;
+}
+
+.accordion-body {
+    width: 85%;
+}
+
+.accordion-collapse.collapse.show {
+    width: 100%;
+}
+
+.accordion-button.collapsed {
+    width: 100%;
+    min-width: fit-content;
+    min-height: fit-content;
+}
+
+.accordion-button {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.accordion-container {
+    display: flex;
+    width: 85%;
+    margin: auto;
+}
+
+.accordion-item {
+    width: 75%;
+    float:left;
+    display:inline;
+    min-width: fit-content;
+}
+
+.accordionTitleComponent {
+    text-align: center;
+    width: 30%;
+    height: 100%;
+    font-size:16px;
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+     width: 15%;
+     padding: 10px;
+     padding-left: 30px;
+     padding-right: 30px;
+     min-width: fit-content;
+}
+
+.button {
+    border-radius: 6px;
+    border: 3px solid rgb(144, 215, 201);
+    background-color: white;
+    font-size:16px;
+    color: rgb(88, 156, 143);
+    height: 54px;
+}
+
+.center {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.accordion-button.collapsed::after {
+    display: none;
+}
+
+.accordion-button::after {
+    display: none;
+} */

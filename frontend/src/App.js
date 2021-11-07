@@ -1,12 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import HeaderComponent from "./components/header/HeaderComponent"
-function App() {
+import HeaderComponent from "./components/header/HeaderComponent";
+import AccordionComponent from "./components/accordion/AccordionComponent";
 
-    return (
-        <div className="App">
-            <HeaderComponent/>
-        </div>
-    );
+function App() {
+  return (
+    <div className="App">
+      <HeaderComponent />
+      <AccordionComponent />
+    </div>
+  );
 }
 
 export default App;

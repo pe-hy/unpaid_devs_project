@@ -9,7 +9,7 @@ const list = [
     school: "Gymnázium Hladnov",
     date: "27.11.2022",
     time: "10:45 - 11:30",
-    email: "jan.nowak@osu.cz",
+    email: "jan.nowak@seznam.cz",
     button: "rezervovat",
   },
   {
@@ -19,7 +19,7 @@ const list = [
     school: "Gymnázium Hladnov",
     date: "28.11.2022",
     time: "11:45 - 12:30",
-    email: "jan.novak@osu.cz",
+    email: "jan.novak@volny.cz",
     button: "rezervovat",
   },
   {
@@ -29,7 +29,7 @@ const list = [
     school: "Gymnázium Hladnov",
     date: "04.12.2022",
     time: "09:45 - 10:30",
-    email: "jan.novy@osu.cz",
+    email: "jan.novy@gmail.com",
     button: "rezervovat",
   },
 ];

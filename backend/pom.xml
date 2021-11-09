@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cz.osu</groupId>
-    <artifactId>teacher_practice_reservation_system</artifactId>
+    <artifactId>teacher_practice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>teacher_practice_reservation_system</name>
+    <name>teacher_practice</name>
     <description>teacher_practice_reservation_system</description>
     <properties>
         <java.version>11</java.version>

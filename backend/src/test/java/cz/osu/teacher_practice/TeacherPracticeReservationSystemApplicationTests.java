@@ -1,4 +1,4 @@
-package cz.osu.teacher_practice_reservation_system;
+package cz.osu.teacher_practice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

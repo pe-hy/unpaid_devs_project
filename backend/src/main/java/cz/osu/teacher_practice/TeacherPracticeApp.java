@@ -1,13 +1,13 @@
-package cz.osu.teacher_practice_reservation_system;
+package cz.osu.teacher_practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TeacherPracticeReservationSystemApplication {
+public class TeacherPracticeApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(TeacherPracticeReservationSystemApplication.class, args);
+        SpringApplication.run(TeacherPracticeApp.class, args);
     }
 
 }

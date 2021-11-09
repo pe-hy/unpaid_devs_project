@@ -12,7 +12,7 @@
     <artifactId>teacher_practice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>teacher_practice</name>
-    <description>teacher_practice_reservation_system</description>
+    <description>Teacher practice reservation system</description>
     <properties>
         <java.version>11</java.version>
     </properties>

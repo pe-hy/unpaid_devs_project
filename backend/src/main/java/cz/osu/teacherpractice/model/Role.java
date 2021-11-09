@@ -3,6 +3,7 @@ package cz.osu.teacherpractice.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 @AllArgsConstructor @Getter
 public enum Role {

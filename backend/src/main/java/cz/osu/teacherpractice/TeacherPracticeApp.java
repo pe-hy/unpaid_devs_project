@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class TeacherPracticeApp {
@@ -19,10 +21,15 @@ public class TeacherPracticeApp {
     CommandLineRunner run(UserService userService) {
         // adding some default users
         return args -> {
-            userService.saveUser(new User(null, "student", "student", Role.STUDENT, "Adam", "Boss"));
-            userService.saveUser(new User(null, "teacher", "teacher", Role.TEACHER, "Nekdo", "Jiny"));
-            userService.saveUser(new User(null, "coordinator", "coordinator", Role.COORDINATOR, "Marek", "Holobradek"));
-            userService.saveUser(new User(null, "admin", "admin", Role.ADMIN, "Lojza", "Neveda"));
+            userService.saveUser(new User(null, "student", "student", Role.STUDENT));
+            userService.saveUser(new User(null, "teacher", "teacher", Role.TEACHER));
+            userService.saveUser(new User(null, "coordinator", "coordinator", Role.COORDINATOR));
+            userService.saveUser(new User(null, "admin", "admin", Role.ADMIN));
         };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

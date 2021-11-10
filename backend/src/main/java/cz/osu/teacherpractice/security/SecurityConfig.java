@@ -39,9 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/coordinator/**").hasAnyAuthority(Role.COORDINATOR.getCode(), Role.ADMIN.getCode());
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
         http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        //http.authorizeRequests().anyRequest().permitAll(); add this line to disable security and comment previous lines
     }
 
     @Bean @Override

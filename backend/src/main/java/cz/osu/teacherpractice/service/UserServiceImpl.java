@@ -22,14 +22,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User saveUser(User user) {
         log.info("Saving user \"{}\" to database", user.getUsername());
+
+        if (userRepo.findByUsername(user.getUsername()) != null) {
+            throw new IllegalStateException("User \"" + user.getUsername() + "\" already exists.");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepo.save(user);
     }
 
     @Override
-    public User getUser(String username) {
-        log.info("Fetching user \"{}\" from database", username);
-        return userRepo.findByUsername(username);
+    public User getUser(Long id) {
+        log.info("Fetching user with id \"{}\" from database", id);
+        return userRepo.findById(id).orElseThrow(() -> new IllegalStateException(
+                "Student with id " + id + " not found."
+        ));
     }
 
     @Override

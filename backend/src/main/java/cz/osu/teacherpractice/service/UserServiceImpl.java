@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service @RequiredArgsConstructor @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -54,15 +53,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<String> getSubjects() {
+    public List<Subject> getSubjects() {
         log.info("Fetching all subjects from database");
-        return subjectRepo.findAll().stream().map(Subject::getName).collect(Collectors.toList());
+        return subjectRepo.findAll();
     }
 
     @Override
-    public List<String> getSchools() {
+    public List<School> getSchools() {
         log.info("Fetching all schools from database");
-        return schoolRepo.findAll().stream().map(School::getName).collect(Collectors.toList());
+        return schoolRepo.findAll();
     }
 
     @Override

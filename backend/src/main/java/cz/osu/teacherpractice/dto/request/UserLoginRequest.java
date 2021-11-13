@@ -1,9 +1,9 @@
-package cz.osu.teacherpractice.dto;
+package cz.osu.teacherpractice.dto.request;
 
 import lombok.Data;
 
 @Data
-public class UserLoginDTO {
+public class UserLoginRequest {
     private String username;
     private String password;
 }

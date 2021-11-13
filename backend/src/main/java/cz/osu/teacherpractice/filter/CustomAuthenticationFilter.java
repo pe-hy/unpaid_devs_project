@@ -3,7 +3,7 @@ package cz.osu.teacherpractice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.dto.UserLoginDTO;
+import cz.osu.teacherpractice.dto.request.UserLoginRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,7 +42,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String password = null;
 
         try {
-            UserLoginDTO login = new ObjectMapper().readValue(request.getInputStream(), UserLoginDTO.class);
+            UserLoginRequest login = new ObjectMapper().readValue(request.getInputStream(), UserLoginRequest.class);
             username = login.getUsername();
             password = login.getPassword();
             log.info("User \"{}\" with password \"{}\" is trying to log in", username, password);

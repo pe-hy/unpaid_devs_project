@@ -15,7 +15,7 @@ public class Practice {
     private Long id;
 
     @Column(columnDefinition = "DATE")
-    LocalDate date;
+    private LocalDate date;
 
     @Column(columnDefinition = "TIME")
     private LocalTime start;

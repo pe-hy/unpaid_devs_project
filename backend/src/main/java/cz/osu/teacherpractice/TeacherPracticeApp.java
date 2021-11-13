@@ -26,7 +26,7 @@ public class TeacherPracticeApp {
     CommandLineRunner run(UserService userService, SubjectRepo subjectRepo, SchoolRepo schoolRepo) {
         return args -> {
             // adding default school
-            School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a ", null));
+            School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
             userService.saveUser(new User(null, "student", "student", "Adam", "Kovář", Role.STUDENT, null, null, null));

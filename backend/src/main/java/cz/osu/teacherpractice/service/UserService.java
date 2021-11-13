@@ -8,4 +8,6 @@ public interface UserService {
     User saveUser(User user);
     User getUser(Long id);
     List<User> getUsers(); // maybe change to return a page of users (not all users) later
+    List<String> getSubjects();
+    List<String> getSchools();
 }

@@ -12,6 +12,6 @@ public class StudentController {
 
     @GetMapping("")
     public String getStudent(Principal principal) {
-        return "Hi " + principal.getName();
+        return "Hi student";
     }
 }

@@ -12,6 +12,6 @@ public class TeacherController {
 
     @GetMapping("")
     public String getTeacher(Principal principal) {
-        return "Hi " + principal.getName();
+        return "Hi teacher";
     }
 }

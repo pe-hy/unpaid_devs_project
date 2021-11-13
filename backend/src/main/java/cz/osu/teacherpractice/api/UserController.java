@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @PostMapping("/register")
     public String registerUser() {
-        return "OK";
+        return "User registered";
     }
 }

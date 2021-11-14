@@ -24,8 +24,8 @@ public class User {
     private School school;
 
     @OneToMany(mappedBy="teacher")
-    private List<Practice> teacher_practices = new ArrayList<>();
+    private List<Practice> teacherPractices = new ArrayList<>();
 
     @OneToMany(mappedBy="student")
-    private List<Practice> student_practices = new ArrayList<>();
+    private List<Practice> studentPractices = new ArrayList<>();
 }

@@ -1,11 +1,11 @@
 import HeaderComponent from "./components/header/HeaderComponent";
-import AccordionComponent from "./components/accordion/AccordionComponent";
+import PracticeSelectionComponent from "./components/subjectSelectionAccordion/PracticeSelectionComponent";
 
 function App() {
   return (
     <div className="App">
       <HeaderComponent />
-      <AccordionComponent />
+      <PracticeSelectionComponent />
     </div>
   );
 }

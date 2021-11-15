@@ -1,0 +1,7 @@
+.accordion-button::after {
+    display: none;
+}
+
+.accordion-row {
+    margin: 15px;
+}

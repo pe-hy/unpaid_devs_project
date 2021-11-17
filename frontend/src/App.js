@@ -1,11 +1,11 @@
-import HeaderComponent from "./components/header/HeaderComponent";
-import AccordionComponent from "./components/accordion/AccordionComponent";
+import NavbarComponent from "./components/navbar/NavbarComponent";
+import PracticeListComponent from "./components/practicelist/PracticeListComponent";
 
 function App() {
   return (
     <div className="App">
-      <HeaderComponent />
-      <AccordionComponent />
+      <NavbarComponent />
+      <PracticeListComponent />
     </div>
   );
 }

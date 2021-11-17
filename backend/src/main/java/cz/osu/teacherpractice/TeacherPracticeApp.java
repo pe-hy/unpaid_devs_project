@@ -1,9 +1,6 @@
 package cz.osu.teacherpractice;
 
-import cz.osu.teacherpractice.model.Role;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.Subject;
-import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.model.*;
 import cz.osu.teacherpractice.repo.PracticeRepo;
 import cz.osu.teacherpractice.repo.SchoolRepo;
 import cz.osu.teacherpractice.repo.SubjectRepo;
@@ -17,6 +14,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @SpringBootApplication @RequiredArgsConstructor @Slf4j
 public class TeacherPracticeApp {
@@ -43,15 +43,19 @@ public class TeacherPracticeApp {
             School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
-            userRepo.save(new User(null, "student", "student", "Adam", "Kovář", Role.STUDENT, null, null, null));
-            userRepo.save(new User(null, "teacher", "teacher", "Karel", "Svoboda", Role.TEACHER, school, null, null));
+            User userStudentTest = userRepo.save(new User(null, "student", "student", "Adam", "Kovář", Role.STUDENT, null, null, null));
+            User userTeacherTest = userRepo.save(new User(null, "teacher", "teacher", "Karel", "Svoboda", Role.TEACHER, school, null, null));
             userRepo.save(new User(null, "coordinator", "coordinator", "Milan", "Novák", Role.COORDINATOR, null, null, null));
             userRepo.save(new User(null, "admin", "admin", "Petra", "Konečná", Role.ADMIN, null, null, null));
 
             // adding default subjects
-            subjectRepo.save(new Subject(null, "Španělština", null));
+            Subject subjectTest = subjectRepo.save(new Subject(null, "Španělština", null));
             subjectRepo.save(new Subject(null, "Čínština", null));
             subjectRepo.save(new Subject(null, "Biologie", null));
+
+            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), subjectTest, userTeacherTest, userStudentTest));
+            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(50), subjectTest, userTeacherTest, userStudentTest));
+            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(100), subjectTest, userTeacherTest, userStudentTest));
         };
     }
 

@@ -5,3 +5,20 @@
 .accordion-row {
     margin: 15px;
 }
+
+.title-container {
+    display: flex;
+    padding: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.accordion-item {
+    margin-bottom: 20px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

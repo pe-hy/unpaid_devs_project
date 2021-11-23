@@ -32,6 +32,8 @@ public class TeacherServiceImpl implements TeacherService {
         practice.setDate(practiceRequest.getDate());
         practice.setStart(practiceRequest.getStart());
         practice.setEnd(practiceRequest.getEnd());
+        practice.setNote(practiceRequest.getNote());
+        practice.setCapacity(practiceRequest.getCapacity());
         practice.setSubject(subject);
         practice.setTeacher(teacher);
         practiceRepo.save(practice);

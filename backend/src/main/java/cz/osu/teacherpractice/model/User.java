@@ -27,6 +27,6 @@ public class User {
     @OneToMany(mappedBy="teacher")
     private List<Practice> teacherPractices = new ArrayList<>();
 
-    @OneToMany(mappedBy="student")
+    @ManyToMany(mappedBy="students")
     private List<Practice> studentPractices = new ArrayList<>();
 }

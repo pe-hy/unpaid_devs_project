@@ -36,19 +36,19 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void makeReservation(String studentUsername, Long practiceId) {
-        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
+        /*Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
                 "Practice with id [" +  practiceId + "] not found."
         ));
         User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new ResourceNotFoundException(
                 "Student with username [" + studentUsername + "] not found."
         ));
         practice.setStudent(student);
-        practiceRepo.save(practice);
+        practiceRepo.save(practice);*/
     }
 
     @Override
     public void cancelReservation(String studentUsername, Long practiceId) {
-        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
+        /*Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
                 "Practice with id [" +  practiceId + "] not found."
         ));
         User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new ResourceNotFoundException(
@@ -57,6 +57,6 @@ public class StudentServiceImpl implements StudentService {
         if (practice.getStudent().equals(student)) {
             practice.setStudent(null);
         }
-        practiceRepo.save(practice);
+        practiceRepo.save(practice);*/
     }
 }

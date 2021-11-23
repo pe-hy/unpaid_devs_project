@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.api;
 
 import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.payload.response.PracticeInfo;
 import cz.osu.teacherpractice.payload.response.SubjectInfo;
 import cz.osu.teacherpractice.payload.response.UserInfo;
@@ -58,18 +59,27 @@ public class StudentController {
 
     private PracticeInfo convertToResponse(Practice practice) {
         SubjectInfo subject = modelMapper.map(practice.getSubject(), SubjectInfo.class);
-        UserInfo student = practice.getStudent() == null ? null : modelMapper.map(practice.getStudent(), UserInfo.class);
+
+        List<UserInfo> students = practice.getStudents() == null ? null : practice.getStudents().stream()
+                .map(this::convertToResponse).collect(Collectors.toList());
+
         UserInfo teacher = modelMapper.map(practice.getTeacher(), UserInfo.class);
 
         PracticeInfo practiceInfo = new PracticeInfo();
         practiceInfo.setSubjectInfo(subject);
-        practiceInfo.setStudent(student);
+        practiceInfo.setStudents(students);
         practiceInfo.setTeacher(teacher);
         practiceInfo.setId(practice.getId());
         practiceInfo.setDate(practice.getDate());
         practiceInfo.setStart(practice.getStart());
         practiceInfo.setEnd(practice.getEnd());
+        practiceInfo.setNote(practice.getNote());
+        practiceInfo.setCapacity(practice.getCapacity());
 
         return practiceInfo;
+    }
+
+    private UserInfo convertToResponse(User user) {
+        return modelMapper.map(user, UserInfo.class);
     }
 }

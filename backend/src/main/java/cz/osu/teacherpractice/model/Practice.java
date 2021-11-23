@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
 public class Practice {
@@ -34,6 +36,10 @@ public class Practice {
     @ManyToOne
     private User teacher;
 
-    @ManyToOne
-    private User student;
+    @ManyToMany
+    @JoinTable(
+            name = "user_practice",
+            joinColumns = @JoinColumn(name = "practice_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<User> students = new ArrayList<>();
 }

@@ -11,5 +11,7 @@ public class NewPracticeRequest {
     @NotNull private LocalDate date;
     @NotNull private LocalTime start;
     @NotNull private LocalTime end;
+             private String note;
+    @NotNull private Integer capacity;
     @NotNull private Long subjectId;
 }

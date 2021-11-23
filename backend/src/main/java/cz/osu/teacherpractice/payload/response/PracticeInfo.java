@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class PracticeInfo {
@@ -11,7 +12,9 @@ public class PracticeInfo {
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
+    private String note;
+    private Integer capacity;
     private SubjectInfo subjectInfo;
     private UserInfo teacher;
-    private UserInfo student;
+    private List<UserInfo> students;
 }

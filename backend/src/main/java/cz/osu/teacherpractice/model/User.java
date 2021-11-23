@@ -18,6 +18,7 @@ public class User {
     private String password;
     private String firstName;
     private String secondName;
+    private String phoneNumber;
     private Role role;
 
     @ManyToOne

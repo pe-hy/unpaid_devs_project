@@ -23,6 +23,11 @@ public class Practice {
     @Column(columnDefinition = "TIME")
     private LocalTime end;
 
+    @Column(columnDefinition = "TEXT")
+    private String note;
+
+    private Integer capacity;
+
     @ManyToOne
     private Subject subject;
 

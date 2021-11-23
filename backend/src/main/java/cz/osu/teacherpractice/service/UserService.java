@@ -7,9 +7,9 @@ import cz.osu.teacherpractice.model.User;
 import java.util.List;
 
 public interface UserService {
-    User saveUser(User user);
+    User createUser(User user);
     User getUser(Long id);
-    List<User> getUsers(); // maybe change to return a page of users (not all users) later
+    List<User> getUsers(); // change to return a page of users (not all users) later
     List<Subject> getSubjects();
     List<School> getSchools();
 }

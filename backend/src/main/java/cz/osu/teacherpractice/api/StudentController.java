@@ -1,17 +1,20 @@
 package cz.osu.teacherpractice.api;
 
-import cz.osu.teacherpractice.payload.response.PracticeResponse;
-import cz.osu.teacherpractice.payload.response.SubjectResponse;
-import cz.osu.teacherpractice.payload.response.UserResponse;
+import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.payload.response.PracticeInfo;
+import cz.osu.teacherpractice.payload.response.SubjectInfo;
+import cz.osu.teacherpractice.payload.response.UserInfo;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,29 +28,48 @@ public class StudentController {
 
     @GetMapping("")
     public String getStudent(Principal principal) {
-        return "Hi student";
+        return "Hi student: " + principal.getName();
     }
 
     @GetMapping("/practices")
-    public List<PracticeResponse> getPractices(Principal principal) {
-        List<Practice> practices = studentService.getPractices();
+    public List<PracticeInfo> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                           @RequestParam(required=false) Long subjectId) {
+        List<Practice> practices = studentService.getPractices(date, subjectId);
         return practices.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
-    private PracticeResponse convertToResponse(Practice practice) {
-        SubjectResponse subject = modelMapper.map(practice.getSubject(), SubjectResponse.class);
-        UserResponse student = practice.getStudent() == null ? null : modelMapper.map(practice.getStudent(), UserResponse.class);
-        UserResponse teacher = modelMapper.map(practice.getTeacher(), UserResponse.class);
+    @PutMapping("/practice/{id}/make-reservation")
+    public void makeReservation(@PathVariable("id") Long practiceId) {
+        try {
+            studentService.makeReservation("student", practiceId);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
-        PracticeResponse practiceResponse = new PracticeResponse();
-        practiceResponse.setSubjectResponse(subject);
-        practiceResponse.setStudent(student);
-        practiceResponse.setTeacher(teacher);
-        practiceResponse.setId(practice.getId());
-        practiceResponse.setDate(practice.getDate());
-        practiceResponse.setStart(practice.getStart());
-        practiceResponse.setEnd(practice.getEnd());
+    @PutMapping("/practice/{id}/cancel-reservation")
+    public void cancelReservation(@PathVariable("id") Long practiceId) {
+        try {
+            studentService.cancelReservation("student", practiceId);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
-        return practiceResponse;
+    private PracticeInfo convertToResponse(Practice practice) {
+        SubjectInfo subject = modelMapper.map(practice.getSubject(), SubjectInfo.class);
+        UserInfo student = practice.getStudent() == null ? null : modelMapper.map(practice.getStudent(), UserInfo.class);
+        UserInfo teacher = modelMapper.map(practice.getTeacher(), UserInfo.class);
+
+        PracticeInfo practiceInfo = new PracticeInfo();
+        practiceInfo.setSubjectInfo(subject);
+        practiceInfo.setStudent(student);
+        practiceInfo.setTeacher(teacher);
+        practiceInfo.setId(practice.getId());
+        practiceInfo.setDate(practice.getDate());
+        practiceInfo.setStart(practice.getStart());
+        practiceInfo.setEnd(practice.getEnd());
+
+        return practiceInfo;
     }
 }

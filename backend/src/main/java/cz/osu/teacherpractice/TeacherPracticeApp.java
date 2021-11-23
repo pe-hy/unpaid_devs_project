@@ -43,19 +43,22 @@ public class TeacherPracticeApp {
             School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
-            User userStudentTest = userRepo.save(new User(null, "student", "student", "Adam", "Kovář", Role.STUDENT, null, null, null));
-            User userTeacherTest = userRepo.save(new User(null, "teacher", "teacher", "Karel", "Svoboda", Role.TEACHER, school, null, null));
+            User student = userRepo.save(new User(null, "student", "student", "Adam", "Kovář", Role.STUDENT, null, null, null));
+            User teacher = userRepo.save(new User(null, "teacher", "teacher", "Karel", "Svoboda", Role.TEACHER, school, null, null));
             userRepo.save(new User(null, "coordinator", "coordinator", "Milan", "Novák", Role.COORDINATOR, null, null, null));
             userRepo.save(new User(null, "admin", "admin", "Petra", "Konečná", Role.ADMIN, null, null, null));
 
             // adding default subjects
-            Subject subjectTest = subjectRepo.save(new Subject(null, "Španělština", null));
-            subjectRepo.save(new Subject(null, "Čínština", null));
-            subjectRepo.save(new Subject(null, "Biologie", null));
+            Subject subjectA = subjectRepo.save(new Subject(null, "Španělština", null));
+            Subject subjectB = subjectRepo.save(new Subject(null, "Čínština", null));
+            Subject subjectC = subjectRepo.save(new Subject(null, "Biologie", null));
 
-            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), subjectTest, userTeacherTest, userStudentTest));
-            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(50), subjectTest, userTeacherTest, userStudentTest));
-            practiceRepo.save(new Practice(null, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(100), subjectTest, userTeacherTest, userStudentTest));
+            // adding default practices
+            practiceRepo.save(new Practice(null, LocalDate.parse("2021-11-27"), LocalTime.now().plusHours(1), LocalTime.now(), subjectA, teacher, student));
+            practiceRepo.save(new Practice(null, LocalDate.parse("2021-11-26"), LocalTime.now().plusHours(2), LocalTime.now(), subjectA, teacher, null));
+            practiceRepo.save(new Practice(null, LocalDate.parse("2021-10-27"), LocalTime.now().plusHours(3), LocalTime.now(), subjectB, teacher, student));
+            practiceRepo.save(new Practice(null, LocalDate.parse("2020-10-27"), LocalTime.now().plusHours(4), LocalTime.now(), subjectC, teacher, null));
+            practiceRepo.save(new Practice(null, LocalDate.parse("2020-10-27"), LocalTime.now().plusHours(5), LocalTime.now(), subjectC, teacher, null));
         };
     }
 

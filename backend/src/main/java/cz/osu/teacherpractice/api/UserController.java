@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.api;
 
-import cz.osu.teacherpractice.payload.response.SchoolResponse;
-import cz.osu.teacherpractice.payload.response.SubjectResponse;
+import cz.osu.teacherpractice.payload.response.SchoolInfo;
+import cz.osu.teacherpractice.payload.response.SubjectInfo;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.service.UserServiceImpl;
@@ -26,24 +26,24 @@ public class UserController {
     }
 
     @GetMapping("/user/subjects")
-    public List<SubjectResponse> getSubjects() {
+    public List<SubjectInfo> getSubjects() {
         return userService.getSubjects().
                 stream().map(this::convertToResponse).
                 collect(Collectors.toList());
     }
 
     @GetMapping("/user/schools")
-    public List<SchoolResponse> getSchools() {
+    public List<SchoolInfo> getSchools() {
         return userService.getSchools().
                 stream().map(this::convertToResponse).
                 collect(Collectors.toList());
     }
 
-    private SubjectResponse convertToResponse(Subject subject) {
-        return modelMapper.map(subject, SubjectResponse.class);
+    private SubjectInfo convertToResponse(Subject subject) {
+        return modelMapper.map(subject, SubjectInfo.class);
     }
 
-    private SchoolResponse convertToResponse(School school) {
-        return modelMapper.map(school, SchoolResponse.class);
+    private SchoolInfo convertToResponse(School school) {
+        return modelMapper.map(school, SchoolInfo.class);
     }
 }

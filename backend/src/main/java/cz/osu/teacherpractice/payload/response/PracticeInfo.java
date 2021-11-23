@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-public class PracticeResponse {
+public class PracticeInfo {
     private Long id;
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
-    private SubjectResponse subjectResponse;
-    private UserResponse teacher;
-    private UserResponse student;
+    private SubjectInfo subjectInfo;
+    private UserInfo teacher;
+    private UserInfo student;
 }

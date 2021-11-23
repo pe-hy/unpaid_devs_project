@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-public class AddPracticeRequest {
+public class NewPracticeRequest {
     @NotNull private LocalDate date;
     @NotNull private LocalTime start;
     @NotNull private LocalTime end;

@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.payload.request.AddPracticeRequest;
+import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.payload.request.NewPracticeRequest;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -18,10 +19,14 @@ public class TeacherServiceImpl implements TeacherService {
     private final PracticeRepo practiceRepo;
 
     @Override
-    public void addPractice(String teacherUsername, AddPracticeRequest practiceRequest) {
-        User teacher = userRepo.findByUsername(teacherUsername);
-        Subject subject = subjectRepo.findById(practiceRequest.getSubjectId())
-                .orElseThrow(() -> new IllegalStateException("Subject not found."));
+    public void addPractice(String teacherUsername, NewPracticeRequest practiceRequest) {
+        User teacher = userRepo.findByUsername(teacherUsername).orElseThrow(() -> new ResourceNotFoundException(
+                "Teacher with username [" + teacherUsername + "] not found."
+        ));
+
+        Subject subject = subjectRepo.findById(practiceRequest.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException(
+                "Subject with id [" + practiceRequest.getSubjectId() + "] not found."
+        ));
 
         Practice practice = new Practice();
         practice.setDate(practiceRequest.getDate());
@@ -30,8 +35,5 @@ public class TeacherServiceImpl implements TeacherService {
         practice.setSubject(subject);
         practice.setTeacher(teacher);
         practiceRepo.save(practice);
-
-        teacher.getTeacherPractices().add(practice);
-        userRepo.save(teacher);
     }
 }

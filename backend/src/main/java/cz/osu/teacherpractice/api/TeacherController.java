@@ -1,9 +1,8 @@
 package cz.osu.teacherpractice.api;
 
-import cz.osu.teacherpractice.dto.request.AddPracticeRequest;
+import cz.osu.teacherpractice.payload.request.AddPracticeRequest;
 import cz.osu.teacherpractice.service.TeacherServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

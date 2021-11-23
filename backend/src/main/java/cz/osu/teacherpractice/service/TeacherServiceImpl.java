@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.dto.request.AddPracticeRequest;
+import cz.osu.teacherpractice.payload.request.AddPracticeRequest;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -8,7 +8,6 @@ import cz.osu.teacherpractice.repo.PracticeRepo;
 import cz.osu.teacherpractice.repo.SubjectRepo;
 import cz.osu.teacherpractice.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service @RequiredArgsConstructor

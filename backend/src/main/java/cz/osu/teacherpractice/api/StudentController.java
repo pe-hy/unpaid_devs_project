@@ -1,10 +1,9 @@
 package cz.osu.teacherpractice.api;
 
-import cz.osu.teacherpractice.dto.response.PracticeResponse;
-import cz.osu.teacherpractice.dto.response.SubjectResponse;
-import cz.osu.teacherpractice.dto.response.UserResponse;
+import cz.osu.teacherpractice.payload.response.PracticeResponse;
+import cz.osu.teacherpractice.payload.response.SubjectResponse;
+import cz.osu.teacherpractice.payload.response.UserResponse;
 import cz.osu.teacherpractice.model.Practice;
-import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

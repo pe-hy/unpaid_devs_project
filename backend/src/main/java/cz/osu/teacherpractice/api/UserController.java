@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.api;
 
-import cz.osu.teacherpractice.dto.response.SchoolResponse;
-import cz.osu.teacherpractice.dto.response.SubjectResponse;
+import cz.osu.teacherpractice.payload.response.SchoolResponse;
+import cz.osu.teacherpractice.payload.response.SubjectResponse;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.service.UserServiceImpl;

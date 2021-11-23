@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.dto.request;
+package cz.osu.teacherpractice.payload.request;
 
 import lombok.Data;
 

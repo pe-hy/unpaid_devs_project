@@ -3,7 +3,7 @@ package cz.osu.teacherpractice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.dto.request.UserLoginRequest;
+import cz.osu.teacherpractice.payload.request.UserLoginRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;

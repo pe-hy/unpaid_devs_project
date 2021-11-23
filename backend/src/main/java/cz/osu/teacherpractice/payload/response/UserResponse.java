@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.dto.response;
+package cz.osu.teacherpractice.payload.response;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.security;
+package cz.osu.teacherpractice.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

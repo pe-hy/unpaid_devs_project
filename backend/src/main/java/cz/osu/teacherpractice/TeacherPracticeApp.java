@@ -55,11 +55,11 @@ public class TeacherPracticeApp {
             Subject subjectC = subjectRepo.save(new Subject(null, "Biologie", null));
 
             // adding default practices
-            Practice practiceA = practiceRepo.save(new Practice(null, LocalDate.parse("2021-11-27"), LocalTime.now().plusHours(1), LocalTime.now(), null, 2, subjectA, teacher, null));
-            Practice practiceB = practiceRepo.save(new Practice(null, LocalDate.parse("2021-11-26"), LocalTime.now().plusHours(2), LocalTime.now(), null, 2, subjectA, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.parse("2021-10-27"), LocalTime.now().plusHours(3), LocalTime.now(), null, 2, subjectB, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.parse("2020-10-27"), LocalTime.now().plusHours(4), LocalTime.now(), null, 2, subjectC, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.parse("2020-10-27"), LocalTime.now().plusHours(5), LocalTime.now(), null, 2, subjectC, teacher, null));
+            Practice practiceA = practiceRepo.save(new Practice(null, LocalDate.parse("2022-11-27"), LocalTime.now().plusHours(1), LocalTime.now(), null, 2, subjectA, teacher, null));
+            Practice practiceB = practiceRepo.save(new Practice(null, LocalDate.parse("2022-11-26"), LocalTime.now().plusHours(2), LocalTime.now(), null, 2, subjectA, teacher, null));
+            practiceRepo.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().plusHours(3), LocalTime.now(), null, 2, subjectB, teacher, null));
+            practiceRepo.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().plusHours(4), LocalTime.now(), null, 2, subjectC, teacher, null));
+            practiceRepo.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().plusHours(5), LocalTime.now(), null, 2, subjectC, teacher, null));
 
             practiceA.setStudents(new ArrayList<>(List.of(student)));
             practiceRepo.save(practiceA);

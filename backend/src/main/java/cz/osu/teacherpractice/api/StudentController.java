@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.api;
 
+import cz.osu.teacherpractice.exception.ReservationException;
 import cz.osu.teacherpractice.exception.ResourceNotFoundException;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.payload.response.PracticeInfo;
@@ -45,6 +46,8 @@ public class StudentController {
             studentService.makeReservation("student", practiceId);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (ReservationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -54,6 +57,8 @@ public class StudentController {
             studentService.cancelReservation("student", practiceId);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (ReservationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 

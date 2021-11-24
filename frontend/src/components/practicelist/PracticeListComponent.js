@@ -1,19 +1,26 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
-import axios from "axios";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-
-const baseURL = "http://localhost:8080/student";
+import {axios} from "../../axios.js";
 
 export const PracticeListComponent = () => {
-  const [practices, setPractices] = React.useState(null);
-  React.useEffect(() => {
-    axios.get(`${baseURL}/practices`).then((response) => {
-      setPractices(response.data);
+  const [practices, setPraxe] = useState([]);
+  const noPractices = !practices || (practices && practices.length === 0);
+
+  const getPraxe = async () => {
+    const response = await axios.get("/student/practices").catch((err) => {
+      console.log("Error:", err);
     });
+    if (response && response.data) {
+      console.log(response)
+      setPraxe(response.data);
+    }
+  };
+  useEffect(() => {
+    getPraxe();
   }, []);
-  if (!practices) return null;
+
 
   return (
     <Container fluid>
@@ -46,12 +53,12 @@ export const PracticeListComponent = () => {
       </div>
 
       <Accordion flush>
-        {practices.map((item) => (
-          <Accordion.Item eventKey={item.id} style={{ display: "block" }}>
+        {practices.map((item, index) => (
+          <Accordion.Item eventKey={item.id} key={index} style={{ display: "block" }}>
             <div style={{ display: "flex" }}>
               <Accordion.Header style={{ width: "85%" }}>
                 <Row style={{ width: "100%" }}>
-                  <Col className="text-center">{item.subjectResponse.name}</Col>
+                  <Col className="text-center">{item.subjectInfo.name}</Col>
                   <Col className="text-center">
                     {item.teacher.firstName + " " + item.teacher.secondName}
                   </Col>

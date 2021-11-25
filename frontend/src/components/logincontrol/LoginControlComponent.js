@@ -1,16 +1,15 @@
 import React from "react";
 import {BsPower, BsPlusLg, BsPersonCheckFill} from "react-icons/bs";
-import {Row, Col, Container, Image} from "react-bootstrap";
+import {Row, Col, Container, Image, Nav} from "react-bootstrap";
 import UserPicture from "../../resources/UserPhoto.svg";
 import "./LoginControlStyles.css"
+import LoginInformationComponent from "../loginInformation/LoginInformationComponent";
 let iconStyles = { fontSize: "1.5em", color: "white"};
 let textStyles = {color: "white"}
 
 function showUserPhoto(){
   return (
-        <span>
-          <Image src={UserPicture} roundedCircle />
-        </span>
+          <Image style={{ height: "100%", width: "100%", backgroundSize: "contain", marginLeft: "-20px"}} src={UserPicture} roundedCircle />
   )
 }
 
@@ -82,22 +81,33 @@ class LoginControl extends React.Component {
     } else {
       button = <LoginButton onClick={this.handleLoginClick} />;
     }
-
-    return (
-      <div>
-        <ul className="nav">
-          <li className="nav-item d-flex align-items-center">
-            <Container>{isRegistered}
-              {isLoggedIn}
-              {button}</Container>
-          </li>
-          <li className="nav-item">
-            <Container>{userPhoto}</Container>
-          </li>
-
-        </ul>
-      </div>
-    );
+    if(isLoggedIn){
+      return (
+          <div>
+            <ul className="nav" style={{marginRight: "60px"}}>
+              <li className="nav-item d-flex align-items-center">
+                <Nav.Link id="button">
+                  {button}
+                </Nav.Link>
+              </li>
+              <li className="nav-item" style={{width: "fit-content"}}>
+                <div style={{height: "132px", width: "132px"}}>{userPhoto}</div>
+              </li>
+              <li className="nav-item align-items-center d-flex" style={textStyles}>
+                <LoginInformationComponent isLoggedIn={this.state.isLoggedIn}/>
+              </li>
+            </ul>
+          </div>
+      );
+    }else{
+      return (
+          <div style={{marginRight: "30px"}}>
+                <Nav.Link id={"button"}>
+                  {button}
+                </Nav.Link>
+          </div>
+      );
+    }
   }
 }
 export default LoginControl;

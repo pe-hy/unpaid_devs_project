@@ -39,6 +39,6 @@
 
 #prehled:hover,#ucet:hover{
     color: white;
-    text-decoration: underline 25%;
-    text-underline-offset: 75%;
+    text-decoration: underline 20%;
+    text-underline-offset: 50%;
 }

@@ -33,9 +33,9 @@ class NavbarComponent extends React.Component {
                                 </Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link eventKey={2} className="navbar-text white">
+                                <Nav eventKey={2} className="navbar-text white">
                                     <LoginControlComponent/>
-                                </Nav.Link>
+                                </Nav>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

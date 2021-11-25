@@ -1,12 +1,15 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import {axios} from "../../axios.js";
+import ReservationButtonComponent from "../ReservationButtonComponent";
+
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
   const noPractices = !practices || (practices && practices.length === 0);
+  const reservation = "Rezervovat"
 
   const getPraxe = async () => {
     const response = await axios.get("/student/practices").catch((err) => {
@@ -21,6 +24,18 @@ export const PracticeListComponent = () => {
     getPraxe();
   }, []);
 
+  const registerRequest = async (id) => {
+    const response = await axios.put(`student/practice/${id}/make-reservation`).catch((err) => {
+      console.log("Error:", err);
+    });
+    if (response && response.data) {
+      console.log(response)
+      setPraxe(response.data);
+    }
+  };
+  useEffect(() => {
+    getPraxe();
+  }, []);
 
   return (
     <Container fluid>
@@ -53,7 +68,7 @@ export const PracticeListComponent = () => {
       </div>
 
       <Accordion flush>
-        {practices.map((item, index) => (
+        {!noPractices && practices.map((item, index) => (
           <Accordion.Item eventKey={item.id} key={index} style={{ display: "block" }}>
             <div style={{ display: "flex" }}>
               <Accordion.Header style={{ width: "85%" }}>
@@ -72,7 +87,7 @@ export const PracticeListComponent = () => {
                 </Row>
               </Accordion.Header>
               <div className="center" style={{ width: "15%" }}>
-                <Button variant="outline-primary">Registrovat</Button>
+                <ReservationButtonComponent text={reservation} color={"white"} onClick = {() => registerRequest(item.id)}/>
               </div>
             </div>
 

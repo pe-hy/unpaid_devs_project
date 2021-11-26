@@ -80,6 +80,7 @@ public class StudentController {
         practiceInfo.setEnd(practice.getEnd());
         practiceInfo.setNote(practice.getNote());
         practiceInfo.setCapacity(practice.getCapacity());
+        practiceInfo.setCurrentlyRegistered(practice.getCurrentlyRegistered());
 
         return practiceInfo;
     }

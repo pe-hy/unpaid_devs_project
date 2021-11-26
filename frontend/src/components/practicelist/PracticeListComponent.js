@@ -23,20 +23,20 @@ export const PracticeListComponent = () => {
     getPraxe();
   }, []);
 
+
   const registerRequest = async (id) => {
     const response = await axios
       .put(`student/practice/${id}/make-reservation`)
       .catch((err) => {
-        alert("Student je již zarezervován!");
+        alert(err.response.data.message);
+        console.log(err.response.data.message)
       });
     if (response && response.data) {
       console.log(response);
       setPraxe(response.data);
     }
+    await getPraxe();
   };
-  useEffect(() => {
-    getPraxe();
-  }, []);
 
   return (
     <Container fluid>
@@ -84,12 +84,12 @@ export const PracticeListComponent = () => {
                       {item.teacher.firstName + " " + item.teacher.secondName}
                     </Col>
                     <Col className="text-center">{item.teacher.schoolName}</Col>
-                    <Col className="text-center">{item.date}</Col>
+                    <Col className="text-center">{item.date.split("-")[2] + ". " + item.date.split("-")[1] + ". " + item.date.split("-")[0]}</Col>
                     <Col className="text-center">
-                      {item.start + " - " + item.end}
+                      {item.start.split(":")[0] + ":" + item.start.split(":")[1] + " - " + item.end.split(":")[0] + ":" + item.end.split(":")[1]}
                     </Col>
-                    <Col className="text-center">{item.email}</Col>
-                    <Col className="text-center">{item.capacity}</Col>
+                    <Col className="text-center">{item.teacher.username}</Col>
+                    <Col className="text-center">{item.currentlyRegistered}  /  {item.capacity}</Col>
                   </Row>
                 </Accordion.Header>
                 <div className="center" style={{ width: "15%" }}>

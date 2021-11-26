@@ -10,8 +10,8 @@ const StudentHomeView = () => {
         <Tab eventKey="tab1" title="Dostupné praxe">
           <PracticeListComponent />
         </Tab>
-        <Tab eventKey="tab2" title="Rezervované praxe"></Tab>
-        <Tab eventKey="tab3" title="Proběhlé praxe"></Tab>
+        <Tab eventKey="tab2" title="Rezervované praxe">empty</Tab>
+        <Tab eventKey="tab3" title="Proběhlé praxe">empty</Tab>
       </Tabs>
     </div>
   );

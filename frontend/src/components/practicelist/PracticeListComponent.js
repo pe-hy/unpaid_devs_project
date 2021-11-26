@@ -1,22 +1,21 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
-import React, {useEffect, useState} from "react";
-import { Container, Row, Col} from "react-bootstrap";
-import {axios} from "../../axios.js";
-import ReservationButtonComponent from "../ReservationButtonComponent";
-
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { axios } from "../../axios.js";
+import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
   const noPractices = !practices || (practices && practices.length === 0);
-  const reservation = "Rezervovat"
+  const reservation = "Rezervovat";
 
   const getPraxe = async () => {
     const response = await axios.get("/student/practices").catch((err) => {
       console.log("Error:", err);
     });
     if (response && response.data) {
-      console.log(response)
+      console.log(response);
       setPraxe(response.data);
     }
   };
@@ -25,11 +24,13 @@ export const PracticeListComponent = () => {
   }, []);
 
   const registerRequest = async (id) => {
-    const response = await axios.put(`student/practice/${id}/make-reservation`).catch((err) => {
-      console.log("Error:", err);
-    });
+    const response = await axios
+      .put(`student/practice/${id}/make-reservation`)
+      .catch((err) => {
+        alert("Student je již zarezervován!");
+      });
     if (response && response.data) {
-      console.log(response)
+      console.log(response);
       setPraxe(response.data);
     }
   };
@@ -68,32 +69,41 @@ export const PracticeListComponent = () => {
       </div>
 
       <Accordion flush>
-        {!noPractices && practices.map((item, index) => (
-          <Accordion.Item eventKey={item.id} key={index} style={{ display: "block" }}>
-            <div style={{ display: "flex" }}>
-              <Accordion.Header style={{ width: "85%" }}>
-                <Row style={{ width: "100%" }}>
-                  <Col className="text-center">{item.subjectInfo.name}</Col>
-                  <Col className="text-center">
-                    {item.teacher.firstName + " " + item.teacher.secondName}
-                  </Col>
-                  <Col className="text-center">{item.teacher.schoolName}</Col>
-                  <Col className="text-center">{item.date}</Col>
-                  <Col className="text-center">
-                    {item.start + " - " + item.end}
-                  </Col>
-                  <Col className="text-center">{item.email}</Col>
-                  <Col className="text-center">{item.capacity}</Col>
-                </Row>
-              </Accordion.Header>
-              <div className="center" style={{ width: "15%" }}>
-                <ReservationButtonComponent text={reservation} color={"white"} onClick = {() => registerRequest(item.id)}/>
+        {!noPractices &&
+          practices.map((item, index) => (
+            <Accordion.Item
+              eventKey={item.id}
+              key={index}
+              style={{ display: "block" }}
+            >
+              <div style={{ display: "flex" }}>
+                <Accordion.Header style={{ width: "85%" }}>
+                  <Row style={{ width: "100%" }}>
+                    <Col className="text-center">{item.subjectInfo.name}</Col>
+                    <Col className="text-center">
+                      {item.teacher.firstName + " " + item.teacher.secondName}
+                    </Col>
+                    <Col className="text-center">{item.teacher.schoolName}</Col>
+                    <Col className="text-center">{item.date}</Col>
+                    <Col className="text-center">
+                      {item.start + " - " + item.end}
+                    </Col>
+                    <Col className="text-center">{item.email}</Col>
+                    <Col className="text-center">{item.capacity}</Col>
+                  </Row>
+                </Accordion.Header>
+                <div className="center" style={{ width: "15%" }}>
+                  <ReservationButtonComponent
+                    text={reservation}
+                    color={"white"}
+                    onClick={() => registerRequest(item.id)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <Accordion.Body>Informace o předmětu...</Accordion.Body>
-          </Accordion.Item>
-        ))}
+              <Accordion.Body>Informace o předmětu...</Accordion.Body>
+            </Accordion.Item>
+          ))}
       </Accordion>
     </Container>
   );

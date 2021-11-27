@@ -89,7 +89,7 @@ export const PracticeListComponent = () => {
                       {item.start.split(":")[0] + ":" + item.start.split(":")[1] + " - " + item.end.split(":")[0] + ":" + item.end.split(":")[1]}
                     </Col>
                     <Col className="text-center">{item.teacher.username}</Col>
-                    <Col className="text-center">{item.currentlyRegistered}  /  {item.capacity}</Col>
+                    <Col className="text-center">{item.registeredCount}  /  {item.capacity}</Col>
                   </Row>
                 </Accordion.Header>
                 <div className="center" style={{ width: "15%" }}>

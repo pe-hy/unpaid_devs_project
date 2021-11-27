@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.api;
+package cz.osu.teacherpractice.controller;
 
 import cz.osu.teacherpractice.exception.ResourceNotFoundException;
 import cz.osu.teacherpractice.payload.request.NewPracticeRequest;

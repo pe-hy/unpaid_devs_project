@@ -61,7 +61,6 @@ public class StudentServiceImpl implements StudentService {
             }
 
             students.add(student);
-            practice.setCurrentlyRegistered(practice.getCurrentlyRegistered()+1);
             practice.setStudents(students);
         }
 

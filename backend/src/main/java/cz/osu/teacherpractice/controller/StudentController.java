@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.api;
+package cz.osu.teacherpractice.controller;
 
 import cz.osu.teacherpractice.exception.ReservationException;
 import cz.osu.teacherpractice.exception.ResourceNotFoundException;
@@ -35,9 +35,12 @@ public class StudentController {
 
     @GetMapping("/practices")
     public List<PracticeInfo> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                           @RequestParam(required=false) Long subjectId) {
+                                           @RequestParam(required=false) Long subjectId,
+                                           Principal principal) {
         List<Practice> practices = studentService.getPractices(date, subjectId);
-        return practices.stream().map(this::convertToResponse).collect(Collectors.toList());
+        List<PracticeInfo> practicesInfo = practices.stream().map(this::convertToResponse).collect(Collectors.toList());
+        practicesInfo.forEach(p -> p.setIsReserved(p.getStudents() != null && p.getStudents().contains(new UserInfo("student"))));
+        return practicesInfo;
     }
 
     @PutMapping("/practice/{id}/make-reservation")
@@ -80,7 +83,7 @@ public class StudentController {
         practiceInfo.setEnd(practice.getEnd());
         practiceInfo.setNote(practice.getNote());
         practiceInfo.setCapacity(practice.getCapacity());
-        practiceInfo.setCurrentlyRegistered(practice.getCurrentlyRegistered());
+        practiceInfo.setRegisteredCount(students == null ? 0 : students.size());
 
         return practiceInfo;
     }

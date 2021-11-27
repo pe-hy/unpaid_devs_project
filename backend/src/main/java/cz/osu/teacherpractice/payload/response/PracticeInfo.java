@@ -14,7 +14,8 @@ public class PracticeInfo {
     private LocalTime end;
     private String note;
     private Integer capacity;
-    private Integer currentlyRegistered;
+    private Integer registeredCount;
+    private Boolean isReserved;
     private SubjectInfo subjectInfo;
     private UserInfo teacher;
     private List<UserInfo> students;

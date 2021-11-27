@@ -30,8 +30,6 @@ public class Practice {
 
     private Integer capacity;
 
-    private Integer currentlyRegistered;
-
     @ManyToOne
     private Subject subject;
 

@@ -12,6 +12,6 @@ public class CoordinatorController {
 
     @GetMapping("")
     public String getCoordinator(Principal principal) {
-        return "Hi coordinator";
+        return "Hi coordinator: " + principal.getName();
     }
 }

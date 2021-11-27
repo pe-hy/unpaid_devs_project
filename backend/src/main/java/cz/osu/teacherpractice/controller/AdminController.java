@@ -12,6 +12,6 @@ public class AdminController {
 
     @GetMapping("")
     public String getAdmin(Principal principal) {
-        return "Hi admin";
+        return "Hi admin: " + principal.getName();
     }
 }

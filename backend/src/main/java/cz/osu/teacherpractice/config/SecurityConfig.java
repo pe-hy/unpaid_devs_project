@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.security;
+package cz.osu.teacherpractice.config;
 
 import cz.osu.teacherpractice.filter.CustomAuthenticationFilter;
 import cz.osu.teacherpractice.filter.CustomAuthorizationFilter;
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*http.csrf().disable();
+        http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/login/**", "/register/**").permitAll();
         http.authorizeRequests().antMatchers("/student/**").hasAuthority(Role.STUDENT.getCode());
@@ -40,11 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);*/
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // add this line to disable security and comment previous lines
-        http.csrf().disable();
-        http.authorizeRequests().anyRequest().permitAll();
+        /*http.csrf().disable();
+        http.authorizeRequests().anyRequest().permitAll();*/
     }
 
     @Bean @Override

@@ -20,7 +20,7 @@ public class TeacherController {
 
     @GetMapping("")
     public String getTeacher(Principal principal) {
-        return "Hi teacher";
+        return "Hi teacher: " + principal.getName();
     }
 
     @PostMapping("/practice")

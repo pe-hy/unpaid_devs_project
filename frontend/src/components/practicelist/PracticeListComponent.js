@@ -1,8 +1,9 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import {Container, Row, Col, OverlayTrigger, Tooltip} from "react-bootstrap";
 import { axios } from "../../axios.js";
+import {BsInfoCircleFill} from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 
 export const PracticeListComponent = () => {
@@ -63,6 +64,11 @@ export const PracticeListComponent = () => {
             </Col>
             <Col className="text-center">
               <b>Kapacita</b>
+              <OverlayTrigger overlay={<Tooltip>Počet aktuálně zapsaných studentů / maximální počet studentů na praxi.</Tooltip>}>
+                <span>
+                  <BsInfoCircleFill className={"iconStyles"} />
+                </span>
+              </OverlayTrigger>
             </Col>
           </Row>
         </div>

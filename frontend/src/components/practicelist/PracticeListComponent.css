@@ -22,3 +22,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.iconStyles {
+    font-size: 1.1em;
+    margin: 4px;
+    color: #326496;
+}

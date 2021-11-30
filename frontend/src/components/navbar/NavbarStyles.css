@@ -6,6 +6,7 @@
 .navbar{
     background-color: #264d73;
     color: #fff;
+    height: 100px;
 }
 
 .container{
@@ -41,4 +42,9 @@
     color: white;
     text-decoration: underline 20%;
     text-underline-offset: 50%;
+}
+
+.p-margin{
+    margin-bottom: 0;
+
 }

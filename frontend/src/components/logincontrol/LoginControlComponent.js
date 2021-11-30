@@ -1,7 +1,6 @@
 import React from "react";
-import {BsPower, BsPlusLg, BsPersonCheckFill} from "react-icons/bs";
-import {Row, Col, Container, Image, Nav} from "react-bootstrap";
-import UserPicture from "../../resources/UserPhoto.svg";
+import {BsPower, BsPlusLg, BsPersonCheckFill,BsPersonCircle} from "react-icons/bs";
+import {Row, Col, Container, Nav} from "react-bootstrap";
 import "./LoginControlStyles.css"
 import LoginInformationComponent from "../loginInformation/LoginInformationComponent";
 let iconStyles = { fontSize: "1.5em", color: "white"};
@@ -9,7 +8,9 @@ let textStyles = {color: "white"}
 
 function showUserPhoto(){
   return (
-          <Image style={{ height: "100%", width: "100%", backgroundSize: "contain", marginLeft: "-20px"}} src={UserPicture} roundedCircle />
+          <span>
+            <BsPersonCircle style={iconStyles}/>
+          </span>
   )
 }
 
@@ -91,7 +92,7 @@ class LoginControl extends React.Component {
                 </Nav.Link>
               </li>
               <li className="nav-item" style={{width: "fit-content"}}>
-                <div style={{height: "132px", width: "132px"}}>{userPhoto}</div>
+                <div style={{height: "170px", width: "170px", padding: "50px", fontSize: "2.5em"}}>{userPhoto}</div>
               </li>
               <li className="nav-item align-items-center d-flex" style={textStyles}>
                 <LoginInformationComponent isLoggedIn={this.state.isLoggedIn}/>

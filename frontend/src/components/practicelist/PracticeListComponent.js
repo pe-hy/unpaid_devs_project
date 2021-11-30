@@ -101,7 +101,7 @@ export const PracticeListComponent = () => {
                 <div className="center" style={{ width: "15%" }}>
                   <ReservationButtonComponent
                     text={reservation}
-                    color={"white"}
+
                     onClick={() => registerRequest(item.id)}
                   />
                 </div>

@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types'
+import "./ReservationButtonStyles.css"
 
-const ReservationButtonComponent = ({ color, text, onClick }) => {
+const ReservationButtonComponent = ({ text, onClick }) => {
     return (
-        <button
-            onClick={onClick}
-            style={{ backgroundColor: color, border: "solid 2px rgb(72, 219, 207)", borderRadius: "0px"}}
-            className='btn'
-        >
+        <button onClick={onClick} className='btn reservation'>
             {text}
         </button>
     )

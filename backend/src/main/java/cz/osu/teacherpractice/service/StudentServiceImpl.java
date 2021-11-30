@@ -51,13 +51,13 @@ public class StudentServiceImpl implements StudentService {
             practice.setStudents(new ArrayList<>(List.of(student)));
         } else {
             if (students.contains(student)) {
-                throw new ReservationException("Student [" + studentUsername + "] již je zarezervován na tuto praxi.");
+                throw new ReservationException("Student [" + studentUsername + "] has already made a reservation to this practice.");
             }
             if (students.size() >= practice.getCapacity()) {
-                throw new ReservationException("Kapacita praxe je plná.");
+                throw new ReservationException("The maximum capacity for this practice has been reached.");
             }
             if (LocalDate.now().plusDays(7).isAfter(practice.getDate())) {
-                throw new ReservationException("Na praxi se již nelze zarezervovat - je pozdě.");
+                throw new ReservationException("It is too late to make a reservation to this practice.");
             }
 
             students.add(student);

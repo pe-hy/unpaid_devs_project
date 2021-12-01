@@ -5,6 +5,7 @@ import {Container, Row, Col, OverlayTrigger, Tooltip} from "react-bootstrap";
 import { axios } from "../../axios.js";
 import {BsInfoCircleFill} from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
+import Badge from 'react-bootstrap/Badge'
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
@@ -23,7 +24,6 @@ export const PracticeListComponent = () => {
   useEffect(() => {
     getPraxe();
   }, []);
-
 
   const registerRequest = async (id) => {
     const response = await axios
@@ -44,29 +44,29 @@ export const PracticeListComponent = () => {
       <div style={{ width: "85%" }}>
         <div className="title-container">
           <Row style={{ width: "100%" }}>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Předmět</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Jméno</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Škola</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Datum</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Čas</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>E-mail</b>
             </Col>
-            <Col className="text-center">
+            <Col className="text-left">
               <b>Kapacita</b>
               <OverlayTrigger overlay={<Tooltip>Počet aktuálně zapsaných studentů / maximální počet studentů na praxi.</Tooltip>}>
                 <span>
-                  <BsInfoCircleFill className={"iconStyles"} />
+                  <BsInfoCircleFill className={"info-tooltip"} />
                 </span>
               </OverlayTrigger>
             </Col>
@@ -83,9 +83,9 @@ export const PracticeListComponent = () => {
               style={{ display: "block" }}
             >
               <div style={{ display: "flex" }}>
-                <Accordion.Header style={{ width: "85%" }}>
+                <Accordion.Header className={"accordion-header"}>
                   <Row style={{ width: "100%" }}>
-                    <Col className="text-center">{item.subjectInfo.name}</Col>
+                    <Col className="text-center  ">{item.subjectInfo.name}</Col>
                     <Col className="text-center">
                       {item.teacher.firstName + " " + item.teacher.secondName}
                     </Col>
@@ -95,13 +95,16 @@ export const PracticeListComponent = () => {
                       {item.start.split(":")[0] + ":" + item.start.split(":")[1] + " - " + item.end.split(":")[0] + ":" + item.end.split(":")[1]}
                     </Col>
                     <Col className="text-center">{item.teacher.username}</Col>
-                    <Col className="text-center">{item.registeredCount}  /  {item.capacity}</Col>
+                    <Col className="text-center badge">
+                      <div>
+                      <Badge bg={(item.registeredCount < item.capacity - 1) ? "success" : "danger"}>{item.registeredCount}  /  {item.capacity}</Badge>
+                    </div>
+                    </Col>
                   </Row>
                 </Accordion.Header>
                 <div className="center" style={{ width: "15%" }}>
                   <ReservationButtonComponent
                     text={reservation}
-
                     onClick={() => registerRequest(item.id)}
                   />
                 </div>

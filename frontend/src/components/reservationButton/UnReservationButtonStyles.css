@@ -19,15 +19,15 @@
 }
 
 /* Green */
-.reservation {
-    border-color: #85D4C4;
-    color: #09A789;
+.dereservation {
+    border-color: #8b1313;
+    color: rgba(197, 68, 68, 0.73);
     border-radius: 4px;
 }
 
-.reservation:hover {
-    background-color: #09A789;
-    border-color: #09A789;
+.dereservation:hover {
+    background-color: #ff0000;
+    border-color: #ff7676;
     color: white;
     border-radius: 4px;
 }

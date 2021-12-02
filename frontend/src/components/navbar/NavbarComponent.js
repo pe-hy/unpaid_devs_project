@@ -4,10 +4,10 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../../resources/OUbile.png";
 import "./NavbarStyles.css";
-import { BsFillHouseFill, BsPersonCircle } from "react-icons/bs";
+import { BsFillHouseFill, BsFillPersonFill } from "react-icons/bs";
 import LoginControlComponent from "../logincontrol/LoginControlComponent";
 
-let iconStyles = { fontSize: "3.5em" };
+let iconStyles = {fontSize: "2.5em", };
 
 class NavbarComponent extends React.Component {
   render() {
@@ -17,8 +17,8 @@ class NavbarComponent extends React.Component {
           <Container fluid>
             <Navbar.Brand href="#home">
               <img
-                width="150px"
-                height="auto"
+                width="90px"
+                height="90px"
                 className="img-responsive"
                 src={Logo}
                 alt="logo"
@@ -30,13 +30,13 @@ class NavbarComponent extends React.Component {
                 <Nav.Link className="ms-md-5">
                   <span id="prehled">
                     <BsFillHouseFill style={iconStyles} />
-                    <p>Home</p>
+                    <p className={"p-margin"}>Home</p>
                   </span>
                 </Nav.Link>
                 <Nav.Link className="ms-md-5">
                   <span id="prehled">
-                    <BsPersonCircle style={iconStyles} />
-                    <p>Účet</p>
+                    <BsFillPersonFill style={iconStyles} />
+                    <p className={"p-margin"}>Účet</p>
                   </span>
                 </Nav.Link>
               </Nav>

@@ -5,7 +5,7 @@ import {Container, Row, Col, OverlayTrigger, Tooltip} from "react-bootstrap";
 import { axios } from "../../axios.js";
 import {BsInfoCircleFill} from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
-import Badge from 'react-bootstrap/Badge'
+import Badge from 'react-bootstrap/Badge';
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
@@ -42,18 +42,18 @@ export const PracticeListComponent = () => {
   return (
     <Container fluid>
       <div style={{ width: "85%" }}>
-        <div className="title-container">
+        <div className="title-container text-info-practice">
           <Row style={{ width: "100%" }}>
-            <Col className="text-left">
+            <Col xs="auto" className="text-left">
               <b>Předmět</b>
             </Col>
-            <Col className="text-left">
+            <Col className="text-center">
               <b>Jméno</b>
             </Col>
-            <Col className="text-left">
+            <Col className="text-center">
               <b>Škola</b>
             </Col>
-            <Col className="text-left">
+            <Col className="date">
               <b>Datum</b>
             </Col>
             <Col className="text-left">
@@ -62,7 +62,7 @@ export const PracticeListComponent = () => {
             <Col className="text-left">
               <b>E-mail</b>
             </Col>
-            <Col className="text-left">
+            <Col className="text-center">
               <b>Kapacita</b>
               <OverlayTrigger overlay={<Tooltip>Počet aktuálně zapsaných studentů / maximální počet studentů na praxi.</Tooltip>}>
                 <span>
@@ -74,7 +74,7 @@ export const PracticeListComponent = () => {
         </div>
       </div>
 
-      <Accordion flush>
+      <Accordion >
         {!noPractices &&
           practices.map((item, index) => (
             <Accordion.Item
@@ -86,9 +86,7 @@ export const PracticeListComponent = () => {
                 <Accordion.Header className={"accordion-header"}>
                   <Row style={{ width: "100%" }}>
                     <Col className="text-center  ">{item.subjectInfo.name}</Col>
-                    <Col className="text-center">
-                      {item.teacher.firstName + " " + item.teacher.secondName}
-                    </Col>
+                    <Col className="text-center">{item.teacher.firstName + " " + item.teacher.secondName}</Col>
                     <Col className="text-center">{item.teacher.schoolName}</Col>
                     <Col className="text-center">{item.date.split("-")[2] + ". " + item.date.split("-")[1] + ". " + item.date.split("-")[0]}</Col>
                     <Col className="text-center">

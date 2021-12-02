@@ -7,6 +7,21 @@
 
 }
 
+.accordion-button[aria-expanded="true"]:hover{
+    background-color: transparent;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black
+}
+
+.accordion-button:focus{
+    box-shadow: none
+}
+.accordion-button:not(.collapsed){
+    background-color: #ffffff
+}
+
 .accordion-row {
     margin: 150px;
 }

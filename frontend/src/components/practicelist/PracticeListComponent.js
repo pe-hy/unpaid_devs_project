@@ -6,11 +6,13 @@ import { axios } from "../../axios.js";
 import {BsInfoCircleFill} from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 import Badge from 'react-bootstrap/Badge';
+import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
   const noPractices = !practices || (practices && practices.length === 0);
   const reservation = "Rezervovat";
+  const unReservation = "Odrezervovat"
 
   const getPraxe = async () => {
     const response = await axios.get("/student/practices").catch((err) => {
@@ -38,6 +40,34 @@ export const PracticeListComponent = () => {
     }
     await getPraxe();
   };
+
+  const unRegisterRequest = async (id) => {
+    const response = await axios
+        .put(`student/practice/${id}/cancel-reservation`)
+        .catch((err) => {
+          alert(err.response.data.message);
+          console.log(err.response.data.message)
+        });
+    if (response && response.data) {
+      console.log(response);
+      setPraxe(response.data);
+    }
+    await getPraxe();
+  };
+
+  const getButton = (isReserved, id) => {
+    if (!isReserved) {
+      return <ReservationButtonComponent
+          text={reservation}
+          onClick={() => registerRequest(id)}
+      />
+    } else {
+      return <UnReservationButtonComponent
+          text={unReservation}
+          onClick={() => unRegisterRequest(id)}
+      />
+    }
+  }
 
   return (
     <Container fluid>
@@ -101,10 +131,7 @@ export const PracticeListComponent = () => {
                   </Row>
                 </Accordion.Header>
                 <div className="center" style={{ width: "15%" }}>
-                  <ReservationButtonComponent
-                    text={reservation}
-                    onClick={() => registerRequest(item.id)}
-                  />
+                  {getButton(item.isReserved, item.id)}
                 </div>
               </div>
 

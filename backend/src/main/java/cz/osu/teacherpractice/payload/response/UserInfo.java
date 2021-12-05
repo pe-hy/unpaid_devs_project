@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.payload.response;
 
+import cz.osu.teacherpractice.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import java.util.Objects;
 
 @Data @NoArgsConstructor
 public class UserInfo {
+    private Long id;
     private String username;
     private String firstName;
     private String secondName;

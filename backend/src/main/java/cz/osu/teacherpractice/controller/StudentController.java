@@ -10,6 +10,8 @@ import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -66,29 +68,9 @@ public class StudentController {
     }
 
     private PracticeInfo convertToResponse(Practice practice) {
-        SubjectInfo subject = modelMapper.map(practice.getSubject(), SubjectInfo.class);
-
-        List<UserInfo> students = practice.getStudents() == null ? null : practice.getStudents().stream()
-                .map(this::convertToResponse).collect(Collectors.toList());
-
-        UserInfo teacher = modelMapper.map(practice.getTeacher(), UserInfo.class);
-
-        PracticeInfo practiceInfo = new PracticeInfo();
-        practiceInfo.setSubjectInfo(subject);
-        practiceInfo.setStudents(students);
-        practiceInfo.setTeacher(teacher);
-        practiceInfo.setId(practice.getId());
-        practiceInfo.setDate(practice.getDate());
-        practiceInfo.setStart(practice.getStart());
-        practiceInfo.setEnd(practice.getEnd());
-        practiceInfo.setNote(practice.getNote());
-        practiceInfo.setCapacity(practice.getCapacity());
-        practiceInfo.setRegisteredCount(students == null ? 0 : students.size());
-
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        PracticeInfo practiceInfo = modelMapper.map(practice, PracticeInfo.class);
+        practiceInfo.setRegisteredCount(practiceInfo.getStudents().size());
         return practiceInfo;
-    }
-
-    private UserInfo convertToResponse(User user) {
-        return modelMapper.map(user, UserInfo.class);
     }
 }

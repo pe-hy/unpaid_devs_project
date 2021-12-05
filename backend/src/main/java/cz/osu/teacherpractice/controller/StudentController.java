@@ -41,14 +41,14 @@ public class StudentController {
                                            Principal principal) {
         List<Practice> practices = studentService.getPractices(date, subjectId);
         List<PracticeInfo> practicesInfo = practices.stream().map(this::convertToResponse).collect(Collectors.toList());
-        practicesInfo.forEach(p -> p.setIsReserved(p.getStudents() != null && p.getStudents().contains(new UserInfo("student"))));
+        practicesInfo.forEach(p -> p.setIsReserved(p.getStudents() != null && p.getStudents().contains(new UserInfo(principal.getName()))));
         return practicesInfo;
     }
 
     @PutMapping("/practice/{id}/make-reservation")
-    public void makeReservation(@PathVariable("id") Long practiceId) {
+    public void makeReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
-            studentService.makeReservation("student", practiceId);
+            studentService.makeReservation(principal.getName(), practiceId);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (ReservationException e) {
@@ -57,9 +57,9 @@ public class StudentController {
     }
 
     @PutMapping("/practice/{id}/cancel-reservation")
-    public void cancelReservation(@PathVariable("id") Long practiceId) {
+    public void cancelReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
-            studentService.cancelReservation("student", practiceId);
+            studentService.cancelReservation(principal.getName(), practiceId);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (ReservationException e) {

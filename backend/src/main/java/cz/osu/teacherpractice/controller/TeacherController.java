@@ -27,7 +27,7 @@ public class TeacherController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addPractice(Principal principal, @Valid @RequestBody NewPracticeRequest practiceRequest) {
         try {
-            teacherService.addPractice("teacher", practiceRequest);
+            teacherService.addPractice(principal.getName(), practiceRequest);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

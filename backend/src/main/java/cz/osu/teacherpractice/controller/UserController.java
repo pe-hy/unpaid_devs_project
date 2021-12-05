@@ -27,16 +27,16 @@ public class UserController {
 
     @GetMapping("/user/subjects")
     public List<SubjectInfo> getSubjects() {
-        return userService.getSubjects().
-                stream().map(this::convertToResponse).
-                collect(Collectors.toList());
+        return userService.getSubjects().stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/user/schools")
     public List<SchoolInfo> getSchools() {
-        return userService.getSchools().
-                stream().map(this::convertToResponse).
-                collect(Collectors.toList());
+        return userService.getSchools().stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 
     private SubjectInfo convertToResponse(Subject subject) {

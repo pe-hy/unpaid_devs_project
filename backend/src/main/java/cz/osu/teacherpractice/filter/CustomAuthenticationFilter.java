@@ -77,7 +77,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         // return jwt token as cookie
         Cookie cookie = new Cookie("access_token", access_token);
+        cookie.setMaxAge(14 * 24 * 60 * 60);
         cookie.setHttpOnly(true);
+        //cookie.setSecure(true); // https
         response.addCookie(cookie);
 
         // provide role for client as json

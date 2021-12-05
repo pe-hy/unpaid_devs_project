@@ -15,7 +15,7 @@ public class NewPracticeRequest {
 
     private String note;
 
-    @NotNull @Min(1)
+    @NotNull @Min(value = 1, message = "Capacity must be at least 1.")
     private Integer capacity;
 
     @NotNull private Long subjectId;

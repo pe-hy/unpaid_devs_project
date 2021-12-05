@@ -9,18 +9,13 @@ import cz.osu.teacherpractice.repo.SchoolRepo;
 import cz.osu.teacherpractice.repo.SubjectRepo;
 import cz.osu.teacherpractice.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service @RequiredArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final SubjectRepo subjectRepo;
@@ -56,14 +51,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<School> getSchools() {
         return schoolRepo.findAll();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
-                "User with username [" + username + "] not found."
-        ));
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), List.of(authority));
     }
 }

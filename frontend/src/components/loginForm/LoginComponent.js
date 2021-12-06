@@ -1,7 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useNavigate  } from "react-router-dom";
 
 import AuthService from "../../services/AuthService";
 
@@ -55,7 +56,8 @@ export default class Login extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.username, this.state.password).then(
                 () => {
-                    this.props.history.push("/profile");
+                    let navigate = useNavigate();
+                    navigate("/studentHome");
                     window.location.reload();
                 },
                 error => {
@@ -118,6 +120,9 @@ export default class Login extends Component {
                                 className="btn btn-primary btn-block"
                                 disabled={this.state.loading}
                             >
+                                {this.state.loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
                                 <span>Login</span>
                             </button>
                         </div>
@@ -130,7 +135,7 @@ export default class Login extends Component {
                             </div>
                         )}
                         <CheckButton
-                            style={{display: "none"}}
+                            style={{ display: "none" }}
                             ref={c => {
                                 this.checkBtn = c;
                             }}

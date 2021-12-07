@@ -10,18 +10,18 @@ class UserService {
     }
 
     getUserBoard() {
-        return axios.get(API_URL + 'student', { headers: authHeader() });
+        return axios.get(API_URL + 'student', { headers: auth_header() });
     }
 
     getTeacherBoard() {
-        return axios.get(API_URL + 'ucitel', { headers: authHeader() });
+        return axios.get(API_URL + 'ucitel', { headers: auth_header() });
     }
 
     getCoordinatorBoard() {
-        return axios.get(API_URL + 'koordinator', { headers: authHeader() });
+        return axios.get(API_URL + 'koordinator', { headers: auth_header() });
     }
     getAdminBoard() {
-        return axios.get(API_URL + 'admin', { headers: authHeader() });
+        return axios.get(API_URL + 'admin', { headers: auth_header() });
     }
 }
 

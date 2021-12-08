@@ -144,7 +144,6 @@ export default class Login extends Component {
                 <span className="text-bold">Přihlásit se</span>
               </button>
             </div>
-            )}
             <CheckButton
               style={{ display: "none" }}
               ref={(c) => {

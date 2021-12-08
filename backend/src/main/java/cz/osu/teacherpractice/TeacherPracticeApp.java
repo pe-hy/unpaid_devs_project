@@ -45,6 +45,7 @@ public class TeacherPracticeApp {
 
             // adding default users
             User student = userService.createUser(new User(null, "student", "student", "Adam", "Kovář", null, Role.STUDENT, null, null, null));
+            User student2 = userService.createUser(new User(null, "student2", "student2", "Jan", "Nowak", null, Role.STUDENT, null, null, null));
             User teacher = userService.createUser(new User(null, "teacher", "teacher", "Karel", "Svoboda", null, Role.TEACHER, school, null, null));
             userService.createUser(new User(null, "coordinator", "coordinator", "Milan", "Novák", null, Role.COORDINATOR, null, null, null));
             userService.createUser(new User(null, "admin", "admin", "Petra", "Konečná", null, Role.ADMIN, null, null, null));

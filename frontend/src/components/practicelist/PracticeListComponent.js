@@ -15,14 +15,17 @@ export const PracticeListComponent = () => {
   const unReservation = "Odrezervovat"
 
   const getPraxe = async () => {
-    const response = await axios.get("/student/practices").catch((err) => {
-      console.log("Error:", err);
-    });
+    const response = await axios({
+      url: "http://localhost:8080/student/practices",
+      withCredentials: true,
+      method: "GET",
+    })
     if (response && response.data) {
       console.log(response);
       setPraxe(response.data);
     }
   };
+
   useEffect(() => {
     getPraxe();
   }, []);

@@ -41,15 +41,14 @@ export default class Login extends Component {
     console.log('handling login')
     e.preventDefault();
     //Use something like this to check renderering, but after everything is fetched from the server
-    this.setState({
-      redirectToLogin: true,
-    });
     // Uncomment this below and add proper error handling for servercall
     this.form.validateAll();
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
-         console.log("logged in")
+          this.setState({
+            redirectToLogin: true,
+          });
         },
         (error) => {
           const resMessage =

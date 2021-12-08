@@ -1,39 +1,47 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, { useEffect, useState } from "react";
-import {Container, Row, Col, OverlayTrigger, Tooltip} from "react-bootstrap";
+import { Container, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { axios } from "../../axios.js";
-import {BsInfoCircleFill} from "react-icons/bs";
+import { BsInfoCircleFill } from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
-import Badge from 'react-bootstrap/Badge';
+import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
   const noPractices = !practices || (practices && practices.length === 0);
   const reservation = "Rezervovat";
-  const unReservation = "Odrezervovat"
+  const unReservation = "Odrezervovat";
 
   const getPraxe = async () => {
-    const response = await axios.get("/student/practices").catch((err) => {
-      console.log("Error:", err);
+    const response = await axios({
+      url: "http://localhost:8080/student/practices",
+      withCredentials: true,
+      method: "GET",
+    }).catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response.data.message);
     });
     if (response && response.data) {
       console.log(response);
       setPraxe(response.data);
     }
   };
+
   useEffect(() => {
     getPraxe();
   }, []);
 
   const registerRequest = async (id) => {
-    const response = await axios
-      .put(`student/practice/${id}/make-reservation`)
-      .catch((err) => {
-        alert(err.response.data.message);
-        console.log(err.response.data.message)
-      });
+    const response = await axios({
+      url: `student/practice/${id}/make-reservation`,
+      withCredentials: true,
+      method: "PUT",
+    }).catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response.data.message);
+    });
     if (response && response.data) {
       console.log(response);
       setPraxe(response.data);
@@ -42,12 +50,14 @@ export const PracticeListComponent = () => {
   };
 
   const unRegisterRequest = async (id) => {
-    const response = await axios
-        .put(`student/practice/${id}/cancel-reservation`)
-        .catch((err) => {
-          alert(err.response.data.message);
-          console.log(err.response.data.message)
-        });
+    const response = await axios({
+      url: `student/practice/${id}/cancel-reservation`,
+      withCredentials: true,
+      method: "PUT",
+    }).catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response.data.message);
+    });
     if (response && response.data) {
       console.log(response);
       setPraxe(response.data);
@@ -57,17 +67,21 @@ export const PracticeListComponent = () => {
 
   const getButton = (isReserved, id) => {
     if (!isReserved) {
-      return <ReservationButtonComponent
+      return (
+        <ReservationButtonComponent
           text={reservation}
           onClick={() => registerRequest(id)}
-      />
+        />
+      );
     } else {
-      return <UnReservationButtonComponent
+      return (
+        <UnReservationButtonComponent
           text={unReservation}
           onClick={() => unRegisterRequest(id)}
-      />
+        />
+      );
     }
-  }
+  };
 
   return (
     <Container fluid>
@@ -94,7 +108,14 @@ export const PracticeListComponent = () => {
             </Col>
             <Col className="text-center">
               <b>Kapacita</b>
-              <OverlayTrigger overlay={<Tooltip>Počet aktuálně zapsaných studentů / maximální počet studentů na praxi.</Tooltip>}>
+              <OverlayTrigger
+                overlay={
+                  <Tooltip>
+                    Počet aktuálně zapsaných studentů / maximální počet studentů
+                    na praxi.
+                  </Tooltip>
+                }
+              >
                 <span>
                   <BsInfoCircleFill className={"info-tooltip"} />
                 </span>
@@ -104,7 +125,7 @@ export const PracticeListComponent = () => {
         </div>
       </div>
 
-      <Accordion >
+      <Accordion>
         {!noPractices &&
           practices.map((item, index) => (
             <Accordion.Item
@@ -116,17 +137,39 @@ export const PracticeListComponent = () => {
                 <Accordion.Header className={"accordion-header"}>
                   <Row style={{ width: "100%" }}>
                     <Col className="text-center  ">{item.subjectInfo.name}</Col>
-                    <Col className="text-center">{item.teacher.firstName + " " + item.teacher.secondName}</Col>
-                    <Col className="text-center">{item.teacher.schoolName}</Col>
-                    <Col className="text-center">{item.date.split("-")[2] + ". " + item.date.split("-")[1] + ". " + item.date.split("-")[0]}</Col>
                     <Col className="text-center">
-                      {item.start.split(":")[0] + ":" + item.start.split(":")[1] + " - " + item.end.split(":")[0] + ":" + item.end.split(":")[1]}
+                      {item.teacher.firstName + " " + item.teacher.secondName}
+                    </Col>
+                    <Col className="text-center">{item.teacher.schoolName}</Col>
+                    <Col className="text-center">
+                      {item.date.split("-")[2] +
+                        ". " +
+                        item.date.split("-")[1] +
+                        ". " +
+                        item.date.split("-")[0]}
+                    </Col>
+                    <Col className="text-center">
+                      {item.start.split(":")[0] +
+                        ":" +
+                        item.start.split(":")[1] +
+                        " - " +
+                        item.end.split(":")[0] +
+                        ":" +
+                        item.end.split(":")[1]}
                     </Col>
                     <Col className="text-center">{item.teacher.username}</Col>
                     <Col className="text-center badge">
                       <div>
-                      <Badge bg={(item.registeredCount < item.capacity - 1) ? "success" : "danger"}>{item.registeredCount}  /  {item.capacity}</Badge>
-                    </div>
+                        <Badge
+                          bg={
+                            item.registeredCount < item.capacity - 1
+                              ? "success"
+                              : "danger"
+                          }
+                        >
+                          {item.registeredCount} / {item.capacity}
+                        </Badge>
+                      </div>
                     </Col>
                   </Row>
                 </Accordion.Header>

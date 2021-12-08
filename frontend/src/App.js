@@ -6,6 +6,7 @@ import LoginView from "./views/login/LoginView";
 function App() {
   return (
     <div className="app">
+        <NavbarComponent/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginView />} />

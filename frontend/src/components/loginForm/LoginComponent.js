@@ -4,11 +4,15 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/AuthService";
 import { Navigate } from "react-router-dom";
+import {BsEnvelopeFill, BsLockFill, BsExclamationTriangleFill} from "react-icons/bs";
+
+import "./LoginFormStyles.css"
+
 const required = (value) => {
   if (!value) {
     return (
-        <div className="alert alert-danger" role="alert">
-          This field is required!
+        <div className="alert alert-danger my-alert" role="alert">
+          <BsExclamationTriangleFill/>   Toto pole je povinné!
         </div>
     );
   }
@@ -73,45 +77,54 @@ export default class Login extends Component {
     //Use similar logic like this
     if(this.state.redirectToLogin) return <Navigate to="/studentHome" />
     return (
-        <div className="col-md-12">
-          <div className="card card-container">
+        <div className="col-md-12 container-login">
+          <p className="thick ">PŘIHLÁŠENÍ</p>
+          <div className="card card-container form-cointainer">
             <Form
                 onSubmit={this.handleLogin}
                 ref={(c) => {
                   this.form = c;
                 }}
             >
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <Input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required]}
-                />
+              <div className="form-group form-cointainer">
+                <label htmlFor="username" className="text-bold text-padding">E-mail</label>
+                <div className="inner-addon left-addon">
+                  <i className="glyphicon glyphicon-user icon-form"><BsEnvelopeFill /></i>
+                  <Input
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      placeholder="example@osu.cz"
+                      value={this.state.username}
+                      onChange={this.onChangeUsername}
+                      validations={[required]}
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
+              <div className="form-group form-cointainer">
+                <label htmlFor="password" className="text-bold text-padding">Heslo</label>
+                <div className="inner-addon left-addon">
+                  <i className="glyphicon glyphicon-user icon-form"><BsLockFill /></i>
                 <Input
                     type="password"
                     className="form-control"
                     name="password"
+                    placeholder="heslo"
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     validations={[required]}
                 />
+                </div>
               </div>
-              <div className="form-group">
+              <div className="form-group button-login">
                 <button
-                    className="btn btn-primary btn-block"
+                    className="btn btn-primary btn-block button-lg"
                     disabled={this.state.loading}
                 >
                   {this.state.loading && (
                       <span className="spinner-border spinner-border-sm"></span>
                   )}
-                  <span>Login</span>
+                  <span className="text-bold">Přihlásit se</span>
                 </button>
               </div>
               {this.state.message && (

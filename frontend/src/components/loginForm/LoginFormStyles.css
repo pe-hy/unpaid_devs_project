@@ -1,0 +1,86 @@
+.container-login{
+    padding-top: 60px;
+    align-content: stretch;
+    margin: auto;
+    width: 550px;
+    height:450px;
+}
+
+.form-cointainer{
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.my-alert{
+    text-align: center;
+}
+
+p.thick{
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+    /*font-family: Oswald, sans-serif;*/
+}
+
+.button-login{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.button-lg{
+    border-color: #D3EAF6;
+    color:  #185D7D;
+    background-color: #D3EAF6 ;
+}
+
+.button-lg:hover{
+    border-color: #48819B;
+    background-color: #48819B;
+    color:  #D3EAF6;
+}
+
+
+.login-icon{
+    color: darkgray;
+}
+
+.text-bold{
+    font-weight: bold;
+}
+
+.text-padding{
+    padding-bottom: 10px;
+}
+
+.inner-addon{
+    position: relative;
+}
+
+.inner-addon .glyphicon{
+    position: absolute;
+    padding-top: 6px;
+    padding-left: 10px;
+    pointer-events: none;
+}
+
+.left-addon .glyphicon {
+    left:  0;
+}
+.right-addon .glyphicon{
+    right: 0;
+}
+
+.left-addon input{
+    padding-left:  30px;
+}
+.right-addon input{
+    padding-right: 30px;
+}
+
+.icon-form{
+    padding-top: 0;
+    color: darkgrey;
+    text-align: center;
+}

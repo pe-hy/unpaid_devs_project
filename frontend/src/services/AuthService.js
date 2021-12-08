@@ -4,6 +4,16 @@ import Cookies from "js-cookie";
 const API_URL = "http://localhost:8080/login";
 
 class AuthService {
+  callServer(){
+    return axios({
+      url: "localhost:8080/student/practices",
+      withCredentials: true,
+      method: "GET",
+    }).then((response) => {
+
+      return response.data;
+    });
+  }
   login(username, password) {
     const formData = JSON.stringify({ username, password });
     return axios({
@@ -12,11 +22,11 @@ class AuthService {
       method: "POST",
       data: formData,
     }).then((response) => {
-      this.testRequest();
       if (response) {
         localStorage.setItem("user", JSON.stringify(response.data));
         if (response.data.role === "ROLE_STUDENT") {
           console.log("I am student");
+          console.log(this.callServer())
         }
       }
       return response.data;

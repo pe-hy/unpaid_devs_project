@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const API_URL = "http://localhost:8080/login";
 
@@ -15,32 +14,13 @@ class AuthService {
       if (response) {
         localStorage.setItem("user", JSON.stringify(response.data));
         if (response.data.role === "ROLE_STUDENT") {
-          console.log("I am student");
+          localStorage.setItem("role", "ROLE_STUDENT");
+        } else if (response.data.role === "ROLE_TEACHER") {
+          localStorage.setItem("role", "ROLE_TEACHER");
         }
       }
       return response.data;
     });
-
-    // return axios
-    //   .post(
-    //     API_URL,
-    //     {
-    //       username,
-    //       password,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.access_token) {
-    //       localStorage.setItem("user", JSON.stringify(response.data));
-    //       localStorage.setItem("token", response.data.access_token);
-    //       console.log(response);
-    //       console.log(response.headers);
-    //       console.log(response.data.role);
-    //     }
-    //     return response.data;
-    //   });
   }
 
   logout() {

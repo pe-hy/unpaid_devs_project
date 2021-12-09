@@ -8,6 +8,7 @@ import {
   BsEnvelopeFill,
   BsLockFill,
   BsExclamationTriangleFill,
+  BsExclamationCircleFill
 } from "react-icons/bs";
 
 import "./LoginFormStyles.css";
@@ -15,8 +16,8 @@ import "./LoginFormStyles.css";
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger my-alert" role="alert">
-        <BsExclamationTriangleFill /> Toto pole je povinné!
+      <div className="alert my-alert text-bold" role="alert">
+        <BsExclamationCircleFill /> Toto pole je povinné!
       </div>
     );
   }
@@ -133,15 +134,15 @@ export default class Login extends Component {
                 />
               </div>
             </div>
-            <a href = "localhost:8080/forgotpassword" className={"float-end mt-2"} style={{marginRight: "20px"}}>Zapomenuté heslo</a>
+            <a href = "localhost:8080/forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
             <div className="form-group button-login pt-5">
               {this.state.message && (
-                  <div className="alert alert-danger" role="alert">
-                    {this.state.message}
+                  <div className="alert alert-danger my-alert1" role="alert">
+                    < BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
                   </div>
               )}
               <button
-                className="btn btn-primary btn-block button-lg"
+                className="btn button-lg"
                 disabled={this.state.loading}
               >
                 {this.state.loading && (
@@ -150,7 +151,7 @@ export default class Login extends Component {
                 <span className="text-bold">Přihlásit se</span>
               </button>
             </div>
-            <a href = "localhost:8080/register" className={"d-flex justify-content-center mt-2"}>Zaregistrovat se</a>
+            <a href = "localhost:8080/register" className={"d-flex justify-content-center mt-2 rgstr"}>Zaregistrovat se</a>
             <CheckButton
               style={{ display: "none" }}
               ref={(c) => {

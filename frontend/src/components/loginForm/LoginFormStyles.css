@@ -1,11 +1,15 @@
 .container-login{
-    padding-top: 60px;
+    padding-top: 180px;
     align-content: stretch;
+    min-width: 200px;
+    max-width: 500px;
+    height: 1000px;
     margin: auto;
-    width: 550px;
-    height:450px;
 }
 
+.form-control-error{
+    border-color: #D92F24;
+}
 .form-cointainer{
     padding-top: 15px;
     padding-left: 20px;
@@ -13,14 +17,23 @@
 }
 
 .my-alert{
+    text-align: left;
+    height: 10px;
+    color: #D92F24;
+}
+
+.my-alert1{
     text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
 }
 
 p.thick{
     font-weight: bold;
     text-align: center;
+    padding-top: 180px;
     font-size: 30px;
-    /*font-family: Oswald, sans-serif;*/
 }
 
 .button-login{
@@ -31,16 +44,16 @@ p.thick{
 
 .button-lg{
     border-color: #D3EAF6;
-    color:  #185D7D;
+    color:  #264d73;
     background-color: #D3EAF6 ;
+    font-size: 18px;
 }
 
 .button-lg:hover{
-    border-color: #48819B;
-    background-color: #48819B;
-    color:  #D3EAF6;
+    border-color: #264d73;
+    background-color: #264d73;
+    color:  white;
 }
-
 
 .login-icon{
     color: darkgray;
@@ -84,3 +97,20 @@ p.thick{
     color: darkgrey;
     text-align: center;
 }
+
+.forgot-pswrd{
+    font-weight: bold;
+    margin-right: 20px;
+    color: #48819B;
+}
+
+.rgstr{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #48819B;
+}
+
+.alert-icon{
+    font-size: 1.4em;
+}
+

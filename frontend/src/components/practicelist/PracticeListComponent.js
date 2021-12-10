@@ -85,7 +85,7 @@ export const PracticeListComponent = () => {
 
   return (
     <Container fluid>
-      <div style={{ width: "85%" }}>
+      <div>
         <div className="title-container text-info-practice">
           <Row style={{ width: "100%" }}>
             <Col xs="auto" className="text-left">
@@ -97,13 +97,13 @@ export const PracticeListComponent = () => {
             <Col className="text-center">
               <b>Škola</b>
             </Col>
-            <Col className="date">
+            <Col className="text-center">
               <b>Datum</b>
             </Col>
-            <Col className="text-left">
+            <Col className="text-center">
               <b>Čas</b>
             </Col>
-            <Col className="text-left">
+            <Col className="text-center">
               <b>E-mail</b>
             </Col>
             <Col className="text-center">

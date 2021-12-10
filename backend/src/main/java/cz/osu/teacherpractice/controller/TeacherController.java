@@ -1,12 +1,10 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.resources.request.NewPracticeRequest;
 import cz.osu.teacherpractice.service.TeacherServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -26,10 +24,6 @@ public class TeacherController {
     @PostMapping("/practice")
     @ResponseStatus(HttpStatus.CREATED)
     public void addPractice(Principal principal, @Valid @RequestBody NewPracticeRequest practiceRequest) {
-        try {
-            teacherService.addPractice(principal.getName(), practiceRequest);
-        } catch (UserException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        teacherService.addPractice(principal.getName(), practiceRequest);
     }
 }

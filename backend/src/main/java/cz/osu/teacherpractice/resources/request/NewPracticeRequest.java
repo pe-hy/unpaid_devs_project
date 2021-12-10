@@ -18,12 +18,12 @@ public class NewPracticeRequest {
     @NotNull(message = "Pole pro konec praxe musí být vyplněné.")
     private LocalTime end;
 
-    @Size(max = 250, message = "Maximální délka poznámky je 250 znaků.")
+    @Size(max = 250, message = "Maximální délka poznámky je {max} znaků.")
     private String note;
 
     @NotNull(message = "Pole pro kapacitu musí být vyplněné.")
-    @Min(value = 1, message = "Kapacita musí být větší nebo rovna 1.")
-    @Max(value = 10, message = "Kapacita musí být menší nebo rovna 10.")
+    @Min(value = 1, message = "Kapacita musí být větší nebo rovna {value}.")
+    @Max(value = 10, message = "Kapacita musí být menší nebo rovna {value}.")
     private Integer capacity;
 
     @NotNull(message = "Pole pro předmět musí být vyplněné.")

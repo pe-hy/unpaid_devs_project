@@ -1,6 +1,5 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.resources.response.PracticeInfo;
 import cz.osu.teacherpractice.resources.response.UserInfo;
 import cz.osu.teacherpractice.model.Practice;
@@ -9,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -46,20 +43,12 @@ public class StudentController {
 
     @PutMapping("/practices/{id}/make-reservation")
     public void makeReservation(Principal principal, @PathVariable("id") Long practiceId) {
-        try {
-            studentService.makeReservation(principal.getName(), practiceId);
-        } catch (UserException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        studentService.makeReservation(principal.getName(), practiceId);
     }
 
     @PutMapping("/practices/{id}/cancel-reservation")
     public void cancelReservation(Principal principal, @PathVariable("id") Long practiceId) {
-        try {
-            studentService.cancelReservation(principal.getName(), practiceId);
-        } catch (UserException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        studentService.cancelReservation(principal.getName(), practiceId);
     }
 
     private PracticeInfo convertToResponse(Practice practice) {

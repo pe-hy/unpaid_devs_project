@@ -1,17 +1,13 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.exception.ReservationException;
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
-import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.payload.response.PracticeInfo;
-import cz.osu.teacherpractice.payload.response.SubjectInfo;
-import cz.osu.teacherpractice.payload.response.UserInfo;
+import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.resources.response.PracticeInfo;
+import cz.osu.teacherpractice.resources.response.UserInfo;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -39,30 +35,29 @@ public class StudentController {
     public List<PracticeInfo> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                            @RequestParam(required=false) Long subjectId,
                                            Principal principal) {
-        List<Practice> practices = studentService.getPractices(date, subjectId);
-        List<PracticeInfo> practicesInfo = practices.stream().map(this::convertToResponse).collect(Collectors.toList());
-        practicesInfo.forEach(p -> p.setIsReserved(p.getStudents() != null && p.getStudents().contains(new UserInfo(principal.getName()))));
+
+        List<PracticeInfo> practicesInfo = studentService.getPractices(date, subjectId)
+                .stream().map(this::convertToResponse).collect(Collectors.toList());
+
+        practicesInfo.forEach(p -> p.setIsReserved(p.getStudents().contains(new UserInfo(principal.getName()))));
+
         return practicesInfo;
     }
 
-    @PutMapping("/practice/{id}/make-reservation")
+    @PutMapping("/practices/{id}/make-reservation")
     public void makeReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
             studentService.makeReservation(principal.getName(), practiceId);
-        } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (ReservationException e) {
+        } catch (UserException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    @PutMapping("/practice/{id}/cancel-reservation")
+    @PutMapping("/practices/{id}/cancel-reservation")
     public void cancelReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
             studentService.cancelReservation(principal.getName(), practiceId);
-        } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (ReservationException e) {
+        } catch (UserException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

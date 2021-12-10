@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.payload.response.SchoolInfo;
-import cz.osu.teacherpractice.payload.response.SubjectInfo;
+import cz.osu.teacherpractice.resources.response.SchoolInfo;
+import cz.osu.teacherpractice.resources.response.SubjectInfo;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.service.UserServiceImpl;

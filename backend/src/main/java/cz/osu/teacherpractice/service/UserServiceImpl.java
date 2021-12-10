@@ -1,7 +1,6 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
-import cz.osu.teacherpractice.exception.UserAlreadyExists;
+import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserAlreadyExists("User with username [" + user.getUsername() + "] already exists.");
+            throw new UserException("Uživatel [" + user.getUsername() + "] již existuje.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
@@ -33,8 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long id) {
-        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException(
-                "User with id [" + id + "] not found."
+        return userRepo.findById(id).orElseThrow(() -> new UserException(
+                "Uživatel nebyl nalezen."
         ));
     }
 

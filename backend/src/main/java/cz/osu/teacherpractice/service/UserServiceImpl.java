@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -31,14 +32,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Long id) {
+    public User getUserById(Long id) {
         return userRepo.findById(id).orElseThrow(() -> new UserException(
-                "Uživatel nebyl nalezen."
+                "Uživatel s id [" + id + "] nebyl nalezen."
         ));
     }
 
     @Override
-    public List<User> getUsers() {
+    public User getUserByUsername(String username) {
+        return userRepo.findByUsername(username).orElseThrow(() -> new UserException(
+                "Uživatel [" + username + "] nebyl nalezen."
+        ));
+    }
+
+    @Override
+    public Role getUserRole(String username) {
+        return getUserByUsername(username).getRole();
+    }
+
+    @Override
+    public List<User> getAllUsers() {
         return userRepo.findAll();
     }
 

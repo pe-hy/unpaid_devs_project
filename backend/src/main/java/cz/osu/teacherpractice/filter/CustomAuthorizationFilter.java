@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -43,13 +44,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             Cookie[] cookies = request.getCookies();
 
             if (cookies == null) {
-                throw new AuthenticationCredentialsNotFoundException("Access token cookie is not present.");
+                throw new AuthenticationCredentialsNotFoundException("Je nutné se přihlásit.");
             }
 
             Optional<Cookie> access_token = Arrays.stream(cookies).filter(c -> c.getName().equals("access_token")).findFirst();
 
             if (access_token.isEmpty()) {
-                throw new AuthenticationCredentialsNotFoundException("Access token cookie is not present.");
+                throw new AuthenticationCredentialsNotFoundException("Je nutné se přihlásit.");
             }
 
             String token = access_token.get().getValue();
@@ -70,7 +71,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
 
-        } catch (AuthenticationCredentialsNotFoundException e) {
+        } catch (AuthenticationCredentialsNotFoundException | UsernameNotFoundException e) {
             response.setStatus(UNAUTHORIZED.value());
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", e.getMessage()));

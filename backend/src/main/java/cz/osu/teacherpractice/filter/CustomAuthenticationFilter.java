@@ -25,17 +25,17 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static cz.osu.teacherpractice.config.SecurityConfig.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final int EXPIRATION_DAYS = 14;
-    private static final int EXPIRATION_SECONDS = EXPIRATION_DAYS * 24 * 60 * 60;
-
     private final AuthenticationManager authenticationManager;
+    private final Algorithm jwtAlgorithm;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, Algorithm jwtAlgorithm) {
         this.authenticationManager = authenticationManager;
+        this.jwtAlgorithm = jwtAlgorithm;
     }
 
     @Override
@@ -62,22 +62,20 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         User user = (User) authResult.getPrincipal();
         String role = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0);
 
-        // secret key should be encrypted and stored on a more secure place
-        Algorithm algorithm = Algorithm.HMAC256("secret-key");
-        Date expirationDate = Date.from(LocalDate.now().plusDays(EXPIRATION_DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date expirationDate = Date.from(LocalDate.now().plusDays(JWT_TOKEN_EXPIRATION_DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         // would be possible to create refresh token as well
         String access_token = JWT.create().withSubject(user.getUsername())
                 .withExpiresAt(expirationDate)
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("role", role)
-                .sign(algorithm);
+                .sign(jwtAlgorithm);
 
         // return jwt token as cookie
-        Cookie cookie = new Cookie("access_token", access_token);
-        cookie.setMaxAge(EXPIRATION_SECONDS);
-        cookie.setHttpOnly(true);
-        //cookie.setSecure(true); // https
+        Cookie cookie = new Cookie(COOKIE_NAME, access_token);
+        cookie.setMaxAge(COOKIE_EXPIRATION_SECONDS);
+        cookie.setHttpOnly(COOKIE_HTTP_ONLY);
+        cookie.setSecure(COOKIE_SECURE);
         response.addCookie(cookie);
 
         // provide role for client as json

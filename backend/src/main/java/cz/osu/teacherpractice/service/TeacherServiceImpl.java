@@ -16,8 +16,6 @@ import java.time.LocalDate;
 @Service @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
-    private static final int ADD_PRACTICE_DAYS_LEFT = 7;
-
     private final UserRepo userRepo;
     private final SubjectRepo subjectRepo;
     private final PracticeRepo practiceRepo;
@@ -31,10 +29,6 @@ public class TeacherServiceImpl implements TeacherService {
         Subject subject = subjectRepo.findById(practiceRequest.getSubjectId()).orElseThrow(() -> new UserException(
                 "Předmět s id [" + practiceRequest.getSubjectId() + "] nenalezen."
         ));
-
-        if (LocalDate.now().plusDays(ADD_PRACTICE_DAYS_LEFT).isAfter(practiceRequest.getDate())) {
-            throw new UserException("Praxi je možné přidat nejpozději " + ADD_PRACTICE_DAYS_LEFT + " dní předem.");
-        }
 
         if (practiceRequest.getStart().toSecondOfDay() >= practiceRequest.getEnd().toSecondOfDay()) {
             throw new UserException("Čas začátku praxe musí předcházet času konce praxe.");

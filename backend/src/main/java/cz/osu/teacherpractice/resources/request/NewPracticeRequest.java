@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.resources.request;
 
+import cz.osu.teacherpractice.annotation.constraint.PracticeDateConstraint;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 
 @Data
 public class NewPracticeRequest {
+    @PracticeDateConstraint
     @NotNull(message = "Pole pro datum musí být vyplněné.")
     private LocalDate date;
     @NotNull(message = "Pole pro začátek praxe musí být vyplněné.")

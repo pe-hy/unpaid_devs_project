@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.config;
 
+import com.auth0.jwt.algorithms.Algorithm;
 import cz.osu.teacherpractice.filter.CustomAuthenticationFilter;
 import cz.osu.teacherpractice.filter.CustomAuthorizationFilter;
 import cz.osu.teacherpractice.model.Role;
@@ -24,6 +25,16 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration @EnableWebSecurity @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // should be stored on a more secure place
+    public static final String JWT_SECRET_KEY = "secret-key";
+    public static final int JWT_TOKEN_EXPIRATION_DAYS = 14;
+
+    // cookie containing jwt token
+    public static final String COOKIE_NAME = "access_token";
+    public static final boolean COOKIE_HTTP_ONLY = true;
+    public static final boolean COOKIE_SECURE = false;
+    public static final int COOKIE_EXPIRATION_SECONDS = JWT_TOKEN_EXPIRATION_DAYS * 24 * 60 * 60;
+
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -42,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/coordinator/**").hasAnyAuthority(Role.COORDINATOR.getCode(), Role.ADMIN.getCode());
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
         http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
-        http.addFilterBefore(new CustomAuthorizationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), jwtAlgorithm()));
+        http.addFilterBefore(new CustomAuthorizationFilter(userDetailsService, jwtAlgorithm()), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean @Override
@@ -55,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public Algorithm jwtAlgorithm() { return Algorithm.HMAC256(JWT_SECRET_KEY); }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

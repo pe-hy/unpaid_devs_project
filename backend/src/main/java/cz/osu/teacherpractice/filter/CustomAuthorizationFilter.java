@@ -29,10 +29,15 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RequiredArgsConstructor
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
+    private final Algorithm jwtAlgorithm;
+
+    public CustomAuthorizationFilter(UserDetailsService userDetailsService, Algorithm jwtAlgorithm) {
+        this.userDetailsService = userDetailsService;
+        this.jwtAlgorithm = jwtAlgorithm;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -55,9 +60,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
             String token = access_token.get().getValue();
 
-            // repeating code (see CustomAuthenticationFilter)
-            Algorithm algorithm = Algorithm.HMAC256("secret-key");
-            JWTVerifier verifier = JWT.require(algorithm).build();
+            JWTVerifier verifier = JWT.require(jwtAlgorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
             String username = decodedJWT.getSubject();

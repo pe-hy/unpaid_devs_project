@@ -1,5 +1,5 @@
 import React from 'react';
-let userName = "Jan Novák"; //napojí se na backend
+let userName = "Jan Novák";
 let role = "Student"
 let empty = "";
 

@@ -6,7 +6,8 @@ const LoginView = () => {
   return (
     <Container
       style={{
-        position: "absolute",
+        marginTop: "200px",
+        position: "relative",
         left: "50%",
         top: "33%",
         transform: "translate(-50%, -50%)",

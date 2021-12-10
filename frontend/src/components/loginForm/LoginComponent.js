@@ -133,7 +133,13 @@ export default class Login extends Component {
                 />
               </div>
             </div>
-            <div className="form-group button-login">
+            <a href = "localhost:8080/forgotpassword" className={"float-end mt-2"} style={{marginRight: "20px"}}>Zapomenuté heslo</a>
+            <div className="form-group button-login pt-5">
+              {this.state.message && (
+                  <div className="alert alert-danger" role="alert">
+                    {this.state.message}
+                  </div>
+              )}
               <button
                 className="btn btn-primary btn-block button-lg"
                 disabled={this.state.loading}
@@ -144,6 +150,7 @@ export default class Login extends Component {
                 <span className="text-bold">Přihlásit se</span>
               </button>
             </div>
+            <a href = "localhost:8080/register" className={"d-flex justify-content-center mt-2"}>Zaregistrovat se</a>
             <CheckButton
               style={{ display: "none" }}
               ref={(c) => {

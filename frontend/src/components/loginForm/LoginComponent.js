@@ -67,8 +67,8 @@ export default class Login extends Component {
       AuthService.login(this.state.username, this.state.password).then(
         (res) => {
           this.setState({
-            redirectToLogin: true,
             currentRole: localStorage.getItem("role"),
+            redirectToLogin: true,
           });
         },
         (error) => {

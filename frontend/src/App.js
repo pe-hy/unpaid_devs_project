@@ -10,30 +10,27 @@ function App() {
       <NavbarComponent />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LoginView />} />
           <Route
-            exact
-            path="/studentHome"
+            path="studentHome"
             element={
               localStorage.getItem("role") === "ROLE_STUDENT" ? (
                 <StudentHomeView />
               ) : (
-                <Navigate to="/login" />
+                <Navigate to="/" />
               )
             }
           />
           <Route
-            exact
-            path="/teacherHome"
+            path="teacherHome"
             element={
               localStorage.getItem("role") === "ROLE_TEACHER" ? (
                 <TeacherHomeView />
               ) : (
-                <Navigate to="/login" />
+                <Navigate to="/" />
               )
             }
           />
-          <Route exact path="/login" element={<LoginView />} />
-          <Route exact path="/" element={<LoginView />} />
         </Routes>
       </BrowserRouter>
     </div>

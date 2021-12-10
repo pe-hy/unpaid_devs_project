@@ -40,6 +40,14 @@ public class TeacherServiceImpl implements TeacherService {
             throw new UserException("Čas začátku praxe musí předcházet času konce praxe.");
         }
 
+        if (practiceRequest.getCapacity() < 1) {
+            throw new UserException("Kapacita nesmí být menší než 1.");
+        }
+
+        if (practiceRequest.getCapacity() >= 10) {
+            throw new UserException("Kapacita musí být menší nebo rovna 10.");
+        }
+
         Practice practice = new Practice();
         practice.setDate(practiceRequest.getDate());
         practice.setStart(practiceRequest.getStart());

@@ -15,7 +15,7 @@ import "./TabsStyles.css";
 
 import { axios } from "../../axios";
 
-export function getMinDate(days){
+export function getMinDate(days) {
   let date = new Date();
   date.setDate(date.getDate() + days);
   return date;
@@ -100,9 +100,17 @@ const TabsForm = () => {
                 <Form.Control
                   name="date"
                   type="date"
-                  min={new Date(new Date().setDate(new Date().getDate()+7)).toISOString().substr(0,10)}
-                  max={new Date(new Date().setDate(new Date().getDate()+365)).toISOString().substr(0,10)}
-                  defaultValue={new Date(new Date().setDate(new Date().getDate()+7)).toISOString().substr(0,10)}
+                  min={new Date(new Date().setDate(new Date().getDate() + 7))
+                    .toISOString()
+                    .substr(0, 10)}
+                  max={new Date(new Date().setDate(new Date().getDate() + 365))
+                    .toISOString()
+                    .substr(0, 10)}
+                  defaultValue={new Date(
+                    new Date().setDate(new Date().getDate() + 7)
+                  )
+                    .toISOString()
+                    .substr(0, 10)}
                   required="required"
                   onChange={handleChange}
                 />

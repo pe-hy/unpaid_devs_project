@@ -1,7 +1,6 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.exception.ReservationException;
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repo.PracticeRepo;
@@ -38,11 +37,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void makeReservation(String studentUsername, Long practiceId) {
-        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
-                "Practice with id [" +  practiceId + "] not found."
+        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new UserException(
+                "Praxe s id [" +  practiceId + "] nenalezena."
         ));
-        User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new ResourceNotFoundException(
-                "Student with username [" + studentUsername + "] not found."
+        User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new UserException(
+                "Student [" + studentUsername + "] nenalezen."
         ));
 
         List<User> students = practice.getStudents();
@@ -51,13 +50,13 @@ public class StudentServiceImpl implements StudentService {
             practice.setStudents(new ArrayList<>(List.of(student)));
         } else {
             if (students.contains(student)) {
-                throw new ReservationException("Student [" + studentUsername + "] has already made a reservation to this practice.");
+                throw new UserException("Na tuto praxi jste již přihlášen/á.");
             }
             if (students.size() >= practice.getCapacity()) {
-                throw new ReservationException("The maximum capacity for this practice has been reached.");
+                throw new UserException("Na tuto praxi se již více studentů přihlásit nemůže.");
             }
             if (LocalDate.now().plusDays(7).isAfter(practice.getDate())) {
-                throw new ReservationException("It is too late to make a reservation to this practice.");
+                throw new UserException("Čas do kdy je možné se přihlásit na tuto praxi již vypršel.");
             }
 
             students.add(student);
@@ -69,22 +68,25 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void cancelReservation(String studentUsername, Long practiceId) {
-        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new ResourceNotFoundException(
-                "Practice with id [" +  practiceId + "] not found."
+        Practice practice = practiceRepo.findById(practiceId).orElseThrow(() -> new UserException(
+                "Praxe s id [" +  practiceId + "] nenalezena."
         ));
-        User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new ResourceNotFoundException(
-                "Student with username [" + studentUsername + "] not found."
+        User student = userRepo.findByUsername(studentUsername).orElseThrow(() -> new UserException(
+                "Student [" + studentUsername + "] nenalezen."
         ));
 
         List<User> students = practice.getStudents();
 
         if (students == null || !students.contains(student)) {
-            throw new ReservationException("Student [" + studentUsername + "] has not made a reservation to this practice.");
-        } else {
-            students.remove(student);
-            practice.setStudents(students);
+            throw new UserException("Na tuto praxi nejste přihlášen/á.");
+        }
+        if (LocalDate.now().plusDays(7).isAfter(practice.getDate())) {
+            throw new UserException("Čas do kdy je možné se odhlásit z této praxe již vypršel.");
         }
 
+        students.remove(student);
+        practice.setStudents(students);
+        
         practiceRepo.save(practice);
     }
 }

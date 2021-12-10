@@ -3,9 +3,10 @@ package cz.osu.teacherpractice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.exception.WrongLoginAttributesException;
+import cz.osu.teacherpractice.exception.CustomAuthenticationException;
 import cz.osu.teacherpractice.payload.request.UserLoginRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,13 +45,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             UserLoginRequest login = new ObjectMapper().readValue(request.getInputStream(), UserLoginRequest.class);
             String username = login.getUsername();
             String password = login.getPassword();
-            if (username == null || password == null) {
-                throw new WrongLoginAttributesException("Username or password is missing or is equal to null.");
+            if (username == null) {
+                throw new AuthenticationCredentialsNotFoundException("Uživatelské jméno nevyplněno.");
+            }
+            if (password == null) {
+                throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno.");
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
-            throw new WrongLoginAttributesException("Username or password is misspelled.");
+            throw new AuthenticationCredentialsNotFoundException("Překlep v atributech username nebo password.");
         }
     }
 
@@ -84,12 +88,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
-        if (failed instanceof WrongLoginAttributesException) {
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        if (failed instanceof AuthenticationCredentialsNotFoundException) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", failed.getMessage()));
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", "Neplatné přihlašovací údaje."));
         }
-        response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", failed.getMessage()));
     }
 }

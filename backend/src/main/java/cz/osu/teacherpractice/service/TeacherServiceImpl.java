@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.payload.request.NewPracticeRequest;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.Subject;
@@ -20,12 +20,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void addPractice(String teacherUsername, NewPracticeRequest practiceRequest) {
-        User teacher = userRepo.findByUsername(teacherUsername).orElseThrow(() -> new ResourceNotFoundException(
-                "Teacher with username [" + teacherUsername + "] not found."
+        User teacher = userRepo.findByUsername(teacherUsername).orElseThrow(() -> new UserException(
+                "Učitel [" + teacherUsername + "] nenalezen."
         ));
 
-        Subject subject = subjectRepo.findById(practiceRequest.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException(
-                "Subject with id [" + practiceRequest.getSubjectId() + "] not found."
+        Subject subject = subjectRepo.findById(practiceRequest.getSubjectId()).orElseThrow(() -> new UserException(
+                "Předmět s id [" + practiceRequest.getSubjectId() + "] nenalezen."
         ));
 
         Practice practice = new Practice();

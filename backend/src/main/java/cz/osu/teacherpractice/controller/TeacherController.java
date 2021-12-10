@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
+import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.payload.request.NewPracticeRequest;
 import cz.osu.teacherpractice.service.TeacherServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class TeacherController {
     public void addPractice(Principal principal, @Valid @RequestBody NewPracticeRequest practiceRequest) {
         try {
             teacherService.addPractice(principal.getName(), practiceRequest);
-        } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UserException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }

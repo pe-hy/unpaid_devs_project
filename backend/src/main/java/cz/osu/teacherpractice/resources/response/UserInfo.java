@@ -1,6 +1,5 @@
-package cz.osu.teacherpractice.payload.response;
+package cz.osu.teacherpractice.resources.response;
 
-import cz.osu.teacherpractice.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

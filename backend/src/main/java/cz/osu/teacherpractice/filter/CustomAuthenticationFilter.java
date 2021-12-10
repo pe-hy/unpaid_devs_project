@@ -3,8 +3,8 @@ package cz.osu.teacherpractice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.payload.request.UserLoginRequest;
-import lombok.extern.slf4j.Slf4j;
+import cz.osu.teacherpractice.resources.request.UserLoginRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,8 +27,10 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private static final int EXPIRATION_DAYS = 14;
+    private static final int EXPIRATION_SECONDS = EXPIRATION_DAYS * 24 * 60 * 60;
 
     private final AuthenticationManager authenticationManager;
 
@@ -38,35 +40,31 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = null;
-        String password = null;
-
         try {
             UserLoginRequest login = new ObjectMapper().readValue(request.getInputStream(), UserLoginRequest.class);
-            username = login.getUsername();
-            password = login.getPassword();
-            log.info("User \"{}\" with password \"{}\" is trying to log in", username, password);
+            String username = login.getUsername();
+            String password = login.getPassword();
+            if (username == null) {
+                throw new AuthenticationCredentialsNotFoundException("Uživatelské jméno nevyplněno.");
+            }
+            if (password == null) {
+                throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno.");
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            throw new AuthenticationCredentialsNotFoundException("Překlep v atributech username nebo password.");
         }
-
-        if (username == null || password == null) {
-            throw new AuthenticationCredentialsNotFoundException("Username or password equals null");
-        }
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        return authenticationManager.authenticate(authenticationToken);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         User user = (User) authResult.getPrincipal();
         String role = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0);
-        log.info("User \"{}\" with role \"{}\" successfully logged in", user.getUsername(), role);
 
         // secret key should be encrypted and stored on a more secure place
         Algorithm algorithm = Algorithm.HMAC256("secret-key");
-        Date expirationDate = Date.from(LocalDate.now().plusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date expirationDate = Date.from(LocalDate.now().plusDays(EXPIRATION_DAYS).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         // would be possible to create refresh token as well
         String access_token = JWT.create().withSubject(user.getUsername())
@@ -77,7 +75,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         // return jwt token as cookie
         Cookie cookie = new Cookie("access_token", access_token);
-        cookie.setMaxAge(14 * 24 * 60 * 60);
+        cookie.setMaxAge(EXPIRATION_SECONDS);
         cookie.setHttpOnly(true);
         //cookie.setSecure(true); // https
         response.addCookie(cookie);
@@ -85,5 +83,18 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         // provide role for client as json
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), Map.of("role", role));
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        if (failed instanceof AuthenticationCredentialsNotFoundException) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", failed.getMessage()));
+        } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", "Neplatné přihlašovací údaje."));
+        }
     }
 }

@@ -1,8 +1,8 @@
 package cz.osu.teacherpractice.controller;
 
 import cz.osu.teacherpractice.exception.UserException;
-import cz.osu.teacherpractice.payload.response.PracticeInfo;
-import cz.osu.teacherpractice.payload.response.UserInfo;
+import cz.osu.teacherpractice.resources.response.PracticeInfo;
+import cz.osu.teacherpractice.resources.response.UserInfo;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public class StudentController {
         return practicesInfo;
     }
 
-    @PutMapping("/practice/{id}/make-reservation")
+    @PutMapping("/practices/{id}/make-reservation")
     public void makeReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
             studentService.makeReservation(principal.getName(), practiceId);
@@ -53,7 +53,7 @@ public class StudentController {
         }
     }
 
-    @PutMapping("/practice/{id}/cancel-reservation")
+    @PutMapping("/practices/{id}/cancel-reservation")
     public void cancelReservation(Principal principal, @PathVariable("id") Long practiceId) {
         try {
             studentService.cancelReservation(principal.getName(), practiceId);

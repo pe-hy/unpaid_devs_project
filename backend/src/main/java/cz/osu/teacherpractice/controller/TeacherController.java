@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.controller;
 
 import cz.osu.teacherpractice.exception.UserException;
-import cz.osu.teacherpractice.payload.request.NewPracticeRequest;
+import cz.osu.teacherpractice.resources.request.NewPracticeRequest;
 import cz.osu.teacherpractice.service.TeacherServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

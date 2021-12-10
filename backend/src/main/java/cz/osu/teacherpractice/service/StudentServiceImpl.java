@@ -15,6 +15,8 @@ import java.util.List;
 @Service @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
+    private static final int RESERVATION_DAYS_LEFT = 7;
+
     private final UserRepo userRepo;
     private final PracticeRepo practiceRepo;
 
@@ -53,10 +55,11 @@ public class StudentServiceImpl implements StudentService {
                 throw new UserException("Na tuto praxi jste již přihlášen/á.");
             }
             if (students.size() >= practice.getCapacity()) {
-                throw new UserException("Na tuto praxi se již více studentů přihlásit nemůže.");
+                throw new UserException("Na tuto praxi se již více studentů přihlásit nemůže. V" +
+                        "případě potřeby kontaktujte, prosím, vyučujícího.");
             }
-            if (LocalDate.now().plusDays(7).isAfter(practice.getDate())) {
-                throw new UserException("Čas do kdy je možné se přihlásit na tuto praxi již vypršel.");
+            if (LocalDate.now().plusDays(RESERVATION_DAYS_LEFT).isAfter(practice.getDate())) {
+                throw new UserException("Na praxi je možné se přihlásit nejpozději " + RESERVATION_DAYS_LEFT + " dní předem.");
             }
 
             students.add(student);
@@ -80,8 +83,8 @@ public class StudentServiceImpl implements StudentService {
         if (students == null || !students.contains(student)) {
             throw new UserException("Na tuto praxi nejste přihlášen/á.");
         }
-        if (LocalDate.now().plusDays(7).isAfter(practice.getDate())) {
-            throw new UserException("Čas do kdy je možné se odhlásit z této praxe již vypršel.");
+        if (LocalDate.now().plusDays(RESERVATION_DAYS_LEFT).isAfter(practice.getDate())) {
+            throw new UserException("Z praxe je možné se odhlásit nejpozději " + RESERVATION_DAYS_LEFT + " dní předem.");
         }
 
         students.remove(student);

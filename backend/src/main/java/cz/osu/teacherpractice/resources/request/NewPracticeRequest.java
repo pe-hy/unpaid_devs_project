@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,6 +18,7 @@ public class NewPracticeRequest {
     @NotNull(message = "Pole pro konec praxe musí být vyplněné.")
     private LocalTime end;
 
+    @Size(max = 250, message = "Maximální délka poznámky je 250 znaků.")
     private String note;
 
     @NotNull(message = "Pole pro kapacitu musí být vyplněné.")

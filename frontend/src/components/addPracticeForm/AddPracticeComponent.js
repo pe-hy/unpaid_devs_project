@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import {
   Col,
   Row,
@@ -30,6 +31,7 @@ const TabsForm = () => {
   };
 
   const getSubjects = async () => {
+    if (checkRole()) return;
     const response = await axios({
       url: "http://localhost:8080/user/subjects",
       withCredentials: true,
@@ -60,6 +62,7 @@ const TabsForm = () => {
   };
 
   const addPraxe = async (event) => {
+    if (checkRole()) return;
     event.preventDefault();
     checkFormData(formData);
     const response = await axios({
@@ -84,6 +87,10 @@ const TabsForm = () => {
     document.getElementById("Poznamka").value = "";
   };
 
+  const checkRole = () => {
+    return localStorage.getItem("role") !== "ROLE_TEACHER";
+  };
+  if (checkRole()) return <Navigate to="/login" />;
   return (
     <Form onSubmit={addPraxe} id="Form">
       <Row>

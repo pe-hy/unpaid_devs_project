@@ -7,6 +7,7 @@ import { BsInfoCircleFill } from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
+import { Navigate } from "react-router-dom";
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
@@ -15,6 +16,7 @@ export const PracticeListComponent = () => {
   const unReservation = "Odrezervovat";
 
   const getPraxe = async () => {
+    if (checkRole()) return;
     const response = await axios({
       url: "http://localhost:8080/student/practices",
       withCredentials: true,
@@ -34,6 +36,7 @@ export const PracticeListComponent = () => {
   }, []);
 
   const registerRequest = async (id) => {
+    if (checkRole()) return;
     const response = await axios({
       url: `student/practices/${id}/make-reservation`,
       withCredentials: true,
@@ -50,6 +53,7 @@ export const PracticeListComponent = () => {
   };
 
   const unRegisterRequest = async (id) => {
+    if (checkRole()) return;
     const response = await axios({
       url: `student/practices/${id}/cancel-reservation`,
       withCredentials: true,
@@ -64,7 +68,9 @@ export const PracticeListComponent = () => {
     }
     await getPraxe();
   };
-
+  const checkRole = () => {
+    return localStorage.getItem("role") !== "ROLE_STUDENT";
+  };
   const getButton = (isReserved, id) => {
     if (!isReserved) {
       return (
@@ -82,7 +88,7 @@ export const PracticeListComponent = () => {
       );
     }
   };
-
+  if (checkRole()) return <Navigate to="/login" />;
   return (
     <Container fluid>
       <Accordion>

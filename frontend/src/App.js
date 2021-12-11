@@ -1,7 +1,7 @@
 import NavbarComponent from "./components/navbar/NavbarComponent";
 import StudentHomeView from "./views/studentHome/StudentHomeView";
 import TeacherHomeView from "./views/teacherHome/TeacherHomeView";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginView from "./views/login/LoginView";
 
 function App() {
@@ -11,26 +11,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginView />} />
-          <Route
-            path="studentHome"
-            element={
-              localStorage.getItem("role") === "ROLE_STUDENT" ? (
-                <StudentHomeView />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="teacherHome"
-            element={
-              localStorage.getItem("role") === "ROLE_TEACHER" ? (
-                <TeacherHomeView />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="studentHome" element={<StudentHomeView />} />
+          <Route path="teacherHome" element={<TeacherHomeView />} />
         </Routes>
       </BrowserRouter>
     </div>

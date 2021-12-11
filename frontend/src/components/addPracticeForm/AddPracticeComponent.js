@@ -235,6 +235,7 @@ const TabsForm = () => {
                   name="capacity"
                   type="number"
                   min="1"
+                  max="10"
                   defaultValue="1"
                   required="required"
                   onChange={handleChange}

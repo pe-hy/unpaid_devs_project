@@ -6,6 +6,7 @@ import LoginInformationComponent from "../loginInformation/LoginInformationCompo
 let iconStyles = { fontSize: "1.5em", color: "white"};
 let textStyles = {color: "white"}
 
+
 function showUserPhoto(){
   return (
           <span>
@@ -55,19 +56,36 @@ class LoginControl extends React.Component {
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.handleRegisterClick = this.handleRegisterClick.bind(this);
     this.state = { isLoggedIn: false };
-    this.state = { isRegistered: false };
+    this.state = { isRegistered: true };
+  }
+
+  setCorrectButton  = () => {
+    if(localStorage.getItem("role") == null) {
+      this.setState({isLoggedIn: false});
+    }else{
+      this.setState({isLoggedIn: true})
+    }
+    this.setState({isRegistered: true});
   }
 
   handleLoginClick() {
-    this.setState({ isLoggedIn: true });
+      window.location.href = '/login';
   }
 
   handleLogoutClick() {
-    this.setState({ isLoggedIn: false });
-  }
+      localStorage.clear();
+      window.location.href = '/';
+    }
+
   handleRegisterClick() {
     this.setState({ isRegistered: true });
+    //window.location.href = '/registration'; ještě není implementováno
   }
+
+  componentDidMount() {
+    window.addEventListener('load', this.setCorrectButton.bind(this));
+  }
+
 
   render() {
     const isLoggedIn = this.state.isLoggedIn;

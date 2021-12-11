@@ -9,14 +9,18 @@ import LoginControlComponent from "../logincontrol/LoginControlComponent";
 
 let iconStyles = {fontSize: "2.5em", };
 
+function refreshPage() {
+  window.location.reload();
+}
+
 class NavbarComponent extends React.Component {
   render() {
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" variant="light">
           <Container fluid>
-            <Navbar.Brand href="#home">
-              <img
+            <Navbar.Brand href="#">
+              <img onClick={refreshPage}
                 width="90px"
                 height="90px"
                 className="img-responsive"
@@ -28,7 +32,7 @@ class NavbarComponent extends React.Component {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link className="ms-md-5">
-                  <span id="prehled">
+                  <span onClick={refreshPage} id="prehled">
                     <BsFillHouseFill style={iconStyles} />
                     <p className={"p-margin"}>Home</p>
                   </span>

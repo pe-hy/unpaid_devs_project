@@ -66,9 +66,11 @@ export const PracticeListComponent = () => {
     }
     await getPraxe();
   };
+
   const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_STUDENT";
   };
+
   const getButton = (isReserved, id) => {
     if (!isReserved) {
       return (

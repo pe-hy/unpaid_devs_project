@@ -36,7 +36,6 @@ export const PracticeListComponent = () => {
   }, []);
 
   const registerRequest = async (id) => {
-    if (checkRole()) return;
     const response = await axios({
       url: `student/practices/${id}/make-reservation`,
       withCredentials: true,
@@ -53,7 +52,6 @@ export const PracticeListComponent = () => {
   };
 
   const unRegisterRequest = async (id) => {
-    if (checkRole()) return;
     const response = await axios({
       url: `student/practices/${id}/cancel-reservation`,
       withCredentials: true,
@@ -183,7 +181,12 @@ export const PracticeListComponent = () => {
                 </div>
               </div>
 
-              <Accordion.Body>Informace o předmětu...</Accordion.Body>
+              <Accordion.Body>
+                <div>
+                  <p>Informace o předmětu...</p>
+                  Poznámka: {item.note}
+                </div>
+              </Accordion.Body>
             </Accordion.Item>
           ))}
       </Accordion>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import {
   Col,
   Row,
@@ -9,6 +10,7 @@ import {
   ButtonGroup,
   Button,
   ButtonToolbar,
+  Alert,
 } from "react-bootstrap";
 
 import "./TabsStyles.css";
@@ -24,12 +26,17 @@ export function getMinDate(days){
 const TabsForm = () => {
   const [subjects, setSubjects] = useState([]);
   const [formData, setFormData] = useState({});
+  const [showDangerAlert, setshowDangerAlert] = useState(false);
+  const [showSuccessAlert, setshowSuccessAlert] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e) => {
+    setshowSuccessAlert(false);
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const getSubjects = async () => {
+    if (checkRole()) return;
     const response = await axios({
       url: "http://localhost:8080/user/subjects",
       withCredentials: true,
@@ -48,6 +55,7 @@ const TabsForm = () => {
   }, []);
 
   const checkFormData = () => {
+    console.log(formData);
     if (!formData["subjectId"]) {
       formData["subjectId"] = subjects.at(0).id;
     } else {
@@ -57,21 +65,42 @@ const TabsForm = () => {
         }
       });
     }
+    if (!formData["date"]) {
+      formData["date"] = new Date(new Date().setDate(new Date().getDate() + 7))
+        .toISOString()
+        .substr(0, 10);
+    }
+    if (!formData["capacity"]) {
+      formData["capacity"] = 1;
+    }
+    let start = formData["start"];
+    let end = formData["end"];
+    formData["time"] = { start: start, end: end };
   };
 
   const addPraxe = async (event) => {
     event.preventDefault();
     checkFormData(formData);
+    console.log(formData);
     const response = await axios({
-      url: `/teacher/practice`,
+      url: `http://localhost:8080/teacher/practice`,
       withCredentials: true,
       method: "POST",
       data: formData,
     }).catch((err) => {
-      alert(err.response.data.message);
-      console.log(err.response.data.message);
+      let error = err.response.data[0];
+      setErrorMsg(
+        typeof error !== "undefined"
+          ? error["message"]
+          : err.response.data["message"]
+      );
+      setshowSuccessAlert(false);
+      setshowDangerAlert(true);
+      console.log(err.response.data);
     });
     if (response) {
+      setshowDangerAlert(false);
+      setshowSuccessAlert(true);
       clearForm();
     }
   };
@@ -84,6 +113,11 @@ const TabsForm = () => {
     document.getElementById("Poznamka").value = "";
   };
 
+  const checkRole = () => {
+    return localStorage.getItem("role") !== "ROLE_TEACHER";
+  };
+
+  if (checkRole()) return <Navigate to="/login" />;
   return (
     <Form onSubmit={addPraxe} id="Form">
       <Row>
@@ -100,9 +134,17 @@ const TabsForm = () => {
                 <Form.Control
                   name="date"
                   type="date"
-                  min={new Date(new Date().setDate(new Date().getDate()+7)).toISOString().substr(0,10)}
-                  max={new Date(new Date().setDate(new Date().getDate()+365)).toISOString().substr(0,10)}
-                  defaultValue={new Date(new Date().setDate(new Date().getDate()+7)).toISOString().substr(0,10)}
+                  min={new Date(new Date().setDate(new Date().getDate() + 7))
+                    .toISOString()
+                    .substr(0, 10)}
+                  max={new Date(new Date().setDate(new Date().getDate() + 365))
+                    .toISOString()
+                    .substr(0, 10)}
+                  defaultValue={new Date(
+                    new Date().setDate(new Date().getDate() + 7)
+                  )
+                    .toISOString()
+                    .substr(0, 10)}
                   required="required"
                   onChange={handleChange}
                 />
@@ -235,6 +277,20 @@ const TabsForm = () => {
         </Col>
         <Col sm={2}> </Col>
       </Row>
+      <Alert
+        show={showDangerAlert}
+        variant="danger"
+        className="w-25 mt-3 ml-3 "
+      >
+        {errorMsg}
+      </Alert>
+      <Alert
+        show={showSuccessAlert}
+        variant="success"
+        className="w-25 mt-3 ml-3 "
+      >
+        Vytvoření proběhlo úspěšně
+      </Alert>
     </Form>
   );
 };

@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.payload.request;
+package cz.osu.teacherpractice.resources.request;
 
 import lombok.Data;
 

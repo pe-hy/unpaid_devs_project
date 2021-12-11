@@ -7,6 +7,7 @@ import { BsInfoCircleFill } from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
+import { Navigate } from "react-router-dom";
 
 export const PracticeListComponent = () => {
   const [practices, setPraxe] = useState([]);
@@ -15,6 +16,7 @@ export const PracticeListComponent = () => {
   const unReservation = "Odrezervovat";
 
   const getPraxe = async () => {
+    if (checkRole()) return;
     const response = await axios({
       url: "http://localhost:8080/student/practices",
       withCredentials: true,
@@ -35,7 +37,7 @@ export const PracticeListComponent = () => {
 
   const registerRequest = async (id) => {
     const response = await axios({
-      url: `student/practice/${id}/make-reservation`,
+      url: `student/practices/${id}/make-reservation`,
       withCredentials: true,
       method: "PUT",
     }).catch((err) => {
@@ -51,7 +53,7 @@ export const PracticeListComponent = () => {
 
   const unRegisterRequest = async (id) => {
     const response = await axios({
-      url: `student/practice/${id}/cancel-reservation`,
+      url: `student/practices/${id}/cancel-reservation`,
       withCredentials: true,
       method: "PUT",
     }).catch((err) => {
@@ -64,7 +66,9 @@ export const PracticeListComponent = () => {
     }
     await getPraxe();
   };
-
+  const checkRole = () => {
+    return localStorage.getItem("role") !== "ROLE_STUDENT";
+  };
   const getButton = (isReserved, id) => {
     if (!isReserved) {
       return (
@@ -82,50 +86,49 @@ export const PracticeListComponent = () => {
       );
     }
   };
-
+  if (checkRole()) return <Navigate to="/login" />;
   return (
     <Container fluid>
-      <div style={{ width: "85%" }}>
-        <div className="title-container text-info-practice">
-          <Row style={{ width: "100%" }}>
-            <Col xs="auto" className="text-left">
-              <b>Předmět</b>
-            </Col>
-            <Col className="text-center">
-              <b>Jméno</b>
-            </Col>
-            <Col className="text-center">
-              <b>Škola</b>
-            </Col>
-            <Col className="date">
-              <b>Datum</b>
-            </Col>
-            <Col className="text-left">
-              <b>Čas</b>
-            </Col>
-            <Col className="text-left">
-              <b>E-mail</b>
-            </Col>
-            <Col className="text-center">
-              <b>Kapacita</b>
-              <OverlayTrigger
-                overlay={
-                  <Tooltip>
-                    Počet aktuálně zapsaných studentů / maximální počet studentů
-                    na praxi.
-                  </Tooltip>
-                }
-              >
-                <span>
-                  <BsInfoCircleFill className={"info-tooltip"} />
-                </span>
-              </OverlayTrigger>
-            </Col>
-          </Row>
-        </div>
-      </div>
-
       <Accordion>
+        <div style={{ width: "85%" }}>
+          <div className="title-container text-info-practice">
+            <Row style={{ width: "100%" }}>
+              <Col className="text-center">
+                <b>Předmět</b>
+              </Col>
+              <Col className="text-center">
+                <b>Učitel</b>
+              </Col>
+              <Col className="text-center">
+                <b>Škola</b>
+              </Col>
+              <Col className="text-center">
+                <b>Datum</b>
+              </Col>
+              <Col className="text-center">
+                <b>Čas</b>
+              </Col>
+              <Col className="text-center">
+                <b>E-mail</b>
+              </Col>
+              <Col className="text-center">
+                <b>Kapacita</b>
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      Počet aktuálně zapsaných studentů / maximální počet
+                      studentů na praxi.
+                    </Tooltip>
+                  }
+                >
+                  <span>
+                    <BsInfoCircleFill className={"info-tooltip"} />
+                  </span>
+                </OverlayTrigger>
+              </Col>
+            </Row>
+          </div>
+        </div>
         {!noPractices &&
           practices.map((item, index) => (
             <Accordion.Item
@@ -178,7 +181,12 @@ export const PracticeListComponent = () => {
                 </div>
               </div>
 
-              <Accordion.Body>Informace o předmětu...</Accordion.Body>
+              <Accordion.Body>
+                <div>
+                  <p>Informace o předmětu...</p>
+                  Poznámka: {item.note}
+                </div>
+              </Accordion.Body>
             </Accordion.Item>
           ))}
       </Accordion>

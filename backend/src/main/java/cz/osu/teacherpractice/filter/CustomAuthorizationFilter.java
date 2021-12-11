@@ -5,15 +5,13 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,12 +26,18 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Slf4j @RequiredArgsConstructor
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
+    private final Algorithm jwtAlgorithm;
+
+    public CustomAuthorizationFilter(UserDetailsService userDetailsService, Algorithm jwtAlgorithm) {
+        this.userDetailsService = userDetailsService;
+        this.jwtAlgorithm = jwtAlgorithm;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -41,29 +45,22 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        log.info("Authorization ...");
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            log.info("No cookies are present");
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        Optional<Cookie> access_token = Arrays.stream(cookies).filter(c -> c.getName().equals("access_token")).findFirst();
-        if (access_token.isEmpty()) {
-            log.info("Access token is not present among cookies");
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         try {
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies == null) {
+                throw new AuthenticationCredentialsNotFoundException("Je nutné se přihlásit.");
+            }
+
+            Optional<Cookie> access_token = Arrays.stream(cookies).filter(c -> c.getName().equals("access_token")).findFirst();
+
+            if (access_token.isEmpty()) {
+                throw new AuthenticationCredentialsNotFoundException("Je nutné se přihlásit.");
+            }
+
             String token = access_token.get().getValue();
 
-            // repeating code (see CustomAuthenticationFilter)
-            Algorithm algorithm = Algorithm.HMAC256("secret-key");
-            JWTVerifier verifier = JWT.require(algorithm).build();
+            JWTVerifier verifier = JWT.require(jwtAlgorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
             String username = decodedJWT.getSubject();
@@ -77,11 +74,14 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
 
+        } catch (AuthenticationCredentialsNotFoundException | UsernameNotFoundException e) {
+            response.setStatus(UNAUTHORIZED.value());
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", e.getMessage()));
         } catch (Exception e) {
-            log.error(e.getMessage());
             response.setStatus(FORBIDDEN.value());
             response.setContentType(APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("error", e.getMessage()));
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", e.getMessage()));
         }
     }
 }

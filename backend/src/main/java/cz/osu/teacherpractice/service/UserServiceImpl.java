@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.exception.ResourceNotFoundException;
-import cz.osu.teacherpractice.exception.UserAlreadyExists;
+import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -25,21 +25,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserAlreadyExists("User with username [" + user.getUsername() + "] already exists.");
+            throw new UserException("Uživatel [" + user.getUsername() + "] již existuje.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
     @Override
-    public User getUser(Long id) {
-        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException(
-                "User with id [" + id + "] not found."
+    public User getUserById(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new UserException(
+                "Uživatel s id [" + id + "] nebyl nalezen."
         ));
     }
 
     @Override
-    public List<User> getUsers() {
+    public User getUserByUsername(String username) {
+        return userRepo.findByUsername(username).orElseThrow(() -> new UserException(
+                "Uživatel [" + username + "] nebyl nalezen."
+        ));
+    }
+
+    @Override
+    public Role getUserRole(String username) {
+        return getUserByUsername(username).getRole();
+    }
+
+    @Override
+    public List<User> getAllUsers() {
         return userRepo.findAll();
     }
 

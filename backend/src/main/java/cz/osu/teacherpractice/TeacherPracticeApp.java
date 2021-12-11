@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication @RequiredArgsConstructor @Lazy
 public class TeacherPracticeApp {
@@ -44,11 +42,11 @@ public class TeacherPracticeApp {
             School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
-            User student = userService.createUser(new User(null, "student", "student", "Adam", "Kovář", null, Role.STUDENT, null, null, null));
-            User student2 = userService.createUser(new User(null, "student2", "student2", "Jan", "Nowak", null, Role.STUDENT, null, null, null));
-            User teacher = userService.createUser(new User(null, "teacher", "teacher", "Karel", "Svoboda", null, Role.TEACHER, school, null, null));
-            userService.createUser(new User(null, "coordinator", "coordinator", "Milan", "Novák", null, Role.COORDINATOR, null, null, null));
-            userService.createUser(new User(null, "admin", "admin", "Petra", "Konečná", null, Role.ADMIN, null, null, null));
+            User student = userService.createUser(new User(null, "student@student.cz", "student", "Adam", "Kovář", null, Role.STUDENT, null, null, null));
+            User student2 = userService.createUser(new User(null, "student2@student.cz", "student2", "Jan", "Nowak", null, Role.STUDENT, null, null, null));
+            User teacher = userService.createUser(new User(null, "teacher@teacher.cz", "teacher", "Karel", "Svoboda", null, Role.TEACHER, school, null, null));
+            userService.createUser(new User(null, "coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, Role.COORDINATOR, null, null, null));
+            userService.createUser(new User(null, "admin@admin.cz", "admin", "Petra", "Konečná", null, Role.ADMIN, null, null, null));
 
             // adding default subjects
             Subject subjectA = subjectRepo.save(new Subject(null, "Španělština", null));

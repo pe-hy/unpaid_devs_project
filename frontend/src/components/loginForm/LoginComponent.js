@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/AuthService";
 import { Navigate } from "react-router-dom";
+import validator from "validator";
 import {
   BsEnvelopeFill,
   BsLockFill,
@@ -22,11 +23,20 @@ const required = (value) => {
     );
   }
 };
+const invalidEmail = (value) => {
+  if (!validator.isEmail(value)) {
+    return (
+      <div className="alert alert-danger my-alert" role="alert">
+        <BsExclamationTriangleFill /> Chybná e-mailová adresa!
+      </div>
+    );
+  }
+};
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.state = {
       username: "",
@@ -37,7 +47,8 @@ export default class Login extends Component {
       currentRole: null,
     };
   }
-  onChangeUsername(e) {
+
+  onChangeEmail(e) {
     this.setState({
       username: e.target.value,
     });
@@ -57,8 +68,8 @@ export default class Login extends Component {
       AuthService.login(this.state.username, this.state.password).then(
         (res) => {
           this.setState({
-            redirectToLogin: true,
             currentRole: localStorage.getItem("role"),
+            redirectToLogin: true,
           });
         },
         (error) => {
@@ -110,8 +121,8 @@ export default class Login extends Component {
                   name="username"
                   placeholder="example@osu.cz"
                   value={this.state.username}
-                  onChange={this.onChangeUsername}
-                  validations={[required]}
+                  onChange={this.onChangeEmail}
+                  validations={[required, invalidEmail]}
                 />
               </div>
             </div>
@@ -134,6 +145,7 @@ export default class Login extends Component {
                 />
               </div>
             </div>
+
             <a href = "localhost:8080/forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
             <div className="form-group button-login pt-5">
               {this.state.message && (

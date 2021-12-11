@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.payload.response.SchoolInfo;
-import cz.osu.teacherpractice.payload.response.SubjectInfo;
+import cz.osu.teacherpractice.resources.response.SchoolInfo;
+import cz.osu.teacherpractice.resources.response.SubjectInfo;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.service.UserServiceImpl;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController @RequiredArgsConstructor
@@ -23,6 +25,11 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser() {
         return "Registration not implemented yet.";
+    }
+
+    @GetMapping("/user/roles")
+    public Map<String, String> getUserRole(Principal principal) {
+        return Map.of("role", userService.getUserRole(principal.getName()).getCode());
     }
 
     @GetMapping("/user/subjects")

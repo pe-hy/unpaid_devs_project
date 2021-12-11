@@ -3,19 +3,22 @@ import StudentHomeView from "./views/studentHome/StudentHomeView";
 import TeacherHomeView from "./views/teacherHome/TeacherHomeView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginView from "./views/login/LoginView";
+import { UserContextProvider } from "./userContext";
 
 function App() {
   return (
     <div>
-      <NavbarComponent />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginView />} />
-          <Route path="/login" element={<LoginView />} />
-          <Route path="studentHome" element={<StudentHomeView />} />
-          <Route path="teacherHome" element={<TeacherHomeView />} />
-        </Routes>
-      </BrowserRouter>
+      <UserContextProvider>
+        <NavbarComponent />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginView />} />
+            <Route path="/login" element={<LoginView />} />
+            <Route path="studentHome" element={<StudentHomeView />} />
+            <Route path="teacherHome" element={<TeacherHomeView />} />
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
     </div>
   );
 }

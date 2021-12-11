@@ -12,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+
+import static cz.osu.teacherpractice.config.AppConfig.CREATE_PRACTICE_DAYS_LEFT;
 
 @Service @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
-
-    private static final int ADD_PRACTICE_DAYS_LEFT = 7;
 
     private final UserRepo userRepo;
     private final SubjectRepo subjectRepo;
@@ -32,11 +33,14 @@ public class TeacherServiceImpl implements TeacherService {
                 "Předmět s id [" + practiceRequest.getSubjectId() + "] nenalezen."
         ));
 
-        if (LocalDate.now().plusDays(ADD_PRACTICE_DAYS_LEFT).isAfter(practiceRequest.getDate())) {
-            throw new UserException("Praxi je možné přidat nejpozději " + ADD_PRACTICE_DAYS_LEFT + " dní předem.");
+        if (LocalDate.now().plusDays(CREATE_PRACTICE_DAYS_LEFT).isAfter(practiceRequest.getDate())) {
+            throw new UserException("Praxi je možné přidat nejpozději " + CREATE_PRACTICE_DAYS_LEFT + " dní předem.");
         }
 
-        if (practiceRequest.getStart().toSecondOfDay() >= practiceRequest.getEnd().toSecondOfDay()) {
+        LocalTime start = practiceRequest.getTime().getStart();
+        LocalTime end = practiceRequest.getTime().getEnd();
+
+        if (start.toSecondOfDay() >= end.toSecondOfDay()) {
             throw new UserException("Čas začátku praxe musí předcházet času konce praxe.");
         }
 
@@ -50,8 +54,8 @@ public class TeacherServiceImpl implements TeacherService {
 
         Practice practice = new Practice();
         practice.setDate(practiceRequest.getDate());
-        practice.setStart(practiceRequest.getStart());
-        practice.setEnd(practiceRequest.getEnd());
+        practice.setStart(start);
+        practice.setEnd(end);
         practice.setNote(practiceRequest.getNote());
         practice.setCapacity(practiceRequest.getCapacity());
         practice.setSubject(subject);

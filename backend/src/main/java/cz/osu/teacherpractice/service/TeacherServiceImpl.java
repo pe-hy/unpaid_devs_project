@@ -11,6 +11,7 @@ import cz.osu.teacherpractice.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -48,8 +49,12 @@ public class TeacherServiceImpl implements TeacherService {
             throw new UserException("Kapacita nesmí být menší než 1.");
         }
 
-        if (practiceRequest.getCapacity() >= 10) {
+        if (practiceRequest.getCapacity() >= 11) {
             throw new UserException("Kapacita musí být menší nebo rovna 10.");
+        }
+
+        if ((Duration.between(start, end).toMinutes()) <= 21) {
+            throw new UserException("Praxe musí trvat alespoň 20 minut.");
         }
 
         Practice practice = new Practice();

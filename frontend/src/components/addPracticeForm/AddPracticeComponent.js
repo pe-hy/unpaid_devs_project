@@ -76,8 +76,6 @@ const TabsForm = () => {
     let start = formData["start"];
     let end = formData["end"];
     formData["time"] = { start: start, end: end };
-    delete formData["start"];
-    delete formData["end"];
   };
 
   const addPraxe = async (event) => {
@@ -90,7 +88,12 @@ const TabsForm = () => {
       method: "POST",
       data: formData,
     }).catch((err) => {
-      setErrorMsg(err.response.data[0]["message"]);
+      let error = err.response.data[0];
+      setErrorMsg(
+        typeof error !== "undefined"
+          ? error["message"]
+          : err.response.data["message"]
+      );
       setshowSuccessAlert(false);
       setshowDangerAlert(true);
       console.log(err.response.data);

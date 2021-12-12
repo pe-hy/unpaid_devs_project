@@ -16,6 +16,13 @@ import {
 import "./TabsStyles.css";
 
 import { axios } from "../../axios";
+import {
+  BsInfoCircleFill,
+  BsFillPencilFill,
+  BsFillTrashFill,
+  BsCheckLg,
+  BsExclamationTriangleFill
+} from "react-icons/bs";
 
 export function getMinDate(days){
   let date = new Date();
@@ -126,7 +133,7 @@ const TabsForm = () => {
   return (
     <Form onSubmit={addPraxe} id="Form">
       <Row>
-        <Col sm={4}>
+        <Col sm={5} className={"cols"}>
           <Form.Group
             as={Row}
             className="m-3"
@@ -137,6 +144,7 @@ const TabsForm = () => {
             <Col sm={8}>
               <InputGroup>
                 <Form.Control
+                    className={"custom-calendar"}
                   name="date"
                   type="date"
                   min={new Date(new Date().setDate(new Date().getDate() + 7))
@@ -223,17 +231,19 @@ const TabsForm = () => {
             controlId="formHorizontalSubject"
             role="form"
           >
-            <OverlayTrigger
-              key={"top"}
-              placement={"top"}
-              overlay={
-                <Tooltip id={"tooltip-top"}>
-                  Maximální počet studentů na praxi
-                </Tooltip>
-              }
-            >
-              <Col sm={3}>Kapacita</Col>
-            </OverlayTrigger>
+            <Col sm={3}>
+              <OverlayTrigger
+                overlay={
+                  <Tooltip>
+                    Maximální počet studentů na praxi.
+                  </Tooltip>
+                }
+              >
+                <span>
+                  <BsInfoCircleFill className={"info-tooltip"} />
+                </span>
+              </OverlayTrigger>
+              Kapacita</Col>
             <Col sm={8}>
               <InputGroup>
                 <Form.Control
@@ -252,15 +262,30 @@ const TabsForm = () => {
           <Form.Group as={Row} className="m-3">
             <Col sm={3}></Col>
             <Col sm={8}>
-              <ButtonGroup className="d-flex">
-                <Button type="submit">Přidat</Button>
+              <ButtonGroup className="d-flex button-padding">
+                <Button className={"button-add"}>Přidat</Button>
               </ButtonGroup>
             </Col>
+            <Alert
+                show={showDangerAlert}
+                variant="danger"
+                className="alert-practice-error"
+            >
+              <BsExclamationTriangleFill className={"alert-icon-error"}/>    {errorMsg}
+            </Alert>
+            <Alert
+                show={showSuccessAlert}
+                variant="success"
+                className="alert-practice-success"
+            >
+              <BsCheckLg className={"alert-icon-success"}/>    Vytvoření proběhlo úspěšně
+            </Alert>
           </Form.Group>
+
         </Col>
-        <Col sm={4}>
-          <Form.Group className="m-3" role="form">
-            <p>{noteLen}/250</p>
+        <Col sm={5} className={"p-padding"}>
+          <Form.Group className="m-4" role="form">
+            <p className={"p-padding"}><BsFillPencilFill className={"info-tooltip"} />{noteLen}/250</p>
             <Form.Control
               name="note"
               id="Poznamka"
@@ -276,32 +301,11 @@ const TabsForm = () => {
             />
           </Form.Group>
           <ButtonToolbar className="justify-content-end">
-            <Button className="m-2" onClick={clearNotes} size="md">
-              {" "}
-              Zrušit{" "}
-            </Button>
-            <Button className="m-2" size="md">
-              {" "}
-              Uložit{" "}
-            </Button>
+            <a onClick={clearNotes} className={"delete-note"}><BsFillTrashFill/>Smazat</a>
           </ButtonToolbar>
         </Col>
         <Col sm={2}> </Col>
       </Row>
-      <Alert
-        show={showDangerAlert}
-        variant="danger"
-        className="w-25 mt-3 ml-3 "
-      >
-        {errorMsg}
-      </Alert>
-      <Alert
-        show={showSuccessAlert}
-        variant="success"
-        className="w-25 mt-3 ml-3 "
-      >
-        Vytvoření proběhlo úspěšně
-      </Alert>
     </Form>
   );
 };

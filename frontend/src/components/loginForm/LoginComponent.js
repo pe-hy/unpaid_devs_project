@@ -26,7 +26,7 @@ const required = (value) => {
 const invalidEmail = (value) => {
   if (!validator.isEmail(value)) {
     return (
-      <div className="alert alert-danger my-alert" role="alert">
+      <div className="alert alert-danger my-alert text-bold" role="alert">
         <BsExclamationTriangleFill /> Chybná e-mailová adresa!
       </div>
     );
@@ -152,7 +152,7 @@ export default class Login extends Component {
             <div className="form-group button-login pt-5">
               {this.state.message && (
                   <div className="alert alert-danger my-alert1 text-bold" role="alert">
-                    < BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
+                    <BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
                   </div>
               )}
               <button

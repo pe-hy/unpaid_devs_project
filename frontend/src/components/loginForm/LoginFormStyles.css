@@ -16,7 +16,8 @@
 .my-alert{
     text-align: left;
     padding-top: 1px;
-    background-color: white;
+    background-color: transparent;
+    border-color: transparent;
     height: 10px;
     color: #D92F24;
 }

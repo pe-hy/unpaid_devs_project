@@ -29,10 +29,15 @@ const TabsForm = () => {
   const [showDangerAlert, setshowDangerAlert] = useState(false);
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [noteLen, setNoteLen] = useState(0);
 
   const handleChange = (e) => {
     setshowSuccessAlert(false);
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+  };
+
+  const handleTyping = (e) => {
+    setNoteLen(e.target.value.length);
   };
 
   const getSubjects = async () => {
@@ -235,6 +240,7 @@ const TabsForm = () => {
                   name="capacity"
                   type="number"
                   min="1"
+                  max="10"
                   defaultValue="1"
                   required="required"
                   onChange={handleChange}
@@ -254,14 +260,19 @@ const TabsForm = () => {
         </Col>
         <Col sm={4}>
           <Form.Group className="m-3" role="form">
+            <p>{noteLen}/250</p>
             <Form.Control
               name="note"
               id="Poznamka"
               size="lg"
+              maxLength="250"
               as="textarea"
               rows={7}
               placeholder={"Poznámka"}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                handleTyping(e);
+              }}
             />
           </Form.Group>
           <ButtonToolbar className="justify-content-end">

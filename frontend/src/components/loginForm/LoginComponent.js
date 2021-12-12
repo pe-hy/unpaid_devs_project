@@ -11,7 +11,7 @@ import {
   BsExclamationTriangleFill,
   BsExclamationCircleFill
 } from "react-icons/bs";
-
+import { userContext } from "../../userContext";
 import "./LoginFormStyles.css";
 
 const required = (value) => {
@@ -33,6 +33,7 @@ const invalidEmail = (value) => {
   }
 };
 export default class Login extends Component {
+  static contextType = userContext;
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
@@ -67,6 +68,7 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         (res) => {
+          this.context.logIn(true);
           this.setState({
             currentRole: localStorage.getItem("role"),
             redirectToLogin: true,

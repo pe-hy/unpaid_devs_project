@@ -1,14 +1,46 @@
-import React from 'react';
-let userName = "Jan Novák";
-let role = "Student"
+import React, {useEffect, useState} from 'react';
+import {axios} from "../../axios";
 let empty = "";
 
-const LoginInformationComponent = ({ isLoggedIn }) => {
-    if(userName != null && isLoggedIn) {
+export const LoginInformationComponent = ({isLoggedIn}) => {
+    const [name, setName] = useState([]);
+    const [role, setRole] = useState("");
+
+    const getCurrentRole = () => {
+        return JSON.parse(localStorage.getItem("user"));
+    }
+
+    const getUserName = async () => {
+        if (getCurrentRole() == null) return;
+        if (getCurrentRole() !== null){
+            const response = await axios({
+                url: "http://localhost:8080/user/info",
+                withCredentials: true,
+                method: "GET",
+            }).catch((err) => {
+                alert(err.response.data.message);
+                console.log(err.response.data.message);
+            });
+            if (response && response.data) {
+                console.log(response);
+                setName(response.data.firstName + " " + response.data.secondName);
+                if(response.data.role === "ROLE_TEACHER"){
+                    setRole("Učitel");
+                }else{
+                    setRole("Student");
+                }
+            }
+        }
+    };
+    useEffect(() => {
+        getUserName();
+    }, []);
+
+    if(name != null && isLoggedIn) {
         return (
             <div className="text-center" style={{marginTop: "12px"}}>
-            <p style={{marginBottom: "0px"}}>{userName}</p>
-            <p><b>Role:</b> {role}</p>
+                <p style={{marginBottom: "0px"}}>Přihlášen jako: <b>{name}</b></p>
+            <p>Role: <b>{role}</b></p>
             </div>
         )
     }else{

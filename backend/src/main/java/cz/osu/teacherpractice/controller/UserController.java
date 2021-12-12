@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.controller;
 
+import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.resources.response.SchoolInfo;
 import cz.osu.teacherpractice.resources.response.SubjectInfo;
 import cz.osu.teacherpractice.model.School;
@@ -31,6 +32,16 @@ public class UserController {
     public Map<String, String> getUserRole(Principal principal) {
         return Map.of("role", userService.getUserRole(principal.getName()).getCode());
     }
+
+    @GetMapping("/user/info")
+    public Map<String, String> getBasicInfo(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        String firstName = user.getFirstName();
+        String secondName = user.getSecondName();
+        String role = user.getRole().getCode();
+        return Map.of("firstName", firstName, "secondName", secondName, "role", role);
+    }
+
 
     @GetMapping("/user/subjects")
     public List<SubjectInfo> getSubjects() {

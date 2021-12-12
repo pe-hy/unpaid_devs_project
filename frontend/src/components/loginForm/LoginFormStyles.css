@@ -7,9 +7,6 @@
     margin: auto;
 }
 
-.form-control-error{
-    border-color: #D92F24;
-}
 .form-cointainer{
     padding-top: 15px;
     padding-left: 20px;
@@ -18,6 +15,8 @@
 
 .my-alert{
     text-align: left;
+    padding-top: 1px;
+    background-color: white;
     height: 10px;
     color: #D92F24;
 }
@@ -111,6 +110,6 @@ p.thick{
 }
 
 .alert-icon{
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
 

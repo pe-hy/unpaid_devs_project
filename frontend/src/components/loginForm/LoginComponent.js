@@ -151,7 +151,7 @@ export default class Login extends Component {
             <a href = "localhost:8080/forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
             <div className="form-group button-login pt-5">
               {this.state.message && (
-                  <div className="alert alert-danger my-alert1" role="alert">
+                  <div className="alert alert-danger my-alert1 text-bold" role="alert">
                     < BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
                   </div>
               )}

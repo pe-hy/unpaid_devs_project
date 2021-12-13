@@ -185,8 +185,8 @@ export const PracticeListComponent = () => {
 
               <Accordion.Body>
                 <div>
-                  <p>Informace o předmětu...</p>
-                  Poznámka: {item.note}
+                  <hr/>
+                  <p style={{marginLeft: "50px"}}><i>Poznámka:</i> {item.note}</p>
                 </div>
               </Accordion.Body>
             </Accordion.Item>

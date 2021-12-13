@@ -1,9 +1,7 @@
 .container-login{
-    padding-top: 180px;
     align-content: stretch;
     min-width: 200px;
     max-width: 500px;
-    height: 1000px;
     margin: auto;
 }
 
@@ -32,7 +30,7 @@
 p.thick{
     font-weight: bold;
     text-align: center;
-    padding-top: 180px;
+    margin-top: 180px;
     font-size: 30px;
 }
 

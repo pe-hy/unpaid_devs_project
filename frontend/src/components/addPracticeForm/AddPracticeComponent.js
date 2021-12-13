@@ -263,7 +263,7 @@ const TabsForm = () => {
             <Col sm={3}></Col>
             <Col sm={8}>
               <ButtonGroup className="d-flex button-padding">
-                <Button className={"button-add"}>Přidat</Button>
+                <Button type="submit" className={"button-add"}>Přidat</Button>
               </ButtonGroup>
             </Col>
             <Alert

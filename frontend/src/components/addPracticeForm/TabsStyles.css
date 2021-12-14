@@ -48,18 +48,6 @@
     padding-top: 15px;
 }
 
-.delete-note{
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #dc0e0e;
-    padding-right: 30px;
-}
-.delete-note:hover{
-    cursor: pointer;
-    color: #700808;
-}
-
-
 .alert-practice-error{
     text-align: center;
     color: #D92F24;

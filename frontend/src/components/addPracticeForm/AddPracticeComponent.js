@@ -300,9 +300,6 @@ const TabsForm = () => {
               }}
             />
           </Form.Group>
-          <ButtonToolbar className="justify-content-end">
-            <a onClick={clearNotes} className={"delete-note"}><BsFillTrashFill/>Smazat</a>
-          </ButtonToolbar>
         </Col>
         <Col sm={2}> </Col>
       </Row>

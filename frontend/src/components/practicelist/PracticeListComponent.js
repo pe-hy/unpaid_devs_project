@@ -98,7 +98,7 @@ export const PracticeListComponent = () => {
               <Col className="text-center">
                 <b>Předmět</b>
               </Col>
-              <Col className="text-center">
+              <Col className="text-center d-none">
                 <b>Učitel</b>
               </Col>
               <Col className="text-center">
@@ -107,13 +107,13 @@ export const PracticeListComponent = () => {
               <Col className="text-center">
                 <b>Datum</b>
               </Col>
-              <Col className="text-center">
+              <Col className="text-center d-none">
                 <b>Čas</b>
               </Col>
-              <Col className="text-center">
+              <Col className="text-center d-none">
                 <b>E-mail</b>
               </Col>
-              <Col className="text-center">
+              <Col className="text-center d-none">
                 <b>Kapacita</b>
                 <OverlayTrigger
                   overlay={
@@ -142,7 +142,7 @@ export const PracticeListComponent = () => {
                 <Accordion.Header className={"accordion-header"}>
                   <Row style={{ width: "100%" }}>
                     <Col className="text-center  ">{item.subjectInfo.name}</Col>
-                    <Col className="text-center">
+                    <Col className="text-center d-none">
                       {item.teacher.firstName + " " + item.teacher.secondName}
                     </Col>
                     <Col className="text-center">{item.teacher.schoolName}</Col>
@@ -153,7 +153,7 @@ export const PracticeListComponent = () => {
                         ". " +
                         item.date.split("-")[0]}
                     </Col>
-                    <Col className="text-center">
+                    <Col className="text-center d-none">
                       {item.start.split(":")[0] +
                         ":" +
                         item.start.split(":")[1] +
@@ -162,8 +162,10 @@ export const PracticeListComponent = () => {
                         ":" +
                         item.end.split(":")[1]}
                     </Col>
-                    <Col className="text-center">{item.teacher.username}</Col>
-                    <Col className="text-center badge">
+                    <Col className="text-center d-none">
+                      {item.teacher.username}
+                    </Col>
+                    <Col className="text-center badge d-none">
                       <div>
                         <Badge
                           bg={
@@ -185,8 +187,10 @@ export const PracticeListComponent = () => {
 
               <Accordion.Body>
                 <div>
-                  <hr/>
-                  <p style={{marginLeft: "50px"}}><i>Poznámka:</i> {item.note}</p>
+                  <hr />
+                  <p style={{ marginLeft: "50px" }}>
+                    <i>Poznámka:</i> {item.note}
+                  </p>
                 </div>
               </Accordion.Body>
             </Accordion.Item>

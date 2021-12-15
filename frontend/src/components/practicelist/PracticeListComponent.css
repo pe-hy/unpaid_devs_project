@@ -1,5 +1,6 @@
 .accordion-button::after {
-    display: none;
+    position: absolute;
+
 }
 
 .accordion-button:hover {
@@ -22,6 +23,14 @@
     background-color: #ffffff
 }
 
+.accordion-button.collapsed {
+    height: 100%;
+}
+
+.accordion-button{
+    height: 100%;
+}
+
 .accordion-row {
     margin: 150px;
 }
@@ -38,8 +47,8 @@
     width: 85%;
 }
 
- .accordion-item {
-     margin-bottom: 0;
+.accordion-item {
+    margin-bottom: 0;
 
 }
 

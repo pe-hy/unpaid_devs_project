@@ -20,7 +20,7 @@
     box-shadow: none
 }
 .accordion-button:not(.collapsed){
-    background-color: #ffffff
+    background-color: #ffffff;
 }
 
 .accordion-button.collapsed {
@@ -49,7 +49,6 @@
 
 .accordion-item {
     margin-bottom: 0;
-
 }
 
 .center {

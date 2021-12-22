@@ -1,8 +1,8 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.config.AppConfig;
-import cz.osu.teacherpractice.dto.response.PracticeDto;
-import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.domain.PracticeDomain;
+import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.exception.UserException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Practice;
@@ -22,7 +22,7 @@ public class StudentService {
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
 
-    public List<PracticeDto> getPractices(String studentUsername, LocalDate date, Long subjectId) {
+    public List<StudentPracticeDto> getPractices(String studentUsername, LocalDate date, Long subjectId) {
         List<Practice> practices;
 
         if (date != null && subjectId != null) {
@@ -35,12 +35,14 @@ public class StudentService {
             practices = practiceRepository.findAllByOrderByDateAscStartAsc();
         }
 
-        List<PracticeDto> practicesDto = mapper.practicesToPracticesDto(practices);
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
 
-        practicesDto.forEach(p -> p.setRegisteredCount(p.getStudents().size()));
-        practicesDto.forEach(p -> p.setIsReserved(p.getStudents().contains(new UserDto(studentUsername))));
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setIsCurrentStudentReserved(studentUsername);
+        });
 
-        return practicesDto;
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
     public void makeReservation(String studentUsername, Long practiceId) {

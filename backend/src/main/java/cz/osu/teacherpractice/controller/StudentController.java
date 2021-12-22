@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.dto.response.PracticeDto;
+import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,8 +23,8 @@ public class StudentController {
     }
 
     @GetMapping("/practices")
-    public List<PracticeDto> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                          @RequestParam(required=false) Long subjectId, Principal principal) {
+    public List<StudentPracticeDto> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                 @RequestParam(required=false) Long subjectId, Principal principal) {
 
         return studentService.getPractices(principal.getName(), date, subjectId);
     }

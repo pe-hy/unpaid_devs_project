@@ -5,19 +5,18 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
-public class PracticeDto {
+public class StudentPracticeDto {
     private Long id;
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
     private String note;
     private Integer capacity;
-    private Integer registeredCount;
-    private Boolean isReserved;
     private SubjectDto subject;
     private UserDto teacher;
-    private List<UserDto> students;
+
+    private Integer numberOfReservedStudents;
+    private Boolean isCurrentStudentReserved;
 }

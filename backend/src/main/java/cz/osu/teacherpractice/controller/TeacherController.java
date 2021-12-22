@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.controller;
 
-import cz.osu.teacherpractice.resources.request.NewPracticeRequest;
-import cz.osu.teacherpractice.service.TeacherServiceImpl;
+import cz.osu.teacherpractice.dto.request.NewPracticeDto;
+import cz.osu.teacherpractice.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class TeacherController {
 
-    private final TeacherServiceImpl teacherService;
+    private final TeacherService teacherService;
 
     @GetMapping("")
     public String getTeacher(Principal principal) {
@@ -23,7 +23,7 @@ public class TeacherController {
 
     @PostMapping("/practice")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addPractice(Principal principal, @Valid @RequestBody NewPracticeRequest practiceRequest) {
-        teacherService.addPractice(principal.getName(), practiceRequest);
+    public void addPractice(Principal principal, @Valid @RequestBody NewPracticeDto newPracticeDto) {
+        teacherService.addPractice(principal.getName(), newPracticeDto);
     }
 }

@@ -3,7 +3,7 @@ package cz.osu.teacherpractice.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.osu.teacherpractice.resources.request.UserLoginRequest;
+import cz.osu.teacherpractice.dto.request.UserLoginDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +41,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserLoginRequest login = new ObjectMapper().readValue(request.getInputStream(), UserLoginRequest.class);
+            UserLoginDto login = new ObjectMapper().readValue(request.getInputStream(), UserLoginDto.class);
             String username = login.getUsername();
             String password = login.getPassword();
             if (username == null) {

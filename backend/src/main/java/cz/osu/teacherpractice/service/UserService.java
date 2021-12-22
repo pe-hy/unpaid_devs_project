@@ -1,18 +1,52 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.dto.SchoolDto;
+import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.repository.SchoolRepository;
+import cz.osu.teacherpractice.repository.SubjectRepository;
+import cz.osu.teacherpractice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface UserService {
-    User createUser(User user);
-    User getUserById(Long id);
-    User getUserByUsername(String username);
-    Role getUserRole(String username);
-    List<User> getAllUsers();
-    List<Subject> getSubjects();
-    List<School> getSchools();
+@Service @RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final SubjectRepository subjectRepository;
+    private final SchoolRepository schoolRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MapStructMapper mapper;
+
+    public User createUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserException("Uživatel [" + user.getUsername() + "] již existuje.");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserException(
+                "Uživatel [" + username + "] nebyl nalezen."
+        ));
+    }
+
+    public Role getUserRole(String username) {
+        return getUserByUsername(username).getRole();
+    }
+
+    public List<SubjectDto> getSubjects() {
+        return mapper.subjectsToSubjectsDto(subjectRepository.findAll());
+    }
+
+    public List<SchoolDto> getSchools() {
+        return mapper.schoolsToSchoolsDto(schoolRepository.findAll());
+    }
 }

@@ -1,11 +1,11 @@
 package cz.osu.teacherpractice;
 
 import cz.osu.teacherpractice.model.*;
-import cz.osu.teacherpractice.repo.PracticeRepo;
-import cz.osu.teacherpractice.repo.SchoolRepo;
-import cz.osu.teacherpractice.repo.SubjectRepo;
-import cz.osu.teacherpractice.repo.UserRepo;
-import cz.osu.teacherpractice.service.UserServiceImpl;
+import cz.osu.teacherpractice.repository.PracticeRepository;
+import cz.osu.teacherpractice.repository.SchoolRepository;
+import cz.osu.teacherpractice.repository.SubjectRepository;
+import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,11 +19,11 @@ import java.time.LocalTime;
 @SpringBootApplication @RequiredArgsConstructor @Lazy
 public class TeacherPracticeApp {
 
-    private final PracticeRepo practiceRepo;
-    private final SchoolRepo schoolRepo;
-    private final SubjectRepo subjectRepo;
-    private final UserRepo userRepo;
-    private final UserServiceImpl userService;
+    private final PracticeRepository practiceRepository;
+    private final SchoolRepository schoolRepository;
+    private final SubjectRepository subjectRepository;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(TeacherPracticeApp.class, args);
@@ -33,13 +33,13 @@ public class TeacherPracticeApp {
     CommandLineRunner run() {
         return args -> {
             // delete all data from database
-            practiceRepo.deleteAll();
-            userRepo.deleteAll();
-            subjectRepo.deleteAll();
-            schoolRepo.deleteAll();
+            practiceRepository.deleteAll();
+            userRepository.deleteAll();
+            subjectRepository.deleteAll();
+            schoolRepository.deleteAll();
 
             // adding default schools
-            School school = schoolRepo.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
+            School school = schoolRepository.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
             User student = userService.createUser(new User(null, "student@student.cz", "student", "Adam", "Kovář", null, Role.STUDENT, null, null, null));
@@ -49,16 +49,16 @@ public class TeacherPracticeApp {
             userService.createUser(new User(null, "admin@admin.cz", "admin", "Petra", "Konečná", null, Role.ADMIN, null, null, null));
 
             // adding default subjects
-            Subject subjectA = subjectRepo.save(new Subject(null, "Španělština", null));
-            Subject subjectB = subjectRepo.save(new Subject(null, "Čínština", null));
-            Subject subjectC = subjectRepo.save(new Subject(null, "Biologie", null));
+            Subject subjectA = subjectRepository.save(new Subject(null, "Španělština", null));
+            Subject subjectB = subjectRepository.save(new Subject(null, "Čínština", null));
+            Subject subjectC = subjectRepository.save(new Subject(null, "Biologie", null));
 
             // adding default practices
-            Practice practiceA = practiceRepo.save(new Practice(null, LocalDate.parse("2022-11-27"), LocalTime.now().withHour(8).withMinute(0), LocalTime.now().withHour(8).withMinute(45), null, 2, subjectA, teacher, null));
-            Practice practiceB = practiceRepo.save(new Practice(null, LocalDate.parse("2022-11-26"), LocalTime.now().withHour(11).withMinute(15), LocalTime.now().withHour(12).withMinute(0), null, 2, subjectA, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().withHour(9).withMinute(0), LocalTime.now().withHour(9).withMinute(45), null, 2, subjectB, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().withHour(10).withMinute(0), LocalTime.now().withHour(10).withMinute(45), null, 2, subjectC, teacher, null));
-            practiceRepo.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), null, 2, subjectC, teacher, null));
+            Practice practiceA = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-27"), LocalTime.now().withHour(8).withMinute(0), LocalTime.now().withHour(8).withMinute(45), null, 2, subjectA, teacher, null));
+            Practice practiceB = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-26"), LocalTime.now().withHour(11).withMinute(15), LocalTime.now().withHour(12).withMinute(0), null, 2, subjectA, teacher, null));
+            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().withHour(9).withMinute(0), LocalTime.now().withHour(9).withMinute(45), null, 2, subjectB, teacher, null));
+            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().withHour(10).withMinute(0), LocalTime.now().withHour(10).withMinute(45), null, 2, subjectC, teacher, null));
+            practiceRepository.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), null, 2, subjectC, teacher, null));
 
             //practiceA.setStudents(new ArrayList<>(List.of(student)));
             //practiceRepo.save(practiceA);

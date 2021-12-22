@@ -1,5 +1,6 @@
-package cz.osu.teacherpractice.resources.response;
+package cz.osu.teacherpractice.dto.response;
 
+import cz.osu.teacherpractice.dto.SubjectDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Data
-public class PracticeInfo {
+public class PracticeDto {
     private Long id;
     private LocalDate date;
     private LocalTime start;
@@ -16,7 +17,7 @@ public class PracticeInfo {
     private Integer capacity;
     private Integer registeredCount;
     private Boolean isReserved;
-    private SubjectInfo subjectInfo;
-    private UserInfo teacher;
-    private List<UserInfo> students;
+    private SubjectDto subject;
+    private UserDto teacher;
+    private List<UserDto> students;
 }

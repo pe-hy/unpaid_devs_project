@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Practice {
     @Column(columnDefinition = "TEXT")
     private String note;
 
+    @Min(1)
     private Integer capacity;
 
     @ManyToOne

@@ -1,13 +1,10 @@
 package cz.osu.teacherpractice.controller;
 
 import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.resources.response.SchoolInfo;
-import cz.osu.teacherpractice.resources.response.SubjectInfo;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.Subject;
-import cz.osu.teacherpractice.service.UserServiceImpl;
+import cz.osu.teacherpractice.dto.SchoolDto;
+import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,13 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
-    private final ModelMapper modelMapper;
+    private final UserService userService;
 
     @PostMapping("/register")
     public String registerUser() {
@@ -42,26 +37,13 @@ public class UserController {
         return Map.of("firstName", firstName, "secondName", secondName, "role", role);
     }
 
-
     @GetMapping("/user/subjects")
-    public List<SubjectInfo> getSubjects() {
-        return userService.getSubjects().stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
+    public List<SubjectDto> getSubjects() {
+        return userService.getSubjects();
     }
 
     @GetMapping("/user/schools")
-    public List<SchoolInfo> getSchools() {
-        return userService.getSchools().stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
-    }
-
-    private SubjectInfo convertToResponse(Subject subject) {
-        return modelMapper.map(subject, SubjectInfo.class);
-    }
-
-    private SchoolInfo convertToResponse(School school) {
-        return modelMapper.map(school, SchoolInfo.class);
+    public List<SchoolDto> getSchools() {
+        return userService.getSchools();
     }
 }

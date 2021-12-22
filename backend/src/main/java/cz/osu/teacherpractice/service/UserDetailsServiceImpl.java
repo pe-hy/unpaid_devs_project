@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.repo.UserRepo;
+import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +14,11 @@ import java.util.List;
 @Service @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
                 "Uživatel [" + username + "] nenalezen."
         ));
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode());

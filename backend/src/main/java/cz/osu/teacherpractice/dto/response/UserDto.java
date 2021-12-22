@@ -1,19 +1,20 @@
-package cz.osu.teacherpractice.resources.response;
+package cz.osu.teacherpractice.dto.response;
 
+import cz.osu.teacherpractice.dto.SchoolDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Data @NoArgsConstructor
-public class UserInfo {
+public class UserDto {
     private Long id;
     private String username;
     private String firstName;
     private String secondName;
-    private String schoolName;
+    private SchoolDto school;
 
-    public UserInfo(String username) {
+    public UserDto(String username) {
         this.username = username;
     }
 
@@ -21,8 +22,8 @@ public class UserInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(username, userInfo.username);
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(username, userDto.username);
     }
 
     @Override

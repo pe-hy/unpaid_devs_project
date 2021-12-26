@@ -68,12 +68,12 @@ const TabsForm = () => {
 
   const checkFormData = () => {
     console.log(formData);
-    if (!formData["subjectId"]) {
-      formData["subjectId"] = subjects.at(0).id;
+    if (!formData["subject"]) {
+      formData["subject"] = { id: subjects.at(0).id, name: subjects.at(0).name };
     } else {
       subjects.forEach((element) => {
-        if (element.name === formData["subjectId"]) {
-          formData["subjectId"] = element.id;
+        if (element.name === formData["subject"]) {
+          formData["subject"] = { id: element.id, name: element.name };
         }
       });
     }
@@ -85,9 +85,6 @@ const TabsForm = () => {
     if (!formData["capacity"]) {
       formData["capacity"] = 1;
     }
-    let start = formData["start"];
-    let end = formData["end"];
-    formData["time"] = { start: start, end: end };
   };
 
   const addPraxe = async (event) => {
@@ -213,7 +210,7 @@ const TabsForm = () => {
             <Col sm={8}>
               <InputGroup>
                 <Form.Select
-                  name="subjectId"
+                  name="subject"
                   required="required"
                   onChange={handleChange}
                 >

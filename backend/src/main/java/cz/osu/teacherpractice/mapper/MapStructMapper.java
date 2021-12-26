@@ -10,6 +10,7 @@ import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 

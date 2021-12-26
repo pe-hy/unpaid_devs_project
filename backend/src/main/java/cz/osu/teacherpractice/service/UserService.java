@@ -2,7 +2,8 @@ package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.SubjectDto;
-import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.exception.ServerErrorException;
+import cz.osu.teacherpractice.exception.UserErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
@@ -26,16 +27,16 @@ public class UserService {
 
     public User createUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserException("Uživatel [" + user.getUsername() + "] již existuje.");
+            throw new ServerErrorException("Uživatel '" + user.getUsername() + "' již existuje.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UserException(
-                "Uživatel [" + username + "] nebyl nalezen."
-        ));
+        return userRepository.findByUsername(username).orElseThrow(() -> {
+            throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");
+        });
     }
 
     public Role getUserRole(String username) {

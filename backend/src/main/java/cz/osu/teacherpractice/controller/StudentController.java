@@ -3,6 +3,8 @@ package cz.osu.teacherpractice.controller;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +24,18 @@ public class StudentController {
         return "Hi student: " + principal.getName();
     }
 
-    @GetMapping("/practices")
-    public List<StudentPracticeDto> getPractices(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                 @RequestParam(required=false) Long subjectId, Principal principal) {
+    @GetMapping("/practices-list")
+    public List<StudentPracticeDto> getPracticesList(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                  @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {
 
-        return studentService.getPractices(principal.getName(), date, subjectId);
+        return studentService.getPracticesList(principal.getName(), date, subjectId, pageable);
+    }
+
+    @GetMapping("/practices-slice")
+    public Slice<StudentPracticeDto> getPracticesSlice(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                 @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {
+
+        return studentService.getPracticesSlice(principal.getName(), date, subjectId, pageable);
     }
 
     @PutMapping("/practices/{id}/make-reservation")

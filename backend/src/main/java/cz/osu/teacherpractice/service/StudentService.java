@@ -3,13 +3,16 @@ package cz.osu.teacherpractice.service;
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
-import cz.osu.teacherpractice.exception.UserException;
+import cz.osu.teacherpractice.exception.ServerErrorException;
+import cz.osu.teacherpractice.exception.UserErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,18 +25,8 @@ public class StudentService {
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
 
-    public List<StudentPracticeDto> getPractices(String studentUsername, LocalDate date, Long subjectId) {
-        List<Practice> practices;
-
-        if (date != null && subjectId != null) {
-            practices = practiceRepository.findByDateAndSubjectIdOrderByStart(date, subjectId);
-        } else if (date != null) {
-            practices = practiceRepository.findByDateOrderByStart(date);
-        } else if (subjectId != null) {
-            practices = practiceRepository.findBySubjectIdOrderByDateAscStartAsc(subjectId);
-        } else {
-            practices = practiceRepository.findAllByOrderByDateAscStartAsc();
-        }
+    public List<StudentPracticeDto> getPracticesList(String studentUsername, LocalDate date, Long subjectId, Pageable pageable) {
+        List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
 
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
 
@@ -45,25 +38,38 @@ public class StudentService {
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
+    public Slice<StudentPracticeDto> getPracticesSlice(String studentUsername, LocalDate date, Long subjectId, Pageable pageable) {
+        Slice<PracticeDomain> practicesDomain = practiceRepository.findAllByParamsAsSlice(date, subjectId, pageable)
+                .map(mapper::practiceToPracticeDomain);
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setIsCurrentStudentReserved(studentUsername);
+        });
+
+        return practicesDomain.map(mapper::practiceDomainToStudentPracticeDto);
+    }
+
     public void makeReservation(String studentUsername, Long practiceId) {
-        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new UserException(
+        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new ServerErrorException(
                 "Student '" + studentUsername + "' nenalezen."
         ));
-        Practice practice = practiceRepository.findById(practiceId).orElseThrow(() -> new UserException(
+
+        Practice practice = practiceRepository.findById(practiceId).orElseThrow(() -> new UserErrorException(
                 "Požadovaná praxe nebyla nalezena."
         ));
 
         List<User> registeredStudents = practice.getStudents();
 
         if (registeredStudents.contains(student)) {
-            throw new UserException("Na tuto praxi jste již přihlášen/á.");
+            throw new UserErrorException("Na tuto praxi jste již přihlášen/á.");
         }
         if (registeredStudents.size() >= practice.getCapacity()) {
-            throw new UserException("Na tuto praxi se již více studentů přihlásit nemůže. V" +
+            throw new UserErrorException("Na tuto praxi se již více studentů přihlásit nemůže. V" +
                     "případě potřeby kontaktujte, prosím, vyučujícího.");
         }
         if (practice.getDate().minusDays(AppConfig.MAKE_RESERVATION_DAYS_LEFT).isBefore(LocalDate.now())) {
-            throw new UserException("Na praxi je možné se přihlásit nejpozději " + AppConfig.MAKE_RESERVATION_DAYS_LEFT + " dní předem.");
+            throw new UserErrorException("Na praxi je možné se přihlásit nejpozději " + AppConfig.MAKE_RESERVATION_DAYS_LEFT + " dní předem.");
         }
 
         registeredStudents.add(student);
@@ -73,20 +79,21 @@ public class StudentService {
     }
 
     public void cancelReservation(String studentUsername, Long practiceId) {
-        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new UserException(
+        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new ServerErrorException(
                 "Student '" + studentUsername + "' nenalezen."
         ));
-        Practice practice = practiceRepository.findById(practiceId).orElseThrow(() -> new UserException(
+
+        Practice practice = practiceRepository.findById(practiceId).orElseThrow(() -> new UserErrorException(
                 "Požadovaná praxe nebyla nalezena."
         ));
 
         List<User> registeredStudents = practice.getStudents();
 
         if (!registeredStudents.contains(student)) {
-            throw new UserException("Na tuto praxi nejste přihlášen/á.");
+            throw new UserErrorException("Na tuto praxi nejste přihlášen/á.");
         }
         if (practice.getDate().minusDays(AppConfig.CANCEL_RESERVATION_DAYS_LEFT).isBefore(LocalDate.now())) {
-            throw new UserException("Z praxe je možné se odhlásit nejpozději " + AppConfig.CANCEL_RESERVATION_DAYS_LEFT + " dní předem.");
+            throw new UserErrorException("Z praxe je možné se odhlásit nejpozději " + AppConfig.CANCEL_RESERVATION_DAYS_LEFT + " dní předem.");
         }
 
         registeredStudents.remove(student);

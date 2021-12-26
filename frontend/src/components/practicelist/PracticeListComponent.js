@@ -18,7 +18,7 @@ export const PracticeListComponent = () => {
     const getPraxe = async () => {
         if (checkRole()) return;
         const response = await axios({
-            url: "http://localhost:8080/student/practices",
+            url: "http://localhost:8080/student/practices-list",
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
@@ -141,11 +141,11 @@ export const PracticeListComponent = () => {
                         <div style={{display: "flex"}}>
                             <Accordion.Header className={"accordion-header"}>
                                 <Row style={{width: "100%"}}>
-                                    <Col className="text-center  ">{item.subjectInfo.name}</Col>
+                                    <Col className="text-center  ">{item.subject.name}</Col>
                                     <Col className="text-center d-none">
                                         {item.teacher.firstName + " " + item.teacher.secondName}
                                     </Col>
-                                    <Col className="text-center d-none d-xl-block">{item.teacher.schoolName}</Col>
+                                    <Col className="text-center d-none d-xl-block">{item.teacher.school.name}</Col>
                                     <Col className="text-center">
                                         {item.date.split("-")[2] +
                                         ". " +
@@ -169,19 +169,19 @@ export const PracticeListComponent = () => {
                                         <div>
                                             <Badge
                                                 bg={
-                                                    item.registeredCount < item.capacity - 1
+                                                    item.numberOfReservedStudents < item.capacity - 1
                                                         ? "success"
                                                         : "danger"
                                                 }
                                             >
-                                                {item.registeredCount} / {item.capacity}
+                                                {item.numberOfReservedStudents} / {item.capacity}
                                             </Badge>
                                         </div>
                                     </Col>
                                 </Row>
                             </Accordion.Header>
                             <div className="center d-none d-xl-block" style={{width: "15%"}}>
-                                {getButton(item.isReserved, item.id)}
+                                {getButton(item.isCurrentStudentReserved, item.id)}
                             </div>
                         </div>
 
@@ -205,19 +205,19 @@ export const PracticeListComponent = () => {
                                     <span>
                       <Badge
                           bg={
-                              item.registeredCount < item.capacity - 1
+                              item.numberOfReservedStudents < item.capacity - 1
                                   ? "success"
                                   : "danger"
                           }
                       >
-                        {item.registeredCount} / {item.capacity}
+                        {item.numberOfReservedStudents} / {item.capacity}
                       </Badge>
                     </span>
 
                                     <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 
                                 <div className="center d-xl-none" style={{width: "15%"}}>
-                                    {getButton(item.isReserved, item.id)}
+                                    {getButton(item.isCurrentStudentReserved, item.id)}
                                 </div>
 
                                 </div>

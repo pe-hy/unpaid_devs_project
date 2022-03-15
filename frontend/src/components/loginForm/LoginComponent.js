@@ -27,7 +27,7 @@ const invalidEmail = (value) => {
   if (!validator.isEmail(value)) {
     return (
       <div className="alert alert-danger my-alert text-bold" role="alert">
-        <BsExclamationTriangleFill /> Chybná e-mailová adresa!
+        <BsExclamationTriangleFill /> Špatný formát e-mailu!
       </div>
     );
   }

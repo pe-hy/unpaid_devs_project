@@ -1,5 +1,8 @@
 import ReactDOM from "react-dom";
 import React from "react";
+import Form from "react-validation/build/form";
+import CheckButton from "react-validation/build/button";
+
 const { Component } = React;
 
 export class RegistrationComponent extends Component {
@@ -27,7 +30,11 @@ export class RegistrationComponent extends Component {
             <p className="thick ">REGISTRACE</p>
                 </div>
             <section className={"d-flex justify-content-center mt-2"} >
-                <form onSubmit={ () => this.handleSubmit() }>
+                <Form onSubmit={this.handleRegister}
+                ref={(c) => {
+                    this.form = c;
+                    }}
+                >
                     <label>
                         <div>E-mail</div>
                         <input  type="email"
@@ -87,7 +94,13 @@ export class RegistrationComponent extends Component {
                     </label>
                     <br/>
                     <button>Zaregistrovat se</button>
-                </form>
+                    <CheckButton
+                        style={{ display: "none" }}
+                        ref={(c) => {
+                            this.checkBtn = c;
+                        }}
+                    />
+                </Form>
                 <br/>
             </section>
         <a className={"d-flex justify-content-center mt-2"} href = "login">Přihlásit se</a>

@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser() {
+        System.out.println("register mapping triggered");
         return "Registration not implemented yet.";
     }
 

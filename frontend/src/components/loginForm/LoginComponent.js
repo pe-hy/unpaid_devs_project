@@ -60,7 +60,6 @@ export default class Login extends Component {
     });
   }
   handleLogin(e) {
-    console.log("handling login");
     e.preventDefault();
     //Use something like this to check renderering, but after everything is fetched from the server
     // Uncomment this below and add proper error handling for servercall

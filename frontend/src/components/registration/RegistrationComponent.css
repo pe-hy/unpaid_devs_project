@@ -5,7 +5,85 @@
     margin: auto;
 }
 
-
 .thick{
-    padding-top: 150px;
+    padding-top: 380px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 200px;
+    font-size: 30px;
+}
+
+.button-login{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.button-rgstr{
+    border-color: #D3EAF6;
+    color:  #264d73;
+    width: auto;
+    background-color: #D3EAF6 ;
+    font-size: 18px;
+}
+
+.button-rgstr:hover{
+    border-color: #264d73;
+    background-color: #264d73;
+    color:  white;
+}
+
+.btn-align-center{
+    text-align: center;
+    padding-left: 20px;
+}
+
+.login-link{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #48819B;
+}
+
+.account-a{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+    text-align: center;
+}
+
+
+.info-tooltip {
+    font-size: 1.1em;
+    margin: 4px;
+    color: #326496;
+}
+
+.span-label{
+    padding-right: 34%;
+    padding-top: 7px;
+
+}
+
+.span-input{
+    width: 130%;
+
+}
+
+.label-setting{
+    display: grid;
+    grid-template-columns: 30% 50%;
+    text-align: right;
+
+}
+
+.p {
+    text-align: center;
+}
+
+.icon-form{
+    padding-top: 0;
+    padding-right: 10px;
+    color: darkgrey;
+    text-align: center;
 }

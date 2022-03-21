@@ -1,17 +1,27 @@
 .container-registration{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     align-content: stretch;
     min-width: 200px;
-    max-width: 500px;
+    max-width: 800px;
     margin: auto;
 }
 
-.thick{
-    padding-top: 380px;
+.container-registration > section{
+    min-width: 500px;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+
+.container-registration > div > .thick{
+    
     padding-bottom: 20px;
     font-weight: bold;
     text-align: center;
-    margin-top: 200px;
     font-size: 30px;
+    margin-top: 50px;   
 }
 
 .button-login{
@@ -26,6 +36,20 @@
     width: auto;
     background-color: #D3EAF6 ;
     font-size: 18px;
+}
+
+.password-strength{
+    padding-top:0;
+    padding-bottom: 20px;
+    padding-left: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.password{
+    width: 100%;
 }
 
 .button-rgstr:hover{

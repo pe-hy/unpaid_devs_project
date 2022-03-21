@@ -1,5 +1,8 @@
 .studentHomeBody {
     padding: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
 }
 
 div.tab-content {

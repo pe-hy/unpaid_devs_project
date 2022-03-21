@@ -8,7 +8,7 @@ import { UserContextProvider } from "./userContext";
 
 function App() {
   return (
-    <div>
+    <div className="main">
       <UserContextProvider>
         <NavbarComponent />
         <BrowserRouter>

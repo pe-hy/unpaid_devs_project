@@ -14,6 +14,14 @@ import {
 import { userContext } from "../../userContext";
 import "./LoginFormStyles.css";
 
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 const required = (value) => {
   if (!value) {
     return (
@@ -24,7 +32,7 @@ const required = (value) => {
   }
 };
 const invalidEmail = (value) => {
-  if (!validator.isEmail(value)) {
+  if (!validateEmail(value)) {
     return (
       <div className="alert alert-danger my-alert text-bold" role="alert">
         <BsExclamationTriangleFill /> Špatný formát e-mailu!

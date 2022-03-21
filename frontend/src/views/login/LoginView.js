@@ -4,15 +4,7 @@ import NavbarComponent from "../../components/navbar/NavbarComponent";
 
 const LoginView = () => {
   return (
-    <Container
-      style={{
-        marginTop: "250px",
-        position: "relative",
-        left: "50%",
-        top: "33%",
-        transform: "translate(-50%, -50%)",
-      }}
-    >
+    <Container className={"login-main"}>
       <LoginComponent />
     </Container>
   );

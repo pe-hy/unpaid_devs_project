@@ -15,7 +15,7 @@ function refreshPage() {
 
 const NavbarComponent = () => {
   return (
-    <div>
+    <div className={"navbar-main"}>
       <Navbar collapseOnSelect expand="lg" variant="light">
         <Container fluid>
           <Navbar.Brand href="#">

@@ -25,7 +25,14 @@ class AuthService {
   }
 
   register(email, name, surname, school, telephone, password, occupation) {
-    const formData = JSON.stringify({ email, name, surname, school, telephone, password, occupation });
+    var formData = null;
+    if(occupation == "student"){
+      formData = JSON.stringify({ email, name, surname, password, occupation });
+    }
+    else{
+      formData = JSON.stringify({ email, name, surname, school, telephone, password, occupation });
+    }
+    
     return axios({
       url: REGISTER_URL,
       withCredentials: false,

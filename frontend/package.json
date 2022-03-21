@@ -18,6 +18,7 @@
     "react-bootstrap": "^2.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-password-strength-bar": "^0.4.0",
     "react-scripts": "4.0.3",
     "react-validation": "^3.0.7",
     "rsuite": "^5.1.0",

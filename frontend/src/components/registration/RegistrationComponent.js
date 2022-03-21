@@ -9,6 +9,8 @@ import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs";
 import {BsInfoCircleFill} from "react-icons/bs";
 import Input from "react-validation/build/input";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import RegistrationButtonComponent from "../registrationButton/RegistrationButtonComponent";
+import FinishedRegistrationComponent from "../registrationButton/FinishedRegistrationComponent"
 import {
     BsEnvelopeFill,
     BsLockFill,
@@ -16,13 +18,8 @@ import {
     BsExclamationCircleFill
   } from "react-icons/bs";
 
-const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
+const notRegistered = "Zaregistrovat se";
+const finished = "Zaregistrován";
 
   const validatePhoneNum = (number) => {
     return String(number)
@@ -41,11 +38,29 @@ const validateEmail = (email) => {
       );
     }
   };
+
+const getButton = (isRegistered) => {
+    console.log(isRegistered)
+    if (!isRegistered) {
+        return (
+            <RegistrationButtonComponent
+                text={notRegistered}
+            />
+        );
+    } else {
+        return (
+            <FinishedRegistrationComponent
+                text={finished}
+            />
+        );
+    }
+};
   
 
 const validatePassword = (password) => {
-    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if(password.length < 6) return "Příliš krátké heslo!"
+    if(!/[A-Za-z]/.test(password)) return "Heslo neobsahuje znak abecedy!"
     if(!/\d/.test(password)) return "Heslo neobsahuje číslo!"
     if(!format.test(password)) return "Heslo neobsahuje speciální znak!"
 }
@@ -57,16 +72,6 @@ const required = (value) => {
       return (
         <div className="alert my-alert text-bold" role="alert">
           <BsExclamationCircleFill /> Toto pole je povinné!
-        </div>
-      );
-    }
-  };
-
-  const invalidEmail = (value) => {
-    if (!validateEmail(value)) {
-      return (
-        <div className="alert alert-danger my-alert text-bold" role="alert">
-          <BsExclamationTriangleFill /> Špatný formát e-mailu!
         </div>
       );
     }
@@ -98,6 +103,7 @@ export class RegistrationComponent extends Component {
             message: "",
             redirectToLogin: false,
             studentChecked: true,
+            isRegistered: false,
         };
         this.handleRegister = this.handleRegister.bind(this);
         this.onChangeOccupation = this.onChangeOccupation.bind(this)
@@ -108,10 +114,12 @@ export class RegistrationComponent extends Component {
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeSurname = this.onChangeSurname.bind(this);
         this.onChangeSchool = this.onChangeSchool.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
+        this.invalidEmail = this.invalidEmail.bind(this);
       }
 
       checkSecondPassword(e){
-        if(e != this.state.password){
+        if(e !== this.state.password){
             return (
                 <div className="alert alert-danger my-alert text-bold" role="alert">
                   <BsExclamationTriangleFill /> Hesla nesouhlasí!
@@ -119,6 +127,30 @@ export class RegistrationComponent extends Component {
               );
         }
       }
+      validateEmail(email){
+        if(this.state.occupation === "student"){
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^[A-Za-z0-9._%+-]+@student.osu.cz$/
+                );
+        }else{
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        }
+    };
+    invalidEmail(value){
+        if (!this.validateEmail(value)) {
+            return (
+                <div className="alert alert-danger my-alert text-bold" role="alert">
+                    <BsExclamationTriangleFill /> Špatný formát e-mailu!
+                </div>
+            );
+        }
+    };
 
     handleRegister(e) {
         e.preventDefault();
@@ -128,9 +160,9 @@ export class RegistrationComponent extends Component {
           AuthService.register(this.state.email, this.state.name, this.state.surname, this.state.school, this.state.telephone, this.state.password).then(
             (res) => {
                 console.log("Server Message:", res)
-              this.setState({
-                redirectToLogin: true,
-              });
+                this.setState({
+                    isRegistered: true,
+                });
             },
             (error) => {
               const resMessage =
@@ -192,7 +224,7 @@ export class RegistrationComponent extends Component {
     
       }
     render() {
-      if(this.state.occupation == "student"){
+      if(this.state.occupation === "student"){
         return (
           <div className={"container-registration"}>
               <div>
@@ -220,16 +252,30 @@ export class RegistrationComponent extends Component {
                   <br/><br/>
 
                   <label className={"label-setting"}>
-                      <span className={"span-label"}> <b>E-mail</b></span>
+                      <span className={"span-label"}> <b>E-mail</b>
+                          <OverlayTrigger
+                              overlay={
+                                  <Tooltip>
+                                      E-mail musí končit @student.osu.cz.
+                                  </Tooltip>
+                              }
+                          >
+                    <span>
+                      <BsInfoCircleFill className={"info-tooltip"}/>
+                    </span>
+                          </OverlayTrigger>
+                          </span>
+
                       <span className={"span-input"}>
                           <Input  type="email"
                                   className="form-control"
                                   ref="email"
                                   defaultValue=""
                                   name="email"
+                                  placeholder="P21130@student.osu.cz"
                                   value={this.state.email}
                                   onChange={this.onChangeEmail}
-                                  validations={[required, invalidEmail]}
+                                  validations={[required, this.invalidEmail]}
                                   required />
                       </span>
                   </label>
@@ -263,7 +309,19 @@ export class RegistrationComponent extends Component {
                   <br/>
 
                   <label className={"label-setting"}>
-                      <span className={"span-label"}><b>Heslo</b></span>
+                      <span className={"span-label"}><b>Heslo</b>
+                                                <OverlayTrigger
+                                                    overlay={
+                                                        <Tooltip>
+                                                            Heslo musí být alespoň 6 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1 speciální znak.
+                                                        </Tooltip>
+                                                    }
+                                                >
+                    <span>
+                      <BsInfoCircleFill className={"info-tooltip"}/>
+                    </span>
+                          </OverlayTrigger>
+                      </span>
                       <span className={"span-input"}>
                           <div className="inner-addon right-addon">
                           
@@ -287,6 +345,7 @@ export class RegistrationComponent extends Component {
 
                   <label className={"label-setting"}>
                       <span className={"span-input"}></span>
+
                       <span className={"span-input"}>
                           <Input  type="password"
                                   ref="password_again"
@@ -301,7 +360,7 @@ export class RegistrationComponent extends Component {
 
 
                   <div className={"btn-align-center"}>
-                      <button className="btn button-rgstr"><b>Zaregistrovat se</b></button>
+                      {getButton(this.state.isRegistered)}
                   </div>
 
                   <CheckButton
@@ -339,11 +398,11 @@ export class RegistrationComponent extends Component {
                     <div className={"d-flex justify-content-around mt-2 radio-group"}>
                         <div>
                             <input type="radio" id="student" name="occupation" value="student" onChange={this.onChangeOccupation} defaultChecked/>
-                            <label for="student"> Student</label>
+                            <label for="student">Student</label>
                         </div>
                         <div>
                             <input type="radio" id="teacher" name="occupation" value="teacher" onChange={this.onChangeOccupation}/>
-                            <label for="teacher"> Učitel</label>
+                            <label for="teacher">Učitel</label>
                         </div>
                     </div>
                     <br/><br/>
@@ -358,7 +417,7 @@ export class RegistrationComponent extends Component {
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.onChangeEmail}
-                                    validations={[required, invalidEmail]}
+                                    validations={[required, this.invalidEmail]}
                                     required />
                         </span>
                     </label>
@@ -432,7 +491,19 @@ export class RegistrationComponent extends Component {
                       <br/>
   
                     <label className={"label-setting"}>
-                        <span className={"span-label"}><b>Heslo</b></span>
+                        <span className={"span-label"}><b>Heslo</b>
+                                                  <OverlayTrigger
+                                                      overlay={
+                                                          <Tooltip>
+                                                               Heslo musí být alespoň 6 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1 speciální znak.
+                                                          </Tooltip>
+                                                      }
+                                                  >
+                    <span>
+                      <BsInfoCircleFill className={"info-tooltip"}/>
+                    </span>
+                          </OverlayTrigger>
+                        </span>
                         <span className={"span-input"}>
                             <div className="inner-addon right-addon">
                             
@@ -470,7 +541,7 @@ export class RegistrationComponent extends Component {
   
   
                     <div className={"btn-align-center"}>
-                        <button className="btn button-rgstr"><b>Zaregistrovat se</b></button>
+                        {getButton(this.state.isRegistered)}
                     </div>
   
                     <CheckButton

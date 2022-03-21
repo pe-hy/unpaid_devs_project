@@ -13,11 +13,14 @@
 
 .my-alert{
     text-align: left;
-    padding-top: 1px;
+    padding-top: 5px;
     background-color: transparent;
     border-color: transparent;
     height: 10px;
     color: #D92F24;
+    font-size: 14px;
+    margin-bottom: 5px;
+    padding-bottom: 0;
 }
 
 .my-alert1{

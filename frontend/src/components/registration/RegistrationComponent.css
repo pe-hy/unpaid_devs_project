@@ -9,6 +9,10 @@
     margin: auto;
 }
 
+p.ex1 {
+    margin-right: 30px;
+}
+
 .container-registration > section{
     min-width: 500px;
     max-width: 800px;
@@ -30,14 +34,6 @@
     padding-bottom: 10px;
 }
 
-.button-rgstr{
-    border-color: #D3EAF6;
-    color:  #264d73;
-    width: auto;
-    background-color: #D3EAF6 ;
-    font-size: 18px;
-}
-
 .password-strength{
     padding-top:0;
     padding-bottom: 20px;
@@ -50,12 +46,6 @@
 
 .password{
     width: 100%;
-}
-
-.button-rgstr:hover{
-    border-color: #264d73;
-    background-color: #264d73;
-    color:  white;
 }
 
 .btn-align-center{

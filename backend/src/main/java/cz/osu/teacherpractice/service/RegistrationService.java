@@ -5,6 +5,7 @@ import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.email.EmailSender;
 import cz.osu.teacherpractice.email.EmailValidator;
 import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.token.ConfirmationToken;
 import cz.osu.teacherpractice.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -21,12 +22,16 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
+    private final UserRepository userRepository;
 
     public String register(RegistrationDto request){
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
         if(!isValidEmail){
             throw new IllegalStateException("Email not valid");
+        }
+        if(userRepository.findByUsername(request.getEmail()).isPresent()){
+            throw new IllegalStateException("Email already exists");
         }
         String token = userService.signUpUser(
                 new User(request.getEmail(),

@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.email;
 
+import cz.osu.teacherpractice.config.AppConfig;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,9 @@ public class EmailService implements EmailSender{
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Confirm your email");
-            helper.setFrom("hello@amigoscode.com");
+            helper.setSubject("Potvrďtě svou registraci pro registrační systém učitelských praxí.");
+            helper.setFrom(AppConfig.CONFIRMATION_EMAIL_ADDRESS);
+
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);

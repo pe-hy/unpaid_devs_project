@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.controller;
+package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.service.TeacherService;

@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.controller;
+package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.service.RegistrationService;
 import lombok.AllArgsConstructor;
@@ -20,9 +20,9 @@ public class RegistrationController {
         return ret;
     }
 
-//    @GetMapping(path = "confirm")
-//    public String confirm(@RequestParam("token") String token) {
-//        return registrationService.confirmToken(token);
-//    }
+    @GetMapping(path = "/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return registrationService.confirmToken(token);
+    }
 
 }

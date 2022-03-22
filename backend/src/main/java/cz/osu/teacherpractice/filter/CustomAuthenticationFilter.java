@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.osu.teacherpractice.dto.request.UserLoginDto;
+import cz.osu.teacherpractice.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,10 +33,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     private final AuthenticationManager authenticationManager;
     private final Algorithm jwtAlgorithm;
+    private final UserRepository userRepository;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, Algorithm jwtAlgorithm) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, Algorithm jwtAlgorithm, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtAlgorithm = jwtAlgorithm;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -49,6 +52,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             }
             if (password == null) {
                 throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno.");
+            }
+            if (userRepository.findByUsername(username).isPresent()){
+                if(!userRepository.findByUsername(username).get().getEnabled()){
+                    throw new AuthenticationCredentialsNotFoundException("Účet nebyl aktivován.");
+                }
+                if(userRepository.findByUsername(username).get().getLocked()){
+                    throw new AuthenticationCredentialsNotFoundException("Účet byl zablokován.");
+                }
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             return authenticationManager.authenticate(authenticationToken);

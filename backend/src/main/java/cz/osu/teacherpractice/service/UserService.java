@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.SubjectDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
@@ -10,11 +11,15 @@ import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.token.ConfirmationToken;
+import cz.osu.teacherpractice.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service @RequiredArgsConstructor
 public class UserService {
@@ -24,6 +29,7 @@ public class UserService {
     private final SchoolRepository schoolRepository;
     private final PasswordEncoder passwordEncoder;
     private final MapStructMapper mapper;
+    private final ConfirmationTokenService confirmationTokenService;
 
     public User createUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
@@ -52,22 +58,24 @@ public class UserService {
     }
 
     public String signUpUser(User user){
-        boolean userExists = userRepository
-                .findByUsername(user.getUsername()).
-                isPresent();
+        createUser(user);
 
-        if(userExists) {
-            throw new IllegalStateException("Email already taken");
-        }
+        String token = UUID.randomUUID().toString();
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
+                user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        user.setPassword(encodedPassword);
+        //TODO: send email
 
-        userRepository.save(user);
+        return token;
+    }
 
-        // TODO: send confirmation token
-
-        return "it works";
+    public int enableAppUser(String email) {
+        return userRepository.enableAppUser(email);
     }
 }

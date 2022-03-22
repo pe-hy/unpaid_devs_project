@@ -42,11 +42,22 @@ public class TeacherPracticeApp {
             School school = schoolRepository.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
 
             // adding default users
-            User student = userService.createUser(new User(null, "student@student.cz", "student", "Adam", "Kovář", null, Role.STUDENT, null, null, null));
-            User student2 = userService.createUser(new User(null, "student2@student.cz", "student2", "Jan", "Nowak", null, Role.STUDENT, null, null, null));
-            User teacher = userService.createUser(new User(null, "karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", null, Role.TEACHER, school, null, null));
-            userService.createUser(new User(null, "coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, Role.COORDINATOR, null, null, null));
-            userService.createUser(new User(null, "admin@admin.cz", "admin", "Petra", "Konečná", null, Role.ADMIN, null, null, null));
+            User st1 = new User("student@student.cz", "student", "Adam", "Kovář", null, null, Role.STUDENT);
+            st1.setEnabled(true);
+            User st2 = new User("student2@student.cz", "student2", "Jan", "Nowak", null, null, Role.STUDENT);
+            st2.setEnabled(true);
+            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school, null, Role.TEACHER);
+            tch.setEnabled(true);
+            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
+            coord.setEnabled(true);
+            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, null, Role.ADMIN);
+            adm.setEnabled(true);
+
+            User student = userService.createUser(st1);
+            User student2 = userService.createUser(st2);
+            User teacher = userService.createUser(tch);
+            userService.createUser(coord);
+            userService.createUser(adm);
 
             // adding default subjects
             Subject subjectA = subjectRepository.save(new Subject(null, "Španělština", null));

@@ -24,17 +24,13 @@ class AuthService {
     });
   }
 
-  register(email, name, surname, school, telephone, password, occupation) {
-    var formData = null;
-    if(occupation == "student"){
-      formData = JSON.stringify({ email, name, surname, password, occupation });
-    }
-    else{
-      formData = JSON.stringify({ email, name, surname, school, telephone, password, occupation });
-    }
+  register(email, firstName, lastName, school, phoneNumber, password, role) {
+    var formData = JSON.stringify({ email, firstName, lastName, school, phoneNumber, password, role });
+    console.log(formData);
     
     return axios({
       url: REGISTER_URL,
+      headers: { 'content-type': 'application/json' },
       withCredentials: false,
       method: "POST",
       data: formData,

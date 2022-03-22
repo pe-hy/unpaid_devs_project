@@ -24,6 +24,19 @@ public class User {
     @ManyToOne
     private School school;
 
+    public User(String username, String password, String firstName, String secondName, String school, String phoneNumber, String role){
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.school = null; //TODO: implement school.
+        this.phoneNumber = phoneNumber;
+
+        if(role.equals("student")) this.role = Role.STUDENT;
+        else if(role.equals("teacher")) this.role = Role.TEACHER;
+        else throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
+    }
+
     @OneToMany(mappedBy="teacher")
     private List<Practice> teacherPractices = new ArrayList<>();
 

@@ -50,4 +50,24 @@ public class UserService {
     public List<SchoolDto> getSchools() {
         return mapper.schoolsToSchoolsDto(schoolRepository.findAll());
     }
+
+    public String signUpUser(User user){
+        boolean userExists = userRepository
+                .findByUsername(user.getUsername()).
+                isPresent();
+
+        if(userExists) {
+            throw new IllegalStateException("Email already taken");
+        }
+
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+        // TODO: send confirmation token
+
+        return "it works";
+    }
 }

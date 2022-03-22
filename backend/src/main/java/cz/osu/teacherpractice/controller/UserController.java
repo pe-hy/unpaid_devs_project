@@ -7,8 +7,12 @@ import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import cz.osu.teacherpractice.dto.request.RegistrationDto;
+import cz.osu.teacherpractice.service.RegistrationService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +21,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final RegistrationService registrationService;
 
-    @PostMapping("/register")
-    public String registerUser() {
+    @PostMapping("/dfdfregister")
+    public String registerUser(@Valid @RequestBody RegistrationDto request) {
         System.out.println("register mapping triggered");
-        return "Registration not implemented yet.";
+        String ret = registrationService.register(request);
+        System.out.println(ret);
+        return ret;
     }
 
     @GetMapping("/user/roles")

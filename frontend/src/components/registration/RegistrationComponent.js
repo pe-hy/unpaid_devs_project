@@ -157,7 +157,7 @@ export class RegistrationComponent extends Component {
         //Use something like this to check renderering, but after everything is fetched from the server
         // Uncomment this below and add proper error handling for servercall
         this.form.validateAll();
-          AuthService.register(this.state.email, this.state.name, this.state.surname, this.state.school, this.state.telephone, this.state.password).then(
+          AuthService.register(this.state.email, this.state.name, this.state.surname, this.state.school, this.state.telephone, this.state.password, this.state.occupation).then(
             (res) => {
                 console.log("Server Message:", res)
                 this.setState({

@@ -70,8 +70,6 @@ public class UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        //TODO: send email
-
         return token;
     }
 

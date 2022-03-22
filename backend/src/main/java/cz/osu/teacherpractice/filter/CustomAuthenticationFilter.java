@@ -48,23 +48,23 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             String username = login.getUsername();
             String password = login.getPassword();
             if (username == null) {
-                throw new AuthenticationCredentialsNotFoundException("Uživatelské jméno nevyplněno.");
+                throw new AuthenticationCredentialsNotFoundException("Uživatelské jméno nevyplněno");
             }
             if (password == null) {
-                throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno.");
+                throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno");
             }
             if (userRepository.findByUsername(username).isPresent()){
                 if(!userRepository.findByUsername(username).get().getEnabled()){
-                    throw new AuthenticationCredentialsNotFoundException("Účet nebyl aktivován.");
+                    throw new AuthenticationCredentialsNotFoundException("Chybné přihlášení");
                 }
                 if(userRepository.findByUsername(username).get().getLocked()){
-                    throw new AuthenticationCredentialsNotFoundException("Účet byl zablokován.");
+                    throw new AuthenticationCredentialsNotFoundException("Účet byl zablokován");
                 }
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
-            throw new AuthenticationCredentialsNotFoundException("Překlep v atributech username nebo password.");
+            throw new AuthenticationCredentialsNotFoundException("Překlep v atributech username nebo password");
         }
     }
 
@@ -103,7 +103,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", failed.getMessage()));
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", "Neplatné přihlašovací údaje."));
+            new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", "Neplatné přihlašovací údaje"));
         }
     }
 }

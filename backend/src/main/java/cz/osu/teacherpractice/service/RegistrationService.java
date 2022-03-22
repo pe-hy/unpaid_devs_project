@@ -26,7 +26,7 @@ public class RegistrationService {
 
     public String register(RegistrationDto request){
         boolean isValidEmail = emailValidator.
-                test(request.getEmail());
+                checkEmail(request.getEmail(), request.getRole());
         if(!isValidEmail){
             throw new IllegalStateException("Email není validní");
         }

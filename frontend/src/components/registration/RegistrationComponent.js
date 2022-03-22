@@ -3,6 +3,7 @@ import React from "react";
 import Form from "react-validation/build/form";
 import AuthService from "../../services/AuthService";
 import CheckButton from "react-validation/build/button";
+import Select from "react-validation/build/select";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import "./RegistrationComponent.css";
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs";
@@ -22,6 +23,9 @@ const notRegistered = "Zaregistrovat se";
 const finished = "Zkontrolujte e-mail";
 
   const validatePhoneNum = (number) => {
+      if (number === ""){
+          return true;
+      }
     return String(number)
       .toLowerCase()
       .match(
@@ -157,6 +161,7 @@ export class RegistrationComponent extends Component {
         //Use something like this to check renderering, but after everything is fetched from the server
         // Uncomment this below and add proper error handling for servercall
         this.form.validateAll();
+        if (this.checkBtn.context._errors.length === 0 || (this.state.occupation === "teacher" && this.checkBtn.context._errors.length <= 1)) { // Don't ask
           AuthService.register(this.state.email, this.state.name, this.state.surname, this.state.school, this.state.telephone, this.state.password, this.state.occupation).then(
             (res) => {
                 console.log("Server Message:", res)
@@ -178,6 +183,9 @@ export class RegistrationComponent extends Component {
               });
             }
           );
+        }else{
+
+        }
       }
 
       onChangeEmail(e) {
@@ -412,7 +420,7 @@ export class RegistrationComponent extends Component {
                         </div>
                     </div>
                     <br/><br/>
-  
+
                     <label className={"label-setting"}>
                         <span className={"span-label"}> <b>E-mail</b></span>
                         <span className={"span-input"}>
@@ -435,6 +443,7 @@ export class RegistrationComponent extends Component {
                                 <Input  type="text"
                                         onChange={this.onChangeName}
                                         className="form-control"
+                                        name="firstName"
                                         ref="name"
                                         defaultValue=""
                                         required />
@@ -450,6 +459,7 @@ export class RegistrationComponent extends Component {
                                        ref="name"
                                        onChange={this.onChangeSurname}
                                        className="form-control"
+                                       name="lastName"
                                        defaultValue=""
                                        required />
                            </span>
@@ -471,13 +481,13 @@ export class RegistrationComponent extends Component {
                           </OverlayTrigger>
                           </span>
                           <span className={"span-input"}>
-                          <select name="school" id="school" onChange={this.onChangeSchool} className="form-control" placeholder="Vyberte školu">
+                          <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control" placeholder="Vyberte školu">
                               <option value='default' disabled={true}>Vyberte Školu</option>
                               <option value="school1">Gymnázium Ostrava 1</option>
                               <option value="school2">Frýdek-Místek Cihelní</option>
                               <option value="school3">Čeladná ZŠ</option>
                               <option value="school4">Frýdek-Místek 6.</option>
-                          </select>
+                          </Select>
                           </span>
   
                       </label>
@@ -486,13 +496,14 @@ export class RegistrationComponent extends Component {
                       <label className={"label-setting"}>
                           <span className={"span-label"}>Telefon</span>
                           <span className={"span-input"}>
-                          <Input  type="tel"
+                          <Input  type="text"
                                   className="form-control"
+                                  name="telephone"
                                   ref="phone"
                                   onChange={this.onChangePhone}
-                                  validations={[required, invalidPhoneNum]}
+                                  validations={[invalidPhoneNum]}
                                   defaultValue=""
-                                  required /></span>
+                          /></span>
                       </label>
                       <br/>
   
@@ -512,9 +523,10 @@ export class RegistrationComponent extends Component {
                         </span>
                         <span className={"span-input"}>
                             <div className="inner-addon right-addon">
-                            
+
                             <Input  type="password"
                                     className="form-control"
+                                    name="firstPassword"
                                     ref="password"
                                     defaultValue=""
                                     onChange={this.onChangePassword}
@@ -524,18 +536,19 @@ export class RegistrationComponent extends Component {
                     </label>
                     <br/>
                     <span className={"password-strength"}>
-                      <PasswordStrengthBar className={"password"} 
-                      minLength={6} 
-                      scoreWords={['', '', '', '']} 
-                      shortScoreWord={""} 
+                      <PasswordStrengthBar className={"password"}
+                      minLength={6}
+                      scoreWords={['', '', '', '']}
+                      shortScoreWord={""}
                       password={this.state.password} />
                     </span>
-  
+
                     <label className={"label-setting"}>
                         <span className={"span-input"}></span>
                         <span className={"span-input"}>
                             <Input  type="password"
                                     ref="password_again"
+                                    name="secondPassword"
                                     className="form-control"
                                     defaultValue=""
                                     placeholder="Heslo znovu"

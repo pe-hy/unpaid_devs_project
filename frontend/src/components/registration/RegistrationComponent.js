@@ -372,6 +372,12 @@ export class RegistrationComponent extends Component {
               </Form>
 
               <br/>
+
+              {this.state.message && (
+                  <div className="alert alert-danger my-alert1 text-bold" role="alert">
+                      <BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
+                  </div>
+              )}
               <span className={"account-a"}>
                   <p>Máte účet? <a className={"login-link"} href = "login">Přihlašte se</a>
                   </p>
@@ -538,6 +544,11 @@ export class RegistrationComponent extends Component {
                         </span>
                     </label>
                     <br/>
+                    {this.state.message && (
+                        <div className="alert alert-danger my-alert1 text-bold" role="alert">
+                            <BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
+                        </div>
+                    )}
   
   
                     <div className={"btn-align-center"}>

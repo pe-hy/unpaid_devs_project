@@ -28,10 +28,10 @@ public class RegistrationService {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
         if(!isValidEmail){
-            throw new IllegalStateException("Email not valid");
+            throw new IllegalStateException("Email není validní");
         }
         if(userRepository.findByUsername(request.getEmail()).isPresent()){
-            throw new IllegalStateException("Email already exists");
+            throw new IllegalStateException("Email již existuje");
         }
         String token = userService.signUpUser(
                 new User(request.getEmail(),
@@ -56,16 +56,16 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                        new IllegalStateException("Token nenalezen"));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            throw new IllegalStateException("E-mail již byl potvrzen");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            throw new IllegalStateException("Token vypršel");
         }
 
         confirmationTokenService.setConfirmedAt(token);

@@ -19,7 +19,7 @@ import {
   } from "react-icons/bs";
 
 const notRegistered = "Zaregistrovat se";
-const finished = "Zaregistrován";
+const finished = "Zkontrolujte e-mail";
 
   const validatePhoneNum = (number) => {
     return String(number)

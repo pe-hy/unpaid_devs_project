@@ -18,8 +18,8 @@ public class CoordinatorService {
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
 
-    public List<User> getWaitingList() {
-        return userRepository.getAllLocked(true);
+    public List<String> getWaitingList() {
+        return userRepository.getAllLocked();
     }
 
 }

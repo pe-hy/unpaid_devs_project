@@ -21,7 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int enableAppUser(String email);
 
     @Transactional
-    @Modifying
-    @Query("SELECT u.first_name, u.second_name, u.username, u.phone_number, u.role, (SELECT name FROM School WHERE id=u.school_id) FROM User u WHERE u.locked=True")
-    List<User> getAllLocked(Boolean isLocked);
+    @Query("SELECT u.firstName, u.secondName, u.username, u.phoneNumber, u.role FROM User u WHERE u.locked=True")
+    List<String> getAllLocked();
 }

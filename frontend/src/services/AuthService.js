@@ -17,7 +17,7 @@ class AuthService {
         if (response.data.role === "ROLE_COORDINATOR") {
           localStorage.setItem("role", "ROLE_COORDINATOR");
         }
-        if (response.data.role === "ROLE_STUDENT") {
+        else if (response.data.role === "ROLE_STUDENT") {
           localStorage.setItem("role", "ROLE_STUDENT");
         } else if (response.data.role === "ROLE_TEACHER") {
           localStorage.setItem("role", "ROLE_TEACHER");

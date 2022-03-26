@@ -25,7 +25,7 @@ public class CoordinatorController {
         return "Hi coordinator: " + principal.getName();
     }
     @GetMapping("/waitingList")
-    public List<User> getWaitingList() {
+    public List<String> getWaitingList() {
         return coordinatorService.getWaitingList();
     }
 }

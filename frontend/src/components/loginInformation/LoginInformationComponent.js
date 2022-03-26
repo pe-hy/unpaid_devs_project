@@ -22,12 +22,11 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                 console.log(err.response.data.message);
             });
             if (response && response.data) {
-                console.log(response);
                 setName(response.data.firstName + " " + response.data.secondName);
                 if(response.data.role === "ROLE_COORDINATOR"){
                     setRole("Koordinátor");
                 }
-                if(response.data.role === "ROLE_TEACHER"){
+                else if(response.data.role === "ROLE_TEACHER"){
                     setRole("Učitel");
                 }else{
                     setRole("Student");

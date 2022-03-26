@@ -35,8 +35,13 @@ public class User {
         this.phoneNumber = phoneNumber;
 
 
-        if(role.equals("student")) this.role = Role.STUDENT;
-        else if(role.equals("teacher")) this.role = Role.TEACHER;
+        if(role.equals("student")) {
+            this.role = Role.STUDENT;
+        }
+        else if(role.equals("teacher")) {
+            this.role = Role.TEACHER;
+            this.locked = true;
+        }
         else throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
     }
 

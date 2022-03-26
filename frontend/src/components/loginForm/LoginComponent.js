@@ -106,6 +106,8 @@ export default class Login extends Component {
       return <Navigate to="/studentHome" />;
     if (this.state.redirectToLogin && this.state.currentRole === "ROLE_TEACHER")
       return <Navigate to="/teacherHome" />;
+    if (this.state.redirectToLogin && this.state.currentRole === "ROLE_COORDINATOR")
+      return <Navigate to="/coordinatorHome" />;
     return (
       <div className="col-md-12 container-login">
         <p className="thick ">PŘIHLÁŠENÍ</p>

@@ -4,7 +4,9 @@ import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.email.EmailSender;
 import cz.osu.teacherpractice.email.EmailValidator;
+import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.token.ConfirmationToken;
 import cz.osu.teacherpractice.token.ConfirmationTokenService;
@@ -23,6 +25,7 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
     private final UserRepository userRepository;
+    private final SchoolRepository schoolRepository;
 
     public String register(RegistrationDto request){
         boolean isValidEmail = emailValidator.
@@ -33,12 +36,13 @@ public class RegistrationService {
         if(userRepository.findByUsername(request.getEmail()).isPresent()){
             throw new IllegalStateException("Email již existuje");
         }
+        School school = schoolRepository.getSchoolById(request.getSchoolId());
         String token = userService.signUpUser(
                 new User(request.getEmail(),
                         request.getPassword(),
                         request.getFirstName(),
                         request.getLastName(),
-                        request.getSchool(),
+                        school,
                         request.getPhoneNumber(),
                         request.getRole())
         );

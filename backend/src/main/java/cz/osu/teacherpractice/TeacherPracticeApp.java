@@ -39,19 +39,25 @@ public class TeacherPracticeApp {
             schoolRepository.deleteAll();
 
             // adding default schools
-            School school = schoolRepository.save(new School(null, "Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
+            School school1 = schoolRepository.save(new School(null, "ZŠ Čeladná", null));
+            School school2 = schoolRepository.save(new School(null, "ZŠ TGM Frýdlant nad Ostravicí", null));
+            School school3 = schoolRepository.save(new School(null, "SŠ Cihelní 410 Frýdek-Místek", null));
+            School school4 = schoolRepository.save(new School(null, "SŠ Gymnázium Ostrava-Zábřeh, Volgogradská 6a", null));
+            School school5 = schoolRepository.save(new School(null, "ZŠ Dobrá", null));
+
 
             // adding default users
             User st1 = new User("student@student.cz", "student", "Adam", "Kovář", null, null, Role.STUDENT);
             st1.setEnabled(true);
             User st2 = new User("student2@student.cz", "student2", "Jan", "Nowak", null, null, Role.STUDENT);
             st2.setEnabled(true);
-            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school, null, Role.TEACHER);
+            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, null, Role.TEACHER);
             tch.setEnabled(true);
             User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
             coord.setEnabled(true);
             User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, null, Role.ADMIN);
             adm.setEnabled(true);
+
 
             User student = userService.createUser(st1);
             User student2 = userService.createUser(st2);

@@ -26,12 +26,12 @@ public class User {
     @ManyToOne
     private School school;
 
-    public User(String username, String password, String firstName, String secondName, String school, String phoneNumber, String role){
+    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, String role){
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.school = null; //TODO: implement school.
+        this.school = school;
         this.phoneNumber = phoneNumber;
 
 

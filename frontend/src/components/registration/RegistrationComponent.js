@@ -100,13 +100,13 @@ export class RegistrationComponent extends Component {
             email: "",
             name: "",
             surname: "",
-            school: "school1",
+            school: "",
             telephone: "",
             secondPassword: "",
             password: "",
             occupation: "student",
             message: "",
-            schoolList: [{id:2, name:"fuck"}],
+            schoolList: [],
             redirectToLogin: false,
             studentChecked: true,
             isRegistered: false,
@@ -153,6 +153,7 @@ export class RegistrationComponent extends Component {
         var sch = [];
         schools.forEach(element => sch.push(element));
         this.setSchools({ sch });
+        this.state.school = sch[0].id;
       })
         
     }

@@ -36,7 +36,8 @@ public class RegistrationService {
         if(userRepository.findByUsername(request.getEmail()).isPresent()){
             throw new IllegalStateException("Email již existuje");
         }
-        School school = schoolRepository.getSchoolById(request.getSchoolId());
+        School school = schoolRepository.getSchoolById(request.getSchool());
+        System.out.println("request" + " " + " " + request.getSchool().getClass().getName() + " " + request.getSchool() + " " + request + " school:" + " " + school.getId());
         String token = userService.signUpUser(
                 new User(request.getEmail(),
                         request.getPassword(),

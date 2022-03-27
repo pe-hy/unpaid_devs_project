@@ -23,7 +23,7 @@ public class RegistrationDto {
     private final String lastName;
 
     @NotNull(message = "schoolId musí být zadaný.")
-    private final Long schoolId;
+    private final Long school;
 
     private final String phoneNumber;
 

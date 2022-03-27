@@ -83,7 +83,7 @@ export const WaitingListComponent = () => {
                     <th scope="row">{item.firstName + " " + item.secondName}</th>
                     <td>{item.username}</td>
                     <td>{item.phoneNumber}</td>
-                    <td>{item.school}</td>
+                    <td>{item.school.name}</td>
                 </tr>
             ))}
             </tbody>

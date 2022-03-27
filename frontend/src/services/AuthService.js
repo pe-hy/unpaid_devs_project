@@ -2,6 +2,7 @@ import axios from "axios";
 
 const LOGIN_URL = "http://localhost:8080/login";
 const REGISTER_URL = "http://localhost:8080/register";
+const LOGOUT_URL = "http://localhost:8080/user/logout";
 
 class AuthService {
   login(username, password) {
@@ -22,6 +23,19 @@ class AuthService {
         } else if (response.data.role === "ROLE_TEACHER") {
           localStorage.setItem("role", "ROLE_TEACHER");
         }
+      }
+      return response.data;
+    });
+  }
+
+  logout(){
+    return axios({
+      url: LOGOUT_URL,
+      withCredentials: true,
+      method: "GET",
+    }).then((response) => {
+      if (response) {
+        console.log(response);
       }
       return response.data;
     });

@@ -1,12 +1,16 @@
 package cz.osu.teacherpractice.repository;
 
+import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +24,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "SET a.enabled = TRUE WHERE a.username = ?1")
     int enableAppUser(String email);
 
-    @Transactional
-    @Query("SELECT u.firstName, u.secondName, u.username, u.phoneNumber, u.role FROM User u WHERE u.locked=True")
-    List<String> getAllLocked();
+    @Query("SELECT u FROM User u WHERE u.locked = True")
+    List<User> getAllLocked();
+
+
+//    @Transactional
+//    @Query("SELECT u.firstName, u.secondName, u.username, u.phoneNumber, u.role FROM User u WHERE u.locked=True")
+//    List<User> getAllLocked();
 }

@@ -1,5 +1,7 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.dto.response.LockedUsersDto;
+import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.PracticeRepository;
@@ -18,8 +20,10 @@ public class CoordinatorService {
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
 
-    public List<String> getWaitingList() {
-        return userRepository.getAllLocked();
+    public List<UserDto> getWaitingList() {
+        List<User> users = userRepository.getAllLocked();
+
+        return mapper.usersToUsersDto(users);
     }
 
 }

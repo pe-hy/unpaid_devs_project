@@ -2,6 +2,7 @@ package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.dto.response.LockedUsersDto;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
+import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.StudentService;
@@ -32,7 +33,7 @@ public class CoordinatorController {
         return "Hi coordinator: " + principal.getName();
     }
     @GetMapping("/waitingList")
-    public List<LockedUsersDto> getLockedUsers() {
+    public List<UserDto> getLockedUsers() {
 
         return coordinatorService.getWaitingList();
     }

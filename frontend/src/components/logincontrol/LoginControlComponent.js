@@ -9,6 +9,7 @@ import { Row, Col, Container, Nav } from "react-bootstrap";
 import "./LoginControlStyles.css";
 import LoginInformationComponent from "../loginInformation/LoginInformationComponent";
 import { userContext } from "../../userContext";
+import AuthService from "../../services/AuthService";
 let iconStyles = { fontSize: "1.5em", color: "white" };
 let textStyles = { color: "white" };
 
@@ -82,6 +83,10 @@ class LoginControl extends React.Component {
   }
 
   handleLogoutClick() {
+    AuthService.logout().then(
+      (res) => {
+        console.log(res)
+      });
     localStorage.clear();
     this.context.logOut();
     window.location.href = "/";

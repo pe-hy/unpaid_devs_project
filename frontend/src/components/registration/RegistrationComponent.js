@@ -22,8 +22,6 @@ import {axios} from "../../axios";
 
 const notRegistered = "Zaregistrovat se";
 const finished = "Zkontrolujte e-mail";
-const [schools, setSchools] = useState([]);
-const noSchools = !schools || (schools && schools.length === 0);
 
   const validatePhoneNum = (number) => {
       if (number === ""){
@@ -95,25 +93,6 @@ const required = (value) => {
     }
   };
 
-const getSchools = async () => {
-    const response = await axios({
-        url: "http://localhost:8080/user/schools",
-        withCredentials: true,
-        method: "GET",
-    }).catch((err) => {
-        alert(err.response.data.message);
-        console.log(err.response.data.message);
-    });
-    if (response && response.data) {
-        console.log(response);
-        setSchools(response.data);
-    }
-};
-
-useEffect(() => {
-    getSchools();
-}, []);
-
 export class RegistrationComponent extends Component {
     constructor(props) {
         super(props);
@@ -127,6 +106,7 @@ export class RegistrationComponent extends Component {
             password: "",
             occupation: "student",
             message: "",
+            schoolList: [{id:2, name:"fuck"}],
             redirectToLogin: false,
             studentChecked: true,
             isRegistered: false,
@@ -142,7 +122,40 @@ export class RegistrationComponent extends Component {
         this.onChangeSchool = this.onChangeSchool.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.invalidEmail = this.invalidEmail.bind(this);
+        this.setSchools = this.setSchools.bind(this);
       }
+
+      setSchools(e) {
+          console.log("data in e", e)
+        this.setState({
+            schoolList: e.sch,
+          });
+      }
+
+    getSchools(){
+        const response = axios({
+            url: "http://localhost:8080/user/schools",
+            withCredentials: true,
+            method: "GET",
+        }).then((response) => {
+            this.setSchools(response);
+        });
+    };
+
+    componentDidMount() {
+        axios({
+            url: "http://localhost:8080/user/schools",
+            withCredentials: true,
+            method: "GET",})
+      .then(res => {
+        const schools = res.data;
+        console.log("schools:", schools);
+        var sch = [];
+        schools.forEach(element => sch.push(element));
+        this.setSchools({ sch });
+      })
+        
+    }
 
       checkSecondPassword(e){
         if(e !== this.state.password){
@@ -504,8 +517,7 @@ export class RegistrationComponent extends Component {
                           </span>
                           <span className={"span-input"}>
                           <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control" placeholder="Vyberte školu">
-                                        {!noSchools &&
-                                          schools.map((item, index) => (
+                        {               this.state.schoolList.map((item, index) => (
                                               <option value={item.id}>{item.name}</option>
                                          ))}
                           </Select>

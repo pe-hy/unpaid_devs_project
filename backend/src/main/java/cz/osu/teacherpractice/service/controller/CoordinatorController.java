@@ -1,12 +1,12 @@
 package cz.osu.teacherpractice.service.controller;
 
+import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,5 +27,17 @@ public class CoordinatorController {
     public List<UserDto> getLockedUsers() {
 
         return coordinatorService.getWaitingList();
+    }
+
+    @PostMapping(path="/removeUser")
+    public void removeUser(@RequestBody String request) {
+
+        userService.removeUser(request);
+    }
+
+    @PostMapping(path="/unlockUser")
+    public void unlockUser(@RequestBody String request) {
+        System.out.println(request);
+        userService.unlockUser(request);
     }
 }

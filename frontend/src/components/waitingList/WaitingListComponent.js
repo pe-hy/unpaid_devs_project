@@ -8,6 +8,7 @@ export const WaitingListComponent = () => {
     const [users, setUsers] = useState([]);
     const noUsers = !users || (users && users.length === 0);
     const [modalShow, setModalShow] = React.useState(false);
+    const [currEmail, setCurrEmail] = useState("");
 
     const getLockedUsers = async () => {
         if (checkRole()) return;
@@ -29,36 +30,37 @@ export const WaitingListComponent = () => {
         getLockedUsers();
     }, []);
 
-    const acceptUser = async (id) => {
+    const acceptUser = async (email) => {
         const response = await axios({
-            url: `coordinator/users/${id}/acceptUser`,
+            headers: { 'content-type': 'application/json' },
+            url: "http://localhost:8080/coordinator/unlockUser",
             withCredentials: true,
-            method: "PUT",
+            method: "POST",
+            data: email,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
             console.log(response);
-            setUsers(response.data);
+            setModalShow(false);
         }
-        await getLockedUsers();
     };
 
-    const removeUser = async (id) => {
+    const removeUser = async () => {
         const response = await axios({
-            url: `coordinator/users/${id}/removeUser`,
+            headers: { 'content-type': 'application/json' },
+            url: "http://localhost:8080/coordinator/removeUser",
             withCredentials: true,
-            method: "PUT",
+            method: "POST",
+            data: currEmail,
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
             console.log(response);
-            setUsers(response.data);
+            setModalShow(false);
         }
-        await getLockedUsers();
     };
 
     function CreateModal(props) {
@@ -79,7 +81,7 @@ export const WaitingListComponent = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
-                    <button type="button" className="removal-btn" onClick={props.onHide}>Zamítnout</button>
+                    <button type="button" className="removal-btn" onClick={() => {props.onHide(); removeUser();}}>Zamítnout</button>
                 </Modal.Footer>
             </Modal>
         );
@@ -109,8 +111,8 @@ export const WaitingListComponent = () => {
                     <td>{item.school.name}</td>
                     <td>{item.phoneNumber}</td>
                     <td>{item.username}</td>
-                    <td><button type="button" className="accept-btn">Potvrdit</button></td>
-                    <td><button onClick={() => setModalShow(true)} type="button" className="removal-btn">Zamítnout</button></td>
+                    <td><button onClick={() => acceptUser(item.username)} type="button" className="accept-btn">Potvrdit</button></td>
+                    <td><button onClick={() => {setModalShow(true); setCurrEmail(item.username);}} type="button" className="removal-btn">Zamítnout</button></td>
                 </tr>
             ))}
             </tbody>

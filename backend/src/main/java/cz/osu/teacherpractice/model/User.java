@@ -50,7 +50,7 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.school = school; //TODO: implement school.
+        this.school = school;
         this.phoneNumber = phoneNumber;
         this.role = role;
     }

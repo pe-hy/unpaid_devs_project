@@ -39,6 +39,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void removeUser(String username){
+        System.out.println("remove user" + " " + username);
+        int ret = userRepository.deleteUserByEmail(username);
+        System.out.println(ret);
+    }
+
+    public void unlockUser(String username){
+        System.out.println("unlock User" + " " + username);
+        int ret = userRepository.unlockAppUser(username);
+        System.out.println(ret);
+    }
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");

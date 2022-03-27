@@ -1,24 +1,15 @@
 package cz.osu.teacherpractice.service.controller;
 
-import cz.osu.teacherpractice.dto.response.LockedUsersDto;
-import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
-import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.service.CoordinatorService;
-import cz.osu.teacherpractice.service.StudentService;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/coordinator")

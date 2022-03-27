@@ -37,6 +37,7 @@ class AuthService {
       if (response) {
         console.log(response);
       }
+      localStorage.removeItem('access_token')
       return response.data;
     });
   }

@@ -68,17 +68,25 @@ export const WaitingListComponent = () => {
     return (
         <Container fluid>
             <table className="table table-striped">
-            {!noUsers &&
-            users.map((item, index) => (
                 <thead>
                 <tr>
-                    <th scope="col">{item}</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Jméno</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Telefon</th>
+                    <th scope="col">Škola</th>
                 </tr>
                 </thead>
+                <tbody>
+            {!noUsers &&
+            users.map((item, index) => (
+                <tr>
+                    <th scope="row">{item.firstName + " " + item.secondName}</th>
+                    <td>{item.username}</td>
+                    <td>{item.phoneNumber}</td>
+                    <td>{item.school}</td>
+                </tr>
             ))}
+            </tbody>
             </table>
         </Container>
     );

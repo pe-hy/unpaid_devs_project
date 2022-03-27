@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Form from "react-validation/build/form";
 import AuthService from "../../services/AuthService";
 import CheckButton from "react-validation/build/button";
@@ -18,9 +18,12 @@ import {
     BsExclamationTriangleFill,
     BsExclamationCircleFill
   } from "react-icons/bs";
+import {axios} from "../../axios";
 
 const notRegistered = "Zaregistrovat se";
 const finished = "Zkontrolujte e-mail";
+const [schools, setSchools] = useState([]);
+const noSchools = !schools || (schools && schools.length === 0);
 
   const validatePhoneNum = (number) => {
       if (number === ""){
@@ -91,6 +94,25 @@ const required = (value) => {
       );
     }
   };
+
+const getSchools = async () => {
+    const response = await axios({
+        url: "http://localhost:8080/user/schools",
+        withCredentials: true,
+        method: "GET",
+    }).catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data.message);
+    });
+    if (response && response.data) {
+        console.log(response);
+        setSchools(response.data);
+    }
+};
+
+useEffect(() => {
+    getSchools();
+}, []);
 
 export class RegistrationComponent extends Component {
     constructor(props) {
@@ -482,11 +504,10 @@ export class RegistrationComponent extends Component {
                           </span>
                           <span className={"span-input"}>
                           <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control" placeholder="Vyberte školu">
-                              <option value='default' disabled={true}>Vyberte Školu</option>
-                              <option value="school1">Gymnázium Ostrava 1</option>
-                              <option value="school2">Frýdek-Místek Cihelní</option>
-                              <option value="school3">Čeladná ZŠ</option>
-                              <option value="school4">Frýdek-Místek 6.</option>
+                                        {!noSchools &&
+                                          schools.map((item, index) => (
+                                              <option value={item.id}>{item.name}</option>
+                                         ))}
                           </Select>
                           </span>
   

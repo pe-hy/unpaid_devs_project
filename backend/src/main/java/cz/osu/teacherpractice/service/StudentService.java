@@ -51,7 +51,7 @@ public class StudentService {
     }
 
     public void makeReservation(String studentUsername, Long practiceId) {
-        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new ServerErrorException(
+        User student = userRepository.findByEmail(studentUsername).orElseThrow(() -> new ServerErrorException(
                 "Student '" + studentUsername + "' nenalezen."
         ));
 
@@ -79,7 +79,7 @@ public class StudentService {
     }
 
     public void cancelReservation(String studentUsername, Long practiceId) {
-        User student = userRepository.findByUsername(studentUsername).orElseThrow(() -> new ServerErrorException(
+        User student = userRepository.findByEmail(studentUsername).orElseThrow(() -> new ServerErrorException(
                 "Student '" + studentUsername + "' nenalezen."
         ));
 

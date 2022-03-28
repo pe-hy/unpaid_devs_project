@@ -21,7 +21,7 @@ public class TeacherService {
     private final MapStructMapper mapper;
 
     public void addPractice(String teacherUsername, NewPracticeDto newPracticeDto) {
-        User teacher = userRepository.findByUsername(teacherUsername).orElseThrow(() -> new ServerErrorException(
+        User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(
                 "Učitel '" + teacherUsername + "' nenalezen."
         ));
 

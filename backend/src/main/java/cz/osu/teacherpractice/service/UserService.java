@@ -4,7 +4,6 @@ import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.SubjectDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
-import cz.osu.teacherpractice.exception.UserErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
@@ -12,6 +11,7 @@ import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.token.ConfirmationToken;
+import cz.osu.teacherpractice.token.ConfirmationTokenRepository;
 import cz.osu.teacherpractice.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +25,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
     private final SubjectRepository subjectRepository;
     private final SchoolRepository schoolRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,27 +33,38 @@ public class UserService {
     private final ConfirmationTokenService confirmationTokenService;
 
     public User createUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByEmail(user.getUsername()).isPresent()) {
             throw new ServerErrorException("Uživatel '" + user.getUsername() + "' již existuje.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public void removeUser(String username){
-        System.out.println("remove user" + " " + username);
-        int ret = userRepository.deleteUserByEmail(username);
-        System.out.println(ret);
+    public String removeUser(String username){
+        if(userRepository.findByEmail(username).isPresent()) {
+            System.out.println("before token removal" + " " + username);
+            Long userId = userRepository.findByEmail(username).get().getId();
+            confirmationTokenRepository.deleteConfirmationTokenById(userId);
+            int ret = userRepository.deleteUserByEmail(username);
+            if (ret == 1) return "User deleted";
+            else return "Something went wrong;";
+        }
+        else return "User wasn't deleted";
     }
 
-    public void unlockUser(String username){
-        System.out.println("unlock User" + " " + username);
-        int ret = userRepository.unlockAppUser(username);
-        System.out.println(ret);
+    public String unlockUser(String username){
+        if(userRepository.findByEmail(username).isPresent()){
+            User u = userRepository.findByEmail(username).get();
+            userRepository.unlockAppUser(username);
+//            u.setLocked(false);
+//            userRepoTest.update(u);
+            return "user unlocked";
+        }
+        return "email not found";
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> {
+        return userRepository.findByEmail(username).orElseThrow(() -> {
             throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");
         });
     }
@@ -88,4 +100,5 @@ public class UserService {
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
     }
+
 }

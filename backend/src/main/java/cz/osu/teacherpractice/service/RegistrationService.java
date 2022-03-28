@@ -33,7 +33,7 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("Email není validní");
         }
-        if(userRepository.findByUsername(request.getEmail()).isPresent()){
+        if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw new IllegalStateException("Email již existuje");
         }
         School school = schoolRepository.getSchoolById(request.getSchool());

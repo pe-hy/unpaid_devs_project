@@ -53,11 +53,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             if (password == null) {
                 throw new AuthenticationCredentialsNotFoundException("Heslo nevyplněno");
             }
-            if (userRepository.findByUsername(username).isPresent()){
-                if(!userRepository.findByUsername(username).get().getEnabled()){
+            if (userRepository.findByEmail(username).isPresent()){
+                if(!userRepository.findByEmail(username).get().getEnabled()){
                     throw new AuthenticationCredentialsNotFoundException("Chybné přihlášení");
                 }
-                if(userRepository.findByUsername(username).get().getLocked()){
+                if(userRepository.findByEmail(username).get().getLocked()){
                     throw new AuthenticationCredentialsNotFoundException("Účet byl zablokován");
                 }
             }

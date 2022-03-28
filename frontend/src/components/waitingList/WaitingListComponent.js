@@ -42,7 +42,7 @@ export const WaitingListComponent = () => {
         });
         if (response && response.data) {
             console.log(response);
-            setModalShow(false);
+            getLockedUsers();
         }
     };
 
@@ -60,6 +60,7 @@ export const WaitingListComponent = () => {
         if (response && response.data) {
             console.log(response);
             setModalShow(false);
+            getLockedUsers();
         }
     };
 

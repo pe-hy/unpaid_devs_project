@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/exit").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http
-                .logout().logoutSuccessHandler(this.)
+                .logout()
                 .logoutUrl("/logout")
                 .deleteCookies("access_token");
 

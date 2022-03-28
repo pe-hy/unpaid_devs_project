@@ -21,16 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/user/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null){
-//            new SecurityContextLogoutHandler().logout(request, response, auth);
-//        }
-        // TODO: repqir logout
-        return "success";
-    }
-
     @GetMapping("/user/roles")
     public Map<String, String> getUserRole(Principal principal) {
         return Map.of("role", userService.getUserRole(principal.getName()).getCode());

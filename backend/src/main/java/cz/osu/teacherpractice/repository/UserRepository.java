@@ -20,23 +20,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE User a SET a.enabled = TRUE WHERE a.username = ?1")
+    @Query("UPDATE User a SET a.enabled = True WHERE a.username = ?1")
     int enableAppUser(String email);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM User WHERE username = :email")
-    int deleteUserByEmail(@Param("email") String email);
+    @Query("DELETE FROM User WHERE username = :username")
+    int deleteUserByEmail(@Param("username") String username);
 
     @Transactional
     @Modifying
-    @Query("UPDATE User a SET a.locked = FALSE WHERE a.username = :email")
-    int unlockAppUser(@Param("email") String email);
+    @Query("UPDATE User a SET a.locked = False WHERE a.username = :username")
+    int unlockAppUser(@Param("username") String username);
 
     @Query("SELECT u FROM User u WHERE u.locked = True")
     List<User> getAllLocked();
 
-    String deleteByEmail(String email);
+    String deleteByUsername(String Username);
 
 //    @Transactional
 //    @Query("SELECT u.firstName, u.secondName, u.username, u.phoneNumber, u.role FROM User u WHERE u.locked=True")

@@ -17,14 +17,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-@Configuration @EnableWebSecurity @RequiredArgsConstructor
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // should be stored on a more secure place
@@ -56,18 +63,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/teacher/**").hasAuthority(Role.TEACHER.getCode());
         http.authorizeRequests().antMatchers("/coordinator/**").hasAnyAuthority(Role.COORDINATOR.getCode(), Role.ADMIN.getCode());
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
+        http.authorizeRequests().antMatchers("/exit").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
-        http.logout()
+        http
+                .logout().logoutSuccessHandler(this.)
                 .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("access_token")
-                .logoutSuccessUrl("/login");
+                .deleteCookies("access_token");
+
+
+
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), jwtAlgorithm(), userRepository));
         http.addFilterBefore(new CustomAuthorizationFilter(userDetailsService, jwtAlgorithm()), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean @Override
+    @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -78,13 +88,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public Algorithm jwtAlgorithm() { return Algorithm.HMAC256(JWT_SECRET_KEY); }
+    public Algorithm jwtAlgorithm() {
+        return Algorithm.HMAC256(JWT_SECRET_KEY);
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization"));

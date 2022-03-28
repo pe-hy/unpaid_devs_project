@@ -29,8 +29,8 @@ class AuthService {
   }
 
   logout(){
-    return axios.get("http://localhost:8080/logout");
-    // return axios({
+    return axios.get(LOGOUT_URL);
+    // return axios(
     //   url: LOGOUT_URL,
     //   withCredentials: true,
     //   method: "GET",
@@ -41,6 +41,8 @@ class AuthService {
     //   return response.data;
     // });
   }
+
+
 
   register(email, firstName, lastName, school, phoneNumber, password, role) {
     var formData = JSON.stringify({ email, firstName, lastName, school, phoneNumber, password, role });

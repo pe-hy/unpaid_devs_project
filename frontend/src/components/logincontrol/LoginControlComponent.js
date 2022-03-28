@@ -83,13 +83,13 @@ class LoginControl extends React.Component {
   }
 
   handleLogoutClick() {
-    // AuthService.logout().then(
-    //   (res) => {
-    //     console.log(res)
-    //   });
-    localStorage.clear();
-    this.context.logOut();
-    window.location.href = "/";
+    AuthService.logout().then(
+      (res) => {
+        console.log(res)
+      });
+    //localStorage.clear();
+    //this.context.logOut();
+    //window.location.href = "/";
   }
 
   handleRegisterClick() {

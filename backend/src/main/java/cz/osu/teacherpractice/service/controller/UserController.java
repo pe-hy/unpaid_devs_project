@@ -11,10 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +48,12 @@ public class UserController {
     public List<SchoolDto> getSchools() {
         return userService.getSchools();
     }
+
     @GetMapping("/user/logout")
-    public String userLogout() {
-        return "logged out";
+    public void userLogout(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookiesLst = request.getCookies();
+        Cookie tokenCookie = cookiesLst[0];
+        tokenCookie.setMaxAge(0);
+        response.addCookie(tokenCookie);
     }
 }

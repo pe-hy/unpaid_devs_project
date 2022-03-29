@@ -1,8 +1,7 @@
 import axios from "axios";
-
+import React from "react";
 const LOGIN_URL = "http://localhost:8080/login";
 const REGISTER_URL = "http://localhost:8080/register";
-const LOGOUT_URL = "http://localhost:8080/logout";
 
 class AuthService {
   login(username, password) {
@@ -27,22 +26,6 @@ class AuthService {
       return response.data;
     });
   }
-
-  logout(){
-    return axios.get(LOGOUT_URL);
-    // return axios(
-    //   url: LOGOUT_URL,
-    //   withCredentials: true,
-    //   method: "GET",
-    // }).then((response) => {
-    //   if (response) {
-    //     console.log(response);
-    //   }
-    //   return response.data;
-    // });
-  }
-
-
 
   register(email, firstName, lastName, school, phoneNumber, password, role) {
     var formData = JSON.stringify({ email, firstName, lastName, school, phoneNumber, password, role });

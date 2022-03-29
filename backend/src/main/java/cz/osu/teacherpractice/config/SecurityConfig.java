@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // cookie containing jwt token
     public static final String COOKIE_NAME = "access_token";
-    public static final boolean COOKIE_HTTP_ONLY = true;
+    public static final boolean COOKIE_HTTP_ONLY = false;
     public static final boolean COOKIE_SECURE = false;
     public static final int COOKIE_EXPIRATION_SECONDS = JWT_TOKEN_EXPIRATION_DAYS * 24 * 60 * 60;
 
@@ -63,12 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/teacher/**").hasAuthority(Role.TEACHER.getCode());
         http.authorizeRequests().antMatchers("/coordinator/**").hasAnyAuthority(Role.COORDINATOR.getCode(), Role.ADMIN.getCode());
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
-        http.authorizeRequests().antMatchers("/exit").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
-        http
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("access_token");
+//        http
+//                .logout()
+//                .logoutUrl("/logout")
+//                .deleteCookies("access_token");
 
 
 

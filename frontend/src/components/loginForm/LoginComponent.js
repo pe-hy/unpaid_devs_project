@@ -67,6 +67,14 @@ export default class Login extends Component {
       password: e.target.value,
     });
   }
+
+  componentDidMount(e){
+    if(window.location.href.includes("token")){
+      AuthService.sendConfirmationToken(window.location.href.split("?")[1])
+    }
+    
+  }
+
   handleLogin(e) {
     e.preventDefault();
     //Use something like this to check renderering, but after everything is fetched from the server

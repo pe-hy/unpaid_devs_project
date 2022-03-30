@@ -73,7 +73,7 @@ public class RegistrationService {
                 new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
         );
 
-        String link = "http://localhost:8080/register/confirm?token=" + token;
+        String link = "http://localhost:3000/login?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));

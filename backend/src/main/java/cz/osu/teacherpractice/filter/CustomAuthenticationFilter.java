@@ -58,7 +58,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                     throw new AuthenticationCredentialsNotFoundException("Chybné přihlášení");
                 }
                 if(userRepository.findByEmail(username).get().getLocked()){
-                    throw new AuthenticationCredentialsNotFoundException("Účet je blokován");
+                    throw new AuthenticationCredentialsNotFoundException("Účet je blokován. Kontaktujte koordinátora.");
                 }
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);

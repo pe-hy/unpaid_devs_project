@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 const LOGIN_URL = "http://localhost:8080/login";
 const REGISTER_URL = "http://localhost:8080/register";
+const CONFIMATION_URL = "http://localhost:8080/register/confirm?token="
 
 class AuthService {
   login(username, password) {
@@ -43,6 +44,19 @@ class AuthService {
       return response.data;
     });
   }
+
+  sendConfirmationToken(token){
+    return axios({
+      url: CONFIMATION_URL + token,
+      withCredentials: false,
+      method: "GET",
+    }).then((response) => {
+      if(response){
+      }
+      return response.data;
+    });
+  }
+  
 }
 
 export default new AuthService();

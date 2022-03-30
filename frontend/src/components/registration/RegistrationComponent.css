@@ -13,6 +13,20 @@ p.ex1 {
     margin-right: 30px;
 }
 
+input[type='radio'] { 
+    transform: scale(2); 
+}
+
+.radio-group > div{
+    display: flex;
+    align-items: center;
+}
+
+.radio-group > div > label{
+    font-size: 25px;
+    margin-left: 20px;
+}
+
 .container-registration > section{
     min-width: 500px;
     max-width: 800px;

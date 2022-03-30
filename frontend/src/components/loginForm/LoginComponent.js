@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/AuthService";
 import { Navigate } from "react-router-dom";
 import validator from "validator";
+import axios from "axios";
 import {
   BsEnvelopeFill,
   BsLockFill,
@@ -13,6 +14,8 @@ import {
 } from "react-icons/bs";
 import { userContext } from "../../userContext";
 import "./LoginFormStyles.css";
+
+const CONFIRMATION_URL = "http://localhost:8080/register/confirm?"
 
 const validateEmail = (email) => {
   return String(email)
@@ -54,6 +57,7 @@ export default class Login extends Component {
       message: "",
       redirectToLogin: false,
       currentRole: null,
+      showTokenMessage: false,
     };
   }
 
@@ -69,8 +73,40 @@ export default class Login extends Component {
   }
 
   componentDidMount(e){
+    
     if(window.location.href.includes("token")){
-      AuthService.sendConfirmationToken(window.location.href.split("?")[1])
+      console.log(CONFIRMATION_URL + window.location.href.split("?")[1]);
+      return axios({
+        url: CONFIRMATION_URL + window.location.href.split("?")[1],
+        withCredentials: false,
+        method: "GET",
+      })
+        .then(
+          (res) => {
+            this.setState({
+              showTokenMessage: true,
+              message: res.data,
+            });
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            this.setState({
+              showTokenMessage: false,
+              loading: false,
+              message: resMessage,
+            });
+          }
+        );
+      
+
+    }
+    else{
+      console.log("not token")
     }
     
   }
@@ -167,8 +203,13 @@ export default class Login extends Component {
 
             <a href = "forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
             <div className="form-group button-login pt-5">
-              {this.state.message && (
+              {this.state.message && !this.state.showTokenMessage && (
                   <div className="alert alert-danger my-alert1 text-bold" role="alert">
+                    <BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
+                  </div>
+              )}
+              {this.state.showTokenMessage && (
+                <div className="alert alert-success text-bold" role="alert">
                     <BsExclamationTriangleFill className={"alert-icon"}/>{ this.state.message}
                   </div>
               )}

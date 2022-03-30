@@ -310,7 +310,7 @@ export class RegistrationComponent extends Component {
               <br /><br />
 
               <label className={"label-setting"}>
-                <span className={"span-label"}> <b>E-mail</b>
+                <span className={"span-label"}>
                   <OverlayTrigger
                     overlay={
                       <Tooltip>
@@ -322,6 +322,7 @@ export class RegistrationComponent extends Component {
                       <BsInfoCircleFill className={"info-tooltip"} />
                     </span>
                   </OverlayTrigger>
+                  <b>E-mail</b>
                 </span>
 
                 <span className={"span-input"}>
@@ -367,7 +368,7 @@ export class RegistrationComponent extends Component {
               <br />
 
               <label className={"label-setting"}>
-                <span className={"span-label"}><b>Heslo</b>
+                <span className={"span-label"}>
                   <OverlayTrigger
                     overlay={
                       <Tooltip>
@@ -379,6 +380,7 @@ export class RegistrationComponent extends Component {
                       <BsInfoCircleFill className={"info-tooltip"} />
                     </span>
                   </OverlayTrigger>
+                  <b>Heslo</b>
                 </span>
                 <span className={"span-input"}>
                   <div className="inner-addon right-addon">
@@ -517,7 +519,7 @@ export class RegistrationComponent extends Component {
               <br />
 
               <label className={"label-setting"}>
-                <span className={"span-label"}><b>Škola</b>
+                <span className={"span-label"}>
                   <OverlayTrigger
                     overlay={
                       <Tooltip>
@@ -529,6 +531,7 @@ export class RegistrationComponent extends Component {
                       <BsInfoCircleFill className={"info-tooltip"} />
                     </span>
                   </OverlayTrigger>
+                  <b>Škola</b>
                 </span>
                 <span className={"span-input"}>
                   <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control" placeholder="Vyberte školu">
@@ -556,7 +559,7 @@ export class RegistrationComponent extends Component {
               <br />
 
               <label className={"label-setting"}>
-                <span className={"span-label"}><b>Heslo</b>
+                <span className={"span-label"}>
                   <OverlayTrigger
                     overlay={
                       <Tooltip>
@@ -568,6 +571,7 @@ export class RegistrationComponent extends Component {
                       <BsInfoCircleFill className={"info-tooltip"} />
                     </span>
                   </OverlayTrigger>
+                  <b>Heslo</b>
                 </span>
                 <span className={"span-input"}>
                   <div className="inner-addon right-addon">

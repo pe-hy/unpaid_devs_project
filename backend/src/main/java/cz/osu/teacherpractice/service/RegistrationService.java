@@ -86,16 +86,16 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("Token nenalezen"));
+                        new IllegalStateException("Token nenalezen."));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("E-mail již byl potvrzen");
+            throw new IllegalStateException("Účet již byl potvrzen.");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Token vypršel");
+            throw new IllegalStateException("Potvrzovací odkaz vypršel.");
         }
 
         confirmationTokenService.setConfirmedAt(token);

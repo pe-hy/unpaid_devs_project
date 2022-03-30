@@ -4,6 +4,8 @@ import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.email.EmailSender;
 import cz.osu.teacherpractice.email.EmailValidator;
+import cz.osu.teacherpractice.mapper.MapStructMapper;
+import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.SchoolRepository;
@@ -26,26 +28,49 @@ public class RegistrationService {
     private final EmailSender emailSender;
     private final UserRepository userRepository;
     private final SchoolRepository schoolRepository;
+    private final MapStructMapper mapper;
 
     public String register(RegistrationDto request){
-        boolean isValidEmail = emailValidator.
-                checkEmail(request.getEmail(), request.getRole());
-        if(!isValidEmail){
+
+        if(!emailValidator.checkEmail(request.getEmail(), request.getRole())){
             throw new IllegalStateException("Email není validní");
         }
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw new IllegalStateException("Email již existuje");
         }
-        School school = schoolRepository.getSchoolById(request.getSchool());
-        System.out.println("request" + " " + " " + request.getSchool().getClass().getName() + " " + request.getSchool() + " " + request + " school:" + " " + school.getId());
+
+        String email, password, firstName, lastName, phoneNumber;
+        School school;
+        Role role;
+        boolean locked;
+
+        switch (request.getRole()) {
+            case "student":
+                email = request.getEmail();
+                password = request.getPassword();
+                firstName = request.getFirstName();
+                lastName = request.getLastName();
+                phoneNumber = null;
+                school = null;
+                role = Role.STUDENT;
+                locked = false;
+                break;
+            case "teacher":
+                email = request.getEmail();
+                password = request.getPassword();
+                firstName = request.getFirstName();
+                lastName = request.getLastName();
+                phoneNumber = request.getPhoneNumber();
+                school = schoolRepository.getSchoolById(request.getSchool());
+                role = Role.TEACHER;
+                locked = true;
+                break;
+            default:
+                throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
+        }
+
         String token = userService.signUpUser(
-                new User(request.getEmail(),
-                        request.getPassword(),
-                        request.getFirstName(),
-                        request.getLastName(),
-                        school,
-                        request.getPhoneNumber(),
-                        request.getRole())
+                new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
         );
 
         String link = "http://localhost:8080/register/confirm?token=" + token;

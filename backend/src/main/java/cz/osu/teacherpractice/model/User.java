@@ -26,26 +26,11 @@ public class User {
     @ManyToOne
     private School school;
 
-    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, String role){
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.school = school;
-        this.phoneNumber = phoneNumber;
-
-
-        if(role.equals("student")) {
-            this.role = Role.STUDENT;
-        }
-        else if(role.equals("teacher")) {
-            this.role = Role.TEACHER;
-            this.locked = true;
-        }
-        else throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
+    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, Role role){
+        this(username, password, firstName, secondName, school, phoneNumber, role, false);
     }
 
-    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, Role role){
+    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, Role role, boolean locked){
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -53,6 +38,7 @@ public class User {
         this.school = school;
         this.phoneNumber = phoneNumber;
         this.role = role;
+        this.locked = locked;
     }
 
     @OneToMany(mappedBy="teacher")

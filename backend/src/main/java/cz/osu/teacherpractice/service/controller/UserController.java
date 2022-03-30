@@ -56,4 +56,8 @@ public class UserController {
         tokenCookie.setMaxAge(0);
         response.addCookie(tokenCookie);
     }
+    @RequestMapping(value = "/forceLogout", method = RequestMethod.GET)
+    public void forceLogout() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
 }

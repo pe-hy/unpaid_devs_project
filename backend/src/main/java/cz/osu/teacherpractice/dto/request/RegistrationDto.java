@@ -22,7 +22,6 @@ public class RegistrationDto {
     @NotNull(message = "lastName musí být zadaný.")
     private final String lastName;
 
-    @NotNull(message = "schoolId musí být zadaný.")
     private final Long school;
 
     private final String phoneNumber;

@@ -39,6 +39,10 @@ public interface MapStructMapper {
 
     List<UserDto> usersToUsersDto(List<User> users);
 
+    User userDtoToUser(UserDto userDto);
+
+
+
     StudentPracticeDto practiceDomainToStudentPracticeDto(PracticeDomain practiceDomain);
 
     List<StudentPracticeDto> practicesDomainToStudentPracticesDto(List<PracticeDomain> practiceDomain);

@@ -1,8 +1,8 @@
 import "./RegistrationButtonComponent.css"
 
-const RegistrationButtonComponent = ({ text }) => {
+const RegistrationButtonComponent = ({ text, click, disable }) => {
     return (
-        <button className='btn button-rgstr-1'>
+        <button className='btn button-rgstr-1'disabled={disable} onClick={click}>
             {text}
         </button>
     )

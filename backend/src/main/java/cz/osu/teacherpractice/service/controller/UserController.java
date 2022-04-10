@@ -48,16 +48,4 @@ public class UserController {
     public List<SchoolDto> getSchools() {
         return userService.getSchools();
     }
-
-    @GetMapping("/user/logout")
-    public void userLogout(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookiesLst = request.getCookies();
-        Cookie tokenCookie = cookiesLst[0];
-        tokenCookie.setMaxAge(0);
-        response.addCookie(tokenCookie);
-    }
-    @RequestMapping(value = "/forceLogout", method = RequestMethod.GET)
-    public void forceLogout() {
-        SecurityContextHolder.getContext().setAuthentication(null);
-    }
 }

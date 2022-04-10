@@ -9,7 +9,6 @@ import { Row, Col, Container, Nav } from "react-bootstrap";
 import "./LoginControlStyles.css";
 import LoginInformationComponent from "../loginInformation/LoginInformationComponent";
 import { userContext } from "../../userContext";
-import Logout from "../../services/LogoutService";
 let iconStyles = { fontSize: "1.5em", color: "white" };
 let textStyles = { color: "white" };
 
@@ -83,13 +82,10 @@ class LoginControl extends React.Component {
   }
 
   handleLogoutClick() {
-    Logout().then(
-      (res) => {
-        console.log(res)
-      });
     localStorage.clear();
     this.context.logOut();
     window.location.href = "/";
+    document.cookie = "access_token" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   handleRegisterClick() {

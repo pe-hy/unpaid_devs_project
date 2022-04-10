@@ -35,12 +35,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User a SET a.locked = False WHERE a.username = :username")
     int unlockAppUser(@Param("username") String username);
 
-    @Query("SELECT u FROM User u WHERE u.locked = True")
+    @Query("SELECT u FROM User u WHERE u.locked = True and u.enabled = True")
     List<User> getAllLocked();
 
     String deleteByUsername(String Username);
-
-//    @Transactional
-//    @Query("SELECT u.firstName, u.secondName, u.username, u.phoneNumber, u.role FROM User u WHERE u.locked=True")
-//    List<User> getAllLocked();
 }

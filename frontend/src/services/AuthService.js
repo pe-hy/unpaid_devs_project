@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 const LOGIN_URL = "http://localhost:8080/login";
 const REGISTER_URL = "http://localhost:8080/register";
 const CONFIRMATION_URL = "http://localhost:8080/register/confirm?"

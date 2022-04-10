@@ -1,6 +1,5 @@
-import LoginComponent from "../../components/loginForm/LoginComponent";
 import { Container } from "react-bootstrap";
-import NavbarComponent from "../../components/navbar/NavbarComponent";
+import LoginComponent from "../../components/loginForm/LoginComponent";
 
 const LoginView = () => {
   return (

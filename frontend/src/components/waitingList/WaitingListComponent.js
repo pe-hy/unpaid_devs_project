@@ -2,7 +2,7 @@ import "./WaitingListComponent.css";
 import {Navigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {axios} from "../../axios.js";
-import {Container, Modal, Button} from "react-bootstrap";
+import {Container, Modal} from "react-bootstrap";
 
 export const WaitingListComponent = () => {
     const [users, setUsers] = useState([]);

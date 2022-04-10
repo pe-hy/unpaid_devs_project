@@ -1,7 +1,6 @@
-import RegisterComponent, {RegistrationComponent} from "../../components/registration/RegistrationComponent.js";
 import { Container } from "react-bootstrap";
-import NavbarComponent from "../../components/navbar/NavbarComponent";
-import "./RegisterView.css"
+import { RegistrationComponent } from "../../components/registration/RegistrationComponent.js";
+import "./RegisterView.css";
 
 const RegisterView = () => {
   return (

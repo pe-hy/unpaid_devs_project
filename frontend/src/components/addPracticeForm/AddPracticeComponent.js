@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import {
-  Col,
-  Row,
-  Form,
+  Alert, Button, ButtonGroup, Col, Form,
   InputGroup,
-  OverlayTrigger,
-  Tooltip,
-  ButtonGroup,
-  Button,
-  ButtonToolbar,
-  Alert,
+  OverlayTrigger, Row, Tooltip
 } from "react-bootstrap";
-
+import {
+  BsCheckLg,
+  BsExclamationTriangleFill, BsFillPencilFill, BsInfoCircleFill
+} from "react-icons/bs";
+import { Navigate } from "react-router-dom";
+import { axios } from "../../axios";
 import "./TabsStyles.css";
 
-import { axios } from "../../axios";
-import {
-  BsInfoCircleFill,
-  BsFillPencilFill,
-  BsFillTrashFill,
-  BsCheckLg,
-  BsExclamationTriangleFill
-} from "react-icons/bs";
+
 
 export function getMinDate(days){
   let date = new Date();
@@ -67,7 +57,6 @@ const TabsForm = () => {
   }, []);
 
   const checkFormData = () => {
-    console.log(formData);
     if (!formData["subject"]) {
       formData["subject"] = { id: subjects.at(0).id, name: subjects.at(0).name };
     } else {
@@ -90,7 +79,6 @@ const TabsForm = () => {
   const addPraxe = async (event) => {
     event.preventDefault();
     checkFormData(formData);
-    console.log(formData);
     const response = await axios({
       url: `http://localhost:8080/teacher/practice`,
       withCredentials: true,

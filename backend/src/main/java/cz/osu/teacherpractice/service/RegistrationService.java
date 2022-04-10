@@ -101,7 +101,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         userService.enableAppUser(
                 confirmationToken.getAppUser().getUsername());
-        return "Účet aktivován. Můžete se přihlásit.";
+        return "E-mail byl úspěšně ověřen.";
     }
 
     private String buildEmail(String name, String link) {

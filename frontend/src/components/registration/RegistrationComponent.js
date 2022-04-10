@@ -1,24 +1,16 @@
-import ReactDOM from "react-dom";
-import React, { useEffect, useState } from "react";
-import Form from "react-validation/build/form";
-import AuthService from "../../services/AuthService";
-import CheckButton from "react-validation/build/button";
-import Select from "react-validation/build/select";
+import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import "./RegistrationComponent.css";
-import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { BsInfoCircleFill } from "react-icons/bs";
-import Input from "react-validation/build/input";
+import { BsExclamationCircleFill, BsExclamationTriangleFill, BsInfoCircleFill } from "react-icons/bs";
 import PasswordStrengthBar from 'react-password-strength-bar';
-import RegistrationButtonComponent from "../registrationButton/RegistrationButtonComponent";
-import FinishedRegistrationComponent from "../registrationButton/FinishedRegistrationComponent"
-import {
-  BsEnvelopeFill,
-  BsLockFill,
-  BsExclamationTriangleFill,
-  BsExclamationCircleFill
-} from "react-icons/bs";
+import CheckButton from "react-validation/build/button";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import Select from "react-validation/build/select";
 import { axios } from "../../axios";
+import AuthService from "../../services/AuthService";
+import FinishedRegistrationComponent from "../registrationButton/FinishedRegistrationComponent";
+import RegistrationButtonComponent from "../registrationButton/RegistrationButtonComponent";
+import "./RegistrationComponent.css";
 
 const notRegistered = "Zaregistrovat se";
 const waiting = "Zpracování požadavku..."
@@ -100,6 +92,12 @@ const invalidPassword = (value) => {
 export class RegistrationComponent extends Component {
   constructor(props) {
     super(props);
+    this.emailRef = React.createRef();
+    this.nameRef = React.createRef();
+    this.lastNameRef = React.createRef();
+    this.passwordRef = React.createRef();
+    this.passwordAgainRef = React.createRef();
+    this.phoneRef = React.createRef();
     this.state = {
       email: "",
       name: "",
@@ -160,7 +158,9 @@ export class RegistrationComponent extends Component {
         var sch = [];
         schools.forEach(element => sch.push(element));
         this.setSchools({ sch });
-        this.state.school = sch[0].id;
+        this.setState({
+          school: sch[0].id
+        });
       })
 
   }
@@ -200,6 +200,7 @@ export class RegistrationComponent extends Component {
   };
 
   handleRegister(e) {
+    console.log("handling register")
     //Use something like this to check renderering, but after everything is fetched from the server
     // Uncomment this below and add proper error handling for servercall
     e.preventDefault();
@@ -300,11 +301,11 @@ export class RegistrationComponent extends Component {
               <div className={"d-flex justify-content-around mt-2 radio-group"}>
                 <div>
                   <input type="radio" id="student" name="occupation" value="student" onChange={this.onChangeOccupation} defaultChecked />
-                  <label for="student"> Student</label>
+                  <label htmlFor="student"> Student</label>
                 </div>
                 <div>
                   <input type="radio" id="teacher" name="occupation" value="teacher" onChange={this.onChangeOccupation} />
-                  <label for="teacher"> Učitel</label>
+                  <label htmlFor="teacher"> Učitel</label>
                 </div>
               </div>
               <br /><br />
@@ -328,9 +329,8 @@ export class RegistrationComponent extends Component {
                 <span className={"span-input"}>
                   <Input type="email"
                     className="form-control"
-                    ref="email"
-                    defaultValue=""
-                    name="email"
+                    ref={this.emailRef}
+                    name={this.emailRef}
                     placeholder="P21130@student.osu.cz"
                     value={this.state.email}
                     onChange={this.onChangeEmail}
@@ -346,8 +346,8 @@ export class RegistrationComponent extends Component {
                   <Input type="text"
                     className="form-control"
                     onChange={this.onChangeName}
-                    ref="name"
-                    defaultValue=""
+                    ref={this.nameRef}
+                    
                     required />
                 </span>
               </label>
@@ -358,10 +358,10 @@ export class RegistrationComponent extends Component {
                 <span className={"span-label"}><b>Příjmení</b></span>
                 <span className={"span-input"}>
                   <Input type="text"
-                    ref="name"
+                    ref={this.lastNameRef}
                     onChange={this.onChangeSurname}
                     className="form-control"
-                    defaultValue=""
+                    
                     required />
                 </span>
               </label>
@@ -387,8 +387,7 @@ export class RegistrationComponent extends Component {
 
                     <Input type="password"
                       className="form-control"
-                      ref="password"
-                      defaultValue=""
+                      ref={this.passwordRef}
                       onChange={this.onChangePassword}
                       validations={[required, invalidPassword]}
                       required /></div>
@@ -408,9 +407,8 @@ export class RegistrationComponent extends Component {
 
                 <span className={"span-input"}>
                   <Input type="password"
-                    ref="password_again"
+                    ref={this.passwordAgainRef}
                     className="form-control"
-                    defaultValue=""
                     placeholder="Heslo znovu"
                     validations={[required, this.checkSecondPassword]}
                     required />
@@ -464,11 +462,11 @@ export class RegistrationComponent extends Component {
               <div className={"d-flex justify-content-around mt-2 radio-group"}>
                 <div>
                   <input type="radio" id="student" name="occupation" value="student" onChange={this.onChangeOccupation} defaultChecked />
-                  <label for="student">Student</label>
+                  <label htmlFor="student">Student</label>
                 </div>
                 <div>
                   <input type="radio" id="teacher" name="occupation" value="teacher" onChange={this.onChangeOccupation} />
-                  <label for="teacher">Učitel</label>
+                  <label htmlFor="teacher">Učitel</label>
                 </div>
               </div>
               <br /><br />
@@ -478,9 +476,8 @@ export class RegistrationComponent extends Component {
                 <span className={"span-input"}>
                   <Input type="email"
                     className="form-control"
-                    ref="email"
-                    defaultValue=""
-                    name="email"
+                    ref={this.emailRef}
+                    name={this.emailRef}
                     value={this.state.email}
                     onChange={this.onChangeEmail}
                     validations={[required, this.invalidEmail]}
@@ -495,9 +492,9 @@ export class RegistrationComponent extends Component {
                   <Input type="text"
                     onChange={this.onChangeName}
                     className="form-control"
-                    name="firstName"
-                    ref="name"
-                    defaultValue=""
+                    name={this.nameRef}
+                    ref={this.nameRef}
+                   
                     required />
                 </span>
               </label>
@@ -508,11 +505,11 @@ export class RegistrationComponent extends Component {
                 <span className={"span-label"}><b>Příjmení</b></span>
                 <span className={"span-input"}>
                   <Input type="text"
-                    ref="name"
+                    ref={this.lastNameRef}
                     onChange={this.onChangeSurname}
                     className="form-control"
-                    name="lastName"
-                    defaultValue=""
+                    name={this.lastNameRef}
+                    
                     required />
                 </span>
               </label>
@@ -549,11 +546,11 @@ export class RegistrationComponent extends Component {
                 <span className={"span-input"}>
                   <Input type="text"
                     className="form-control"
-                    name="telephone"
-                    ref="phone"
+                    name={this.phoneRef}
+                    ref={this.phoneRef}
                     onChange={this.onChangePhone}
                     validations={[invalidPhoneNum]}
-                    defaultValue=""
+                  
                   /></span>
               </label>
               <br />
@@ -578,9 +575,8 @@ export class RegistrationComponent extends Component {
 
                     <Input type="password"
                       className="form-control"
-                      name="firstPassword"
-                      ref="password"
-                      defaultValue=""
+                      name={this.passwordRef}
+                      ref={this.passwordRef}
                       onChange={this.onChangePassword}
                       validations={[required, invalidPassword]}
                       required /></div>
@@ -599,10 +595,9 @@ export class RegistrationComponent extends Component {
                 <span className={"span-input"}></span>
                 <span className={"span-input"}>
                   <Input type="password"
-                    ref="password_again"
-                    name="secondPassword"
+                    ref={this.passwordAgainRef}
+                    name={this.passwordAgainRef}
                     className="form-control"
-                    defaultValue=""
                     placeholder="Heslo znovu"
                     validations={[required, this.checkSecondPassword]}
                     required />

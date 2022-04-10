@@ -1,17 +1,13 @@
+import axios from "axios";
 import React, { Component } from "react";
+import {
+  BsEnvelopeFill, BsExclamationCircleFill, BsExclamationTriangleFill, BsLockFill
+} from "react-icons/bs";
+import { Navigate } from "react-router-dom";
+import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/AuthService";
-import { Navigate } from "react-router-dom";
-import validator from "validator";
-import axios from "axios";
-import {
-  BsEnvelopeFill,
-  BsLockFill,
-  BsExclamationTriangleFill,
-  BsExclamationCircleFill
-} from "react-icons/bs";
 import { userContext } from "../../userContext";
 import "./LoginFormStyles.css";
 
@@ -75,7 +71,6 @@ export default class Login extends Component {
   componentDidMount(e){
     
     if(window.location.href.includes("token")){
-      console.log(CONFIRMATION_URL + window.location.href.split("?")[1]);
       return axios({
         url: CONFIRMATION_URL + window.location.href.split("?")[1],
         withCredentials: false,

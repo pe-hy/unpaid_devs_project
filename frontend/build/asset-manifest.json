@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6c759a42.css",
+    "main.js": "/static/js/main.6795e5fb.js",
+    "static/js/787.c19b3eab.chunk.js": "/static/js/787.c19b3eab.chunk.js",
+    "static/media/OUbile.png": "/static/media/OUbile.079e398aa78dbe356520.png",
+    "index.html": "/index.html",
+    "main.6c759a42.css.map": "/static/css/main.6c759a42.css.map",
+    "main.6795e5fb.js.map": "/static/js/main.6795e5fb.js.map",
+    "787.c19b3eab.chunk.js.map": "/static/js/787.c19b3eab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c759a42.css",
+    "static/js/main.6795e5fb.js"
+  ]
+}

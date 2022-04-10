@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import "./FinishedRegistrationComponent.css"
 
 const FinishedRegistrationComponent = ({ text }) => {

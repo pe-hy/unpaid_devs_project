@@ -106,10 +106,6 @@ const TabsForm = () => {
     document.getElementById("Form").reset();
   };
 
-  const clearNotes = () => {
-    document.getElementById("Poznamka").value = "";
-  };
-
   const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_TEACHER";
   };

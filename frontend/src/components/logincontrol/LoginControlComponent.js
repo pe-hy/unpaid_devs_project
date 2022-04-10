@@ -85,6 +85,7 @@ class LoginControl extends React.Component {
     localStorage.clear();
     this.context.logOut();
     window.location.href = "/";
+    // eslint-disable-next-line no-useless-concat
     document.cookie = "access_token" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 

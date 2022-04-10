@@ -33,7 +33,7 @@ export const PracticeListComponent = () => {
 
     useEffect(() => {
         getPraxe();
-    }, []);
+    },[]);
 
     const registerRequest = async (id) => {
         const response = await axios({

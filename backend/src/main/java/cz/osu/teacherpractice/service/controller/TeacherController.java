@@ -16,7 +16,7 @@ public class TeacherController {
 
     private final TeacherService teacherService;
 
-    @GetMapping("")
+    @GetMapping("/hi")
     public String getTeacher(Principal principal) {
         return "Hi teacher: " + principal.getName();
     }
@@ -26,4 +26,6 @@ public class TeacherController {
     public void addPractice(Principal principal, @Valid @RequestBody NewPracticeDto newPracticeDto) {
         teacherService.addPractice(principal.getName(), newPracticeDto);
     }
+
+
 }

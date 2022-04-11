@@ -36,32 +36,38 @@ const FileManagementComponent = () => {
             formData.append(`files`, files[i])
         }
 
-        const requestOptions = {
-            headers: { 'content-type': 'application/json' },
-            method: 'POST',
-            body: formData,
-            withCredentials: true,
-        };
-        fetch(FILE_UPLOAD_BASE_ENDPOINT+'/teacher/upload', requestOptions)
-            .then(async response => {
-                const isJson = response.headers.get('content-type')?.includes('application/json');
-                const data = isJson && await response.json();
+        var axios = require('axios');
+var data = formData;
 
-                // check for error response
-                if (!response.ok) {
-                    // get error message
-                    const error = (data && data.message) || response.status;
-                    setFileUploadResponse(data.message);
-                    return Promise.reject(error);
-                }
+var config = {
+  method: 'post',
+  url: 'http://localhost:8080/teacher/upload',
+  headers: { 
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0', 
+    'Accept': 'application/json, text/plain, */*', 
+    'Accept-Language': 'cs,sk;q=0.8,en-US;q=0.5,en;q=0.3', 
+    'Accept-Encoding': 'gzip, deflate', 
+    'Content-Type': 'application/json', 
+    'Origin': 'http://localhost:3000', 
+    'Connection': 'keep-alive', 
+    'Referer': 'http://localhost:3000/', 
+    'Sec-Fetch-Dest': 'empty', 
+    'Sec-Fetch-Mode': 'cors', 
+    'Sec-Fetch-Site': 'same-site', 
+    'Cookie': 'access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJlbC5zdm9ib2RhQGVtYWlsLmN6Iiwicm9sZSI6IlJPTEVfVEVBQ0hFUiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9sb2dpbiIsImV4cCI6MTY1MDg1OTIwMH0.H-GQi5cCucfPGHxS7GeYWsd6VuFFBatUfU20TQunH5c', 
+    ...data.getHeaders()
+  },
+  data : data
+};
 
-                console.log(data.message);
-                setFileUploadResponse(data.message);
-            })
-            .catch(error => {
-                console.error('Error while uploading file!', error);
-            });
-        setFileUploadProgress(false);
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
     };
 
     return(

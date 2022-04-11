@@ -1,10 +1,13 @@
 import "./TeacherPersonalPageStyles.css";
+import FileManagementComponent from "../../components/teacherPersonalPage/FileManagementComponent";
 
 const TeacherHomeView = () => {
   
   return (
     <div className="container">
-      <input type="file"/>
+        <div className="cstmpadd">
+            <FileManagementComponent/>
+        </div>
     </div>
   );
 };

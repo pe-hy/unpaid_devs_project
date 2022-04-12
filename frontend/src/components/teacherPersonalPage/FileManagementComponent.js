@@ -10,7 +10,6 @@ const FileManagementComponent = () => {
     //for displaying response message
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
     
-    const []
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
     const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];

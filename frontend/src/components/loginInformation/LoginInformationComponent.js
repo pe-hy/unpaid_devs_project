@@ -13,6 +13,7 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
     const getUserName = async () => {
         if (getCurrentRole() == null) return;
         if (getCurrentRole() !== null){
+            console.log("fetching user info");
             const response = await axios({
                 url: "http://localhost:8080/user/info",
                 withCredentials: true,

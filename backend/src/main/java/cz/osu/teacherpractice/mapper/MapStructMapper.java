@@ -41,7 +41,7 @@ public interface MapStructMapper {
 
     User userDtoToUser(UserDto userDto);
 
-
+    UserDto userToUserDto(User user);
 
     StudentPracticeDto practiceDomainToStudentPracticeDto(PracticeDomain practiceDomain);
 

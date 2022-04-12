@@ -101,7 +101,7 @@ export default class Login extends Component {
 
     }
     else{
-      console.log("not token")
+      
     }
     
   }

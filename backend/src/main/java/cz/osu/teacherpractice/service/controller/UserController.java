@@ -1,5 +1,7 @@
 package cz.osu.teacherpractice.service.controller;
 
+import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.SubjectDto;
@@ -23,6 +25,7 @@ import java.util.Map;
 @RestController @RequiredArgsConstructor
 public class UserController {
 
+    private final MapStructMapper mapper;
     private final UserService userService;
 
     @GetMapping("/user/roles")
@@ -37,6 +40,12 @@ public class UserController {
         String secondName = user.getSecondName();
         String role = user.getRole().getCode();
         return Map.of("firstName", firstName, "secondName", secondName, "role", role);
+    }
+
+    @GetMapping("/user/data")
+    public UserDto getUserData(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        return mapper.userToUserDto(user);
     }
 
     @GetMapping("/user/subjects")

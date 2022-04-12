@@ -51,7 +51,7 @@ public class TeacherPracticeApp {
             st1.setEnabled(true);
             User st2 = new User("student2@student.cz", "student2", "Jan", "Nowak", null, null, Role.STUDENT);
             st2.setEnabled(true);
-            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, null, Role.TEACHER);
+            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "448896334", Role.TEACHER);
             tch.setEnabled(true);
             User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
             coord.setEnabled(true);

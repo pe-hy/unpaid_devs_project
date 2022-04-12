@@ -9,6 +9,8 @@ const FileManagementComponent = () => {
     const [fileUploadProgress, setFileUploadProgress] = useState(false);
     //for displaying response message
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
+    
+    const []
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
     const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];
@@ -69,12 +71,12 @@ const FileManagementComponent = () => {
     return (
 
         <div>
-            <input type="file" multiple onChange={uploadFileHandler}/>
-            <button onClick={fileSubmitHandler}>Upload</button>
+            {/* <input type="file" multiple onChange={uploadFileHandler}/> */}
             <div>{DragDrop()}</div>
             {!fileSize && <p style={{color: 'red'}}>File size exceeded!!</p>}
             {fileUploadProgress && <p style={{color: 'red'}}>Uploading File(s)</p>}
             {fileUploadResponse != null && <p style={{color: 'green'}}>{fileUploadResponse}</p>}
+            <button onClick={fileSubmitHandler}>Upload</button>
         </div>
 
     );

@@ -119,6 +119,8 @@ export default class Login extends Component {
             currentRole: localStorage.getItem("role"),
             redirectToLogin: true,
           });
+          window.location.reload(); // bcuz no idea how to change navbar otherwise, will figure out later
+
         },
         (error) => {
           const resMessage =

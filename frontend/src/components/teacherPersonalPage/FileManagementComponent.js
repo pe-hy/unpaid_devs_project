@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {FileUploader} from "react-drag-drop-files";
 
 const FileManagementComponent = () => {
     const [files, setFiles] = useState('');
@@ -10,22 +11,30 @@ const FileManagementComponent = () => {
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
+    const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PNG"];
+
+    function DragDrop() {
+        const handleChange = (file) => {
+            setFiles(file);
+        };
+        return (
+            <FileUploader label={"Nahrejte soubor kliknutím nebo přetažením"} handleChange={handleChange} name="file" types={fileTypes} />
+        );
+    }
 
     const uploadFileHandler = (event) => {
         setFiles(event.target.files);
     };
 
-
     const fileSubmitHandler = (event) => {
         event.preventDefault();
         setFileSize(true);
         setFileUploadProgress(true);
-        setFileUploadResponse(null);
 
         const formData = new FormData();
 
         for (let i = 0; i < files.length; i++) {
-            if (files[i].size > 10240) {
+            if (files[i].size > 202480) {
                 setFileSize(false);
                 setFileUploadProgress(false);
                 setFileUploadResponse(null);
@@ -49,6 +58,7 @@ const FileManagementComponent = () => {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                setFileUploadResponse(response.data.message);
             })
             .catch(function (error) {
                 console.log(error);
@@ -61,6 +71,7 @@ const FileManagementComponent = () => {
         <div>
             <input type="file" multiple onChange={uploadFileHandler}/>
             <button onClick={fileSubmitHandler}>Upload</button>
+            <div>{DragDrop()}</div>
             {!fileSize && <p style={{color: 'red'}}>File size exceeded!!</p>}
             {fileUploadProgress && <p style={{color: 'red'}}>Uploading File(s)</p>}
             {fileUploadResponse != null && <p style={{color: 'green'}}>{fileUploadResponse}</p>}

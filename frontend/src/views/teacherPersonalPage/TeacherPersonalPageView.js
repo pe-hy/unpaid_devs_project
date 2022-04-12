@@ -1,12 +1,12 @@
 import "./TeacherPersonalPageStyles.css";
-import FileManagementComponent from "../../components/teacherPersonalPage/FileManagementComponent";
+import TeacherPersonalPageComponent from "../../components/teacherPersonalPage/TeacherPersonalPageComponent";
 
 const TeacherHomeView = () => {
   
   return (
     <div className="container">
         <div className="cstmpadd">
-            <FileManagementComponent/>
+            <TeacherPersonalPageComponent/>
         </div>
     </div>
   );

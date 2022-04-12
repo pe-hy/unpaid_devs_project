@@ -97,7 +97,6 @@ public class UploadFileController {
     }
 
     private void createDirIfNotExist(File path) {
-        //create user folder
         File directory = path;
         if (!directory.exists()) {
             directory.mkdir();

@@ -21,7 +21,7 @@ function App() {
             <Route path="/studentHome" element={<StudentHomeView />} />
             <Route path="/teacherHome" element={<TeacherHomeView />} />
             <Route path="/coordinatorHome" element={<CoordinatorHomeView />} />
-            <Route path="/teacherPersonalPage" element={<TeacherPersonalPageView />} />
+            <Route path="/teacherPersonal" element={<TeacherPersonalPageView />} />
           </Routes>
         </BrowserRouter>
       </UserContextProvider>

@@ -11,14 +11,14 @@ const FileManagementComponent = () => {
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
-    const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PNG"];
-
+    const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];
+    //https://www.npmjs.com/package/react-drag-drop-files
     function DragDrop() {
         const handleChange = (file) => {
             setFiles(file);
         };
         return (
-            <FileUploader label={"Nahrejte soubor kliknutím nebo přetažením"} handleChange={handleChange} name="file" types={fileTypes} />
+            <FileUploader maxSize={20} multiple={true} label={"Nahrejte soubor kliknutím nebo přetažením"} handleChange={handleChange} name="file" types={fileTypes} />
         );
     }
 

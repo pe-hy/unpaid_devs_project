@@ -13,4 +13,5 @@ public class AppConfig {
     public static final int PRACTICE_NOTE_MAX_LENGTH = 250;
     public static final int CONFIRMATION_TOKEN_EXPIRY_TIME = 60; // minutes
     public static final String CONFIRMATION_EMAIL_ADDRESS = "teacherpracticeconfirmator@seznam.cz";
+    public static final int MAXIMUM_FILE_NUMBER_PER_USER = 3;
 }

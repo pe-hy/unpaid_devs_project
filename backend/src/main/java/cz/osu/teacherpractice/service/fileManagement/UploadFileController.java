@@ -1,4 +1,5 @@
 package cz.osu.teacherpractice.service.fileManagement;
+import cz.osu.teacherpractice.config.AppConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,22 +7,38 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import cz.osu.teacherpractice.repository.UserRepository;
 
 @RestController
 @RequiredArgsConstructor
 public class UploadFileController {
 
+    private final UserRepository userRepository;
+
     @PostMapping("/teacher/upload")
-    public ResponseEntity<FileUploadResponse> uploadFiles(@RequestParam("files") MultipartFile[] files) {
-        System.out.println("Called upload files endpoint");
+    public ResponseEntity<FileUploadResponse> uploadFiles(Principal principal, @RequestParam("files") MultipartFile[] files) {
         try {
-            createDirIfNotExist();
+            Long id = userRepository.findByEmail(principal.getName()).get().getId();
+            File userFolderPath = new File(FileUtil.folderPath + id);
+            createDirIfNotExist(userFolderPath);
+            int maxFiles = AppConfig.MAXIMUM_FILE_NUMBER_PER_USER;
+            long filesNum = FileUtil.getNumberOfFilesInFolder(id);
+            if(filesNum >= maxFiles){
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new FileUploadResponse("Byl překročen limit počtu souborů na uživatele. Maximum je: " + maxFiles));
+            }
+
             List<String> fileNames = new ArrayList<>();
 
             // read and write the file to the local folder
@@ -29,7 +46,12 @@ public class UploadFileController {
                 byte[] bytes = new byte[0];
                 try {
                     bytes = file.getBytes();
-                    Files.write(Paths.get(FileUtil.folderPath + file.getOriginalFilename()), bytes);
+                    String fileName = file.getOriginalFilename();
+                    File path = new File(FileUtil.folderPath + id + "//" + fileName);
+                    if(fileExists(id, fileName)){
+                        fileName = renameExistingFile(userFolderPath, fileName);
+                    }
+                    Files.write(Paths.get(FileUtil.folderPath + id + "//" + fileName), bytes);
                     fileNames.add(file.getOriginalFilename());
                 } catch (IOException e) {
 
@@ -37,20 +59,46 @@ public class UploadFileController {
             });
 
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new FileUploadResponse("Files uploaded successfully: " + fileNames));
+                    .body(new FileUploadResponse("Soubory byly úspěšně nahrány: " + fileNames));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                    .body(new FileUploadResponse("Exception to upload files!"));
+                    .body(new FileUploadResponse("Došlo k neočekávané chybě!"));
         }
     }
 
     /**
      * Create directory to save files, if not exist
      */
-    private void createDirIfNotExist() {
-        //create directory to save the files
-        File directory = new File(FileUtil.folderPath);
+    private boolean fileExists(Long id, String fileName){
+        File directory = new File(FileUtil.folderPath + "//" + id + "//" + fileName);
+        return directory.exists();
+    }
+    private String renameExistingFile(File path, String fileName){
+        int highestNumber = 1;
+        File f = path;
+        File[] matchingFiles = f.listFiles((dir, name) -> name.startsWith(fileName.split("\\.")[0]));
+        Pattern MY_PATTERN = Pattern.compile("(\\d+)");
+
+        assert matchingFiles != null;
+        for (File file :
+                matchingFiles) {
+            Matcher m = MY_PATTERN.matcher(file.getName());
+            while (m.find()) {
+                String s = m.group(m.groupCount()-1);
+                // s now contains "BAR"
+                if(Integer.parseInt(s) > highestNumber) highestNumber = Integer.parseInt(s);
+            }
+        }
+        String name = fileName.split("\\.")[0];
+        String fileExtension = fileName.split("\\.")[1];
+        String ret = name + "(" + (highestNumber + 1) + ")." + fileExtension;
+        return ret;
+    }
+
+    private void createDirIfNotExist(File path) {
+        //create user folder
+        File directory = path;
         if (!directory.exists()) {
             directory.mkdir();
         }

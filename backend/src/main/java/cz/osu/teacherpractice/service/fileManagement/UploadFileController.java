@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.service.fileManagement;
 import cz.osu.teacherpractice.config.AppConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -100,7 +101,11 @@ public class UploadFileController {
         //create user folder
         File directory = path;
         if (!directory.exists()) {
-            directory.mkdir();
+
+            boolean wasSuccessful = directory.mkdirs();
+            if (!wasSuccessful) {
+                System.out.println("was not successful.");
+            }
         }
     }
 

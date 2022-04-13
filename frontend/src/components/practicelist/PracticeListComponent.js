@@ -216,6 +216,8 @@ export const PracticeListComponent = () => {
 
                                     <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 
+                                    <p style={{marginTop: "10px"}}><b>Soubor ke stažení:</b> {item.note}</p>
+
                                 <div className="center d-xl-none" style={{width: "15%"}}>
                                     {getButton(item.isCurrentStudentReserved, item.id)}
                                 </div>

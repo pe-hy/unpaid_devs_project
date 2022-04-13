@@ -16,6 +16,7 @@ function refreshPage() {
 const NavbarComponent = () => {
 
     const [role, setRole] = useState("");
+    
     useEffect(() => {
         getCurrentRole()
     }, [])

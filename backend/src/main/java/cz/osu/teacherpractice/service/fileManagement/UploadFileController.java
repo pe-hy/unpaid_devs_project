@@ -34,8 +34,10 @@ public class UploadFileController {
             File userFolderPath = new File(FileUtil.folderPath + id);
             createDirIfNotExist(userFolderPath);
             int maxFiles = AppConfig.MAXIMUM_FILE_NUMBER_PER_USER;
+            int numberOfFilesUploaded = files.length;
+
             long filesNum = FileUtil.getNumberOfFilesInFolder(id);
-            if(filesNum >= maxFiles){
+            if((filesNum + numberOfFilesUploaded) > maxFiles){
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                         .body(new FileUploadResponse("Byl překročen limit počtu souborů na uživatele. Maximum je: " + maxFiles));
             }

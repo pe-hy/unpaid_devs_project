@@ -72,10 +72,10 @@ const FileManagementComponent = () => {
         <div>
             {/* <input type="file" multiple onChange={uploadFileHandler}/> */}
             <div>{DragDrop()}</div>
-            {!fileSize && <p style={{color: 'red'}}>File size exceeded!!</p>}
-            {fileUploadProgress && <p style={{color: 'red'}}>Uploading File(s)</p>}
-            {fileUploadResponse != null && <p style={{color: 'green'}}>{fileUploadResponse}</p>}
-            <button onClick={fileSubmitHandler}>Upload</button>
+            {!fileSize && <p style={{color: 'red'}}>Příliš velký soubor. Limit: 20 MB</p>}
+            {fileUploadProgress && <p style={{color: 'red'}}>Nahrávám soubory...</p>}
+            {fileUploadResponse != null && <p style={{color: 'green'}}>{fileUploadResponse.replace(/[[\]']+/g,'')}</p>}
+            <button className={"btn btn-success"} onClick={fileSubmitHandler}>Nahrát</button>
         </div>
 
     );

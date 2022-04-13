@@ -77,7 +77,7 @@ const FileManagementComponent = () => {
                 });
         }
         const { acceptedFiles, getRootProps, fileRejections, getInputProps } = useDropzone({
-            accept: '.jpg, .jpeg, .png, .docx, .txt, .pdf'
+            accept: 'image/jpeg, image/png, image/png, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain, application/pdf'
         });
     
 
@@ -90,7 +90,8 @@ const FileManagementComponent = () => {
 
         const fileRejectionItems = fileRejections.map(({ file, errors }) => (
             <li key={file.path}>
-              {file.path} - {file.size} bytes
+                {file.path}
+                - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
               <ul>
                 {errors.map(e => (
                   <li key={e.code}>{"Nepovolená přípona souboru."}</li>

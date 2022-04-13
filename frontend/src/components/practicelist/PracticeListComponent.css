@@ -1,6 +1,5 @@
 .accordion-button::after {
     position: absolute;
-
 }
 
 .accordion-button:hover {
@@ -8,7 +7,7 @@
 
 }
 
-.accordion-button[aria-expanded="true"]:hover{
+.accordion-button[aria-expanded="true"]:hover {
     background-color: transparent;
 }
 
@@ -16,10 +15,11 @@
     color: black
 }
 
-.accordion-button:focus{
+.accordion-button:focus {
     box-shadow: none
 }
-.accordion-button:not(.collapsed){
+
+.accordion-button:not(.collapsed) {
     background-color: #ffffff;
 }
 
@@ -27,7 +27,7 @@
     height: 100%;
 }
 
-.accordion-button{
+.accordion-button {
     height: 100%;
 }
 
@@ -43,7 +43,7 @@
     text-transform: uppercase;
 }
 
-.accordion-header{
+.accordion-header {
     width: 85%;
 }
 
@@ -63,17 +63,17 @@
     color: #326496;
 }
 
-.badge{
+.badge {
     font-size: 15px;
 }
 
-.text-info-practice{
+.text-info-practice {
     width: 100%;
     flex-wrap: nowrap;
     padding-left: 20px;
 }
 
-.date{
+.date {
     text-align: left;
     width: 150px;
     margin-left: 30px;

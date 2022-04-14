@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 const FileManagementComponent = () => {
-    const [files, setFiles] = useState('');
+    
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
     // for file upload progress message

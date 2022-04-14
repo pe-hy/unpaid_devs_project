@@ -10,6 +10,7 @@ import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.service.fileManagement.FileUtil;
 import cz.osu.teacherpractice.token.ConfirmationToken;
 import cz.osu.teacherpractice.token.ConfirmationTokenRepository;
 import cz.osu.teacherpractice.token.ConfirmationTokenService;
@@ -17,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service @RequiredArgsConstructor
 public class UserService {
@@ -54,10 +55,7 @@ public class UserService {
 
     public String unlockUser(String username){
         if(userRepository.findByEmail(username).isPresent()){
-            User u = userRepository.findByEmail(username).get();
             userRepository.unlockAppUser(username);
-//            u.setLocked(false);
-//            userRepoTest.update(u);
             return "user unlocked";
         }
         return "email not found";
@@ -81,6 +79,8 @@ public class UserService {
         return mapper.schoolsToSchoolsDto(schoolRepository.findAll());
     }
 
+
+
     public String signUpUser(User user){
         createUser(user);
 
@@ -99,6 +99,29 @@ public class UserService {
 
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
+    }
+
+    public List<String> getTeacherFiles(String teacherMail){
+
+        if(userRepository.findByEmail(teacherMail).isPresent()){
+            long id = userRepository.findByEmail(teacherMail).get().getId();
+
+            File folder = new File(FileUtil.folderPath + id);
+            File[] listOfFiles = folder.listFiles();
+
+            ArrayList<String> list = new ArrayList<>();
+
+            if(listOfFiles == null) return list;
+            for (File listOfFile : listOfFiles) {
+                if (listOfFile.isFile()) {
+                    list.add(listOfFile.getName());
+                }
+            }
+            return list;
+        }
+        else{
+            throw new ServerErrorException("Uživatel s mailem '" + teacherMail + "' nenalezen.");
+        }
     }
 
 }

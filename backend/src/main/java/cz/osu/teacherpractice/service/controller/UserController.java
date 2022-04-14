@@ -57,4 +57,9 @@ public class UserController {
     public List<SchoolDto> getSchools() {
         return userService.getSchools();
     }
+
+    @GetMapping("/user/teacherFiles/{teacherMail}")
+    public List<String> getTeacherFiles(@PathVariable("teacherMail") String teacherMail) {
+        return userService.getTeacherFiles(teacherMail);
+    }
 }

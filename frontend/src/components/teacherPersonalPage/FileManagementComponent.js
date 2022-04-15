@@ -119,22 +119,22 @@ const FileManagementComponent = () => {
 
 
         const files = acceptedFiles.map(file => (
-            <li key={file.path}>
+            <p key={file.path}>
                 {file.path}
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
-            </li>
+            </p>
         ));
 
         const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-            <li key={file.path}>
+            <p key={file.path}>
                 {file.path}
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
-                <ul>
+                <p>
                     {errors.map(e => (
-                        <li key={e.code}>{errorMessage(e)}</li>
+                        <p style={{padding: "0", margin: "0", fontSize: "10px"}} key={e.code}>{errorMessage(e)}</p>
                     ))}
-                </ul>
-            </li>
+                </p>
+            </p>
         ));
 
 
@@ -147,10 +147,13 @@ const FileManagementComponent = () => {
                 </div>
                 {(files.length > 0 || fileRejectionItems.length > 0) && <React.Fragment>
                     <div>
-                        <h4>Soubory připravené k nahrání</h4>
-                        <ul>{files}</ul>
-                        <h4>Zamítnuté soubory</h4>
-                        <ul>{fileRejectionItems}</ul>
+                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Soubory připravené k nahrání</h4>
+                        <p>{files}</p>
+                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Zamítnuté soubory</h4>
+                        {!fileRejectionItems &&
+                        <i>Prozatím jste nenahráli žádný soubor.</i>
+                        }
+                        <p>{fileRejectionItems}</p>
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>

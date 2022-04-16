@@ -1,13 +1,13 @@
 import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
-import React, {useEffect, useState} from "react";
-import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
-import {axios} from "../../axios.js";
-import {BsInfoCircleFill} from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { axios } from "../../axios.js";
+import { BsInfoCircleFill } from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const PracticeListComponent = () => {
     const [practices, setPraxe] = useState([]);
@@ -33,7 +33,7 @@ export const PracticeListComponent = () => {
 
     useEffect(() => {
         getPraxe();
-    },[]);
+    }, []);
 
     const registerRequest = async (id) => {
         const response = await axios({
@@ -88,13 +88,13 @@ export const PracticeListComponent = () => {
             );
         }
     };
-    if (checkRole()) return <Navigate to="/login"/>;
+    if (checkRole()) return <Navigate to="/login" />;
     return (
         <Container fluid>
             <Accordion>
-                <div style={{width: "85%"}}>
+                <div style={{ width: "85%" }}>
                     <div className="title-container text-info-practice">
-                        <Row style={{width: "100%"}}>
+                        <Row style={{ width: "100%" }}>
                             <Col className="text-center">
                                 <b>Předmět</b>
                             </Col>
@@ -123,50 +123,86 @@ export const PracticeListComponent = () => {
                                         </Tooltip>
                                     }
                                 >
-                  <span>
-                    <BsInfoCircleFill className={"info-tooltip"}/>
-                  </span>
+                                    <span>
+                                        <BsInfoCircleFill className={"info-tooltip"} />
+                                    </span>
                                 </OverlayTrigger>
                             </Col>
                         </Row>
                     </div>
                 </div>
                 {!noPractices &&
-                practices.map((item, index) => (
-                    <Accordion.Item
-                        eventKey={item.id}
-                        key={index}
-                        style={{display: "block"}}
-                    >
-                        <div style={{display: "flex"}}>
-                            <Accordion.Header className={"accordion-header"}>
-                                <Row style={{width: "100%"}}>
-                                    <Col className="text-center  ">{item.subject.name}</Col>
-                                    <Col className="text-center d-none">
-                                        {item.teacher.firstName + " " + item.teacher.secondName}
-                                    </Col>
-                                    <Col className="text-center d-none d-xl-block">{item.teacher.school.name}</Col>
-                                    <Col className="text-center">
-                                        {item.date.split("-")[2] +
-                                        ". " +
-                                        item.date.split("-")[1] +
-                                        ". " +
-                                        item.date.split("-")[0]}
-                                    </Col>
-                                    <Col className="text-center d-none">
-                                        {item.start.split(":")[0] +
-                                        ":" +
-                                        item.start.split(":")[1] +
-                                        " - " +
-                                        item.end.split(":")[0] +
-                                        ":" +
-                                        item.end.split(":")[1]}
-                                    </Col>
-                                    <Col className="text-center d-none">
-                                        {item.teacher.username}
-                                    </Col>
-                                    <Col className="text-center badge d-none">
-                                        <div>
+                    practices.map((item, index) => (
+                        <Accordion.Item
+                            eventKey={item.id}
+                            key={index}
+                            style={{ display: "block" }}
+                        >
+                            <div style={{ display: "flex" }}>
+                                <Accordion.Header className={"accordion-header"}>
+                                    <Row style={{ width: "100%" }}>
+                                        <Col className="text-center  ">{item.subject.name}</Col>
+                                        <Col className="text-center d-none">
+                                            {item.teacher.firstName + " " + item.teacher.secondName}
+                                        </Col>
+                                        <Col className="text-center d-none d-xl-block">{item.teacher.school.name}</Col>
+                                        <Col className="text-center">
+                                            {item.date.split("-")[2] +
+                                                ". " +
+                                                item.date.split("-")[1] +
+                                                ". " +
+                                                item.date.split("-")[0]}
+                                        </Col>
+                                        <Col className="text-center d-none">
+                                            {item.start.split(":")[0] +
+                                                ":" +
+                                                item.start.split(":")[1] +
+                                                " - " +
+                                                item.end.split(":")[0] +
+                                                ":" +
+                                                item.end.split(":")[1]}
+                                        </Col>
+                                        <Col className="text-center d-none">
+                                            {item.teacher.username}
+                                        </Col>
+                                        <Col className="text-center badge d-none">
+                                            <div>
+                                                <Badge
+                                                    bg={
+                                                        item.numberOfReservedStudents < item.capacity - 1
+                                                            ? "success"
+                                                            : "danger"
+                                                    }
+                                                >
+                                                    {item.numberOfReservedStudents} / {item.capacity}
+                                                </Badge>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Accordion.Header>
+                                <div className="center d-none d-xl-block" style={{ width: "15%" }}>
+                                    {getButton(item.isCurrentStudentReserved, item.id)}
+                                </div>
+                            </div>
+
+                            <Accordion.Body>
+                                <div>
+                                    <hr />
+                                    <div style={{ marginLeft: "50px" }}>
+                                        <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
+                                        <p><b>E-mail:</b> {item.teacher.username}</p>
+                                        <p><b>Čas: </b>
+                                            <span>
+                                                {item.start.split(":")[0] +
+                                                    ":" +
+                                                    item.start.split(":")[1] +
+                                                    " - " +
+                                                    item.end.split(":")[0] +
+                                                    ":" +
+                                                    item.end.split(":")[1]}</span></p>
+
+                                        <b>Kapacita: </b>
+                                        <span>
                                             <Badge
                                                 bg={
                                                     item.numberOfReservedStudents < item.capacity - 1
@@ -176,57 +212,27 @@ export const PracticeListComponent = () => {
                                             >
                                                 {item.numberOfReservedStudents} / {item.capacity}
                                             </Badge>
+                                        </span>
+
+                                        <p style={{ marginTop: "10px" }}><i>Poznámka:</i> {item.note}</p>
+
+                                        <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b>
+                                            <ul>
+                                                {item.fileNames.map(function (name, index) {
+                                                    return <li key={index}><a href = {`http://localhost:8080/user/download/${item.teacher.username}/${name}`}>{name}</a></li>;
+                                                })}
+                                            </ul>
+                                        </p>
+
+                                        <div className="center d-xl-none" style={{ width: "15%" }}>
+                                            {getButton(item.isCurrentStudentReserved, item.id)}
                                         </div>
-                                    </Col>
-                                </Row>
-                            </Accordion.Header>
-                            <div className="center d-none d-xl-block" style={{width: "15%"}}>
-                                {getButton(item.isCurrentStudentReserved, item.id)}
-                            </div>
-                        </div>
 
-                        <Accordion.Body>
-                            <div>
-                                <hr/>
-                                <div style={{marginLeft: "50px"}}>
-                                    <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
-                                    <p><b>E-mail:</b> {item.teacher.username}</p>
-                                    <p><b>Čas: </b>
-                                    <span>
-                    {item.start.split(":")[0] +
-                    ":" +
-                    item.start.split(":")[1] +
-                    " - " +
-                    item.end.split(":")[0] +
-                    ":" +
-                    item.end.split(":")[1]}</span></p>
-
-                                    <b>Kapacita: </b>
-                                    <span>
-                      <Badge
-                          bg={
-                              item.numberOfReservedStudents < item.capacity - 1
-                                  ? "success"
-                                  : "danger"
-                          }
-                      >
-                        {item.numberOfReservedStudents} / {item.capacity}
-                      </Badge>
-                    </span>
-
-                                    <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
-
-                                    <p style={{marginTop: "10px"}}><b>Soubor ke stažení:</b> {item.note}</p>
-
-                                <div className="center d-xl-none" style={{width: "15%"}}>
-                                    {getButton(item.isCurrentStudentReserved, item.id)}
+                                    </div>
                                 </div>
-
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                ))}
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    ))}
             </Accordion>
         </Container>
     );

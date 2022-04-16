@@ -2,10 +2,12 @@ package cz.osu.teacherpractice.domain;
 
 import cz.osu.teacherpractice.dto.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.service.fileManagement.FileUtil;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,6 +24,7 @@ public class PracticeDomain {
     private SubjectDto subject;
     private UserDto teacher;
     private List<UserDto> students;
+    private List<String> fileNames;
 
     @Setter(AccessLevel.NONE)
     private Integer numberOfReservedStudents;
@@ -39,5 +42,9 @@ public class PracticeDomain {
                 .findAny();
 
         this.isCurrentStudentReserved = currentStudent.isPresent();
+    }
+
+    public void setFileNames(List<String> list){
+        this.fileNames = list;
     }
 }

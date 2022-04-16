@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class StudentPracticeDto {
@@ -16,6 +17,7 @@ public class StudentPracticeDto {
     private Integer capacity;
     private SubjectDto subject;
     private UserDto teacher;
+    private List<String> fileNames;
 
     private Integer numberOfReservedStudents;
     private Boolean isCurrentStudentReserved;

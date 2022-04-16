@@ -24,6 +24,7 @@ public class StudentService {
     private final UserRepository userRepository;
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
+    private final UserService userService;
 
     public List<StudentPracticeDto> getPracticesList(String studentUsername, LocalDate date, Long subjectId, Pageable pageable) {
         List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
@@ -33,6 +34,7 @@ public class StudentService {
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
             p.setIsCurrentStudentReserved(studentUsername);
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
         });
 
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);

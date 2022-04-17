@@ -4,7 +4,7 @@ import "./FileManagementComponent.css";
 import axios from 'axios'
 
 
-const FileManagementComponent = () => {
+const FileManagementComponent = ({userDataRef}) => {
     
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
@@ -144,6 +144,8 @@ const FileManagementComponent = () => {
                     <input {...getInputProps()} />
                     <p>Přetáhnětě soubory zde nebo klikněte a vyberte soubor</p>
                     <p>Povolené přípony: .png, .jpg, .jpeg, .docx, .txt, .pdf</p>
+                    <p>Maximum souborů k nahrání: {MAX_NUMBER_OF_FILES}</p>
+                    <p>Maximální velikost 1 souboru: {unitConversion(MAX_FILE_SIZE)} MB</p>
                 </div>
                 {(files.length > 0 || fileRejectionItems.length > 0) && <React.Fragment>
                     <div>
@@ -157,7 +159,7 @@ const FileManagementComponent = () => {
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>
-                    <button className={"btn btn-success"} onClick={uploadFiles}>Submit</button>
+                    <button className={"btn btn-success"} onClick={() => {uploadFiles(); userDataRef()}}>Submit</button>
                 </React.Fragment>}
 
             </section>

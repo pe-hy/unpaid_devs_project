@@ -13,6 +13,22 @@ const TeacherPersonalPageComponent = () => {
     const [phone, setPhone] = useState("");
     const [files, setFiles] = useState([]);
 
+    const deleteFile = async (fileName) => {
+        const response = await axios({
+            headers: {'content-type': 'application/json'},
+            url: `http://localhost:8080/user/file/delete/${email}/${fileName}`,
+            withCredentials: true,
+            method: "POST",
+        }).catch((err) => {
+            alert(err.response.data.message);
+            console.log(err.response.data.message);
+        });
+        if (response && response.data) {
+            console.log(response);
+            await getUserData();
+        }
+    };
+
     const getCurrentRole = () => {
         return JSON.parse(localStorage.getItem("user"));
     }
@@ -48,7 +64,6 @@ const TeacherPersonalPageComponent = () => {
 
     useEffect(() => {
         getUserData();
-
     }, []);
 
     return (
@@ -67,24 +82,26 @@ const TeacherPersonalPageComponent = () => {
                     <div className="uploadCol">
                         <h1 className="custHeadingUploadCol">Nahrávání souborů</h1>
                         <div style={{paddingTop: "15px", paddingBottom: "15px"}}>
-                            <FileManagementComponent/>
+                            <FileManagementComponent
+                            userDataRef={getUserData}
+                            />
                         </div>
                     </div>
                     <p className="mt-4 mb-4">Aktuálně nahrané soubory: </p>
                     {!files &&
                     <i>Prozatím jste nenahráli žádný soubor.</i>
                     }
-
                     <ul>
-                        {files.map((item, index) => (
-                            <li key={index} style={{marginLeft: "20px", marginTop: "20px"}}>
-                                {item}
-                                <button style={{marginLeft: "20px", fontSize: "16px"}} type="button"
+                        {files.map(function (name, index) {
+                            return <li key={index} style={{marginLeft: "20px", marginTop: "20px"}}>
+                                <a href={`http://localhost:8080/user/download/${email}/${name}`}>{name}</a>
+                                <button onClick={() => {
+                                    deleteFile(name);
+                                }} style={{marginLeft: "20px", fontSize: "16px"}} type="button"
                                         className={"removal-btn-2"}>X
                                 </button>
-                                {' '}
-                            </li>
-                        ))}
+                            </li>;
+                        })}
                     </ul>
                     <p><i>Tyto soubory si může stáhnout student, pokud otevře jakoukoliv z vašich vypsaných praxí.</i>
                     </p>

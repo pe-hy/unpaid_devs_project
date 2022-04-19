@@ -147,19 +147,20 @@ const FileManagementComponent = ({userDataRef}) => {
                     <p>Maximum souborů k nahrání: {MAX_NUMBER_OF_FILES}</p>
                     <p>Maximální velikost 1 souboru: {unitConversion(MAX_FILE_SIZE)} MB</p>
                 </div>
-                {(files.length > 0 || fileRejectionItems.length > 0) && <React.Fragment>
+                {(files.length > 0) && <React.Fragment>
                     <div>
                         <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Soubory připravené k nahrání</h4>
                         <p>{files}</p>
+                    </div>
+                </React.Fragment>}
+                {(fileRejectionItems.length > 0) && <React.Fragment>
+                    <div>
                         <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Zamítnuté soubory</h4>
-                        {!fileRejectionItems &&
-                        <i>Prozatím jste nenahráli žádný soubor.</i>
-                        }
                         <p>{fileRejectionItems}</p>
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>
-                    <button className={"btn btn-success"} onClick={() => {uploadFiles(); userDataRef()}}>Submit</button>
+                    <button className={"btn btn-success"} onClick={() => {uploadFiles(); userDataRef()}}>Nahrát</button>
                 </React.Fragment>}
 
             </section>

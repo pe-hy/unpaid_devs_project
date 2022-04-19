@@ -87,8 +87,10 @@ const TeacherPersonalPageComponent = () => {
                             />
                         </div>
                     </div>
-                    <p className="mt-4 mb-4">Aktuálně nahrané soubory: </p>
-                    {!files &&
+                    <p><i>Tyto soubory si může stáhnout student, pokud otevře jakoukoliv z vašich vypsaných praxí.</i>
+                    </p>
+                    <p className="mt-4 mb-4"><b>Aktuálně nahrané soubory:</b> </p>
+                    {!files.length &&
                     <i>Prozatím jste nenahráli žádný soubor.</i>
                     }
                     <ul>
@@ -103,9 +105,6 @@ const TeacherPersonalPageComponent = () => {
                             </li>;
                         })}
                     </ul>
-                    <p><i>Tyto soubory si může stáhnout student, pokud otevře jakoukoliv z vašich vypsaných praxí.</i>
-                    </p>
-
                 </div>
             </div>
         </div>

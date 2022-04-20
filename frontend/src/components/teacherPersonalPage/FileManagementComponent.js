@@ -4,8 +4,8 @@ import "./FileManagementComponent.css";
 import axios from 'axios'
 
 
-const FileManagementComponent = ({userDataRef}) => {
-    
+const FileManagementComponent = ({ userDataRef }) => {
+
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
     // for file upload progress message
@@ -32,25 +32,25 @@ const FileManagementComponent = ({userDataRef}) => {
 
     function fileSizeValidator(file) {
         if (file.size > MAX_FILE_SIZE) {
-          return {
-            code: "file-too-large",
-            message: `Soubor přesahuje maximální povolenou velikost ${MAX_FILE_SIZE/1000000} MB.`
-          };
+            return {
+                code: "file-too-large",
+                message: `Soubor přesahuje maximální povolenou velikost ${MAX_FILE_SIZE / 1000000} MB.`
+            };
         }
-      
-        return null
-      }
 
-      function errorMessage(e){
+        return null
+    }
+
+    function errorMessage(e) {
         console.log(e.code);
         let message = "Neznámá chyba.";
-        if(e.code == "file-too-large"){
+        if (e.code == "file-too-large") {
             message = e.message;
         }
-        else if(e.code == "file-invalid-type"){
+        else if (e.code == "file-invalid-type") {
             message = "Nepovolená přípona souboru.";
         }
-        else if(e.code == "too-many-files"){
+        else if (e.code == "too-many-files") {
             message = `Bylo zvoleno příliš mnoho souborů. Maximum je ${MAX_NUMBER_OF_FILES}.`;
         }
         return message;
@@ -114,7 +114,7 @@ const FileManagementComponent = ({userDataRef}) => {
             },
             validator: fileSizeValidator,
             maxFiles: MAX_NUMBER_OF_FILES,
-            
+
         });
 
 
@@ -126,15 +126,15 @@ const FileManagementComponent = ({userDataRef}) => {
         ));
 
         const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-            <p key={file.path}>
+            <div key={file.path}>
                 {file.path}
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
-                <p>
+                <div>
                     {errors.map(e => (
-                        <p style={{padding: "0", margin: "0", fontSize: "10px"}} key={e.code}>{errorMessage(e)}</p>
+                        <p style={{ padding: "0", margin: "0", fontSize: "10px" }} key={e.code}>{errorMessage(e)}</p>
                     ))}
-                </p>
-            </p>
+                </div>
+            </div>
         ));
 
 
@@ -149,18 +149,18 @@ const FileManagementComponent = ({userDataRef}) => {
                 </div>
                 {(files.length > 0) && <React.Fragment>
                     <div>
-                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Soubory připravené k nahrání</h4>
-                        <p>{files}</p>
+                        <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Soubory připravené k nahrání</h4>
+                        <div>{files}</div>
                     </div>
                 </React.Fragment>}
                 {(fileRejectionItems.length > 0) && <React.Fragment>
                     <div>
-                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Zamítnuté soubory</h4>
-                        <p>{fileRejectionItems}</p>
+                        <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Zamítnuté soubory</h4>
+                        <div>{fileRejectionItems}</div>
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>
-                    <button className={"btn btn-success"} onClick={() => {uploadFiles(); userDataRef()}}>Nahrát</button>
+                    <button className={"btn btn-success"} onClick={() => { uploadFiles(); userDataRef() }}>Nahrát</button>
                 </React.Fragment>}
 
             </section>
@@ -173,7 +173,7 @@ const FileManagementComponent = ({userDataRef}) => {
             {/* <input type="file" multiple onChange={uploadFileHandler}/> */}
             <Basic />
             <div>
-                {!fileSize && <p id="messageSize" style={{ color: 'red' }}>Příliš velký soubor. Limit: ${MAX_FILE_SIZE/1000000} MB</p>}
+                {!fileSize && <p id="messageSize" style={{ color: 'red' }}>Příliš velký soubor. Limit: ${MAX_FILE_SIZE / 1000000} MB</p>}
                 {fileUploadProgress && <p style={{ color: 'red' }}>Nahrávám soubory...</p>}
                 {fileUploadResponse != null && <p id="messageResponse" style={{ color: messageColor }}>{fileUploadResponse.replace(/[[\]']+/g, '')}</p>}
             </div>

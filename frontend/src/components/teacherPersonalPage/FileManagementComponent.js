@@ -129,9 +129,9 @@ const FileManagementComponent = ({ userDataRef }) => {
             <div key={file.path}>
                 {file.path}
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
-                <div>
+                <div style={{paddingBottom: "15px"}}>
                     {errors.map(e => (
-                        <p style={{ padding: "0", margin: "0", fontSize: "10px" }} key={e.code}>{errorMessage(e)}</p>
+                        <p style={{ color: "red", padding: "0", margin: "0", fontSize: "14px" }} key={e.code}>{errorMessage(e)}</p>
                     ))}
                 </div>
             </div>
@@ -150,13 +150,15 @@ const FileManagementComponent = ({ userDataRef }) => {
                 {(files.length > 0) && <React.Fragment>
                     <div>
                         <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Soubory připravené k nahrání</h4>
-                        <div>{files}</div>
+                        <div style={{color: "green"}}>{files}</div>
+                        <hr/>
                     </div>
                 </React.Fragment>}
                 {(fileRejectionItems.length > 0) && <React.Fragment>
                     <div>
                         <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Zamítnuté soubory</h4>
                         <div>{fileRejectionItems}</div>
+                        <hr/>
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>

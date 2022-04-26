@@ -25,7 +25,6 @@ export const PracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
         const [q, setQ] = useState("");
-        const [searchParam] = useState(["name"]);
         const [filterParam, setFilterParam] = useState(["All"]);
         const [schools, setSchools] = useState([]);
         const [selectedSchool, setSelectedSchools] = useState("");
@@ -70,34 +69,18 @@ export const PracticeListComponent = () => {
 
 
         function search(items) {
-            console.log("schools", schools);
-            console.log("items", items);
+            console.log("vole")
             return items.filter((item) => {
                 /*
                 // in here we check if our region is equal to our c state
                 // if it's equal to then only return the items that match
                 // if not return All the countries
                 */
-                if (item.teacher.school.name == filterParam) {
-                    return searchParam.some((newItem) => {
-                        console.log("what is this", newItem);
-                        return (
-                            item.teacher.school[newItem]
-                                .toString()
-                                .toLowerCase()
-                                .indexOf(q.toLowerCase()) > -1
-                        );
-                    });
+               console.log("selected school", selectedSchool)
+                if (item.teacher.school.name == selectedSchool) {
+                    return true;
                 } else if (filterParam == "All") {
-                    return searchParam.some((newItem) => {
-                        console.log("what is this", newItem);
-                        return (
-                            item.teacher.school[newItem]
-                                .toString()
-                                .toLowerCase()
-                                .indexOf(q.toLowerCase()) > -1
-                        );
-                    });
+                    return true;
                 }
             });
         }
@@ -152,6 +135,11 @@ export const PracticeListComponent = () => {
             });
         };
 
+        const selectSchoolsChange = (value) => {
+            setFilterParam("School");
+            setSelectedSchools(value);
+        }
+
         const handleSelect = (ranges) => {
             console.log(ranges);
             // {
@@ -198,7 +186,7 @@ export const PracticeListComponent = () => {
                                         <Combobox
                                             data={schools}
                                             value={selectedSchool}
-                                            onChange={value => setSelectedSchools(value)}
+                                            onChange={value => selectSchoolsChange(value)}
                                         />
                                     </div>
                                     <div className="col">
@@ -261,7 +249,7 @@ export const PracticeListComponent = () => {
                             </Row>
                         </div>
                     </div>
-                    {search(practices).map((item, index) => (
+                    {practices && search(practices).map((item, index) => (
                         <Accordion.Item
                             eventKey={item.id}
                             key={index}
@@ -345,7 +333,7 @@ export const PracticeListComponent = () => {
 
                                         <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 
-                                        <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b>
+                                        <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
                                             <ul>
                                                 {item.fileNames.map(function (name, index) {
                                                     return <li key={index}><a
@@ -353,7 +341,7 @@ export const PracticeListComponent = () => {
                                                     </li>;
                                                 })}
                                             </ul>
-                                        </p>
+                                        
 
                                         <div className="center d-xl-none" style={{width: "15%"}}>
                                             {getButton(item.isCurrentStudentReserved, item.id)}

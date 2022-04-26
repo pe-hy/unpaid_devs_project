@@ -136,16 +136,6 @@ export class RegistrationComponent extends Component {
     });
   }
 
-  getSchools() {
-    const response = axios({
-      url: "http://localhost:8080/user/schools",
-      withCredentials: true,
-      method: "GET",
-    }).then((response) => {
-      this.setSchools(response);
-    });
-  };
-
   componentDidMount() {
     axios({
       url: "http://localhost:8080/register/schools",

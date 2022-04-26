@@ -134,16 +134,43 @@
 }
 
 .my-node-enter {
-    opacity: 0;
+    transform: translateY(-100%);
 }
 .my-node-enter-active {
-    opacity: 1;
-    transition: opacity 500ms;
+    transform: translateY(0);
+    transition: all 250ms ease-in-out;
 }
+
 .my-node-exit {
-    opacity: 1;
+    transform: translateY(0);
 }
 .my-node-exit-active {
-    opacity: 0;
-    transition: opacity 500ms;
+    transform: translateY(-100%);
+    transition: all 250ms ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+.appearAnimation{
+    animation: appear 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
+    z-index: 0;
+}
+.hideDiv{
+    max-height: 0;
+    transition: all 0.3s ease-in-out;
+}
+.calendarDivHeight{
+    max-height: 400px;
+    animation: appear 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+
 }

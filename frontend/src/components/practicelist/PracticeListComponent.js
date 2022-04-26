@@ -17,7 +17,7 @@ import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 export const PracticeListComponent = () => {
-        const duration = 500;
+        const duration = 250;
         const [inProp, setInProp] = useState(false);
         const [showing, setShowing] = useState(false);
         const [practices, setPraxe] = useState([]);
@@ -188,34 +188,32 @@ export const PracticeListComponent = () => {
                         changeBtnText();
                     }}>{btnText}</button>
                     <TransitionGroup>
-                        <CSSTransition classNames="my-node" key={showing} in={showing} timeout={duration}>
-                            <div>
-                            {showing
-                                ?
-                                <div className="customFilters">
-                                    <div className="col">
-                                        <p>Vyhledávání podle školy</p>
-                                        <Combobox
-                                            data={schools}
-                                            value={selectedSchool}
-                                            onChange={value => setSelectedSchools(value)}
-                                        />
-                                    </div>
-                                    <div className="col">
-                                        <p>Vyhledávání podle data praxe</p>
-                                        <DateRange
-                                            editableDateInputs={true}
-                                            onChange={item => setState([item.selection])}
-                                            moveRangeOnFirstSelection={false}
-                                            ranges={state}
-                                            locale={rdrLocales.cs}
-                                            minDate={new Date("2022-1-1")}
-                                            maxDate={new Date("2022-5-1")}
-                                        />
+                        <CSSTransition>
+                            <div style={{overflow: 'hidden'}}>
+                                <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                                    <div className="customFilters">
+                                        <div className="col">
+                                            <p>Vyhledávání podle školy</p>
+                                            <Combobox
+                                                data={schools}
+                                                value={selectedSchool}
+                                                onChange={value => setSelectedSchools(value)}
+                                            />
+                                        </div>
+                                        <div className="col">
+                                            <p>Vyhledávání podle data praxe</p>
+                                            <DateRange
+                                                editableDateInputs={true}
+                                                onChange={item => setState([item.selection])}
+                                                moveRangeOnFirstSelection={false}
+                                                ranges={state}
+                                                locale={rdrLocales.cs}
+                                                minDate={new Date("2022-1-1")}
+                                                maxDate={new Date("2022-5-1")}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                : null
-                            }
                             </div>
                         </CSSTransition>
                     </TransitionGroup>

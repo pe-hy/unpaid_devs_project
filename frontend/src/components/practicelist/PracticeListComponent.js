@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../axios.js";
-import {BsInfoCircleFill} from "react-icons/bs";
+import {BsInfoCircleFill, BsSearch} from "react-icons/bs";
 import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
@@ -17,7 +17,8 @@ import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 export const PracticeListComponent = () => {
-        const duration = 500;
+        let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
+        const duration = 250;
         const [inProp, setInProp] = useState(false);
         const [showing, setShowing] = useState(false);
         const [practices, setPraxe] = useState([]);
@@ -174,36 +175,53 @@ export const PracticeListComponent = () => {
                     <button id="toggleBtn" className="toggleButtonFilters" onClick={() => {
                         setShowing(!showing);
                         changeBtnText();
-                    }}>{btnText}</button>
+                    }}><BsSearch style={iconStyles}/> {btnText}</button>
                     <TransitionGroup>
-                        <CSSTransition classNames="my-node" key={showing} in={showing} timeout={duration}>
-                            <div>
-                            {showing
-                                ?
-                                <div className="customFilters">
-                                    <div className="col">
-                                        <p>Vyhledávání podle školy</p>
-                                        <Combobox
-                                            data={schools}
-                                            value={selectedSchool}
-                                            onChange={value => selectSchoolsChange(value)}
-                                        />
-                                    </div>
-                                    <div className="col">
-                                        <p>Vyhledávání podle data praxe</p>
-                                        <DateRange
-                                            editableDateInputs={true}
-                                            onChange={item => setState([item.selection])}
-                                            moveRangeOnFirstSelection={false}
-                                            ranges={state}
-                                            locale={rdrLocales.cs}
-                                            minDate={new Date("2022-1-1")}
-                                            maxDate={new Date("2022-5-1")}
-                                        />
+                        <CSSTransition>
+                            <div style={{overflow: 'hidden'}}>
+                                <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                                    <div className="customFilters">
+                                        <h3 className="filters-heading">Filtry</h3>
+                                        <div className="col align-self-center">
+                                            <div className="align-self-center search-school">
+                                                <p>Vyhledávání podle školy</p>
+                                                <Combobox
+                                                    data={schools}
+                                                    value={selectedSchool}
+                                                    onChange={value => setSelectedSchools(value)}
+                                                />
+                                            </div>
+                                            <div className="align-self-center search-school">
+                                                <p>Vyhledávání podle názvu předmětu</p>
+                                                <Combobox
+                                                    data={schools}
+                                                    value={selectedSchool}
+                                                    onChange={value => setSelectedSchools(value)}
+                                                />
+                                            </div>
+                                            <div className="align-self-center search-school">
+                                                <p>Vyhledávání podle jména učitele</p>
+                                                <Combobox
+                                                    data={schools}
+                                                    value={selectedSchool}
+                                                    onChange={value => setSelectedSchools(value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col align-self-center search-date">
+                                            <p>Vyhledávání podle data praxe</p>
+                                            <DateRange
+                                                editableDateInputs={true}
+                                                onChange={item => setState([item.selection])}
+                                                moveRangeOnFirstSelection={false}
+                                                ranges={state}
+                                                locale={rdrLocales.cs}
+                                                minDate={new Date("2022-1-1")}
+                                                maxDate={new Date("2022-5-1")}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                : null
-                            }
                             </div>
                         </CSSTransition>
                     </TransitionGroup>

@@ -79,7 +79,6 @@ const required = (value) => {
 };
 
 const invalidPassword = (value) => {
-
   if (validatePassword(value)) {
     return (
       <div className="alert alert-danger my-alert text-bold" role="alert">
@@ -260,13 +259,11 @@ export class RegistrationComponent extends Component {
   }
 
   onChangePassword(e) {
-
     this.setState({
       password: e.target.value,
     });
   }
   onChangeOccupation(e) {
-
     this.setState({
       occupation: e.target.value,
     });

@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.token;
+package cz.osu.teacherpractice.service.token;
 
 import cz.osu.teacherpractice.model.User;
 import lombok.Getter;

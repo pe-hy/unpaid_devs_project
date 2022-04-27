@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.email;
+package cz.osu.teacherpractice.service.email;
 
 import cz.osu.teacherpractice.model.Role;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,6 @@
 package cz.osu.teacherpractice.dto.response;
 
-import cz.osu.teacherpractice.dto.SchoolDto;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Objects;
 
 @Data
 public class UserDto {

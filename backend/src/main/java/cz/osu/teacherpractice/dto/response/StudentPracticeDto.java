@@ -1,6 +1,5 @@
 package cz.osu.teacherpractice.dto.response;
 
-import cz.osu.teacherpractice.dto.SubjectDto;
 import lombok.Data;
 
 import java.time.LocalDate;

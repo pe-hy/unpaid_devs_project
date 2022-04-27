@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.osu.teacherpractice.service.UserDetailsServiceImpl;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -32,11 +33,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final Algorithm jwtAlgorithm;
 
-    public CustomAuthorizationFilter(UserService userService, Algorithm jwtAlgorithm) {
-        this.userService = userService;
+    public CustomAuthorizationFilter(UserDetailsServiceImpl userDetailsService, Algorithm jwtAlgorithm) {
+        this.userDetailsService = userDetailsService;
         this.jwtAlgorithm = jwtAlgorithm;
     }
 
@@ -65,7 +66,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             DecodedJWT decodedJWT = verifier.verify(token);
 
             String username = decodedJWT.getSubject();
-            userService.loadUserByUsername(username);
+            userDetailsService.loadUserByUsername(username);
             String role = decodedJWT.getClaim("role").as(String.class);
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
 

@@ -25,13 +25,11 @@ import java.util.UUID;
 public class RegistrationService {
 
     private final UserService userService;
-    private final RegistrationService registrationService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
     private final UserRepository userRepository;
     private final SchoolRepository schoolRepository;
-    private final MapStructMapper mapper;
 
     public String register(RegistrationDto request){
 
@@ -72,7 +70,7 @@ public class RegistrationService {
                 throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
         }
 
-        String token = registrationService.signUpUser(
+        String token = userService.signUpUser(
                 new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
         );
 
@@ -80,22 +78,6 @@ public class RegistrationService {
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
-
-        return token;
-    }
-
-    public String signUpUser(User user){
-        userService.createUser(user);
-
-        String token = UUID.randomUUID().toString();
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
-                user
-        );
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return token;
     }

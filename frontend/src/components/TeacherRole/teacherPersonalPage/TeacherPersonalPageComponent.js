@@ -16,6 +16,7 @@ const TeacherPersonalPageComponent = () => {
     const [deleteDisable, setDeleteDisable] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
     const [currFile, setCurrFile] = useState("");
+    const schoolNotFound = "Škola nevyplněna";
 
     function delay(time) {
         return new Promise(resolve => setTimeout(resolve, time));
@@ -95,7 +96,7 @@ const TeacherPersonalPageComponent = () => {
 
         // Update state once with all 3 responses
         setName((response[0].data.firstName + " " + response[0].data.secondName));
-        setSchool(response[0].data.school.name);
+        setSchool(response[0].data.school != null ? response[0].data.school.name : schoolNotFound);
         setEmail(response[0].data.username);
         setPhone(response[0].data.phoneNumber);
         setFiles(response2.data);

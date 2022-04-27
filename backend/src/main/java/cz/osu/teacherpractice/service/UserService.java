@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
@@ -66,6 +66,22 @@ public class UserService implements UserDetailsService {
         return "email not found";
     }
 
+    public String signUpUser(User user){
+        createUser(user);
+
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
+                user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        return token;
+    }
+
     public User getUserByUsername(String username) {
         return userRepository.findByEmail(username).orElseThrow(() -> {
             throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");
@@ -86,16 +102,6 @@ public class UserService implements UserDetailsService {
 
     public List<UserDto> getTeachers() {
         return mapper.usersToUsersDto(userRepository.getAllTeachers());
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(
-                "Uživatel '" + username + "' nenalezen."
-        ));
-
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), List.of(authority));
     }
 
     public int enableAppUser(String email) {

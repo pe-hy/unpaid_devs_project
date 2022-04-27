@@ -20,6 +20,7 @@ import {addDays} from 'date-fns';
 export const PracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
+        const schoolNotFound = "Škola nevyplněna";
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";
@@ -116,7 +117,7 @@ export const PracticeListComponent = () => {
                     return true;
                 }
 
-                if (filterParam.includes(schoolFilterParam) && item.teacher.school.name != selectedSchool) {
+                if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name != selectedSchool)) {
                     return false;
                 }
 
@@ -395,7 +396,7 @@ export const PracticeListComponent = () => {
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
-                                        <Col className="text-center d-none d-xl-block">{item.teacher.school.name ? item.teacher.school.name : "Škola nevyplněna"}</Col>
+                                        <Col className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
                                             ". " +

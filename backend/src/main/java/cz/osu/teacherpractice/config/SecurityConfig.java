@@ -5,6 +5,7 @@ import cz.osu.teacherpractice.filter.CustomAuthenticationFilter;
 import cz.osu.teacherpractice.filter.CustomAuthorizationFilter;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.service.UserDetailsServiceImpl;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -45,12 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final boolean COOKIE_SECURE = false;
     public static final int COOKIE_EXPIRATION_SECONDS = JWT_TOKEN_EXPIRATION_DAYS * 24 * 60 * 60;
 
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final UserRepository userRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -69,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), jwtAlgorithm(), userRepository));
-        http.addFilterBefore(new CustomAuthorizationFilter(userService, jwtAlgorithm()), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(userDetailsService, jwtAlgorithm()), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

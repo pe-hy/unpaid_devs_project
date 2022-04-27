@@ -9,6 +9,7 @@ export const WaitingListComponent = () => {
     const noUsers = !users || (users && users.length === 0);
     const [modalShow, setModalShow] = React.useState(false);
     const [currEmail, setCurrEmail] = useState("");
+    const schoolNotFound = "Škola nevyplněna";
 
     const getLockedUsers = async () => {
         if (checkRole()) return;
@@ -113,7 +114,7 @@ export const WaitingListComponent = () => {
                 users.map((item, index) => (
                     <tr className="align-middle">
                         <th scope="row">{item.firstName + " " + item.secondName}</th>
-                        <td>{item.school.name}</td>
+                        <td>{item.school != null ? item.school.name : schoolNotFound}</td>
                         <td>{item.phoneNumber}</td>
                         <td>{item.username}</td>
                         <td>

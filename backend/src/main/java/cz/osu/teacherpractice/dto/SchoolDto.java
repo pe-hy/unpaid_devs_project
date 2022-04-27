@@ -1,5 +1,4 @@
 package cz.osu.teacherpractice.dto;
-
 import lombok.Data;
 
 @Data

@@ -34,5 +34,4 @@ public class TeacherService {
         practice.setTeacher(teacher);
         practiceRepository.save(practice);
     }
-
 }

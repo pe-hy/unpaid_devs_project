@@ -79,6 +79,7 @@ export const AddSchoolComponent = () => {
             <div className="d-flex">
                 <div className="col">
                     Přidání školy
+
                 </div>
                 <div className="col">
                     <table className="table table-striped align-items-center">

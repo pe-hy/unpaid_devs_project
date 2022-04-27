@@ -1,14 +1,14 @@
 package cz.osu.teacherpractice.service.controller;
 
-import cz.osu.teacherpractice.dto.request.RegistrationDto;
+import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
-import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -34,6 +34,28 @@ public class CoordinatorController {
     public String removeUser(@RequestBody String request) {
         String result = request.substring(1, request.length() - 1);
         return userService.removeUser(result);
+    }
+
+    @PostMapping("/addSchool")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addSchool(@Valid @RequestBody SchoolDto newSchoolDto) {
+        coordinatorService.addSchool(newSchoolDto);
+    }
+
+    @PostMapping(path="/removeSchool")
+    public String removeSchool(@RequestBody String request) {
+        System.out.println("request:" + " " + request);
+        String result = request.substring(1, request.length() - 1);
+        System.out.println("result after substring: " + " " + result);
+        return coordinatorService.removeSchool(result);
+    }
+
+    @PostMapping(path="/removeSubject")
+    public String removeSubject(@RequestBody String request) {
+        System.out.println("request:" + " " + request);
+        String result = request.substring(1, request.length() - 1);
+        System.out.println("result after substring: " + " " + result);
+        return coordinatorService.removeSubject(result);
     }
 
     @PostMapping(path="/unlockUser")

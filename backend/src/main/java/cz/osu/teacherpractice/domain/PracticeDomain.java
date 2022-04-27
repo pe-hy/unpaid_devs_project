@@ -1,13 +1,11 @@
 package cz.osu.teacherpractice.domain;
 
-import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
-import cz.osu.teacherpractice.service.fileManagement.FileUtil;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;

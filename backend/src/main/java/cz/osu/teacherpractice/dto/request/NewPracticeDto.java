@@ -4,7 +4,7 @@ import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.constraint.annotation.DateStartsAfter;
 import cz.osu.teacherpractice.constraint.annotation.IntegerRange;
 import cz.osu.teacherpractice.constraint.annotation.TimeStartBeforeEnd;
-import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import lombok.Data;
 
 import javax.validation.Valid;

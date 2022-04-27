@@ -1,7 +1,6 @@
-package cz.osu.teacherpractice.service.controller;
+package cz.osu.teacherpractice.service.registration;
 
-import cz.osu.teacherpractice.dto.SchoolDto;
-import cz.osu.teacherpractice.service.RegistrationService;
+import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

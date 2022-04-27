@@ -1,7 +1,7 @@
 package cz.osu.teacherpractice.mapper;
 
-import cz.osu.teacherpractice.dto.SchoolDto;
-import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
@@ -12,7 +12,6 @@ import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.data.domain.Slice;
 
 import java.util.List;
 

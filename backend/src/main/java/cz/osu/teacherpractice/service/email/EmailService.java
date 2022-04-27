@@ -1,11 +1,9 @@
-package cz.osu.teacherpractice.email;
+package cz.osu.teacherpractice.service.email;
 
 import cz.osu.teacherpractice.config.AppConfig;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;

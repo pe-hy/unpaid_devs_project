@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.service;
 
-import cz.osu.teacherpractice.dto.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.School;

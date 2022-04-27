@@ -1,8 +1,8 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.config.AppConfig;
-import cz.osu.teacherpractice.dto.SchoolDto;
-import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
@@ -12,10 +12,14 @@ import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.fileManagement.FileUtil;
-import cz.osu.teacherpractice.token.ConfirmationToken;
-import cz.osu.teacherpractice.token.ConfirmationTokenRepository;
-import cz.osu.teacherpractice.token.ConfirmationTokenService;
+import cz.osu.teacherpractice.service.token.ConfirmationToken;
+import cz.osu.teacherpractice.service.token.ConfirmationTokenRepository;
+import cz.osu.teacherpractice.service.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +28,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
@@ -84,22 +88,14 @@ public class UserService {
         return mapper.usersToUsersDto(userRepository.getAllTeachers());
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(
+                "Uživatel '" + username + "' nenalezen."
+        ));
 
-
-    public String signUpUser(User user){
-        createUser(user);
-
-        String token = UUID.randomUUID().toString();
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
-                user
-        );
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        return token;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), List.of(authority));
     }
 
     public int enableAppUser(String email) {

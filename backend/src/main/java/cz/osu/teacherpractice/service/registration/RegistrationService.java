@@ -1,28 +1,31 @@
-package cz.osu.teacherpractice.service;
+package cz.osu.teacherpractice.service.registration;
 
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.request.RegistrationDto;
-import cz.osu.teacherpractice.email.EmailSender;
-import cz.osu.teacherpractice.email.EmailValidator;
+import cz.osu.teacherpractice.service.UserService;
+import cz.osu.teacherpractice.service.email.EmailSender;
+import cz.osu.teacherpractice.service.email.EmailValidator;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
-import cz.osu.teacherpractice.token.ConfirmationToken;
-import cz.osu.teacherpractice.token.ConfirmationTokenService;
+import cz.osu.teacherpractice.service.token.ConfirmationToken;
+import cz.osu.teacherpractice.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class RegistrationService {
 
     private final UserService userService;
+    private final RegistrationService registrationService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
@@ -69,7 +72,7 @@ public class RegistrationService {
                 throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
         }
 
-        String token = userService.signUpUser(
+        String token = registrationService.signUpUser(
                 new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
         );
 
@@ -77,6 +80,22 @@ public class RegistrationService {
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
+
+        return token;
+    }
+
+    public String signUpUser(User user){
+        userService.createUser(user);
+
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
+                user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return token;
     }

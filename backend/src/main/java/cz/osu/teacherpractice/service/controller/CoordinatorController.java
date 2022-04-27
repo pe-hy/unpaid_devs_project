@@ -1,6 +1,6 @@
 package cz.osu.teacherpractice.service.controller;
 
-import cz.osu.teacherpractice.dto.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;

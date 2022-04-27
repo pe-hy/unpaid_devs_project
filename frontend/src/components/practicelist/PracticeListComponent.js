@@ -378,6 +378,7 @@ export const PracticeListComponent = () => {
                         </Row>
                     </div>
                 </div>
+                {search(practices).length == 0 ? <p>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</p> : null}
                 {practices && search(practices).map((item, index) => (
                     <Accordion.Item
                         eventKey={item.id}

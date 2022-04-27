@@ -9,10 +9,10 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab1" title="Uživatelé čekající na potvrzení">
                     <WaitingListComponent />
                 </Tab>
-                <Tab eventKey="tab2" title="Vypsané praxe">
+                <Tab eventKey="tab2" title="Školy">
                     empty
                 </Tab>
-                <Tab eventKey="tab3" title="Proběhlé praxe">
+                <Tab eventKey="tab3" title="Předměty">
                     empty
                 </Tab>
             </Tabs>

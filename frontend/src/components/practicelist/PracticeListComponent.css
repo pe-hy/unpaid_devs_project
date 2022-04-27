@@ -209,5 +209,57 @@ body, html {
     max-height: 1000px;
     animation: appear 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
+}
 
+
+.filterResetBtn {
+    flex-direction: row;
+    width: 33%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+    margin-top: 0;
+    background-clip: padding-box;
+    background-color: #a88931;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    min-height: 3rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+}
+
+.filterResetBtn:hover,
+.filterResetBtn:focus {
+    background-color: #deaa30;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.filterResetBtn:hover {
+    transform: translateY(-1px);
+}
+
+.filterResetBtn:active {
+    background-color: #cbb43a;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+}
+
+.warnTextPractices{
+    font-size: 18px;
+    color: #181414;
 }

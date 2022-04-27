@@ -189,7 +189,7 @@ export const AddSchoolComponent = () => {
     return (
         <Container fluid>
             <div className="d-flex">
-                <div className="col">
+                <div className="col p-3">
                     <h4 className="p-3">Přidání školy</h4>
                     <Form onSubmit={addSchool} id="Form">
                         <Row className="center">
@@ -200,12 +200,12 @@ export const AddSchoolComponent = () => {
                                 role="form"
                             >
                                 <Row className="center" sm={8}>
-                                    <b className="center pb-4">Název školy</b>
+                                    <b className="center pb-4" style={{fontSize: "20px"}}>Název školy</b>
                                     <InputGroup>
                                         <Form.Control
                                             required="required"
                                             type="text"
-                                            placeholder="Základní škola Čeladná"
+                                            placeholder="Vložte název školy"
                                             onChange={handleChange}
                                         />
                                     </InputGroup>
@@ -230,6 +230,7 @@ export const AddSchoolComponent = () => {
                     </Alert>
                 </div>
                 <div className="col p-3">
+                    <h4 className="p-3">Seznam škol</h4>
                     <table className="table table-striped align-items-center">
                         <thead>
                             <tr>

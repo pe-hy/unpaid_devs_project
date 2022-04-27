@@ -105,7 +105,7 @@ export const PracticeListComponent = () => {
                 highestDate = new Date(element.date.split('-'))
             }
         });
-        setDateLimit([lowestDate, addDays(new Date(highestDate), 1)]);
+        setDateLimit([addDays(lowestDate, -1), addDays(highestDate, 1)]);
     }
 
     function search(items) {

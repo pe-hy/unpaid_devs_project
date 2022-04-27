@@ -31,9 +31,15 @@ public class CoordinatorService {
         return mapper.usersToUsersDto(users);
     }
 
-    public void addSchool(SchoolDto newSchoolDto) {
-        School school = mapper.schoolDtoToSchool(newSchoolDto);
-        schoolRepository.save(school);
+    public String addSchool(SchoolDto newSchoolDto) {
+        String schoolName = newSchoolDto.getName();
+        if(schoolRepository.findByName(schoolName).isPresent()) {
+            throw new IllegalStateException("Škola již existuje.");
+        }else {
+            School school = mapper.schoolDtoToSchool(newSchoolDto);
+            schoolRepository.save(school);
+        }
+        return "Škola byla přidána.";
     }
 
     public String removeSchool(String school) {

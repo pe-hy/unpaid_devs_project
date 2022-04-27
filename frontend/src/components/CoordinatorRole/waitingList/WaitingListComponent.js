@@ -132,6 +132,12 @@ export const WaitingListComponent = () => {
                 ))}
                 </tbody>
             </table>
+            {users.length < 1 &&
+            <div className="customAlertContainer">
+                <div className="w-50 p-2 m-3 center alert-success alertCustom">
+                    <span>Nikdo z uživatelů aktuálně nečeká na registraci.</span>
+                </div>
+            </div>}
             <CreateModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

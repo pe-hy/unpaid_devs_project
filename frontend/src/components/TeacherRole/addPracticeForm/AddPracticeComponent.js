@@ -90,12 +90,7 @@ const TabsForm = () => {
         if (response) {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
-            clearForm();
         }
-    };
-
-    const clearForm = () => {
-        document.getElementById("Form").reset();
     };
 
     const checkRole = () => {

@@ -80,5 +80,9 @@
     .removal-btn {
         padding: 10px 30px;
     }
-
+}
+.customAlertContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -38,8 +38,9 @@ public class CoordinatorController {
 
     @PostMapping("/addSchool")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addSchool(@Valid @RequestBody SchoolDto newSchoolDto) {
-        coordinatorService.addSchool(newSchoolDto);
+    public String addSchool(@Valid @RequestBody SchoolDto newSchoolDto) {
+        System.out.println(newSchoolDto);
+        return coordinatorService.addSchool(newSchoolDto);
     }
 
     @PostMapping(path="/removeSchool")

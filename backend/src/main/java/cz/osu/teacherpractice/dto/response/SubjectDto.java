@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class SubjectDto {
-
-    @NotNull(message = "Chybí id předmětu.")
     private Long id;
 
     @NotNull(message = "Chybí název předmětu.")

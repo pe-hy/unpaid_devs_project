@@ -1,9 +1,11 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.School;
+import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.SchoolRepository;
@@ -40,6 +42,17 @@ public class CoordinatorService {
             schoolRepository.save(school);
         }
         return "Škola byla přidána.";
+    }
+
+    public String addSubject(SubjectDto subjectDto) {
+        String subjectName = subjectDto.getName();
+        if(schoolRepository.findByName(subjectName).isPresent()) {
+            throw new IllegalStateException("Předmět již existuje.");
+        }else {
+            Subject subject = mapper.subjectDtoToSubject(subjectDto);
+            subjectRepository.save(subject);
+        }
+        return "Předmět byl přidán.";
     }
 
     public String removeSchool(String school) {

@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
@@ -24,13 +25,14 @@ public class CoordinatorController {
     public String getCoordinator(Principal principal) {
         return "Hi coordinator: " + principal.getName();
     }
+
     @GetMapping("/waitingList")
     public List<UserDto> getLockedUsers() {
 
         return coordinatorService.getWaitingList();
     }
 
-    @PostMapping(path="/removeUser")
+    @PostMapping(path = "/removeUser")
     public String removeUser(@RequestBody String request) {
         String result = request.substring(1, request.length() - 1);
         return userService.removeUser(result);
@@ -43,7 +45,14 @@ public class CoordinatorController {
         return coordinatorService.addSchool(newSchoolDto);
     }
 
-    @PostMapping(path="/removeSchool")
+    @PostMapping("/addSubject")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addSubject(@Valid @RequestBody SubjectDto subjectDto) {
+        System.out.println(subjectDto);
+        return coordinatorService.addSubject(subjectDto);
+    }
+
+    @PostMapping(path = "/removeSchool")
     public String removeSchool(@RequestBody String request) {
         System.out.println("request:" + " " + request);
         String result = request.substring(1, request.length() - 1);
@@ -51,7 +60,7 @@ public class CoordinatorController {
         return coordinatorService.removeSchool(result);
     }
 
-    @PostMapping(path="/removeSubject")
+    @PostMapping(path = "/removeSubject")
     public String removeSubject(@RequestBody String request) {
         System.out.println("request:" + " " + request);
         String result = request.substring(1, request.length() - 1);
@@ -59,7 +68,7 @@ public class CoordinatorController {
         return coordinatorService.removeSubject(result);
     }
 
-    @PostMapping(path="/unlockUser")
+    @PostMapping(path = "/unlockUser")
     public String unlockUser(@RequestBody String request) {
         String result = request.substring(1, request.length() - 1);
         return userService.unlockUser(result);

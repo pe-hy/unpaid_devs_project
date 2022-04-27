@@ -1,6 +1,8 @@
 import { Tab, Tabs } from "react-bootstrap";
 import WaitingListComponent from "../../components/waitingList/WaitingListComponent";
 import "./CoordinatorHomeStyles.css";
+import AddSchoolComponent from "../../components/addSchoolComponent/AddSchoolComponent";
+import AddSubjectComponent from "../../components/addSubjectComponent/AddSubjectComponent";
 
 const CoordinatorHomeView = () => {
     return (
@@ -10,10 +12,10 @@ const CoordinatorHomeView = () => {
                     <WaitingListComponent />
                 </Tab>
                 <Tab eventKey="tab2" title="Školy">
-                    empty
+                    <AddSchoolComponent />
                 </Tab>
                 <Tab eventKey="tab3" title="Předměty">
-                    empty
+                    <AddSubjectComponent />
                 </Tab>
             </Tabs>
         </div>

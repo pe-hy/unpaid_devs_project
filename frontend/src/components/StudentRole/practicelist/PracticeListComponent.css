@@ -25,6 +25,7 @@ body, html {
 
 .accordion-button:not(.collapsed) {
     background-color: #ffffff;
+    box-shadow: none;
 }
 
 .accordion-button.collapsed {

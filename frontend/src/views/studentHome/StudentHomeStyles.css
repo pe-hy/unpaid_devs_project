@@ -34,6 +34,11 @@ div.tab-content {
 .nav li.active a:hover {
     background-color: red;
     border-radius: 4px;
+}
 
+@media (max-width: 858px){
+    .studentHomeBody {
+        padding: 10px;
+    }
 
 }

@@ -42,6 +42,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER'")
     List<User> getAllTeachers();
 
+    @Query("SELECT u FROM User u WHERE u.school is null and u.role = 'ROLE_TEACHER'")
+    List<User> getAllTeachersWithoutSchool();
+
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.school = null WHERE u.school = :school")

@@ -1,16 +1,21 @@
-import React, {useEffect, useState} from "react";
-import {axios} from "../../../axios";
-import {Navigate} from "react-router-dom";
-import {Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
-import {BsCheckLg, BsExclamationTriangleFill} from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { axios } from "../../../axios";
+import { Navigate } from "react-router-dom";
+import { Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import { BsCheckLg, BsExclamationTriangleFill } from "react-icons/bs";
 import "./AddSchoolComponent.css";
+import Combobox from "react-widgets/Combobox";
 
 
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
+    const [teachersWithoutSchool, setTeachersWithoutSchools] = useState([]);
     const noSchools = !schools || (schools && schools.length === 0);
     const [modalShow, setModalShow] = React.useState(false);
+    const [assignSchoolModalShow, setAssignSchoolModalShow] = useState(false);
     const [currSchool, setCurrSchool] = useState("");
+    const [selectedAssignSchool, setSelectedAssignSchool] = useState();
+    const [currTeacher, setCurrTeacher] = useState();
     const [formData, setFormData] = useState({});
     const [showDangerAlert, setshowDangerAlert] = useState(false);
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
@@ -21,7 +26,7 @@ export const AddSchoolComponent = () => {
 
     const removeSchool = async () => {
         const response = await axios({
-            headers: {'content-type': 'application/json'},
+            headers: { 'content-type': 'application/json' },
             url: "http://localhost:8080/coordinator/removeSchool",
             withCredentials: true,
             method: "POST",
@@ -34,8 +39,27 @@ export const AddSchoolComponent = () => {
             console.log(response);
             setModalShow(false);
             getSchools();
+            getTeachersWithoutSchool();
         }
     };
+
+    const assignSchoolToTeacher = async () => {
+        const response = await axios({
+            headers: { 'content-type': 'application/json' },
+            url: "http://localhost:8080/coordinator/assignSchool",
+            withCredentials: true,
+            method: "POST",
+            data: (currTeacher, selectedAssignSchool),
+        }).catch((err) => {
+            alert(err.response.data.message);
+            console.log(err.response.data.message);
+        });
+        if (response && response.data) {
+            console.log(response);
+            setModalShow(false);
+            getTeachersWithoutSchool();
+        }
+    }
 
     const getSchools = async () => {
         const response = await axios({
@@ -48,6 +72,56 @@ export const AddSchoolComponent = () => {
             setSchools(sch);
         });
     };
+
+    const getTeachersWithoutSchool = async () => {
+        const response = await axios({
+            url: "http://localhost:8080/coordinator/getTeachersWithoutSchool",
+            withCredentials: true,
+            method: "GET",
+        }).then((response) => {
+            setTeachersWithoutSchools(response.data);
+        });
+    };
+
+    const selectAssignSchool = (value) => {
+        let combo = document.getElementById("assign-school-combo");
+        
+    }
+
+    function AssignSchoolModal(props) {
+        console.log("oh oh no");
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Přiřazení školy</h4>
+                    <p>
+                        Zvolte prosím školu pro učitele: {currTeacher != null ? currTeacher.firstName.concat(" ", currTeacher.secondName) : ""}
+                    </p>
+                    <Combobox
+                        id="assign-school-combo"
+                        data={schools}
+                        value={selectedAssignSchool}
+                        onChange={value => setSelectedAssignSchool(value)}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
+                    <button type="button" className="accept-btn" onClick={() => {
+                        props.onHide();
+                        assignSchoolToTeacher();
+                    }}>Přiřadit školu
+                    </button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
 
     function CreateModal(props) {
         return (
@@ -79,7 +153,7 @@ export const AddSchoolComponent = () => {
 
     const handleChange = (e) => {
         setshowSuccessAlert(false);
-        setFormData({...formData, "name": e.target.value.trim()});
+        setFormData({ ...formData, "name": e.target.value.trim() });
         console.log(formData);
     };
 
@@ -108,9 +182,10 @@ export const AddSchoolComponent = () => {
 
     useEffect(() => {
         getSchools();
+        getTeachersWithoutSchool();
     }, []);
 
-    if (checkRole()) return <Navigate to="/login"/>;
+    if (checkRole()) return <Navigate to="/login" />;
     return (
         <Container fluid>
             <div className="d-flex">
@@ -134,7 +209,7 @@ export const AddSchoolComponent = () => {
                                             onChange={handleChange}
                                         />
                                     </InputGroup>
-                                            <Button type="submit" className={"button-add btn"}>Přidat</Button>
+                                    <Button type="submit" className={"button-add btn"}>Přidat</Button>
                                 </Row>
                             </Form.Group>
                         </Row>
@@ -144,37 +219,37 @@ export const AddSchoolComponent = () => {
                         variant="danger"
                         className="alert-practice-error m-4 p-4"
                     >
-                        <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
+                        <BsExclamationTriangleFill className={"alert-icon-error"} /> {errorMsg}
                     </Alert>
                     <Alert
                         show={showSuccessAlert}
                         variant="success"
                         className="alert-practice-success m-4 p-4"
                     >
-                        <BsCheckLg className={"alert-icon-success"}/> Škola byla přidána
+                        <BsCheckLg className={"alert-icon-success"} /> Škola byla přidána
                     </Alert>
                 </div>
                 <div className="col p-3">
                     <table className="table table-striped align-items-center">
                         <thead>
-                        <tr>
-                            <th scope="col">Škola</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Škola</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {!noSchools &&
-                        schools.map((item, index) => (
-                            <tr className="align-middle">
-                                <td>{item}</td>
-                                <td>
-                                    <button onClick={() => {
-                                        setModalShow(true);
-                                        setCurrSchool(item);
-                                    }} type="button" className="removal-btn">X
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                            {!noSchools &&
+                                schools.map((item, index) => (
+                                    <tr className="align-middle">
+                                        <td>{item}</td>
+                                        <td>
+                                            <button onClick={() => {
+                                                setModalShow(true);
+                                                setCurrSchool(item);
+                                            }} type="button" className="removal-btn">X
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
@@ -183,34 +258,37 @@ export const AddSchoolComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-            <hr/>
+            <AssignSchoolModal
+                show={assignSchoolModalShow}
+                onHide={() => setAssignSchoolModalShow(false)}
+            />
+            <hr />
             {schools.length > 0 &&
-            <div className="customAlertContainer">
-                <div className="w-75 p-2 m-3 center alertCustom">
-                    <table className="table align-items-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">Uživatelé bez přiřazené školy</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {!noSchools &&
-                        schools.map((item, index) => (
-                            <tr className="align-middle">
-                                <td>{item}</td>
-                                <td>
-                                    <button onClick={() => {
-                                        setModalShow(true);
-                                        setCurrSchool(item);
-                                    }} type="button" className="removal-btn">X
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>}
+                <div className="customAlertContainer">
+                    <div className="w-75 p-2 m-3 center alertCustom">
+                        <table className="table align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Uživatelé bez přiřazené školy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {teachersWithoutSchool.map((teacher, index) => (
+                                    <tr className="align-middle">
+                                        <td>{teacher.firstName.concat(" ", teacher.secondName, " (", teacher.username, ")")}</td>
+                                        <td>
+                                            <button onClick={() => {
+                                                setAssignSchoolModalShow(true);
+                                                setCurrTeacher(teacher);
+                                            }} type="button" className="accept-btn">Přiřadit školu
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>}
         </Container>
     );
 };

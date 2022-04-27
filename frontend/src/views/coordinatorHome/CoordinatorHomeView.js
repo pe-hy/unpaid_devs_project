@@ -1,8 +1,8 @@
 import { Tab, Tabs } from "react-bootstrap";
-import WaitingListComponent from "../../components/waitingList/WaitingListComponent";
+import WaitingListComponent from "../../components/CoordinatorRole/waitingList/WaitingListComponent";
 import "./CoordinatorHomeStyles.css";
-import AddSchoolComponent from "../../components/addSchoolComponent/AddSchoolComponent";
-import AddSubjectComponent from "../../components/addSubjectComponent/AddSubjectComponent";
+import AddSchoolComponent from "../../components/CoordinatorRole/addSchoolComponent/AddSchoolComponent";
+import AddSubjectComponent from "../../components/CoordinatorRole/addSubjectComponent/AddSubjectComponent";
 
 const CoordinatorHomeView = () => {
     return (

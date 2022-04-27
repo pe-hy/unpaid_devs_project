@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import LoginComponent from "../../components/loginForm/LoginComponent";
+import LoginComponent from "../../components/UnspecifiedRoles/login/loginForm/LoginComponent";
 
 const LoginView = () => {
   return (

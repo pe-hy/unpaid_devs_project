@@ -1,5 +1,5 @@
 import "./TeacherPersonalPageStyles.css";
-import TeacherPersonalPageComponent from "../../components/teacherPersonalPage/TeacherPersonalPageComponent";
+import TeacherPersonalPageComponent from "../../components/TeacherRole/teacherPersonalPage/TeacherPersonalPageComponent";
 
 const TeacherHomeView = () => {
   

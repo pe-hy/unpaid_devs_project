@@ -8,7 +8,7 @@ import {
 import { Row, Col, Container, Nav } from "react-bootstrap";
 import "./LoginControlStyles.css";
 import LoginInformationComponent from "../loginInformation/LoginInformationComponent";
-import { userContext } from "../../userContext";
+import { userContext } from "../../../../userContext";
 let iconStyles = { fontSize: "1.5em", color: "white" };
 let textStyles = { color: "white" };
 

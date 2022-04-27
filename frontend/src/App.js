@@ -1,4 +1,4 @@
-import NavbarComponent from "./components/navbar/NavbarComponent";
+import NavbarComponent from "./components/UnspecifiedRoles/navbar/NavbarComponent";
 import StudentHomeView from "./views/studentHome/StudentHomeView";
 import TeacherHomeView from "./views/teacherHome/TeacherHomeView";
 import CoordinatorHomeView from "./views/coordinatorHome/CoordinatorHomeView";

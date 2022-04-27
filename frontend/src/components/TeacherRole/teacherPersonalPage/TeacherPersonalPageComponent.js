@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import FileManagementComponent from "./FileManagementComponent";
-import {axios} from "../../axios";
+import {axios} from "../../../axios";
 import "./TeacherPersonalPageComponent.css";
 import {BsAt, BsFillPersonFill, BsPhone, BsTools} from "react-icons/bs";
 import {FaGraduationCap} from "react-icons/fa"

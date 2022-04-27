@@ -2,10 +2,10 @@ import Navbar from "react-bootstrap/Navbar";
 import {Container, Nav} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../../resources/OUbile.png";
+import Logo from "../../../resources/OUbile.png";
 import "./NavbarStyles.css";
 import {BsFillHouseFill, BsFillPersonFill} from "react-icons/bs";
-import LoginControlComponent from "../logincontrol/LoginControlComponent";
+import LoginControlComponent from "../login/logincontrol/LoginControlComponent";
 
 let iconStyles = {fontSize: "2.5em"};
 

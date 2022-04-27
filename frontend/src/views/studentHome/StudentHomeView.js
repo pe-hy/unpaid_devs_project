@@ -1,4 +1,4 @@
-import PracticeListComponent from "../../components/practicelist/PracticeListComponent";
+import PracticeListComponent from "../../components/StudentRole/practicelist/PracticeListComponent";
 import { Tab, Tabs } from "react-bootstrap";
 
 import "./StudentHomeStyles.css";

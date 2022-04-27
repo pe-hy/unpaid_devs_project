@@ -1,17 +1,17 @@
-.container-login{
+.container-login {
     align-content: stretch;
     min-width: 200px;
     max-width: 500px;
     margin: auto;
 }
 
-.form-cointainer{
+.form-cointainer {
     padding-top: 15px;
     padding-left: 20px;
     padding-right: 20px;
 }
 
-.my-alert{
+.my-alert {
     text-align: left;
     padding-top: 5px;
     background-color: transparent;
@@ -23,56 +23,56 @@
     padding-bottom: 0;
 }
 
-.my-alert1{
+.my-alert1 {
     text-align: center;
     color: #D92F24;
     border-color: white;
     background-color: rgba(255, 0, 0, 0.19);
 }
 
-p.thick{
+p.thick {
     font-weight: bold;
     text-align: center;
     font-size: 30px;
     margin-top: 50px;
 }
 
-.button-login{
+.button-login {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 10px;
 }
 
-.button-lg{
+.button-lg {
     border-color: #D3EAF6;
-    color:  #264d73;
-    background-color: #D3EAF6 ;
+    color: #264d73;
+    background-color: #D3EAF6;
     font-size: 18px;
 }
 
-.button-lg:hover{
+.button-lg:hover {
     border-color: #264d73;
     background-color: #264d73;
-    color:  white;
+    color: white;
 }
 
-.login-icon{
+.login-icon {
     color: darkgray;
 }
 
-.text-bold{
+.text-bold {
     font-weight: bold;
 }
 
-.text-padding{
+.text-padding {
     padding-bottom: 10px;
 }
 
-.inner-addon{
+.inner-addon {
     position: relative;
 }
 
-.inner-addon .glyphicon{
+.inner-addon .glyphicon {
     position: absolute;
     padding-top: 6px;
     padding-left: 10px;
@@ -80,38 +80,40 @@ p.thick{
 }
 
 .left-addon .glyphicon {
-    left:  0;
+    left: 0;
 }
-.right-addon .glyphicon{
+
+.right-addon .glyphicon {
     right: 0;
 }
 
-.left-addon input{
-    padding-left:  30px;
+.left-addon input {
+    padding-left: 30px;
 }
-.right-addon input{
+
+.right-addon input {
     padding-right: 30px;
 }
 
-.icon-form{
+.icon-form {
     padding-top: 0;
     color: darkgrey;
     text-align: center;
 }
 
-.forgot-pswrd{
+.forgot-pswrd {
     font-weight: bold;
     margin-right: 20px;
     color: #48819B;
 }
 
-.rgstr{
+.rgstr {
     font-weight: bold;
     margin-bottom: 10px;
     color: #48819B;
 }
 
-.alert-icon{
+.alert-icon {
     margin-right: 8px;
     font-size: 1.2em;
 }

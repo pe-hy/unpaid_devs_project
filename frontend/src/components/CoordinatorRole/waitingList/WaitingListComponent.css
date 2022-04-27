@@ -1,11 +1,12 @@
 /* CSS */
 
-.my-flex{
+.my-flex {
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
+
 .removal-btn {
     background-color: #9f1515;
     border: 1px solid #ce2b2b;
@@ -65,7 +66,7 @@
     transform: translateY(-2px);
 }
 
-.my-btn-white{
+.my-btn-white {
     background-color: #ffffff;
     color: #000000;
     border: 1px solid #000000;
@@ -75,6 +76,7 @@
     .accept-btn {
         padding: 10px 30px;
     }
+
     .removal-btn {
         padding: 10px 30px;
     }

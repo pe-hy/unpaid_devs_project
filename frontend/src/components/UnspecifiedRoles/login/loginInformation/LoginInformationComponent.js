@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {axios} from "../../axios";
+import {axios} from "../../../../axios";
+
 let empty = "";
 
 export const LoginInformationComponent = ({isLoggedIn}) => {
@@ -12,7 +13,7 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
 
     const getUserName = async () => {
         if (getCurrentRole() == null) return;
-        if (getCurrentRole() !== null){
+        if (getCurrentRole() !== null) {
             console.log("fetching user info");
             const response = await axios({
                 url: "http://localhost:8080/user/info",
@@ -24,12 +25,11 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
             });
             if (response && response.data) {
                 setName(response.data.firstName + " " + response.data.secondName);
-                if(response.data.role === "ROLE_COORDINATOR"){
+                if (response.data.role === "ROLE_COORDINATOR") {
                     setRole("Koordinátor");
-                }
-                else if(response.data.role === "ROLE_TEACHER"){
+                } else if (response.data.role === "ROLE_TEACHER") {
                     setRole("Učitel");
-                }else{
+                } else {
                     setRole("Student");
                 }
             }
@@ -39,14 +39,14 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
         getUserName();
     }, []);
 
-    if(name != null && isLoggedIn) {
+    if (name != null && isLoggedIn) {
         return (
             <div className="text-center" style={{marginTop: "12px"}}>
                 <p style={{marginBottom: "0px"}}>Přihlášen jako: <b>{name}</b></p>
-            <p>Role: <b>{role}</b></p>
+                <p>Role: <b>{role}</b></p>
             </div>
         )
-    }else{
+    } else {
         return (
             <div>
                 {empty}

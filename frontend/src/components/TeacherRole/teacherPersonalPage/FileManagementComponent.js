@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, {useState} from 'react';
+import {useDropzone} from 'react-dropzone';
 import "./FileManagementComponent.css";
 import axios from 'axios'
 
 
-const FileManagementComponent = ({ userDataRef }) => {
+const FileManagementComponent = ({userDataRef}) => {
 
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
@@ -21,6 +21,7 @@ const FileManagementComponent = ({ userDataRef }) => {
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
     const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];
+
     //https://www.npmjs.com/package/react-drag-drop-files
 
     function unitConversion(size) {
@@ -46,11 +47,9 @@ const FileManagementComponent = ({ userDataRef }) => {
         let message = "Neznámá chyba.";
         if (e.code == "file-too-large") {
             message = e.message;
-        }
-        else if (e.code == "file-invalid-type") {
+        } else if (e.code == "file-invalid-type") {
             message = "Nepovolená přípona souboru.";
-        }
-        else if (e.code == "too-many-files") {
+        } else if (e.code == "too-many-files") {
             message = `Bylo zvoleno příliš mnoho souborů. Maximum je ${MAX_NUMBER_OF_FILES}.`;
         }
         return message;
@@ -80,7 +79,7 @@ const FileManagementComponent = ({ userDataRef }) => {
                 method: 'POST',
                 url: 'http://localhost:8080/teacher/upload',
                 withCredentials: true,
-                headers: { 'content-type': 'application/json' },
+                headers: {'content-type': 'application/json'},
                 data: formData,
             }).then(function (response) {
                 setMessageColor("green");
@@ -101,16 +100,18 @@ const FileManagementComponent = ({ userDataRef }) => {
                     setFileUploadProgress(false);
                 });
         }
-        const { acceptedFiles, getRootProps, fileRejections, getInputProps } = useDropzone({
+        const {acceptedFiles, getRootProps, fileRejections, getInputProps} = useDropzone({
             accept: 'image/jpeg, image/png, image/png, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain, application/pdf',
             onFileDialogOpen: () => {
                 if (document.getElementById("messageResponse")) {
                     document.getElementById("messageResponse").textContent = "";
 
-                };
+                }
+
                 if (document.getElementById("messageSize")) {
                     document.getElementById("messageSize").textContent = "";
-                };
+                }
+
             },
             validator: fileSizeValidator,
             maxFiles: MAX_NUMBER_OF_FILES,
@@ -125,13 +126,14 @@ const FileManagementComponent = ({ userDataRef }) => {
             </p>
         ));
 
-        const fileRejectionItems = fileRejections.map(({ file, errors }) => (
+        const fileRejectionItems = fileRejections.map(({file, errors}) => (
             <div key={file.path}>
                 {file.path}
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
                 <div style={{paddingBottom: "15px"}}>
                     {errors.map(e => (
-                        <p style={{ color: "red", padding: "0", margin: "0", fontSize: "14px" }} key={e.code}>{errorMessage(e)}</p>
+                        <p style={{color: "red", padding: "0", margin: "0", fontSize: "14px"}}
+                           key={e.code}>{errorMessage(e)}</p>
                     ))}
                 </div>
             </div>
@@ -140,7 +142,7 @@ const FileManagementComponent = ({ userDataRef }) => {
 
         return (
             <section className="container">
-                <div {...getRootProps({ className: 'dropzone' })}>
+                <div {...getRootProps({className: 'dropzone'})}>
                     <input {...getInputProps()} />
                     <p>Přetáhnětě soubory zde nebo klikněte a vyberte soubor</p>
                     <p>Povolené přípony: .png, .jpg, .jpeg, .docx, .txt, .pdf</p>
@@ -149,20 +151,24 @@ const FileManagementComponent = ({ userDataRef }) => {
                 </div>
                 {(files.length > 0) && <React.Fragment>
                     <div>
-                        <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Soubory připravené k nahrání</h4>
+                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Soubory připravené k nahrání</h4>
                         <div style={{color: "green"}}>{files}</div>
                         <hr/>
                     </div>
                 </React.Fragment>}
                 {(fileRejectionItems.length > 0) && <React.Fragment>
                     <div>
-                        <h4 style={{ paddingTop: "15px", paddingBottom: "15px" }}>Zamítnuté soubory</h4>
+                        <h4 style={{paddingTop: "15px", paddingBottom: "15px"}}>Zamítnuté soubory</h4>
                         <div>{fileRejectionItems}</div>
                         <hr/>
                     </div>
                 </React.Fragment>}
                 {files.length > 0 && <React.Fragment>
-                    <button className={"btn btn-success"} onClick={() => { uploadFiles(); userDataRef() }}>Nahrát</button>
+                    <button className={"btn btn-success"} onClick={() => {
+                        uploadFiles();
+                        userDataRef()
+                    }}>Nahrát
+                    </button>
                 </React.Fragment>}
 
             </section>
@@ -173,11 +179,13 @@ const FileManagementComponent = ({ userDataRef }) => {
 
         <div>
             {/* <input type="file" multiple onChange={uploadFileHandler}/> */}
-            <Basic />
+            <Basic/>
             <div>
-                {!fileSize && <p id="messageSize" style={{ color: 'red' }}>Příliš velký soubor. Limit: ${MAX_FILE_SIZE / 1000000} MB</p>}
-                {fileUploadProgress && <p style={{ color: 'red' }}>Nahrávám soubory...</p>}
-                {fileUploadResponse != null && <p id="messageResponse" style={{ color: messageColor }}>{fileUploadResponse.replace(/[[\]']+/g, '')}</p>}
+                {!fileSize && <p id="messageSize" style={{color: 'red'}}>Příliš velký soubor. Limit:
+                    ${MAX_FILE_SIZE / 1000000} MB</p>}
+                {fileUploadProgress && <p style={{color: 'red'}}>Nahrávám soubory...</p>}
+                {fileUploadResponse != null &&
+                <p id="messageResponse" style={{color: messageColor}}>{fileUploadResponse.replace(/[[\]']+/g, '')}</p>}
             </div>
         </div>
 

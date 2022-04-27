@@ -1,11 +1,11 @@
-.main{
+.main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.registration-view-container{
+.registration-view-container {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -2,11 +2,11 @@ import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
-import {axios} from "../../axios.js";
-import {BsInfoCircleFill, BsSearch, BsFillXCircleFill} from "react-icons/bs";
-import ReservationButtonComponent from "../reservationButton/ReservationButtonComponent";
+import {axios} from "../../../axios.js";
+import {BsFillXCircleFill, BsInfoCircleFill, BsSearch} from "react-icons/bs";
+import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
-import UnReservationButtonComponent from "../reservationButton/UnReservationButtonComponent";
+import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
 import {Navigate} from "react-router-dom";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
@@ -382,7 +382,8 @@ export const PracticeListComponent = () => {
                         </div>
                     </div>
                     {search(practices).length == 0 ?
-                        <div className="alert alert-danger center warnTextPractices"><span>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</span></div> : null}
+                        <div className="alert alert-danger center warnTextPractices"><span>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</span>
+                        </div> : null}
                     {practices && search(practices).map((item, index) => (
                         <Accordion.Item
                             eventKey={item.id}

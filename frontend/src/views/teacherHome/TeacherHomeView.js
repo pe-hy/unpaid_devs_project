@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "react-bootstrap";
-import AddPracticeComponent from "../../components/addPracticeForm/AddPracticeComponent";
+import AddPracticeComponent from "../../components/TeacherRole/addPracticeForm/AddPracticeComponent";
 import "./TeacherHomeStyles.css";
 
 const TeacherHomeView = () => {

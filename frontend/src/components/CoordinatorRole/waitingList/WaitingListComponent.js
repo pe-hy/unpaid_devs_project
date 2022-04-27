@@ -1,7 +1,7 @@
 import "./WaitingListComponent.css";
 import {Navigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {axios} from "../../axios.js";
+import {axios} from "../../../axios.js";
 import {Container, Modal} from "react-bootstrap";
 
 export const WaitingListComponent = () => {
@@ -32,7 +32,7 @@ export const WaitingListComponent = () => {
 
     const acceptUser = async (email) => {
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: {'content-type': 'application/json'},
             url: "http://localhost:8080/coordinator/unlockUser",
             withCredentials: true,
             method: "POST",
@@ -48,7 +48,7 @@ export const WaitingListComponent = () => {
 
     const removeUser = async () => {
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: {'content-type': 'application/json'},
             url: "http://localhost:8080/coordinator/removeUser",
             withCredentials: true,
             method: "POST",
@@ -82,7 +82,11 @@ export const WaitingListComponent = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
-                    <button type="button" className="removal-btn" onClick={() => {props.onHide(); removeUser();}}>Zamítnout</button>
+                    <button type="button" className="removal-btn" onClick={() => {
+                        props.onHide();
+                        removeUser();
+                    }}>Zamítnout
+                    </button>
                 </Modal.Footer>
             </Modal>
         );
@@ -105,18 +109,28 @@ export const WaitingListComponent = () => {
                 </tr>
                 </thead>
                 <tbody>
-            {!noUsers &&
-            users.map((item, index) => (
-                <tr className="align-middle">
-                    <th scope="row">{item.firstName + " " + item.secondName}</th>
-                    <td>{item.school.name}</td>
-                    <td>{item.phoneNumber}</td>
-                    <td>{item.username}</td>
-                    <td><button onClick={() => acceptUser(item.username)} type="button" className="accept-btn">Potvrdit</button></td>
-                    <td><button onClick={() => {setModalShow(true); setCurrEmail(item.username);}} type="button" className="removal-btn">Zamítnout</button></td>
-                </tr>
-            ))}
-            </tbody>
+                {!noUsers &&
+                users.map((item, index) => (
+                    <tr className="align-middle">
+                        <th scope="row">{item.firstName + " " + item.secondName}</th>
+                        <td>{item.school.name}</td>
+                        <td>{item.phoneNumber}</td>
+                        <td>{item.username}</td>
+                        <td>
+                            <button onClick={() => acceptUser(item.username)} type="button"
+                                    className="accept-btn">Potvrdit
+                            </button>
+                        </td>
+                        <td>
+                            <button onClick={() => {
+                                setModalShow(true);
+                                setCurrEmail(item.username);
+                            }} type="button" className="removal-btn">Zamítnout
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
             </table>
             <CreateModal
                 show={modalShow}

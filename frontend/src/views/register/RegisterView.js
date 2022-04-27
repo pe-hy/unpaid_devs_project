@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { RegistrationComponent } from "../../components/registration/RegistrationComponent.js";
+import { RegistrationComponent } from "../../components/UnspecifiedRoles/registration/RegistrationComponent.js";
 import "./RegisterView.css";
 
 const RegisterView = () => {

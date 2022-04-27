@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.repository;
 
 import cz.osu.teacherpractice.model.Practice;
+import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,4 +41,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER'")
     List<User> getAllTeachers();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.school = null WHERE u.school = :school")
+    int setSchoolNull(Optional<School> school);
 }

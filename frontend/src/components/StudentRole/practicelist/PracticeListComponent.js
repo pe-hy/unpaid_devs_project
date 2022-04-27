@@ -180,7 +180,6 @@ export const PracticeListComponent = () => {
                 var sch = [];
                 response.data.forEach(element => sch.push(element.name));
                 setSchools(sch);
-
             });
         };
 
@@ -210,7 +209,6 @@ export const PracticeListComponent = () => {
                         sch.push(str)
                     });
                 setTeachers(sch);
-
             });
         };
 
@@ -397,7 +395,7 @@ export const PracticeListComponent = () => {
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
-                                        <Col className="text-center d-none d-xl-block">{item.teacher.school.name}</Col>
+                                        <Col className="text-center d-none d-xl-block">{item.teacher.school.name ? item.teacher.school.name : "Škola nevyplněna"}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
                                             ". " +

@@ -73,6 +73,11 @@ public class UserController {
         return userService.getSubjects();
     }
 
+    @GetMapping("/user/teachers")
+    public List<UserDto> getTeachers() {
+        return userService.getTeachers();
+    }
+
     @GetMapping("/user/schools")
     public List<SchoolDto> getSchools() {
         return userService.getSchools();

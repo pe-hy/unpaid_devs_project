@@ -3,6 +3,7 @@ package cz.osu.teacherpractice.service;
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.SchoolDto;
 import cz.osu.teacherpractice.dto.SubjectDto;
+import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
@@ -77,6 +78,10 @@ public class UserService {
 
     public List<SchoolDto> getSchools() {
         return mapper.schoolsToSchoolsDto(schoolRepository.findAll());
+    }
+
+    public List<UserDto> getTeachers() {
+        return mapper.usersToUsersDto(userRepository.getAllTeachers());
     }
 
 

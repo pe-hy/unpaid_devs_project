@@ -38,5 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.locked = True and u.enabled = True")
     List<User> getAllLocked();
 
-    String deleteByUsername(String Username);
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER'")
+    List<User> getAllTeachers();
 }

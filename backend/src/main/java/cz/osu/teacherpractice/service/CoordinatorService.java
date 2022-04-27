@@ -78,4 +78,8 @@ public class CoordinatorService {
         } else return "Subject wasn't deleted";
     }
 
+    public List<UserDto> getTeachersWithoutSchool(){
+        return mapper.usersToUsersDto(userRepository.getAllTeachersWithoutSchool());
+    }
+
 }

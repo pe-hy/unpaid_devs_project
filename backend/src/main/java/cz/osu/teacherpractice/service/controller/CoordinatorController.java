@@ -55,7 +55,7 @@ public class CoordinatorController {
     @PostMapping(path = "/removeSchool")
     public String removeSchool(@RequestBody String request) {
         System.out.println("request:" + " " + request);
-        String result = request.substring(1, request.length() - 1);
+        String result = request.replaceAll("\"", "");
         System.out.println("result after substring: " + " " + result);
         return coordinatorService.removeSchool(result);
     }
@@ -72,5 +72,10 @@ public class CoordinatorController {
     public String unlockUser(@RequestBody String request) {
         String result = request.substring(1, request.length() - 1);
         return userService.unlockUser(result);
+    }
+
+    @GetMapping("/getTeachersWithoutSchool")
+    public List<UserDto> getTeachersWithoutSchool() {
+        return coordinatorService.getTeachersWithoutSchool();
     }
 }

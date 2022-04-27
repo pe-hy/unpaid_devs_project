@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {axios} from "../../../axios";
 import {Navigate} from "react-router-dom";
-import {Alert, Col, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
+import {Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
 import {BsCheckLg, BsExclamationTriangleFill} from "react-icons/bs";
+import "./AddSchoolComponent.css";
+
 
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
@@ -113,17 +115,17 @@ export const AddSchoolComponent = () => {
         <Container fluid>
             <div className="d-flex">
                 <div className="col">
-                    Přidání školy
+                    <h4 className="p-3">Přidání školy</h4>
                     <Form onSubmit={addSchool} id="Form">
-                        <Row>
+                        <Row className="center">
                             <Form.Group
                                 as={Row}
-                                className="m-3"
+                                className="center m-5"
                                 controlId="formHorizontalDatum"
                                 role="form"
                             >
-                                <Col sm={3}>Název školy</Col>
-                                <Col sm={8}>
+                                <Row className="center" sm={8}>
+                                    <b className="center pb-4">Název školy</b>
                                     <InputGroup>
                                         <Form.Control
                                             required="required"
@@ -132,7 +134,8 @@ export const AddSchoolComponent = () => {
                                             onChange={handleChange}
                                         />
                                     </InputGroup>
-                                </Col>
+                                            <Button type="submit" className={"button-add btn"}>Přidat</Button>
+                                </Row>
                             </Form.Group>
                         </Row>
                     </Form>
@@ -151,12 +154,11 @@ export const AddSchoolComponent = () => {
                         <BsCheckLg className={"alert-icon-success"}/> Škola byla přidána
                     </Alert>
                 </div>
-                <div className="col">
+                <div className="col p-3">
                     <table className="table table-striped align-items-center">
                         <thead>
                         <tr>
                             <th scope="col">Škola</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -181,6 +183,34 @@ export const AddSchoolComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
+            <hr/>
+            {schools.length > 0 &&
+            <div className="customAlertContainer">
+                <div className="w-75 p-2 m-3 center alertCustom">
+                    <table className="table align-items-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Uživatelé bez přiřazené školy</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {!noSchools &&
+                        schools.map((item, index) => (
+                            <tr className="align-middle">
+                                <td>{item}</td>
+                                <td>
+                                    <button onClick={() => {
+                                        setModalShow(true);
+                                        setCurrSchool(item);
+                                    }} type="button" className="removal-btn">X
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>}
         </Container>
     );
 };

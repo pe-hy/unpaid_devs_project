@@ -47,9 +47,10 @@ export const AddSchoolComponent = () => {
         }
     };
 
-    const assignSchoolToTeacher = async (teacher) => {
-        setAssignSchoolForm({ ...assignSchoolForm, "username": teacher.username, "school": currAssignedSchool });
-        var fuckingForm = {"username": teacher.username, "school": currAssignedSchool};
+    const assignSchoolToTeacher = async () => {
+        console.log("hf");
+        setAssignSchoolForm({ ...assignSchoolForm, "username": currTeacher.username, "school": currAssignedSchool });
+        var fuckingForm = { "username": currTeacher.username, "school": currAssignedSchool };
         console.log("form", assignSchoolForm);
         const response = await axios({
             headers: { 'content-type': 'application/json' },
@@ -112,6 +113,11 @@ export const AddSchoolComponent = () => {
                     <p>
                         Zvolte prosím školu pro učitele: {currTeacher != null ? currTeacher.firstName.concat(" ", currTeacher.secondName) : ""}
                     </p>
+                    <Combobox
+                        data={schools}
+                        value={currAssignedSchool}
+                        onChange={value => selectSchoolChange(value)}
+                    />
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -119,6 +125,7 @@ export const AddSchoolComponent = () => {
                     <button type="button" className="accept-btn" onClick={() => {
                         props.onHide();
                         assignSchoolToTeacher();
+                        setCurrAssignedSchool("");
                     }}>Přiřadit školu
                     </button>
                 </Modal.Footer>
@@ -234,38 +241,34 @@ export const AddSchoolComponent = () => {
                 <div className="col p-3">
                     <h4 className="p-3">Seznam škol</h4>
                     <div className="center">
-                    <table className="w-75 table table-striped align-items-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">Škola</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {schools &&
-                                schools.map((item, index) => (
-                                    <tr key={index} className="align-middle">
-                                        <td><span>{item}</span></td>
-                                        <td>
-                                            <button onClick={() => {
-                                                setModalShow(true);
-                                                setCurrSchool(item);
-                                            }} type="button" className="removal-btn">X
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
+                        <table className="w-75 table table-striped align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Škola</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {schools &&
+                                    schools.map((item, index) => (
+                                        <tr key={index} className="align-middle">
+                                            <td><span>{item}</span></td>
+                                            <td>
+                                                <button onClick={() => {
+                                                    setModalShow(true);
+                                                    setCurrSchool(item);
+                                                }} type="button" className="removal-btn">X
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </Row>
             <CreateModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-            />
-            <AssignSchoolModal
-                show={assignSchoolModalShow}
-                onHide={() => setAssignSchoolModalShow(false)}
             />
             <hr />
             {teachersWithoutSchool &&
@@ -281,19 +284,17 @@ export const AddSchoolComponent = () => {
                                 {teachersWithoutSchool.map((teacher, index) => (
                                     <tr key={index} className="align-middle">
                                         <td>{teacher.firstName.concat(" ", teacher.secondName, " (", teacher.username, ")")}</td>
-                                        <td>
-                                            <Combobox
-                                                data={schools}
-                                                value={currAssignedSchool}
-                                                onChange={value => selectSchoolChange(value)}
-                                            />
-                                        </td>
+
                                         <td>
                                             <button type="button" className="accept-btn" onClick={() => {
-                                                assignSchoolToTeacher(teacher);
-                                                setCurrAssignedSchool("");
+                                                setCurrTeacher(teacher);
+                                                setAssignSchoolModalShow(true);
                                             }}>Přiřadit školu
                                             </button>
+                                            <AssignSchoolModal
+                                                show={assignSchoolModalShow}
+                                                onHide={() => setAssignSchoolModalShow(false)}
+                                            />
                                         </td>
                                     </tr>
                                 ))}

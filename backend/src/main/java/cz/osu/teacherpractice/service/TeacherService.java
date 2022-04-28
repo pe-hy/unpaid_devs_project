@@ -1,8 +1,8 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.exception.UserErrorException;
-import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.User;

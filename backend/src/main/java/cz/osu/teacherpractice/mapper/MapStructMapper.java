@@ -1,8 +1,8 @@
 package cz.osu.teacherpractice.mapper;
 
+import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
-import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.dto.response.UserDto;

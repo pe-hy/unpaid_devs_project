@@ -49,4 +49,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.school = null WHERE u.school = :school")
     int setSchoolNull(Optional<School> school);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.school.id = :school WHERE u.username = :username")
+    int assignSchool(String username, long school);
 }

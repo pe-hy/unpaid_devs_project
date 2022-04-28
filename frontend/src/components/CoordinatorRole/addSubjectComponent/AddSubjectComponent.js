@@ -165,7 +165,7 @@ export const AddSubjectComponent = () => {
                         <tbody>
                         {!noSubjects &&
                         subjects.map((item, index) => (
-                            <tr className="align-middle">
+                            <tr key={index} className="align-middle">
                                 <td>{item}</td>
                                 <td>
                                     <button onClick={() => {
@@ -197,7 +197,7 @@ export const AddSubjectComponent = () => {
                         <tbody>
                         {!noSubjects &&
                         subjects.map((item, index) => (
-                            <tr className="align-middle">
+                            <tr key={index} className="align-middle">
                                 <td>{item}</td>
                                 <td>
                                     <button onClick={() => {

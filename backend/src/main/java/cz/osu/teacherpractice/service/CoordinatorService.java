@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
@@ -85,4 +86,14 @@ public class CoordinatorService {
         return mapper.usersToUsersDto(userRepository.getAllTeachersWithoutSchool());
     }
 
+    public String assignSchool(AssignSchoolDto request){
+        Optional<School> school = schoolRepository.findByName(request.getSchool());
+        if(school.isPresent()){
+            String username = request.getUsername();
+            Long id = school.get().getId();
+            userRepository.assignSchool(username, id);
+            return "Škola byla přiřazena.";
+        }
+        return "Škola nebyla přiřazena.";
+    }
 }

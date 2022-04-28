@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.service.controller;
 
+import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
@@ -77,5 +78,11 @@ public class CoordinatorController {
     @GetMapping("/getTeachersWithoutSchool")
     public List<UserDto> getTeachersWithoutSchool() {
         return coordinatorService.getTeachersWithoutSchool();
+    }
+
+    @PostMapping(path = "/assignSchool")
+    public String assignSchool(@RequestBody AssignSchoolDto request) {
+        System.out.println(request.getUsername() + " " + request.getSchool());
+        return coordinatorService.assignSchool(request);
     }
 }

@@ -5,7 +5,6 @@ import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.service.UserService;
 import cz.osu.teacherpractice.service.email.EmailSender;
 import cz.osu.teacherpractice.service.email.EmailValidator;
-import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor

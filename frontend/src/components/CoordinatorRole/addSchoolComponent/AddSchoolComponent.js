@@ -10,15 +10,20 @@ import Combobox from "react-widgets/Combobox";
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
     const [teachersWithoutSchool, setTeachersWithoutSchools] = useState([]);
-    const noSchools = !schools || (schools && schools.length === 0);
+
     const [modalShow, setModalShow] = React.useState(false);
     const [assignSchoolModalShow, setAssignSchoolModalShow] = useState(false);
+
     const [currSchool, setCurrSchool] = useState("");
-    const [selectedAssignSchool, setSelectedAssignSchool] = useState();
     const [currTeacher, setCurrTeacher] = useState();
+    const [currAssignedSchool, setCurrAssignedSchool] = useState("");
+
     const [formData, setFormData] = useState({});
+    const [assignSchoolForm, setAssignSchoolForm] = useState({});
+
     const [showDangerAlert, setshowDangerAlert] = useState(false);
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
+
     const [errorMsg, setErrorMsg] = useState("");
     const checkRole = () => {
         return localStorage.getItem("role") !== "ROLE_COORDINATOR";
@@ -36,28 +41,31 @@ export const AddSchoolComponent = () => {
             console.log(err.response.data.message);
         });
         if (response && response.data) {
-            console.log(response);
             setModalShow(false);
             getSchools();
             getTeachersWithoutSchool();
         }
     };
 
-    const assignSchoolToTeacher = async () => {
+    const assignSchoolToTeacher = async (teacher) => {
+        setAssignSchoolForm({ ...assignSchoolForm, "username": teacher.username, "school": currAssignedSchool });
+        var fuckingForm = {"username": teacher.username, "school": currAssignedSchool};
+        console.log("form", assignSchoolForm);
         const response = await axios({
             headers: { 'content-type': 'application/json' },
             url: "http://localhost:8080/coordinator/assignSchool",
             withCredentials: true,
             method: "POST",
-            data: (currTeacher, selectedAssignSchool),
+            data: fuckingForm,
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err.response.data.message);
+
         });
         if (response && response.data) {
-            console.log(response);
             setModalShow(false);
             getTeachersWithoutSchool();
+
         }
     }
 
@@ -73,6 +81,12 @@ export const AddSchoolComponent = () => {
         });
     };
 
+    const selectSchoolChange = (value) => {
+
+        setCurrAssignedSchool(value);
+
+    }
+
     const getTeachersWithoutSchool = async () => {
         const response = await axios({
             url: "http://localhost:8080/coordinator/getTeachersWithoutSchool",
@@ -83,13 +97,7 @@ export const AddSchoolComponent = () => {
         });
     };
 
-    const selectAssignSchool = (value) => {
-        let combo = document.getElementById("assign-school-combo");
-        
-    }
-
     function AssignSchoolModal(props) {
-        console.log("oh oh no");
         return (
             <Modal
                 {...props}
@@ -104,12 +112,7 @@ export const AddSchoolComponent = () => {
                     <p>
                         Zvolte prosím školu pro učitele: {currTeacher != null ? currTeacher.firstName.concat(" ", currTeacher.secondName) : ""}
                     </p>
-                    <Combobox
-                        id="assign-school-combo"
-                        data={schools}
-                        value={selectedAssignSchool}
-                        onChange={value => setSelectedAssignSchool(value)}
-                    />
+
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
@@ -154,7 +157,6 @@ export const AddSchoolComponent = () => {
     const handleChange = (e) => {
         setshowSuccessAlert(false);
         setFormData({ ...formData, "name": e.target.value.trim() });
-        console.log(formData);
     };
 
     const addSchool = async (event) => {
@@ -200,7 +202,7 @@ export const AddSchoolComponent = () => {
                                 role="form"
                             >
                                 <Row className="center" sm={8}>
-                                    <b className="center pb-4" style={{fontSize: "20px"}}>Název školy</b>
+                                    <b className="center pb-4" style={{ fontSize: "20px" }}>Název školy</b>
                                     <InputGroup>
                                         <Form.Control
                                             required="required"
@@ -238,9 +240,9 @@ export const AddSchoolComponent = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {!noSchools &&
+                            {schools &&
                                 schools.map((item, index) => (
-                                    <tr className="align-middle">
+                                    <tr key={index} className="align-middle">
                                         <td>{item}</td>
                                         <td>
                                             <button onClick={() => {
@@ -264,7 +266,7 @@ export const AddSchoolComponent = () => {
                 onHide={() => setAssignSchoolModalShow(false)}
             />
             <hr />
-            {schools.length > 0 &&
+            {teachersWithoutSchool &&
                 <div className="customAlertContainer">
                     <div className="w-75 p-2 m-3 center alertCustom">
                         <table className="table align-items-center">
@@ -275,13 +277,20 @@ export const AddSchoolComponent = () => {
                             </thead>
                             <tbody>
                                 {teachersWithoutSchool.map((teacher, index) => (
-                                    <tr className="align-middle">
+                                    <tr key={index} className="align-middle">
                                         <td>{teacher.firstName.concat(" ", teacher.secondName, " (", teacher.username, ")")}</td>
                                         <td>
-                                            <button onClick={() => {
-                                                setAssignSchoolModalShow(true);
-                                                setCurrTeacher(teacher);
-                                            }} type="button" className="accept-btn">Přiřadit školu
+                                            <Combobox
+                                                data={schools}
+                                                value={currAssignedSchool}
+                                                onChange={value => selectSchoolChange(value)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <button type="button" className="accept-btn" onClick={() => {
+                                                assignSchoolToTeacher(teacher);
+                                                setCurrAssignedSchool("");
+                                            }}>Přiřadit školu
                                             </button>
                                         </td>
                                     </tr>

@@ -231,7 +231,8 @@ export const AddSchoolComponent = () => {
                 </div>
                 <div className="col p-3">
                     <h4 className="p-3">Seznam škol</h4>
-                    <table className="table table-striped align-items-center">
+                    <div className="center">
+                    <table className="w-75 table table-striped align-items-center">
                         <thead>
                             <tr>
                                 <th scope="col">Škola</th>
@@ -241,7 +242,7 @@ export const AddSchoolComponent = () => {
                             {!noSchools &&
                                 schools.map((item, index) => (
                                     <tr className="align-middle">
-                                        <td>{item}</td>
+                                        <td><span>{item}</span></td>
                                         <td>
                                             <button onClick={() => {
                                                 setModalShow(true);
@@ -253,6 +254,7 @@ export const AddSchoolComponent = () => {
                                 ))}
                         </tbody>
                     </table>
+                </div>
                 </div>
             </Row>
             <CreateModal

@@ -46,7 +46,7 @@ public class CoordinatorService {
 
     public String addSubject(SubjectDto subjectDto) {
         String subjectName = subjectDto.getName();
-        if(schoolRepository.findByName(subjectName).isPresent()) {
+        if(subjectRepository.findByName(subjectName).isPresent()) {
             throw new IllegalStateException("Předmět již existuje.");
         }else {
             Subject subject = mapper.subjectDtoToSubject(subjectDto);

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {axios} from "../../../axios";
 import {Navigate} from "react-router-dom";
-import {Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
+import {Alert, Button, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
 import {BsCheckLg, BsExclamationTriangleFill} from "react-icons/bs";
 import "./AddSubjectComponent.css";
 
@@ -10,7 +10,7 @@ export const AddSubjectComponent = () => {
     const [subjects, setSubjects] = useState([]);
     const noSubjects = !subjects || (subjects && subjects.length === 0);
     const [modalShow, setModalShow] = React.useState(false);
-    const [currSchool, setCurrSchool] = useState("");
+    const [currSubject, setCurrSubject] = useState("");
     const [formData, setFormData] = useState({});
     const [showDangerAlert, setshowDangerAlert] = useState(false);
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
@@ -25,7 +25,7 @@ export const AddSubjectComponent = () => {
             url: "http://localhost:8080/coordinator/removeSubject",
             withCredentials: true,
             method: "POST",
-            data: currSchool,
+            data: currSubject,
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err.response.data.message);
@@ -63,6 +63,9 @@ export const AddSubjectComponent = () => {
                     <h4>Vymázání předmětu</h4>
                     <p>
                         Jste si jisti, že chcete tento předmět odstranit? Tato akce je nevratná.
+
+                        <p className="mt-4"><b>Pokud smažete předmět, odstraníte tím veškeré praxe s tímto
+                            předmětem.</b></p>
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -70,7 +73,7 @@ export const AddSubjectComponent = () => {
                     <button type="button" className="removal-btn" onClick={() => {
                         props.onHide();
                         removeSubject();
-                    }}>Smazat školu
+                    }}>Smazat předmět
                     </button>
                 </Modal.Footer>
             </Modal>
@@ -142,24 +145,25 @@ export const AddSubjectComponent = () => {
                     <Alert
                         show={showDangerAlert}
                         variant="danger"
-                        className="alert-practice-error m-4 p-4"
+                        className="alert-school-error m-4"
                     >
                         <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
                     </Alert>
                     <Alert
                         show={showSuccessAlert}
                         variant="success"
-                        className="alert-practice-success m-4 p-4"
+                        className="alert-school-success m-4"
                     >
                         <BsCheckLg className={"alert-icon-success"}/> Předmět byl přidán
                     </Alert>
                 </div>
                 <div className="col p-3">
                     <h4 className="p-3">Seznam předmětů</h4>
-                    <table className="table table-striped align-items-center">
+                    <div className="center">
+                    <table className="w-75 table table-striped align-items-center">
                         <thead>
                         <tr>
-                            <th scope="col">Předměty</th>
+                            <th scope="col">Předmět</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -170,7 +174,7 @@ export const AddSubjectComponent = () => {
                                 <td>
                                     <button onClick={() => {
                                         setModalShow(true);
-                                        setCurrSchool(item);
+                                        setCurrSubject(item);
                                     }} type="button" className="removal-btn">X
                                     </button>
                                 </td>
@@ -178,6 +182,7 @@ export const AddSubjectComponent = () => {
                         ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </Row>
             <CreateModal
@@ -202,7 +207,7 @@ export const AddSubjectComponent = () => {
                                 <td>
                                     <button onClick={() => {
                                         setModalShow(true);
-                                        setCurrSchool(item);
+                                        setCurrSubject(item);
                                     }} type="button" className="removal-btn">X
                                     </button>
                                 </td>

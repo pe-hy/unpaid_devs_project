@@ -63,7 +63,7 @@ public class CoordinatorController {
     @PostMapping(path = "/removeSubject")
     public String removeSubject(@RequestBody String request) {
         System.out.println("request:" + " " + request);
-        String result = request.substring(1, request.length() - 1);
+        String result = request.replaceAll("\"", "");
         System.out.println("result after substring: " + " " + result);
         return coordinatorService.removeSubject(result);
     }

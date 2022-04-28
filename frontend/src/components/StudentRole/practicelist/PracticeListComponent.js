@@ -21,6 +21,7 @@ export const PracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
         const schoolNotFound = "Škola nevyplněna";
+        const subjectNotFound = "Předmět nenalezen";
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";
@@ -121,7 +122,7 @@ export const PracticeListComponent = () => {
                     return false;
                 }
 
-                if (filterParam.includes(subjectFilterParam) && item.subject.name != selectedSubjectName) {
+                if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name != selectedSubjectName)) {
                     return false;
                 }
 
@@ -392,7 +393,7 @@ export const PracticeListComponent = () => {
                             <div style={{display: "flex"}}>
                                 <Accordion.Header className={"accordion-header"}>
                                     <Row style={{width: "100%"}}>
-                                        <Col className="text-center  ">{item.subject.name}</Col>
+                                        <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>

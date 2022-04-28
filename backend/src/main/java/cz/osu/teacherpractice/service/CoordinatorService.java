@@ -69,9 +69,12 @@ public class CoordinatorService {
     }
 
     public String removeSubject(String subject) {
-        subjectRepository.deleteSubjectByName(subject);
         if (subjectRepository.findByName(subject).isPresent()) {
             System.out.println("Removing" + " " + subject);
+            Optional<Subject> subjectEntity = subjectRepository.findByName(subject);
+            practiceRepository.setSubjectNull(subjectEntity);
+            System.out.println(subjectRepository.findByName(subject));
+            System.out.println(practiceRepository.setSubjectNull(subjectEntity));
             int ret = subjectRepository.deleteSubjectByName(subject);
             if (ret == 1) return "Subject deleted";
             else return "Something went wrong;";

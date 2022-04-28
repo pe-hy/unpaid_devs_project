@@ -63,12 +63,26 @@
     width: 500px;
 }
 
+.alert-school-error{
+    text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
+}
+
 .alert-practice-success{
     text-align: center;
     color: #297231;
     border-color: white;
     background-color: #baefca;
     width: 400px;
+}
+
+.alert-school-success{
+    text-align: center;
+    color: #297231;
+    border-color: white;
+    background-color: #baefca;
 }
 
 .alert-icon-error{
@@ -87,7 +101,7 @@
 
 @media (max-width: 450px) {
     .alert-practice-error{
-        width: 350px;
+        width: 300px;
     }
 
     .alert-practice-success{

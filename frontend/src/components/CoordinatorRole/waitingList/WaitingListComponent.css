@@ -17,7 +17,7 @@
     cursor: pointer;
     font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 800;
     outline: none;
     outline: 0;
     padding: 2px 10px;
@@ -85,4 +85,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.myy-alert{
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    color: #297231;
+    background-color: #baefca;
+    width: 500px;
 }

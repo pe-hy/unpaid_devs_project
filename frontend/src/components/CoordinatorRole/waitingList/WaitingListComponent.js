@@ -135,7 +135,7 @@ export const WaitingListComponent = () => {
             </table>
             {users.length < 1 &&
             <div className="customAlertContainer">
-                <div className="w-50 p-2 m-3 center alert-success alertCustom">
+                <div className="p-3 m-3 center myy-alert alert-success alertCustom">
                     <span>Nikdo z učitelů aktuálně nečeká na potvrzení registrace.</span>
                 </div>
             </div>}

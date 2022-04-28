@@ -271,7 +271,7 @@ const TabsForm = () => {
                     variant="success"
                     className="alert-practice-success"
                 >
-                    <BsCheckLg className={"alert-icon-success"}/> Vytvoření proběhlo úspěšně
+                    <BsCheckLg className={"alert-icon-success "}/> Vytvoření proběhlo úspěšně
                 </Alert>
             </div>
         </Form>

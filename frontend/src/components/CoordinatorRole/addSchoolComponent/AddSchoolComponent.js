@@ -113,9 +113,9 @@ export const AddSchoolComponent = () => {
     if (checkRole()) return <Navigate to="/login"/>;
     return (
         <Container fluid>
-            <div className="d-flex">
+            <Row>
                 <div className="col p-3">
-                    <h4 className="p-3">Přidání školy</h4>
+                    <h4 className="p-4">Přidání školy</h4>
                     <Form onSubmit={addSchool} id="Form">
                         <Row className="center">
                             <Form.Group
@@ -142,14 +142,14 @@ export const AddSchoolComponent = () => {
                     <Alert
                         show={showDangerAlert}
                         variant="danger"
-                        className="alert-practice-error m-4 p-4"
+                        className="alert-school-error m-4 "
                     >
                         <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
                     </Alert>
                     <Alert
                         show={showSuccessAlert}
                         variant="success"
-                        className="alert-practice-success m-4 p-4"
+                        className="alert-school-success m-4"
                     >
                         <BsCheckLg className={"alert-icon-success"}/> Škola byla přidána
                     </Alert>
@@ -179,7 +179,7 @@ export const AddSchoolComponent = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </Row>
             <CreateModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

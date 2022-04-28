@@ -10,8 +10,8 @@ const ReservationButtonComponent = ({ text, onClick }) => {
 }
 
 ReservationButtonComponent.defaultProps = {
-    color: 'steelblue',
-    customBorder: '2px'
+    color: "#0F6E49",
+    customBorder: '3px'
 }
 
 ReservationButtonComponent.propTypes = {

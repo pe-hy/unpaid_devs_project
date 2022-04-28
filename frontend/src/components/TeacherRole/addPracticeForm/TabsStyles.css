@@ -2,10 +2,17 @@
     padding-top: 30px;
     text-align: right;
 }
-.button-padding{
-    padding-top: 30px;
-    padding-bottom: 20px;
+
+.cols-submit{
+    text-align: right;
+    margin-top: -20px;
 }
+
+.button-padding{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .button-add {
     border-color: #D3EAF6;
     color: #264d73;
@@ -53,9 +60,25 @@
     color: #D92F24;
     border-color: white;
     background-color: rgba(255, 0, 0, 0.19);
+    width: 500px;
+}
+
+.alert-school-error{
+    text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
 }
 
 .alert-practice-success{
+    text-align: center;
+    color: #297231;
+    border-color: white;
+    background-color: #baefca;
+    width: 400px;
+}
+
+.alert-school-success{
     text-align: center;
     color: #297231;
     border-color: white;
@@ -71,4 +94,18 @@
     size: 20px;
 }
 
+.my-row{
+    text-align: -webkit-center;
+}
 
+
+@media (max-width: 450px) {
+    .alert-practice-error{
+        width: 300px;
+    }
+
+    .alert-practice-success{
+        width: 300px;
+    }
+
+}

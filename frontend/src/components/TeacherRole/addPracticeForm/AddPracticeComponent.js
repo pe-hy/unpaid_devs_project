@@ -226,30 +226,6 @@ const TabsForm = () => {
                             </InputGroup>
                         </Col>
                     </Form.Group>
-
-                    <Form.Group as={Row} className="m-3">
-                        <Col sm={3}></Col>
-                        <Col sm={8}>
-                            <ButtonGroup className="d-flex button-padding">
-                                <Button type="submit" className={"button-add"}>Přidat</Button>
-                            </ButtonGroup>
-                        </Col>
-                        <Alert
-                            show={showDangerAlert}
-                            variant="danger"
-                            className="alert-practice-error"
-                        >
-                            <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
-                        </Alert>
-                        <Alert
-                            show={showSuccessAlert}
-                            variant="success"
-                            className="alert-practice-success"
-                        >
-                            <BsCheckLg className={"alert-icon-success"}/> Vytvoření proběhlo úspěšně
-                        </Alert>
-                    </Form.Group>
-
                 </Col>
                 <Col sm={5} className={"p-padding"}>
                     <Form.Group className="m-4" role="form">
@@ -271,6 +247,33 @@ const TabsForm = () => {
                 </Col>
                 <Col sm={2}> </Col>
             </Row>
+
+            <Col sm={5} className={"cols-submit"}>
+                <Form.Group as={Row} className="m-3">
+                    <Col sm={3}></Col>
+                    <Col sm={8}>
+                        <ButtonGroup className="d-flex button-padding">
+                            <Button type="submit" className={"button-add"}>Přidat</Button>
+                        </ButtonGroup>
+                    </Col>
+                </Form.Group>
+            </Col>
+            <div className={"my-row"}>
+                <Alert
+                    show={showDangerAlert}
+                    variant="danger"
+                    className="alert-practice-error"
+                >
+                    <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
+                </Alert>
+                <Alert
+                    show={showSuccessAlert}
+                    variant="success"
+                    className="alert-practice-success"
+                >
+                    <BsCheckLg className={"alert-icon-success "}/> Vytvoření proběhlo úspěšně
+                </Alert>
+            </div>
         </Form>
     );
 };

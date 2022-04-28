@@ -341,6 +341,7 @@ export const PracticeListComponent = () => {
                     </TransitionGroup>
                     <hr/>
                 </div>
+                {!filterParam.includes(allFilterParam) && <p>Filtr je aktivní</p>}
                 <Accordion>
                     <div style={{width: "85%"}}>
                         <div className="title-container text-info-practice">

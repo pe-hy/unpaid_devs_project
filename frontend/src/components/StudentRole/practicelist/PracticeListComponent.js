@@ -21,7 +21,7 @@ export const PracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
         const schoolNotFound = "Škola nevyplněna";
-        const subjectNotFound = "Předmět nenalezen";
+        const subjectNotFound = "Předmět nevyplněn";
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";

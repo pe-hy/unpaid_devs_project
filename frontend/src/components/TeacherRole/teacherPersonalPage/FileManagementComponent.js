@@ -132,7 +132,7 @@ const FileManagementComponent = ({userDataRef}) => {
                 - {unitConversion(file.size)} {file.size / 1000000 > 1 ? "MB" : "kB"}
                 <div style={{paddingBottom: "15px"}}>
                     {errors.map(e => (
-                        <p style={{color: "red", padding: "0", margin: "0", fontSize: "14px"}}
+                        <p style={{color: "red", padding: "0", margin: "0", fontSize: "16px"}}
                            key={e.code}>{errorMessage(e)}</p>
                     ))}
                 </div>

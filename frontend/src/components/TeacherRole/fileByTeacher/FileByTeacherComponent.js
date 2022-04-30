@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const LIST_FILES_URL = `${URL}/teacher/listFiles`;
+
 const FileByTeacherComponent = () => {
     const [files, setFiles] = useState('');
 
     //base end point url
-    const FILE_DOWNLOAD_BASE_URL = "http://localhost:8080";
+    const FILE_DOWNLOAD_BASE_URL = URL;
     const axios = require('axios');
 
     const config = {
         method: 'GET',
-        url: 'http://localhost:8080/teacher/listFiles',
+        url: LIST_FILES_URL,
         withCredentials: true,
         headers: {'content-type': 'application/json'},
         data: data

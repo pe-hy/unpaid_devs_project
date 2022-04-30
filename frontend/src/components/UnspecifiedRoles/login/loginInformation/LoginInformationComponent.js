@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {axios} from "../../../../axios";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const GET_USER_INFO_URL = `${URL}/user/info`;
+
 let empty = "";
 
 export const LoginInformationComponent = ({isLoggedIn}) => {
@@ -16,7 +20,7 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
         if (getCurrentRole() !== null) {
             console.log("fetching user info");
             const response = await axios({
-                url: "http://localhost:8080/user/info",
+                url: GET_USER_INFO_URL,
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {

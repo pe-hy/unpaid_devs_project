@@ -16,6 +16,10 @@ const notRegistered = "Zaregistrovat se";
 const waiting = "Zpracování požadavku..."
 const finished = "Na e-mail bylo zasláno ověření";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const GET_SCHOOLS_URL = `${URL}/register/schools`;
+
 const validatePhoneNum = (number) => {
     if (number === "") {
         return true;
@@ -136,7 +140,7 @@ export class RegistrationComponent extends Component {
 
     componentDidMount() {
         axios({
-            url: "http://localhost:8080/register/schools",
+            url: GET_SCHOOLS_URL,
             withCredentials: true,
             method: "GET",
         })

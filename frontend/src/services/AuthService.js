@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const LOGIN_URL = "http://localhost:8080/login";
-const REGISTER_URL = "http://localhost:8080/register";
-const CONFIRMATION_URL = "http://localhost:8080/register/confirm?"
+const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
+const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
+const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 
 class AuthService {
     login(username, password) {

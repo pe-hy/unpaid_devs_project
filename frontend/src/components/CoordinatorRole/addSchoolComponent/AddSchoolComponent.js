@@ -6,6 +6,15 @@ import { BsCheckLg, BsExclamationTriangleFill } from "react-icons/bs";
 import "./AddSchoolComponent.css";
 import Combobox from "react-widgets/Combobox";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const REMOVE_SCHOOL_URL = `${URL}/coordinator/removeSchool`;
+const ASSIGN_SCHOOL_URL = `${URL}/coordinator/assignSchool`;
+const GET_SCHOOLS_URL = `${URL}/user/schools`;
+const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSchool`;
+const ADD_SCHOOL_URL = `${URL}/coordinator/addSchool`;
+
+
 
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
@@ -32,7 +41,7 @@ export const AddSchoolComponent = () => {
     const removeSchool = async () => {
         const response = await axios({
             headers: { 'content-type': 'application/json' },
-            url: "http://localhost:8080/coordinator/removeSchool",
+            url: REMOVE_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
             data: currSchool,
@@ -54,7 +63,7 @@ export const AddSchoolComponent = () => {
         console.log("form", assignSchoolForm);
         const response = await axios({
             headers: { 'content-type': 'application/json' },
-            url: "http://localhost:8080/coordinator/assignSchool",
+            url: ASSIGN_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
             data: fuckingForm,
@@ -72,7 +81,7 @@ export const AddSchoolComponent = () => {
 
     const getSchools = async () => {
         const response = await axios({
-            url: "http://localhost:8080/user/schools",
+            url: GET_SCHOOLS_URL,
             withCredentials: true,
             method: "GET",
         }).then((response) => {
@@ -90,7 +99,7 @@ export const AddSchoolComponent = () => {
 
     const getTeachersWithoutSchool = async () => {
         const response = await axios({
-            url: "http://localhost:8080/coordinator/getTeachersWithoutSchool",
+            url: GET_TEACHERS_WITHOUT_SCHOOL_URL,
             withCredentials: true,
             method: "GET",
         }).then((response) => {
@@ -169,7 +178,7 @@ export const AddSchoolComponent = () => {
     const addSchool = async (event) => {
         event.preventDefault();
         const response = await axios({
-            url: `http://localhost:8080/coordinator/addSchool`,
+            url: ADD_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
             data: formData,

@@ -6,6 +6,9 @@ import {BsAt, BsFillPersonFill, BsPhone, BsTools} from "react-icons/bs";
 import {FaGraduationCap} from "react-icons/fa"
 import {Modal} from "react-bootstrap";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+const GET_DATA_URL = `${URL}/user/data`;
+
 const TeacherPersonalPageComponent = () => {
     let iconStyles = {fontSize: "1.35em", marginRight: "10px"};
     const [name, setName] = useState("");
@@ -50,7 +53,7 @@ const TeacherPersonalPageComponent = () => {
         setDeleteDisable(true);
         const response = await axios({
             headers: {'content-type': 'application/json'},
-            url: `http://localhost:8080/user/file/delete/${email}/${fileName}`,
+            url: `${URL}/user/file/delete/${email}/${fileName}`,
             withCredentials: true,
             method: "POST",
         }).catch((err) => {
@@ -81,7 +84,7 @@ const TeacherPersonalPageComponent = () => {
         const response = await Promise.all([
 
             axios({
-                url: "http://localhost:8080/user/data",
+                url: GET_DATA_URL,
                 withCredentials: true,
                 method: "GET",
             }),
@@ -89,7 +92,7 @@ const TeacherPersonalPageComponent = () => {
 
         // Make third request using responses from the first two
         const response2 = await axios({
-            url: "http://localhost:8080/user/teacherFiles/" + response[0].data.username,
+            url: `${URL}/user/teacherFiles/${response[0].data.username}`,
             withCredentials: true,
             method: "GET",
         });
@@ -140,7 +143,7 @@ const TeacherPersonalPageComponent = () => {
                     <ul>
                         {files.map(function (name, index) {
                             return <li key={index} style={{marginLeft: "20px", marginTop: "20px"}}>
-                                <a href={`http://localhost:8080/user/download/${email}/${name}`}>{name}</a>
+                                <a href={`${URL}/user/download/${email}/${name}`}>{name}</a>
                                 <button disabled={deleteDisable} onClick={() => {
                                     setModalShow(true);
                                     setCurrFile(name);

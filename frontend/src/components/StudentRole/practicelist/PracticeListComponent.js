@@ -17,6 +17,13 @@ import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const GET_SCHOOLS_URL = `${URL}/user/schools`;
+const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_SUBJECTS_URL = `${URL}/user/subjects`;
+const GET_TEACHERS_URL = `${URL}/user/teachers`;
+
 export const PracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
@@ -75,7 +82,7 @@ export const PracticeListComponent = () => {
         const getPraxe = async () => {
             if (checkRole()) return;
             const response = await axios({
-                url: "http://localhost:8080/student/practices-list",
+                url: GET_PRACTICE_LIST_URL,
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -175,7 +182,7 @@ export const PracticeListComponent = () => {
 
         const getSchools = async () => {
             const response = await axios({
-                url: "http://localhost:8080/user/schools",
+                url: GET_SCHOOLS_URL,
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {
@@ -187,7 +194,7 @@ export const PracticeListComponent = () => {
 
         const getSubjects = async () => {
             const response = await axios({
-                url: "http://localhost:8080/user/subjects",
+                url: GET_SUBJECTS_URL,
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {
@@ -200,7 +207,7 @@ export const PracticeListComponent = () => {
 
         const getTeachers = async () => {
             const response = await axios({
-                url: "http://localhost:8080/user/teachers",
+                url: GET_TEACHERS_URL,
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {
@@ -473,7 +480,7 @@ export const PracticeListComponent = () => {
                                         <ul>
                                             {item.fileNames.map(function (name, index) {
                                                 return <li key={index}><a
-                                                    href={`http://localhost:8080/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                                    href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
                                                 </li>;
                                             })}
                                         </ul>

@@ -5,6 +5,10 @@ import {Navigate} from "react-router-dom";
 import {axios} from "../../../axios";
 import "./TabsStyles.css";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const GET_SUBJECTS_URL = `${URL}/user/subjects`;
+const GET_PRACTICES_URL = `${URL}/teacher/practice`;
 
 export function getMinDate(days) {
     let date = new Date();
@@ -32,7 +36,7 @@ const TabsForm = () => {
     const getSubjects = async () => {
         if (checkRole()) return;
         const response = await axios({
-            url: "http://localhost:8080/user/subjects",
+            url: GET_SUBJECTS_URL,
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
@@ -72,7 +76,7 @@ const TabsForm = () => {
         event.preventDefault();
         checkFormData(formData);
         const response = await axios({
-            url: `http://localhost:8080/teacher/practice`,
+            url: GET_PRACTICES_URL,
             withCredentials: true,
             method: "POST",
             data: formData,

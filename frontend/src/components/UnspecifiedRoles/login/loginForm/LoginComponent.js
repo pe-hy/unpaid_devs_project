@@ -9,7 +9,9 @@ import AuthService from "../../../../services/AuthService";
 import {userContext} from "../../../../userContext";
 import "./LoginFormStyles.css";
 
-const CONFIRMATION_URL = "http://localhost:8080/register/confirm?"
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const CONFIRMATION_URL = `${URL}/register/confirm?`;
 
 const validateEmail = (email) => {
     return String(email)

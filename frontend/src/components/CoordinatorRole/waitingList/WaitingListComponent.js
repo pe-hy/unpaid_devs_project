@@ -4,6 +4,12 @@ import React, {useEffect, useState} from "react";
 import {axios} from "../../../axios.js";
 import {Container, Modal} from "react-bootstrap";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const GET_WAITING_LIST_URL = `${URL}/coordinator/waitingList`;
+const UNLOCK_USER_URL = `${URL}/coordinator/unlockUser`;
+const REMOVE_USER_URL = `${URL}/coordinator/removeUser`;
+
 export const WaitingListComponent = () => {
     const [users, setUsers] = useState([]);
     const noUsers = !users || (users && users.length === 0);
@@ -14,7 +20,7 @@ export const WaitingListComponent = () => {
     const getLockedUsers = async () => {
         if (checkRole()) return;
         const response = await axios({
-            url: "http://localhost:8080/coordinator/waitingList",
+            url: GET_WAITING_LIST_URL,
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
@@ -34,7 +40,7 @@ export const WaitingListComponent = () => {
     const acceptUser = async (email) => {
         const response = await axios({
             headers: {'content-type': 'application/json'},
-            url: "http://localhost:8080/coordinator/unlockUser",
+            url: UNLOCK_USER_URL,
             withCredentials: true,
             method: "POST",
             data: email,
@@ -50,7 +56,7 @@ export const WaitingListComponent = () => {
     const removeUser = async () => {
         const response = await axios({
             headers: {'content-type': 'application/json'},
-            url: "http://localhost:8080/coordinator/removeUser",
+            url: REMOVE_USER_URL,
             withCredentials: true,
             method: "POST",
             data: currEmail,

@@ -5,6 +5,12 @@ import {Alert, Button, Container, Form, InputGroup, Modal, Row} from "react-boot
 import {BsCheckLg, BsExclamationTriangleFill} from "react-icons/bs";
 import "./AddSubjectComponent.css";
 
+const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+const REMOVE_SUBJECT_URL = `${URL}/coordinator/removeSubject`;
+const GET_SUBJECTS_URL = `${URL}/user/subjects`;
+const ADD_SUBJECT_URL = `${URL}/coordinator/addSubject`;
+
 
 export const AddSubjectComponent = () => {
     const [subjects, setSubjects] = useState([]);
@@ -22,7 +28,7 @@ export const AddSubjectComponent = () => {
     const removeSubject = async () => {
         const response = await axios({
             headers: {'content-type': 'application/json'},
-            url: "http://localhost:8080/coordinator/removeSubject",
+            url: REMOVE_SUBJECT_URL,
             withCredentials: true,
             method: "POST",
             data: currSubject,
@@ -39,7 +45,7 @@ export const AddSubjectComponent = () => {
 
     const getSubjects = async () => {
         const response = await axios({
-            url: "http://localhost:8080/user/subjects",
+            url: GET_SUBJECTS_URL,
             withCredentials: true,
             method: "GET",
         }).then((response) => {
@@ -89,7 +95,7 @@ export const AddSubjectComponent = () => {
     const addSubject = async (event) => {
         event.preventDefault();
         const response = await axios({
-            url: `http://localhost:8080/coordinator/addSubject`,
+            url: ADD_SUBJECT_URL,
             withCredentials: true,
             method: "POST",
             data: formData,

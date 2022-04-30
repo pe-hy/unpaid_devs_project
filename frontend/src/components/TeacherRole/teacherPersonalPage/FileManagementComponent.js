@@ -18,8 +18,12 @@ const FileManagementComponent = ({userDataRef}) => {
     const MAX_FILE_SIZE = 20000000;
     const MAX_NUMBER_OF_FILES = 3;
 
+    const URL = `${process.env.REACT_APP_AXIOS_URL}`;
+
+    const UPLOAD_URL = `${URL}/teacher/upload`;
+
     //base end point url
-    const FILE_UPLOAD_BASE_ENDPOINT = "http://localhost:8080";
+    const FILE_UPLOAD_BASE_ENDPOINT = URL;
     const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];
 
     //https://www.npmjs.com/package/react-drag-drop-files
@@ -77,7 +81,7 @@ const FileManagementComponent = ({userDataRef}) => {
 
             axios({
                 method: 'POST',
-                url: 'http://localhost:8080/teacher/upload',
+                url: UPLOAD_URL,
                 withCredentials: true,
                 headers: {'content-type': 'application/json'},
                 data: formData,

@@ -4,5 +4,14 @@
   },
   "devDependencies": {
     "react-cookie": "^4.1.1"
+  },
+
+  "scripts": {
+    "go": "open http://localhost:3000; npm run server",
+    "e2e": "nightwatch --config nightwatch.js",
+    "run-e2e": "concurrently -s first -k \"npm start\" \"sleep 15; npm run e2e\"",
+    "test": "./node_modules/.bin/concurrently -k 'npm run server' 'npm run e2e'",
+    "start": "npm run server",
+    "server": "live-server public --host=0.0.0.0 --port=3000 --middleware=./disable-browser-cache.js"
   }
 }

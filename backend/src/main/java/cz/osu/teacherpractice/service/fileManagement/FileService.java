@@ -15,12 +15,12 @@ public class FileService {
 
     public Boolean deleteFile(String email, String fileName){
         long teacherId = userRepository.findByEmail(email).get().getId();
-        File myObj = new File(FileUtil.folderPath + teacherId + "//" + fileName);
+        File myObj = new File(FileUtil.folderPath + teacherId + "/" + fileName);
         return myObj.delete();
     }
 
     public String figureOutFileNameFor(String teacherMail, String fileName){
         User teacher = userRepository.findByEmail(teacherMail).get();
-        return FileUtil.folderPath + teacher.getId() + "//" + fileName;
+        return FileUtil.folderPath + teacher.getId() + "/" + fileName;
     }
 }

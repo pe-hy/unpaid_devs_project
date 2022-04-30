@@ -14,4 +14,6 @@ public class AppConfig {
     public static final int CONFIRMATION_TOKEN_EXPIRY_TIME = 60; // minutes
     public static final String CONFIRMATION_EMAIL_ADDRESS = "teacherpracticeconfirmator@seznam.cz";
     public static final int MAXIMUM_FILE_NUMBER_PER_USER = 3;
+    public static final String baseUrlDevelopment = "http://localhost:3000";
+    public static final String baseUrlProduction = "http://172.16.101.104:3000";
 }

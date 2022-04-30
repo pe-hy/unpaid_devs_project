@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static cz.osu.teacherpractice.config.AppConfig.baseUrlDevelopment;
+
 @Service
 @AllArgsConstructor
 public class RegistrationService {
@@ -72,7 +74,7 @@ public class RegistrationService {
                 new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
         );
 
-        String link = "http://localhost:3000/login?token=" + token;
+        String link = baseUrlDevelopment + "/login?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));

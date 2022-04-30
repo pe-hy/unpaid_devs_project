@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
+import static cz.osu.teacherpractice.config.AppConfig.baseUrlDevelopment;
+import static cz.osu.teacherpractice.config.AppConfig.baseUrlProduction;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -92,7 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of(baseUrlDevelopment));
+        configuration.setAllowedOrigins(List.of(baseUrlProduction)); //production
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);

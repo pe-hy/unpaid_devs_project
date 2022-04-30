@@ -1,0 +1,116 @@
+.container-registration{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: stretch;
+    min-width: 200px;
+    max-width: 800px;
+    margin: auto;
+}
+
+p.ex1 {
+    margin-right: 30px;
+}
+
+input[type='radio'] { 
+    transform: scale(2); 
+}
+
+.radio-group > div{
+    display: flex;
+    align-items: center;
+}
+
+.radio-group > div > label{
+    font-size: 25px;
+    margin-left: 20px;
+}
+
+.container-registration > section{
+    min-width: 500px;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+
+.container-registration > div > .thick{
+    
+    padding-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 50px;   
+}
+
+.button-login{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.password-strength{
+    padding-top:0;
+    padding-bottom: 20px;
+    padding-left: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.password{
+    width: 100%;
+}
+
+.btn-align-center{
+    text-align: center;
+}
+
+.login-link{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #48819B;
+}
+
+.account-a{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+    text-align: center;
+}
+
+
+.info-tooltip {
+    font-size: 1.1em;
+    margin: 4px;
+    color: #326496;
+}
+
+.span-label{
+    padding-right: 34%;
+    padding-top: 7px;
+
+}
+
+.span-input{
+    width: 130%;
+
+}
+
+.label-setting{
+    display: grid;
+    grid-template-columns: 30% 50%;
+    text-align: right;
+
+}
+
+.p {
+    text-align: center;
+}
+
+.icon-form{
+    padding-top: 0;
+    padding-right: 10px;
+    color: darkgrey;
+    text-align: center;
+}

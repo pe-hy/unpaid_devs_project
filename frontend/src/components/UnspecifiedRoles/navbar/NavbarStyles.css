@@ -1,0 +1,55 @@
+
+.nav {
+    width: 100%;
+    padding: 0;
+}
+
+.navbar-main{
+    width: 100vw;
+}
+
+.navbar{
+    background-color: #264d73;
+    color: #fff;
+    height: 100px;
+}
+
+.container{
+    margin: 0;
+}
+
+.nav-link{
+    display: flex;
+    align-items: center;
+}
+
+.white {
+    color: #fff;
+}
+
+#odhlasit {
+    color: #fff;
+    text-decoration: underline 5%;
+    text-underline-offset: 5%;
+}
+
+.rounded {
+    alignment: left;
+    position: relative;
+}
+
+#prehled,#ucet{
+    color: black;
+    text-align: center;
+}
+
+#prehled:hover,#ucet:hover{
+    color: white;
+    text-decoration: underline 20%;
+    text-underline-offset: 50%;
+}
+
+.p-margin{
+    margin-bottom: 0;
+
+}

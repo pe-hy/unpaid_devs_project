@@ -1,0 +1,111 @@
+.cols{
+    padding-top: 30px;
+    text-align: right;
+}
+
+.cols-submit{
+    text-align: right;
+    margin-top: -20px;
+}
+
+.button-padding{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.button-add {
+    border-color: #D3EAF6;
+    color: #264d73;
+    background-color: #D3EAF6;
+    font-size: 19px;
+    font-weight: bold;
+    outline: none;
+}
+
+.button-add:hover{
+    border-color: #264d73;
+    background-color: #264d73;
+    color:  white;
+    outline: none;
+}
+
+.button-add:focus{
+    outline: none;
+    border-color: #264d73;
+    background-color: #264d73;
+    color:  white;
+}
+
+
+.button-delete{
+    border-color: transparent;
+    background-color: black;
+    color:  red;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.button-delete:hover{
+    border-color: transparent;
+    background-color: transparent;
+    color:  darkred;
+    text-decoration: underline;
+}
+.p-padding{
+    padding-top: 15px;
+}
+
+.alert-practice-error{
+    text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
+    width: 500px;
+}
+
+.alert-school-error{
+    text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
+}
+
+.alert-practice-success{
+    text-align: center;
+    color: #297231;
+    border-color: white;
+    background-color: #baefca;
+    width: 400px;
+}
+
+.alert-school-success{
+    text-align: center;
+    color: #297231;
+    border-color: white;
+    background-color: #baefca;
+}
+
+.alert-icon-error{
+    size: 2em;
+}
+
+.alert-icon-succes{
+    padding-right: 100px;
+    size: 20px;
+}
+
+.my-row{
+    text-align: -webkit-center;
+}
+
+
+@media (max-width: 450px) {
+    .alert-practice-error{
+        width: 300px;
+    }
+
+    .alert-practice-success{
+        width: 300px;
+    }
+
+}

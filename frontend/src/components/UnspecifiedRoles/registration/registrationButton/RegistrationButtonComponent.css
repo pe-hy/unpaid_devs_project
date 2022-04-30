@@ -1,0 +1,14 @@
+.button-rgstr-1{
+    border-color: #D3EAF6;
+    color:  #264d73;
+    width: auto;
+    background-color: #D3EAF6 ;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.button-rgstr-1:hover{
+    border-color: #264d73;
+    background-color: #264d73;
+    color:  white;
+}

@@ -1,0 +1,266 @@
+body, html {
+    font-family: 'Helvetica', sans-serif;
+}
+
+.accordion-button::after {
+    position: absolute;
+}
+
+.accordion-button:hover {
+    background-color: #EDEDED;
+
+}
+
+.accordion-button[aria-expanded="true"]:hover {
+    background-color: transparent;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black
+}
+
+.accordion-button:focus {
+    box-shadow: none
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #ffffff;
+    box-shadow: none;
+}
+
+.accordion-button.collapsed {
+    height: 100%;
+}
+
+.accordion-button {
+    height: 100%;
+}
+
+.accordion-row {
+    margin: 150px;
+}
+
+.title-container {
+    display: flex;
+    width: 100%;
+    padding: 16px 20px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.accordion-header {
+    width: 85%;
+}
+
+.accordion-item {
+    margin-bottom: 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-tooltip {
+    font-size: 1.1em;
+    margin: 4px;
+    color: #326496;
+}
+
+.badge {
+    font-size: 15px;
+}
+
+.text-info-practice {
+    width: 100%;
+    flex-wrap: nowrap;
+    padding-left: 20px;
+}
+
+.date {
+    text-align: left;
+    width: 150px;
+    margin-left: 30px;
+}
+
+@media (min-width: 1024px) {
+    .customFilters {
+        display: flex;
+        width: 100%;
+        padding: 5px 25px 25px 25px;
+        margin: 25px 25px 25px 25px;
+    }
+}
+
+.customFilters {
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .search-school {
+        margin-top: 25px;
+    }
+}
+
+.search-date {
+    margin-top: 25px;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .filters-heading {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+}
+
+
+.transition {
+    transition: height 0.3s ease-in;
+}
+
+.toggleButtonFilters {
+    padding: 5px 5px 5px 5px;
+    margin-top: 15px;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #507ea1;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    min-height: 3rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+}
+
+.toggleButtonFilters:hover,
+.toggleButtonFilters:focus {
+    background-color: #326496;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.toggleButtonFilters:hover {
+    transform: translateY(-1px);
+}
+
+.toggleButtonFilters:active {
+    background-color: #285988;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+}
+
+.my-node-enter {
+    transform: translateY(-100%);
+}
+
+.my-node-enter-active {
+    transform: translateY(0);
+    transition: all 250ms ease-in-out;
+}
+
+.my-node-exit {
+    transform: translateY(0);
+}
+
+.my-node-exit-active {
+    transform: translateY(-100%);
+    transition: all 250ms ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.appearAnimation {
+    animation: appear 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.hideDiv {
+    max-height: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.calendarDivHeight {
+    max-height: 1000px;
+    animation: appear 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+
+.filterResetBtn {
+    flex-direction: row;
+    width: 33%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+    margin-top: 0;
+    background-clip: padding-box;
+    background-color: #a88931;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    min-height: 3rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+}
+
+.filterResetBtn:hover,
+.filterResetBtn:focus {
+    background-color: #deaa30;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.filterResetBtn:hover {
+    transform: translateY(-1px);
+}
+
+.filterResetBtn:active {
+    background-color: #cbb43a;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+}
+
+.warnTextPractices {
+    font-size: 18px;
+    color: #181414;
+}

@@ -1,0 +1,44 @@
+.studentHomeBody {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+div.tab-content {
+    border: 2px solid rgb(52, 80, 105);
+    border-top: none;
+}
+
+#tab-tab-tab3, #tab-tab-tab2 {
+    background-color: rgb(52, 80, 105);
+    color: white;
+    margin-left: 10px;
+}
+
+#tab-tab-tab1 {
+    background-color: rgb(52, 80, 105);
+    color: white;
+}
+
+#tab-tab-tab1:focus, #tab-tab-tab2:focus, #tab-tab-tab3:focus, #tab-tab-tab1.nav-link.active {
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+
+.nav li.active a,
+.nav li a:hover,
+.nav li.active a:focus,
+.nav li.active a:hover {
+    background-color: red;
+    border-radius: 4px;
+}
+
+@media (max-width: 858px){
+    .studentHomeBody {
+        padding: 10px;
+    }
+
+}

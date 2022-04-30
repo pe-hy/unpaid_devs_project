@@ -1,0 +1,120 @@
+.container-login {
+    align-content: stretch;
+    min-width: 200px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.form-cointainer {
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.my-alert {
+    text-align: left;
+    padding-top: 5px;
+    background-color: transparent;
+    border-color: transparent;
+    height: 10px;
+    color: #D92F24;
+    font-size: 14px;
+    margin-bottom: 5px;
+    padding-bottom: 0;
+}
+
+.my-alert1 {
+    text-align: center;
+    color: #D92F24;
+    border-color: white;
+    background-color: rgba(255, 0, 0, 0.19);
+}
+
+p.thick {
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+.button-login {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.button-lg {
+    border-color: #D3EAF6;
+    color: #264d73;
+    background-color: #D3EAF6;
+    font-size: 18px;
+}
+
+.button-lg:hover {
+    border-color: #264d73;
+    background-color: #264d73;
+    color: white;
+}
+
+.login-icon {
+    color: darkgray;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-padding {
+    padding-bottom: 10px;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon .glyphicon {
+    position: absolute;
+    padding-top: 6px;
+    padding-left: 10px;
+    pointer-events: none;
+}
+
+.left-addon .glyphicon {
+    left: 0;
+}
+
+.right-addon .glyphicon {
+    right: 0;
+}
+
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
+.icon-form {
+    padding-top: 0;
+    color: darkgrey;
+    text-align: center;
+}
+
+.forgot-pswrd {
+    font-weight: bold;
+    margin-right: 20px;
+    color: #48819B;
+}
+
+.rgstr {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #48819B;
+}
+
+.alert-icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+

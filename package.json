@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "react-validation": "^3.0.7"
+  },
+  "devDependencies": {
+    "react-cookie": "^4.1.1"
+  }
+}

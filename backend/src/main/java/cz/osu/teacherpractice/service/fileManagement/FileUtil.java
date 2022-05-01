@@ -15,7 +15,7 @@ public final class FileUtil {
         // restrict instantiation
     }
 
-    public static final String folderPath =  "user-files//";
+    public static final String folderPath =  "user-files/";
     public static final Path filePath = Paths.get(folderPath);
 
     public static long getNumberOfFilesInFolder(long id){

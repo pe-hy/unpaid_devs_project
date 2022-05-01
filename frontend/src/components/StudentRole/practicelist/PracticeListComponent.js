@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
-import {BsFillXCircleFill, BsInfoCircleFill, BsSearch} from "react-icons/bs";
+import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
 import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
@@ -36,6 +36,7 @@ export const PracticeListComponent = () => {
         const allFilterParam = "All";
 
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
+        let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
         const duration = 250;
         const [showing, setShowing] = useState(false);
         const [practices, setPraxe] = useState([]);
@@ -348,7 +349,12 @@ export const PracticeListComponent = () => {
                     </TransitionGroup>
                     <hr/>
                 </div>
-                {!filterParam.includes(allFilterParam) && <p>Filtr je aktivní</p>}
+                {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
+                    <div className="p-3 m-3 center my-alert-filter alert-danger alertCustom">
+                        <BsSliders style={iconStyleFilter}/>
+                        <span><b>Filtr je aktivní</b></span>
+                    </div>
+                </div>}
                 <Accordion>
                     <div style={{width: "85%"}}>
                         <div className="title-container text-info-practice">
@@ -401,11 +407,13 @@ export const PracticeListComponent = () => {
                             <div style={{display: "flex"}}>
                                 <Accordion.Header className={"accordion-header"}>
                                     <Row style={{width: "100%"}}>
-                                        <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
+                                        <Col
+                                            className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
-                                        <Col className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
+                                        <Col
+                                            className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
                                             ". " +

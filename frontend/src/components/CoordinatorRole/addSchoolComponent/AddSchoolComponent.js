@@ -15,7 +15,6 @@ const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSc
 const ADD_SCHOOL_URL = `${URL}/coordinator/addSchool`;
 
 
-
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
     const [teachersWithoutSchool, setTeachersWithoutSchools] = useState([]);
@@ -25,10 +24,9 @@ export const AddSchoolComponent = () => {
 
     const [currSchool, setCurrSchool] = useState("");
     const [currTeacher, setCurrTeacher] = useState();
-    const [currAssignedSchool, setCurrAssignedSchool] = useState("");
+    const currAssignedSchool = useState("");
 
     const [formData, setFormData] = useState({});
-    const [assignSchoolForm, setAssignSchoolForm] = useState({});
 
     const [showDangerAlert, setshowDangerAlert] = useState(false);
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
@@ -57,16 +55,13 @@ export const AddSchoolComponent = () => {
     };
 
     const assignSchoolToTeacher = async () => {
-        console.log("hf");
-        setAssignSchoolForm({ ...assignSchoolForm, "username": currTeacher.username, "school": currAssignedSchool });
-        var fuckingForm = { "username": currTeacher.username, "school": currAssignedSchool };
-        console.log("form", assignSchoolForm);
+        let form = { "username": currTeacher.username, "school": currAssignedSchool[0] };
         const response = await axios({
             headers: { 'content-type': 'application/json' },
             url: ASSIGN_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
-            data: fuckingForm,
+            data: form,
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err.response.data.message);
@@ -92,9 +87,9 @@ export const AddSchoolComponent = () => {
     };
 
     const selectSchoolChange = (value) => {
-
-        setCurrAssignedSchool(value);
-
+        var combobox = document.getElementById("combo_input");
+        currAssignedSchool[0] = value
+        combobox.value = value;
     }
 
     const getTeachersWithoutSchool = async () => {
@@ -123,8 +118,8 @@ export const AddSchoolComponent = () => {
                         Zvolte prosím školu pro učitele: {currTeacher != null ? currTeacher.firstName.concat(" ", currTeacher.secondName) : ""}
                     </p>
                     <Combobox
+                        id={"combo"}
                         data={schools}
-                        value={currAssignedSchool}
                         onChange={value => selectSchoolChange(value)}
                     />
 
@@ -134,7 +129,7 @@ export const AddSchoolComponent = () => {
                     <button type="button" className="accept-btn" onClick={() => {
                         props.onHide();
                         assignSchoolToTeacher();
-                        setCurrAssignedSchool("");
+                        currAssignedSchool[1]("");
                     }}>Přiřadit školu
                     </button>
                 </Modal.Footer>

@@ -1,34 +1,28 @@
 package cz.osu.teacherpractice.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Getter
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 public class RegistrationDto {
 
     @NotNull(message = "email musí být zadaný.")
-    private final String email;
+    private String email;
 
     @NotNull(message = "firstName musí být zadaný.")
-    private final String firstName;
+    private String firstName;
 
     @NotNull(message = "lastName musí být zadaný.")
-    private final String lastName;
+    private String lastName;
 
-    private final Long school;
+    private Long school;
 
-    private final String phoneNumber;
+    private String phoneNumber;
 
     @NotNull(message = "password musí být zadaný.")
-    private final String password;
+    private String password;
 
     @NotNull(message = "role musí být zadaný.")
-    private final String role;
+    private String role;
 }

@@ -28,7 +28,7 @@ public interface PracticeRepository extends JpaRepository<Practice, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Practice p SET p.subject = null WHERE p.subject = :subject")
-    int setSubjectNull(Optional<Subject> subject);
+    int setSubjectNull(@Param("subject") Optional<Subject> subject);
 
     List<Practice> findAllByTeacherUsername(String teacherUsername);
 }

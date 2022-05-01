@@ -22,6 +22,7 @@ function App() {
             <Route path="/teacherHome" element={<TeacherHomeView />} />
             <Route path="/coordinatorHome" element={<CoordinatorHomeView />} />
             <Route path="/teacherPersonal" element={<TeacherPersonalPageView />} />
+            <Route path="/coordinatorPersonal" element={<TeacherPersonalPageView />} />
           </Routes>
         </BrowserRouter>
       </UserContextProvider>

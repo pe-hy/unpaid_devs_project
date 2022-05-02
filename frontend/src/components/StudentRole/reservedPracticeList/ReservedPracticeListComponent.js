@@ -1,4 +1,4 @@
-import "./PracticeListComponent.css";
+import "./ReservedPracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
@@ -23,7 +23,7 @@ const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
-export const PracticeListComponent = () => {
+export const ReservedPracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
         const schoolNotFound = "Škola nevyplněna";
@@ -500,4 +500,4 @@ export const PracticeListComponent = () => {
     }
 ;
 
-export default PracticeListComponent;
+export default ReservedPracticeListComponent;

@@ -17,7 +17,6 @@ body, html {
 
 .accordion-button:hover {
     background-color: #EDEDED;
-
 }
 
 .accordion-button[aria-expanded="true"]:hover {
@@ -57,7 +56,7 @@ body, html {
     text-transform: uppercase;
 }
 
-.accordion-header-listed-teacher {
+.accordion-header-past-practices {
     width: 100%;
 }
 

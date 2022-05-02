@@ -3,6 +3,7 @@ import AddPracticeComponent from "../../components/TeacherRole/addPracticeForm/A
 import {Navigate} from "react-router-dom";
 import "./TeacherHomeStyles.css";
 import TeacherListedPractices from "../../components/TeacherRole/teacherListedPractices/TeacherListedPractices";
+import TeacherPassedPractices from "../../components/TeacherRole/teacherPassedPractices/TeacherPassedPractices";
 
 const checkRole = () => {
   return localStorage.getItem("role") !== "ROLE_TEACHER";
@@ -20,7 +21,7 @@ const TeacherHomeView = () => {
           <TeacherListedPractices />
         </Tab>
         <Tab eventKey="tab3" title="Proběhlé praxe">
-          empty
+          <TeacherPassedPractices />
         </Tab>
       </Tabs>
     </div>

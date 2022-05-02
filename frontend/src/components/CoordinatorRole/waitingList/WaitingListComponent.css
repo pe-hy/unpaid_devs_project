@@ -93,3 +93,11 @@
     background-color: #baefca;
     width: 500px;
 }
+
+.my-alert-filter{
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    background-color: #507ea1;
+    width: 500px;
+}

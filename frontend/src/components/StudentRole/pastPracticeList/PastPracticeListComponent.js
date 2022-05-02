@@ -1,12 +1,10 @@
-import "./PracticeListComponent.css";
+import "./PastPracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
-import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
-import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import 'react-date-range/dist/styles.css'; // main style file
@@ -23,7 +21,7 @@ const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
-export const PracticeListComponent = () => {
+export const PastPracticeListComponent = () => {
         const reservation = "Rezervovat";
         const unReservation = "Odrezervovat";
         const schoolNotFound = "Škola nevyplněna";
@@ -143,38 +141,6 @@ export const PracticeListComponent = () => {
             });
         }
 
-        const registerRequest = async (id) => {
-            const response = await axios({
-                url: `student/practices/${id}/make-reservation`,
-                withCredentials: true,
-                method: "PUT",
-            }).catch((err) => {
-                alert(err.response.data.message);
-                console.log(err.response.data.message);
-            });
-            if (response && response.data) {
-                console.log(response);
-                setPraxe(response.data);
-            }
-            await getPraxe();
-        };
-
-        const unRegisterRequest = async (id) => {
-            const response = await axios({
-                url: `student/practices/${id}/cancel-reservation`,
-                withCredentials: true,
-                method: "PUT",
-            }).catch((err) => {
-                alert(err.response.data.message);
-                console.log(err.response.data.message);
-            });
-            if (response && response.data) {
-                console.log(response);
-                setPraxe(response.data);
-            }
-            await getPraxe();
-        };
-
         const getSchools = async () => {
             const response = await axios({
                 url: GET_SCHOOLS_URL,
@@ -260,24 +226,6 @@ export const PracticeListComponent = () => {
             ranges.selection.endDate.setHours(23, 59, 59);
             setDateRange([ranges.selection]);
         }
-
-        const getButton = (isReserved, id) => {
-            if (!isReserved) {
-                return (
-                    <ReservationButtonComponent
-                        text={reservation}
-                        onClick={() => registerRequest(id)}
-                    />
-                );
-            } else {
-                return (
-                    <UnReservationButtonComponent
-                        text={unReservation}
-                        onClick={() => unRegisterRequest(id)}
-                    />
-                );
-            }
-        };
         return (
             <Container fluid>
                 <div>
@@ -349,7 +297,7 @@ export const PracticeListComponent = () => {
                     </div>
                 </div>}
                 <Accordion>
-                    <div style={{width: "85%"}}>
+                    <div style={{width: "100%"}}>
                         <div className="title-container text-info-practice">
                             <Row style={{width: "100%"}}>
                                 <Col className="text-center">
@@ -398,7 +346,7 @@ export const PracticeListComponent = () => {
                             style={{display: "block"}}
                         >
                             <div style={{display: "flex"}}>
-                                <Accordion.Header className={"accordion-header"}>
+                                <Accordion.Header className={"accordion-header-past-practices"}>
                                     <Row style={{width: "100%"}}>
                                         <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                         <Col className="text-center d-none">
@@ -439,9 +387,6 @@ export const PracticeListComponent = () => {
                                         </Col>
                                     </Row>
                                 </Accordion.Header>
-                                <div className="center d-none d-xl-block" style={{width: "15%"}}>
-                                    {getButton(item.isCurrentStudentReserved, item.id)}
-                                </div>
                             </div>
 
                             <Accordion.Body>
@@ -483,12 +428,6 @@ export const PracticeListComponent = () => {
                                                 </li>;
                                             })}
                                         </ul>
-
-
-                                        <div className="center d-xl-none" style={{width: "15%"}}>
-                                            {getButton(item.isCurrentStudentReserved, item.id)}
-                                        </div>
-
                                     </div>
                                 </div>
                             </Accordion.Body>
@@ -500,4 +439,4 @@ export const PracticeListComponent = () => {
     }
 ;
 
-export default PracticeListComponent;
+export default PastPracticeListComponent;

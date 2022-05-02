@@ -1,0 +1,33 @@
+.btn-border-custom {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn {
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 55px;
+    width: 160px;
+    font-weight: bold;
+}
+
+/* Green */
+.dereservation {
+    color: white;
+    background-color: #DC3545;
+    border-radius: 4px;
+}
+
+.dereservation:hover {
+    background-color: #E26D6D;
+    color: white;
+    border-radius: 4px;
+}

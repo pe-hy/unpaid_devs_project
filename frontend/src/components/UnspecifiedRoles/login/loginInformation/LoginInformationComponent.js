@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {axios} from "../../../../axios";
 
+
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_USER_INFO_URL = `${URL}/user/info`;

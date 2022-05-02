@@ -54,4 +54,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.school.id = :school WHERE u.username = :username")
     int assignSchool(@Param("username") String username, long school);
+
+    //query get practice by user
+    //select practice_id from user_practice where student_id = 1
+    //https://stackoverflow.com/questions/61319288/how-to-query-a-many-to-many-relationship-in-spring-boot-repository
+    /*@Query("SELECT * FROM Practice p INNER JOIN p.students s ON p.id = p.note_id WHERE nl.labels_id = :studentId")
+    List<Practice> getPracticeByUser(@Param("student") User studentId);*/
 }

@@ -9,6 +9,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginView from "./views/login/LoginView";
 import RegisterView from "./views/register/RegisterView";
 import { UserContextProvider } from "./userContext";
+import AdminHomeView from "./views/adminHome/AdminHomeView";
+import AdminPersonalPageView from "./views/adminPersonalPage/AdminPersonalPageView";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/studentHome" element={<StudentHomeView />} />
             <Route path="/teacherHome" element={<TeacherHomeView />} />
             <Route path="/coordinatorHome" element={<CoordinatorHomeView />} />
+            <Route path="/adminHome" element={<AdminHomeView />} />
+            <Route path="/adminPersonal" element={<AdminPersonalPageView />} />
             <Route path="/studentPersonal" element={<StudentPersonalPageView />} />
             <Route path="/teacherPersonal" element={<TeacherPersonalPageView />} />
             <Route path="/coordinatorPersonal" element={<CoordinatorPersonalPageView />} />

@@ -33,11 +33,16 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                     setRole("Koordinátor");
                 } else if (response.data.role === "ROLE_TEACHER") {
                     setRole("Učitel");
-                } else {
+                } else if (response.data.role === "ROLE_ADMIN") {
+                    setRole("Administrátor");
+                }
+                 else if (response.data.role === "ROLE_STUDENT") {
                     setRole("Student");
                 }
+                } else {
+                    setRole("Hacker :)");
+                }
             }
-        }
     };
     useEffect(() => {
         getUserName();

@@ -3,8 +3,14 @@ import WaitingListComponent from "../../components/CoordinatorRole/waitingList/W
 import "./CoordinatorHomeStyles.css";
 import AddSchoolComponent from "../../components/CoordinatorRole/addSchoolComponent/AddSchoolComponent";
 import AddSubjectComponent from "../../components/CoordinatorRole/addSubjectComponent/AddSubjectComponent";
+import {Navigate} from "react-router-dom";
+
+const checkRole = () => {
+    return localStorage.getItem("role") !== "ROLE_COORDINATOR";
+};
 
 const CoordinatorHomeView = () => {
+    if (checkRole()) return <Navigate to="/login" />;
     return (
         <div className="studentHomeBody">
             <Tabs defaultActiveKey="tab1" id="tab" className="tab">

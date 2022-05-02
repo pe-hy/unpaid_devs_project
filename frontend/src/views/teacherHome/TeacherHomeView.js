@@ -1,8 +1,14 @@
 import { Tab, Tabs } from "react-bootstrap";
 import AddPracticeComponent from "../../components/TeacherRole/addPracticeForm/AddPracticeComponent";
+import {Navigate} from "react-router-dom";
 import "./TeacherHomeStyles.css";
 
+const checkRole = () => {
+  return localStorage.getItem("role") !== "ROLE_TEACHER";
+};
+
 const TeacherHomeView = () => {
+  if(checkRole()) return <Navigate to="/login"/>;
   return (
     <div className="studentHomeBody">
       <Tabs defaultActiveKey="tab1" id="tab" className="tab">

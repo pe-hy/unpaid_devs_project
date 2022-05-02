@@ -1,15 +1,21 @@
-import "./TeacherPersonalPageStyles.css";
-import TeacherPersonalPageComponent from "../../components/TeacherRole/teacherPersonalPage/TeacherPersonalPageComponent";
+import "./CoordinatorPersonalPageStyles.css";
+import CoordinatorPersonalPageComponent from "../../components/CoordinatorRole/CoordinatorPersonalPage/CoordinatorPersonalPageComponent.js";
+import {Navigate} from "react-router-dom";
 
-const TeacherHomeView = () => {
-  
+const checkRole = () => {
+  console.log("storage",localStorage.getItem("role"));
+  return localStorage.getItem("role") !== "ROLE_COORDINATOR";
+};
+
+const CoordinatorPersonalPageView = () => {
+  if (checkRole()) return <Navigate to="/login" />;
   return (
     <div className="container">
         <div className="cstmpadd">
-            <TeacherPersonalPageComponent/>
+            <CoordinatorPersonalPageComponent/>
         </div>
     </div>
   );
 };
 
-export default TeacherHomeView;
+export default CoordinatorPersonalPageView;

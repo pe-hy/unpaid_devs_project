@@ -7,7 +7,6 @@ import {BsFillXCircleFill, BsInfoCircleFill, BsSearch} from "react-icons/bs";
 import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
 import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
-import {Navigate} from "react-router-dom";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import 'react-date-range/dist/styles.css'; // main style file
@@ -80,7 +79,6 @@ export const PracticeListComponent = () => {
         }
 
         const getPraxe = async () => {
-            if (checkRole()) return;
             const response = await axios({
                 url: GET_PRACTICE_LIST_URL,
                 withCredentials: true,
@@ -174,10 +172,6 @@ export const PracticeListComponent = () => {
                 setPraxe(response.data);
             }
             await getPraxe();
-        };
-
-        const checkRole = () => {
-            return localStorage.getItem("role") !== "ROLE_STUDENT";
         };
 
         const getSchools = async () => {
@@ -283,7 +277,6 @@ export const PracticeListComponent = () => {
                 );
             }
         };
-        if (checkRole()) return <Navigate to="/login"/>;
         return (
             <Container fluid>
                 <div>

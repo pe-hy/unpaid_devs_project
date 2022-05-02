@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,28 @@ public class PracticeDomain {
                 .findAny();
 
         this.isCurrentStudentReserved = currentStudent.isPresent();
+    }
+
+    public boolean removePassedPractices() {
+        //put date and end time into one variable
+        LocalDateTime dateAndEnd = LocalDateTime.of(date, end);
+
+        //if date and end time is in the past, remove practice
+        if (LocalDateTime.now().isAfter(dateAndEnd)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean removeNotPassedPractices() {
+        //put date and end time into one variable
+        LocalDateTime dateAndEnd = LocalDateTime.of(date, end);
+
+        //if date and end time is in the past, remove practice
+        if (LocalDateTime.now().isAfter(dateAndEnd)) {
+            return true;
+        }
+        return false;
     }
 
     public void setFileNames(List<String> list){

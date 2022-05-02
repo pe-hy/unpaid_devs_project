@@ -1,12 +1,10 @@
-import "./PracticeListComponent.css";
+import "./TeacherPassedPractices.css";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
-import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
-import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import 'react-date-range/dist/styles.css'; // main style file
@@ -18,33 +16,25 @@ import {addDays} from 'date-fns';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
-const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_PRACTICE_LIST_URL_LISTED = `${URL}/teacher/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
-const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
-export const PracticeListComponent = () => {
-        const reservation = "Rezervovat";
-        const unReservation = "Odrezervovat";
-        const schoolNotFound = "Škola nevyplněna";
-        const subjectNotFound = "Předmět nevyplněn";
+
+export const TeacherPassedPractices = () => {
+        let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
-
+        const [subjects, setSubjects] = useState([]);
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
-        let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
-        const duration = 250;
         const [showing, setShowing] = useState(false);
         const [practices, setPraxe] = useState([]);
         const [filterParam, setFilterParam] = useState([allFilterParam]);
-        const [schools, setSchools] = useState([]);
-        const [teachers, setTeachers] = useState([]);
-        const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
-
+        const schoolNotFound = "Škola nevyplněna";
+        const subjectNotFound = "Předmět nevyplněn";
         const [selectedSchool, setSelectedSchools] = useState("");
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
         const [selectedTeacherName, setSelectedTeacherName] = useState("");
@@ -79,9 +69,22 @@ export const PracticeListComponent = () => {
             ]);
         }
 
+        const getSubjects = async () => {
+            const response = await axios({
+                url: GET_SUBJECTS_URL,
+                withCredentials: true,
+                method: "GET",
+            }).then((response) => {
+                var sch = [];
+                response.data.forEach(element => sch.push(element.name));
+                setSubjects(sch);
+
+            });
+        };
+
         const getPraxe = async () => {
             const response = await axios({
-                url: GET_PRACTICE_LIST_URL,
+                url: GET_PRACTICE_LIST_URL_LISTED,
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -96,9 +99,7 @@ export const PracticeListComponent = () => {
 
         useEffect(() => {
             getPraxe();
-            getSchools();
             getSubjects();
-            getTeachers();
         }, []);
 
         function setDateRangeLimit(practices) {
@@ -142,79 +143,6 @@ export const PracticeListComponent = () => {
                 return true;
             });
         }
-
-        const registerRequest = async (id) => {
-            const response = await axios({
-                url: `student/practices/${id}/make-reservation`,
-                withCredentials: true,
-                method: "PUT",
-            }).catch((err) => {
-                alert(err.response.data.message);
-                console.log(err.response.data.message);
-            });
-            if (response && response.data) {
-                console.log(response);
-                setPraxe(response.data);
-            }
-            await getPraxe();
-        };
-
-        const unRegisterRequest = async (id) => {
-            const response = await axios({
-                url: `student/practices/${id}/cancel-reservation`,
-                withCredentials: true,
-                method: "PUT",
-            }).catch((err) => {
-                alert(err.response.data.message);
-                console.log(err.response.data.message);
-            });
-            if (response && response.data) {
-                console.log(response);
-                setPraxe(response.data);
-            }
-            await getPraxe();
-        };
-
-        const getSchools = async () => {
-            const response = await axios({
-                url: GET_SCHOOLS_URL,
-                withCredentials: true,
-                method: "GET",
-            }).then((response) => {
-                var sch = [];
-                response.data.forEach(element => sch.push(element.name));
-                setSchools(sch);
-            });
-        };
-
-        const getSubjects = async () => {
-            const response = await axios({
-                url: GET_SUBJECTS_URL,
-                withCredentials: true,
-                method: "GET",
-            }).then((response) => {
-                var sch = [];
-                response.data.forEach(element => sch.push(element.name));
-                setSubjects(sch);
-
-            });
-        };
-
-        const getTeachers = async () => {
-            const response = await axios({
-                url: GET_TEACHERS_URL,
-                withCredentials: true,
-                method: "GET",
-            }).then((response) => {
-                var sch = [];
-                let res =
-                    response.data.forEach(element => {
-                        let str = element.firstName.concat(" ", element.secondName);
-                        sch.push(str)
-                    });
-                setTeachers(sch);
-            });
-        };
 
         const selectSchoolsChange = (value) => {
             const index = filterParam.indexOf(allFilterParam);
@@ -260,24 +188,6 @@ export const PracticeListComponent = () => {
             ranges.selection.endDate.setHours(23, 59, 59);
             setDateRange([ranges.selection]);
         }
-
-        const getButton = (isReserved, id) => {
-            if (!isReserved) {
-                return (
-                    <ReservationButtonComponent
-                        text={reservation}
-                        onClick={() => registerRequest(id)}
-                    />
-                );
-            } else {
-                return (
-                    <UnReservationButtonComponent
-                        text={unReservation}
-                        onClick={() => unRegisterRequest(id)}
-                    />
-                );
-            }
-        };
         return (
             <Container fluid>
                 <div>
@@ -293,27 +203,11 @@ export const PracticeListComponent = () => {
                                         <h3 className="filters-heading">Filtry</h3>
                                         <div className="col align-self-center">
                                             <div className="align-self-center search-school">
-                                                <p>Vyhledávání podle školy</p>
-                                                <Combobox
-                                                    data={schools}
-                                                    value={selectedSchool}
-                                                    onChange={value => selectSchoolsChange(value)}
-                                                />
-                                            </div>
-                                            <div className="align-self-center search-school">
                                                 <p>Vyhledávání podle názvu předmětu</p>
                                                 <Combobox
                                                     data={subjects}
                                                     value={selectedSubjectName}
                                                     onChange={value => selectSubjectChange(value)}
-                                                />
-                                            </div>
-                                            <div className="align-self-center search-school">
-                                                <p>Vyhledávání podle jména učitele</p>
-                                                <Combobox
-                                                    data={teachers}
-                                                    value={selectedTeacherName}
-                                                    onChange={value => selectTeacherChange(value)}
                                                 />
                                             </div>
                                         </div>
@@ -349,7 +243,7 @@ export const PracticeListComponent = () => {
                     </div>
                 </div>}
                 <Accordion>
-                    <div style={{width: "85%"}}>
+                    <div style={{width: "100%"}}>
                         <div className="title-container text-info-practice">
                             <Row style={{width: "100%"}}>
                                 <Col className="text-center">
@@ -358,20 +252,16 @@ export const PracticeListComponent = () => {
                                 <Col className="text-center d-none">
                                     <b>Učitel</b>
                                 </Col>
-                                <Col className="text-center d-none d-xl-block">
-                                    <b>Škola</b>
-                                </Col>
                                 <Col className="text-center">
                                     <b>Datum</b>
                                 </Col>
-                                <Col className="text-center d-none">
+                                <Col className="text-center">
                                     <b>Čas</b>
                                 </Col>
                                 <Col className="text-center d-none">
                                     <b>E-mail</b>
                                 </Col>
                                 <Col className="text-center d-none">
-                                    <b>Kapacita</b>
                                     <OverlayTrigger
                                         overlay={
                                             <Tooltip>
@@ -384,6 +274,7 @@ export const PracticeListComponent = () => {
                                         <BsInfoCircleFill className={"info-tooltip"}/>
                                     </span>
                                     </OverlayTrigger>
+                                    <b>Kapacita</b>
                                 </Col>
                             </Row>
                         </div>
@@ -398,28 +289,28 @@ export const PracticeListComponent = () => {
                             style={{display: "block"}}
                         >
                             <div style={{display: "flex"}}>
-                                <Accordion.Header className={"accordion-header"}>
+                                <Accordion.Header className={"accordion-header-listed-teacher"}>
                                     <Row style={{width: "100%"}}>
-                                        <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
+                                        <Col
+                                            className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
-                                        <Col className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                                ". " +
+                                                item.date.split("-")[1] +
+                                                ". " +
+                                                item.date.split("-")[0]}
                                         </Col>
-                                        <Col className="text-center d-none">
+                                        <Col className="text-center">
                                             {item.start.split(":")[0] +
-                                            ":" +
-                                            item.start.split(":")[1] +
-                                            " - " +
-                                            item.end.split(":")[0] +
-                                            ":" +
-                                            item.end.split(":")[1]}
+                                                ":" +
+                                                item.start.split(":")[1] +
+                                                " - " +
+                                                item.end.split(":")[0] +
+                                                ":" +
+                                                item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -439,27 +330,12 @@ export const PracticeListComponent = () => {
                                         </Col>
                                     </Row>
                                 </Accordion.Header>
-                                <div className="center d-none d-xl-block" style={{width: "15%"}}>
-                                    {getButton(item.isCurrentStudentReserved, item.id)}
-                                </div>
                             </div>
 
                             <Accordion.Body>
                                 <div>
                                     <hr/>
                                     <div style={{marginLeft: "50px"}}>
-                                        <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
-                                        <p><b>E-mail:</b> {item.teacher.username}</p>
-                                        <p><b>Čas: </b>
-                                            <span>
-                                            {item.start.split(":")[0] +
-                                            ":" +
-                                            item.start.split(":")[1] +
-                                            " - " +
-                                            item.end.split(":")[0] +
-                                            ":" +
-                                            item.end.split(":")[1]}</span></p>
-
                                         <b>Kapacita: </b>
                                         <span>
                                         <Badge
@@ -473,6 +349,8 @@ export const PracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
+                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> jméno -> modal s infem o studentovi</p>
+
                                         <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 
                                         <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
@@ -483,12 +361,6 @@ export const PracticeListComponent = () => {
                                                 </li>;
                                             })}
                                         </ul>
-
-
-                                        <div className="center d-xl-none" style={{width: "15%"}}>
-                                            {getButton(item.isCurrentStudentReserved, item.id)}
-                                        </div>
-
                                     </div>
                                 </div>
                             </Accordion.Body>
@@ -500,4 +372,4 @@ export const PracticeListComponent = () => {
     }
 ;
 
-export default PracticeListComponent;
+export default TeacherPassedPractices;

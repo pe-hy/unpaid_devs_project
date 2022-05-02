@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,10 +54,45 @@ public class TeacherService {
 
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
 
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
         });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removeNotPassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
+
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
+
+    public List<StudentPracticeDto> getPracticesListPast(String teacherUsername, LocalDate date, Long subjectId, Pageable pageable) {
+        User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(
+                "Učitel '" + teacherUsername + "' nenalezen."
+        ));
+        Long teacherId = teacher.getId();
+        List<Practice> practices = practiceRepository.findAllByParamsAsListByTeacher(date, subjectId, teacherId, pageable);
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
+        });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removePassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
+
+
 
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }

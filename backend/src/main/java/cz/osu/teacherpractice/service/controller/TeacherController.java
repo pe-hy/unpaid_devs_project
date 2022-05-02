@@ -41,6 +41,14 @@ public class TeacherController {
         return teacherService.getPracticesList(principal.getName(), date, subjectId, pageable);
     }
 
+    @GetMapping("/practices-list-past")
+    public List<StudentPracticeDto> getPracticesListPast(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                     @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {
+
+        return teacherService.getPracticesListPast(principal.getName(), date, subjectId, pageable);
+    }
+
+
     @DeleteMapping(value = "/deleteFile/{name}")
     public ResponseEntity<String> deletePost(Principal principal, @PathVariable String name) {
 

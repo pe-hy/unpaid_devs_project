@@ -2,13 +2,21 @@ body, html {
     font-family: 'Helvetica', sans-serif;
 }
 
-.accordion-button::after {
-    position: absolute;
+@media (min-width: 768px) {
+    .accordion-button::after {
+        position: absolute;
+    }
+}
+
+@media (max-width: 768px) {
+    .accordion-button::after {
+        position: absolute;
+        width: 0;
+    }
 }
 
 .accordion-button:hover {
     background-color: #EDEDED;
-
 }
 
 .accordion-button[aria-expanded="true"]:hover {

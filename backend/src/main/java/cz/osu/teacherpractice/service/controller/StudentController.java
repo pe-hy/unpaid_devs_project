@@ -31,6 +31,17 @@ public class StudentController {
         return studentService.getPracticesList(principal.getName(), date, subjectId, pageable);
     }
 
+    @GetMapping("/reserved-practices-list")
+    public List<StudentPracticeDto> getStudentReservedPractices(Principal principal, Pageable pageable) {
+        return studentService.getStudentReservedPractices(principal.getName(), pageable);
+    }
+
+    //create getmapping for passed student practices
+    @GetMapping("/passed-practices-list")
+    public List<StudentPracticeDto> getPassedPractices(Principal principal, Pageable pageable) {
+        return studentService.getStudentPassedPractices(principal.getName(), pageable);
+    }
+
     @GetMapping("/practices-slice")
     public Slice<StudentPracticeDto> getPracticesSlice(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                  @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {

@@ -4,6 +4,7 @@ import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,4 +35,5 @@ public interface PracticeRepository extends JpaRepository<Practice, Long> {
     @Query("UPDATE Practice p SET p.subject = null WHERE p.subject = :subject")
     int setSubjectNull(Optional<Subject> subject);
     List<Practice> findAllByTeacherUsername(String teacherUsername);
+    List<Practice> findAllBystudents_id(Long student_id, Pageable pageable);
 }

@@ -11,14 +11,17 @@ import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class StudentService {
 
     private final UserRepository userRepository;
@@ -28,6 +31,41 @@ public class StudentService {
 
     public List<StudentPracticeDto> getPracticesList(String studentUsername, LocalDate date, Long subjectId, Pageable pageable) {
         List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setIsCurrentStudentReserved(studentUsername);
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
+        });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removeNotPassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
+
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
+
+    public List<StudentPracticeDto> getStudentReservedPractices(String studentUsername, Pageable pageable) {
+        User student = userRepository.findByEmail(studentUsername).orElseThrow(() -> new ServerErrorException(
+                        "Student '" + studentUsername + "' nenalezen."
+                )
+        );
+
+        Long studentId = student.getId();
+
+
+        List<Practice> practices = practiceRepository.findAllBystudents_id(studentId, pageable);
+
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
 
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
 
@@ -37,6 +75,38 @@ public class StudentService {
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
         });
 
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
+
+    public List<StudentPracticeDto> getStudentPassedPractices(String studentUsername, Pageable pageable) {
+        User student = userRepository.findByEmail(studentUsername).orElseThrow(() -> new ServerErrorException(
+                        "Student '" + studentUsername + "' nenalezen."
+                )
+        );
+
+        Long studentId = student.getId();
+
+
+        List<Practice> practices = practiceRepository.findAllBystudents_id(studentId, pageable);
+
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setIsCurrentStudentReserved(studentUsername);
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
+        });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removePassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
@@ -100,7 +170,7 @@ public class StudentService {
 
         registeredStudents.remove(student);
         practice.setStudents(registeredStudents);
-        
+
         practiceRepository.save(practice);
     }
 }

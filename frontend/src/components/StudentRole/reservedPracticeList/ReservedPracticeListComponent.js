@@ -19,7 +19,7 @@ import {addDays} from 'date-fns';
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_PRACTICE_LIST_URL = `${URL}/student/reserved-practices-list`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 

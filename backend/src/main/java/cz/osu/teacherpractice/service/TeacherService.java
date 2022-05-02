@@ -51,7 +51,8 @@ public class TeacherService {
         Long teacherId = teacher.getId();
 
         List<Practice> practices = practiceRepository.findAllByParamsAsListByTeacher(date, subjectId, teacherId, pageable);
-
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
 
         List<PracticeDomain> toDelete = new ArrayList<>();
@@ -77,6 +78,9 @@ public class TeacherService {
         ));
         Long teacherId = teacher.getId();
         List<Practice> practices = practiceRepository.findAllByParamsAsListByTeacher(date, subjectId, teacherId, pageable);
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
         List<PracticeDomain> toDelete = new ArrayList<>();
 
@@ -91,9 +95,6 @@ public class TeacherService {
                 practicesDomain.remove(practiceDomain);
             }
         }
-
-
-
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 

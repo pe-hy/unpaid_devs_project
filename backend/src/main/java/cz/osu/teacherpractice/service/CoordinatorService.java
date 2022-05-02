@@ -30,7 +30,6 @@ public class CoordinatorService {
 
     public List<UserDto> getWaitingList() {
         List<User> users = userRepository.getAllLocked();
-
         return mapper.usersToUsersDto(users);
     }
 

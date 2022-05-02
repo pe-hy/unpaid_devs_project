@@ -1,6 +1,8 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
+import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.exception.UserErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
@@ -10,7 +12,12 @@ import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service @RequiredArgsConstructor
 public class TeacherService {
@@ -19,6 +26,8 @@ public class TeacherService {
     private final SubjectRepository subjectRepository;
     private final PracticeRepository practiceRepository;
     private final MapStructMapper mapper;
+
+    private final UserService userService;
 
     public void addPractice(String teacherUsername, NewPracticeDto newPracticeDto) {
         User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(
@@ -34,4 +43,22 @@ public class TeacherService {
         practice.setTeacher(teacher);
         practiceRepository.save(practice);
     }
+    public List<StudentPracticeDto> getPracticesList(String teacherUsername, LocalDate date, Long subjectId, Pageable pageable) {
+        User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(
+                "Učitel '" + teacherUsername + "' nenalezen."
+        ));
+        Long teacherId = teacher.getId();
+
+        List<Practice> practices = practiceRepository.findAllByParamsAsListByTeacher(date, subjectId, teacherId, pageable);
+
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+        });
+
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
+
 }

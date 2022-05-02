@@ -33,8 +33,10 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                     setRole("Koordinátor");
                 } else if (response.data.role === "ROLE_TEACHER") {
                     setRole("Učitel");
+                } else if (response.data.role === "ROLE_ADMIN"){
+                    setRole("Administrátor");
                 } else {
-                    setRole("Student");
+                    setRole("Hacker :)");
                 }
             }
         }

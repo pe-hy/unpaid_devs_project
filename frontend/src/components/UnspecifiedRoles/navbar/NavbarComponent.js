@@ -35,6 +35,8 @@ const NavbarComponent = () => {
                 return window.location.href = '/teacherHome';
             case 'ROLE_COORDINATOR':
                 return window.location.href = '/coordinatorHome';
+            case 'ROLE_ADMIN':
+                return window.location.href = '/adminHome';
             default:
                 return window.location.href = '/login';
         }
@@ -43,11 +45,13 @@ const NavbarComponent = () => {
     const redirectBasedOnRolePersonalPage = () => {
         switch (role.role) {
             case 'ROLE_STUDENT':
-                return window.location.href = '/studentPersonal'; //not yet implemented
+                return window.location.href = '/studentPersonal';
             case "ROLE_TEACHER":
                 return window.location.href = '/teacherPersonal';
             case 'ROLE_COORDINATOR':
-                return window.location.href = '/coordinatorPersonal'; //not yet implemented
+                return window.location.href = '/coordinatorPersonal';
+            case 'ROLE_ADMIN':
+                return window.location.href = '/adminPersonal';
             default:
                 return window.location.href = '/login';
         }

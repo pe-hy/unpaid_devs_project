@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {axios} from "../../../axios";
-import "./CoordinatorPersonalPageComponent.css";
+import "./AdminPersonalPageComponent.css";
 import {BsAt, BsFillPersonFill, BsPhone, BsTools} from "react-icons/bs";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 const GET_DATA_URL = `${URL}/user/data`;
 
-const CoordinatorPersonalPageComponent = () => {
+const AdminPersonalPageComponent = () => {
     let iconStyles = {fontSize: "1.35em", marginRight: "10px"};
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
 
     const getUserData = async () => {
+
         // Make first two requests
         const response = await Promise.all([
             axios({
@@ -48,4 +49,4 @@ const CoordinatorPersonalPageComponent = () => {
     )
 }
 
-export default CoordinatorPersonalPageComponent;
+export default AdminPersonalPageComponent;

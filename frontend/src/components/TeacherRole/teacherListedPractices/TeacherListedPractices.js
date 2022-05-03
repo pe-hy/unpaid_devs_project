@@ -13,6 +13,7 @@ import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
+import { useSelector } from 'react-redux';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -39,6 +40,9 @@ export const TeacherListedPractices = () => {
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
         const [selectedTeacherName, setSelectedTeacherName] = useState("");
         const [btnText, setBtnText] = useState("Zobrazit možnosti vyhledávání");
+
+        const todos = useSelector((state) => state.todos);
+
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -94,13 +98,15 @@ export const TeacherListedPractices = () => {
             if (response && response.data) {
                 setPraxe(response.data);
                 setDateRangeLimit(response.data);
+                console.log("setting praxe data");
             }
         };
 
         useEffect(() => {
+            console.log("using effects");
             getPraxe();
             getSubjects();
-        }, []);
+        }, [todos]);
 
         function setDateRangeLimit(practices) {
             let lowestDate = new Date(practices[0].date.split('-'));
@@ -121,7 +127,6 @@ export const TeacherListedPractices = () => {
             return items.filter((item) => {
 
                 if (filterParam.includes(allFilterParam)) {
-                    console.log("passing filter - All");
                     return true;
                 }
 
@@ -349,7 +354,7 @@ export const TeacherListedPractices = () => {
                                         </Badge>
                                     </span>
 
-                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> jméno -> modal s infem o studentovi</p>
+                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> jméno -{">"} modal s infem o studentovi</p>
 
                                         <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 

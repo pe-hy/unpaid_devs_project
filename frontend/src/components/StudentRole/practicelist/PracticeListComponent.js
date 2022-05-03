@@ -47,7 +47,6 @@ export const PracticeListComponent = () => {
     const [subjects, setSubjects] = useState([]);
     const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
 
-    const [value, setValue] = useState('');
 	const dispatch = useDispatch();
 
     const [selectedSchool, setSelectedSchools] = useState("");
@@ -63,14 +62,11 @@ export const PracticeListComponent = () => {
     ]);
 
     const onSubmit = () => {
-		if (value) {
-            console.log("dispatched");
 			dispatch(
 				addTodo({
-					title: value,
+					title: "a",
 				})
 			);
-		}
 	};
 
     const changeBtnText = () => {
@@ -107,7 +103,6 @@ export const PracticeListComponent = () => {
         if (response && response.data) {
             setPraxe(response.data);
             setDateRangeLimit(response.data);
-            setValue("heeey", new Date());
             onSubmit();
         }
     };
@@ -138,7 +133,6 @@ export const PracticeListComponent = () => {
         return items.filter((item) => {
 
             if (filterParam.includes(allFilterParam)) {
-                console.log("passing filter - All");
                 return true;
             }
 

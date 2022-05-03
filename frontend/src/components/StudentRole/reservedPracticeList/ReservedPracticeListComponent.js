@@ -1,6 +1,6 @@
 import "./ReservedPracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { axios } from "../../../axios.js";
 import { BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders } from "react-icons/bs";
@@ -123,7 +123,6 @@ export const ReservedPracticeListComponent = () => {
         return items.filter((item) => {
 
             if (filterParam.includes(allFilterParam)) {
-                console.log("passing filter - All");
                 return true;
             }
 

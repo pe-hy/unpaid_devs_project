@@ -120,7 +120,6 @@ export const PastPracticeListComponent = () => {
             return items.filter((item) => {
 
                 if (filterParam.includes(allFilterParam)) {
-                    console.log("passing filter - All");
                     return true;
                 }
 

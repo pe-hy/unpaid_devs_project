@@ -4,6 +4,8 @@ import {BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill, BsInfoCircleFill
 import {Navigate} from "react-router-dom";
 import {axios} from "../../../axios";
 import "./TabsStyles.css";
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../../../redux/todoSlice.js';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -23,6 +25,16 @@ const TabsForm = () => {
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [noteLen, setNoteLen] = useState(0);
+
+	const dispatch = useDispatch();
+
+    const onSubmit = () => {
+			dispatch(
+				addTodo({
+					title: "a",
+				})
+			);
+	};
 
     const handleChange = (e) => {
         setshowSuccessAlert(false);
@@ -94,6 +106,7 @@ const TabsForm = () => {
         if (response) {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
+            onSubmit();
         }
     };
 

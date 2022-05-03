@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { Component } from "react";
-import { BsEnvelopeFill, BsExclamationCircleFill, BsExclamationTriangleFill, BsLockFill } from "react-icons/bs";
-import { Navigate } from "react-router-dom";
+import React, {Component} from "react";
+import {BsEnvelopeFill, BsExclamationCircleFill, BsExclamationTriangleFill, BsLockFill} from "react-icons/bs";
+import {Navigate} from "react-router-dom";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../../../services/AuthService";
-import { userContext } from "../../../../userContext";
+import {userContext} from "../../../../userContext";
 import "./LoginFormStyles.css";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -25,7 +25,7 @@ const required = (value) => {
     if (!value) {
         return (
             <div className="alert my-alert text-bold" role="alert">
-                <BsExclamationCircleFill /> Toto pole je povinné!
+                <BsExclamationCircleFill/> Toto pole je povinné!
             </div>
         );
     }
@@ -34,7 +34,7 @@ const invalidEmail = (value) => {
     if (!validateEmail(value)) {
         return (
             <div className="alert alert-danger my-alert text-bold" role="alert">
-                <BsExclamationTriangleFill /> Špatný formát e-mailu!
+                <BsExclamationTriangleFill/> Špatný formát e-mailu!
             </div>
         );
     }
@@ -121,10 +121,6 @@ export default class Login extends Component {
                         currentRole: localStorage.getItem("role"),
                         redirectToLogin: true,
                     });
-               
-                    
-        
-                    // window.location.reload(); // bcuz no idea how to change navbar otherwise, will figure out later
 
                 },
                 (error) => {
@@ -150,11 +146,13 @@ export default class Login extends Component {
     render() {
         //Use similar logic like this
         if (this.state.redirectToLogin && this.state.currentRole === "ROLE_STUDENT")
-            return <Navigate to="/studentHome" />;
+            return <Navigate to="/studentHome"/>;
         if (this.state.redirectToLogin && this.state.currentRole === "ROLE_TEACHER")
-            return <Navigate to="/teacherHome" />;
+            return <Navigate to="/teacherHome"/>;
         if (this.state.redirectToLogin && this.state.currentRole === "ROLE_COORDINATOR")
-            return <Navigate to="/coordinatorHome" />;
+            return <Navigate to="/coordinatorHome"/>;
+        if (this.state.redirectToLogin && this.state.currentRole === "ROLE_ADMIN")
+            return <Navigate to="/adminHome"/>;
         return (
             <div className="col-md-12 container-login">
                 <p className="thick ">PŘIHLÁŠENÍ</p>
@@ -171,7 +169,7 @@ export default class Login extends Component {
                             </label>
                             <div className="inner-addon left-addon">
                                 <i className="glyphicon glyphicon-user icon-form">
-                                    <BsEnvelopeFill />
+                                    <BsEnvelopeFill/>
                                 </i>
                                 <Input
                                     type="text"
@@ -190,7 +188,7 @@ export default class Login extends Component {
                             </label>
                             <div className="inner-addon left-addon">
                                 <i className="glyphicon glyphicon-user icon-form">
-                                    <BsLockFill />
+                                    <BsLockFill/>
                                 </i>
                                 <Input
                                     type="password"
@@ -208,12 +206,12 @@ export default class Login extends Component {
                         <div className="form-group button-login pt-5">
                             {this.state.message && !this.state.showTokenMessage && (
                                 <div className="alert alert-danger my-alert1 text-bold" role="alert">
-                                    <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message}
+                                    <BsExclamationTriangleFill className={"alert-icon"}/>{this.state.message}
                                 </div>
                             )}
                             {this.state.showTokenMessage && (
                                 <div className="alert alert-success text-bold" role="alert">
-                                    <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message}
+                                    <BsExclamationTriangleFill className={"alert-icon"}/>{this.state.message}
                                 </div>
                             )}
                             <button
@@ -228,7 +226,7 @@ export default class Login extends Component {
                         </div>
                         <a href="register" className={"d-flex justify-content-center mt-2 rgstr"}>Zaregistrovat se</a>
                         <CheckButton
-                            style={{ display: "none" }}
+                            style={{display: "none"}}
                             ref={(c) => {
                                 this.checkBtn = c;
                             }}

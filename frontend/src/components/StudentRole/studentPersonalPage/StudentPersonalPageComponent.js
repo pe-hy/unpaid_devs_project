@@ -52,6 +52,7 @@ const StudentPersonalPageComponent = () => {
                     <p><b><BsTools style={iconStyles}/>Změna hesla: <ChangePasswordComponent/></b></p>
 
                 </div>
+                <div className="col-sm uploadCol"></div>
             </div>
         </div>
     )

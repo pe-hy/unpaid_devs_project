@@ -56,6 +56,8 @@ export class ChangePasswordComponent extends Component {
             password: "",
             oldPassword: "",
             modalShow: false,
+            alert: "",
+            alertIsErr: false,
         };
         this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
@@ -80,10 +82,20 @@ export class ChangePasswordComponent extends Component {
         e.preventDefault();
         this.form.validateAll();
         if (this.checkBtn.context._errors.length === 0) {
-            AuthService.changePassword(this.state.oldPassword, this.state.password);
+            AuthService.changePassword(this.state.oldPassword, this.state.password).then((res) =>{
+                    this.setState({
+                        alert: res,
+                        alertIsErr: false
+                    });
+            },
+                (error) => {
+                    this.setState({
+                        alert: error.response.data,
+                        alertIsErr: true
+                    });
+                });
             return true;
         }
-        console.log("ups");
     }
 
     onChangePassword(e) {
@@ -218,6 +230,24 @@ export class ChangePasswordComponent extends Component {
         )
             ;
     }
+    renderAlert() {
+        if (this.state.alert) {
+            if (!this.state.alertIsErr){
+                return (
+                    <div className="alert alert-success center" role="alert">
+                        {this.state.alert}
+                    </div>
+                );
+            }
+            else{
+                return (
+                    <div className="alert alert-danger center" role="alert">
+                        {this.state.alert}
+                    </div>
+                );
+            }
+        }
+    }
 
     render() {
         return (
@@ -226,6 +256,9 @@ export class ChangePasswordComponent extends Component {
                             onClick={() => this.setState({modalShow: true})}>Změnit heslo
                     </button>
                 {this.CreateModal()}
+                <div className="center">
+                    <div className="mt-4 w-75">{this.renderAlert()}</div>
+                </div>
             </span>
         )
     }

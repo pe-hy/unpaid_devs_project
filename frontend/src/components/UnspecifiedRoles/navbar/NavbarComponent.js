@@ -25,6 +25,7 @@ const NavbarComponent = () => {
             case 'ROLE_COORDINATOR':
                 return window.location.href = '/coordinatorHome';
             case 'ROLE_ADMIN':
+                console.log("admin");
                 return window.location.href = '/adminHome';
             default:
                 console.log("fail");

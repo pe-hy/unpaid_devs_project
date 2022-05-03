@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {axios} from "../../../axios";
 import "./StudentPersonalPageComponent.css";
 import {BsAt, BsFillPersonFill, BsPhone, BsTools} from "react-icons/bs";
+import ChangePasswordComponent from "../../UnspecifiedRoles/changePassword/ChangePasswordComponent";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 const GET_DATA_URL = `${URL}/user/data`;
@@ -11,6 +12,7 @@ const StudentPersonalPageComponent = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [showPassword, setShowPassword] = useState(true);
     const getUserData = async () => {
 
         // Make first two requests
@@ -47,8 +49,8 @@ const StudentPersonalPageComponent = () => {
                     <h1>Osobní stránka</h1>
                     <p style={{paddingTop: "25px"}}><BsFillPersonFill style={iconStyles}/><b>Jméno:</b> {name}</p>
                     <p><b><BsAt style={iconStyles}/>E-mail:</b> {email}</p>
-                    <p><b><BsTools style={iconStyles}/>Změna hesla: </b>
-                        <a href="user/changePassword">Změnit</a></p>
+                    <p><b><BsTools style={iconStyles}/>Změna hesla: <ChangePasswordComponent/></b></p>
+
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import practicesReducer from './practicesSlice';
+import todoReducer from './todoSlice';
 
 export default configureStore({
 	reducer: {
-		practices: practicesReducer,
+		todos: todoReducer,
 	},
 });

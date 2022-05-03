@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {axios} from "../../../axios";
 import "./CoordinatorPersonalPageComponent.css";
 import {BsAt, BsFillPersonFill, BsPhone, BsTools} from "react-icons/bs";
+import ChangePasswordComponent from "../../UnspecifiedRoles/changePassword/ChangePasswordComponent";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 const GET_DATA_URL = `${URL}/user/data`;
@@ -40,9 +41,9 @@ const CoordinatorPersonalPageComponent = () => {
                     <p style={{paddingTop: "25px"}}><BsFillPersonFill style={iconStyles}/><b>Jméno:</b> {name}</p>
                     <p><b><BsAt style={iconStyles}/>E-mail:</b> {email}</p>
                     <p><b><BsPhone style={iconStyles}/>Telefon</b>: {phone}</p>
-                    <p><b><BsTools style={iconStyles}/>Změna hesla: </b>
-                        <a href="user/changePassword">Změnit</a></p>
+                    <p><b><BsTools style={iconStyles}/>Změna hesla: <ChangePasswordComponent/></b></p>
                 </div>
+                <div className="col-sm uploadCol"></div>
             </div>
         </div>
     )

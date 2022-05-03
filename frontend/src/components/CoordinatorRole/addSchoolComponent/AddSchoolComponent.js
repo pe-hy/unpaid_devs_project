@@ -32,9 +32,6 @@ export const AddSchoolComponent = () => {
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
 
     const [errorMsg, setErrorMsg] = useState("");
-    const checkRole = () => {
-        return localStorage.getItem("role") !== "ROLE_COORDINATOR";
-    };
 
     const removeSchool = async () => {
         const response = await axios({
@@ -198,7 +195,6 @@ export const AddSchoolComponent = () => {
         getTeachersWithoutSchool();
     }, []);
 
-    if (checkRole()) return <Navigate to="/login" />;
     return (
         <Container fluid>
             <Row>

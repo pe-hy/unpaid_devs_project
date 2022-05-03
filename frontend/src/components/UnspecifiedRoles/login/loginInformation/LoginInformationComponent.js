@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {axios} from "../../../../axios";
 
+
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_USER_INFO_URL = `${URL}/user/info`;
@@ -33,11 +34,16 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                     setRole("Koordinátor");
                 } else if (response.data.role === "ROLE_TEACHER") {
                     setRole("Učitel");
-                } else {
+                } else if (response.data.role === "ROLE_ADMIN") {
+                    setRole("Administrátor");
+                }
+                 else if (response.data.role === "ROLE_STUDENT") {
                     setRole("Student");
                 }
+                } else {
+                    setRole("Hacker :)");
+                }
             }
-        }
     };
     useEffect(() => {
         getUserName();

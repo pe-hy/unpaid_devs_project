@@ -1,5 +1,7 @@
 package cz.osu.teacherpractice.service.controller;
 
+import cz.osu.teacherpractice.dto.request.NewPracticeDto;
+import cz.osu.teacherpractice.dto.request.PasswordDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.User;
@@ -17,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -52,6 +55,15 @@ public class UserController {
     public UserDto getUserData(Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
         return mapper.userToUserDto(user);
+    }
+
+    @PostMapping("/user/changePassword")
+    public ResponseEntity<String> changePassword(Principal principal, @Valid @RequestBody PasswordDto passwordDto){
+        if(userService.changePassword(principal.getName(), passwordDto)){
+            return new ResponseEntity<>("Heslo bylo změněno", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Heslo se nepodařilo změnit", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/user/subjects")

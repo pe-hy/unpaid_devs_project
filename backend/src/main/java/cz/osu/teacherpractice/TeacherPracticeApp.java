@@ -76,7 +76,8 @@ public class TeacherPracticeApp {
             practiceRepository.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().withHour(9).withMinute(0), LocalTime.now().withHour(9).withMinute(45), null, 2, subjectB, teacher, null));
             practiceRepository.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().withHour(10).withMinute(0), LocalTime.now().withHour(10).withMinute(45), null, 2, subjectC, teacher, null));
             practiceRepository.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), null, 2, subjectC, teacher, null));
-
+            practiceRepository.save(new Practice(null, LocalDate.parse("2022-01-01"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe.", 5, subjectB, teacher, null));
+            practiceRepository.save(new Practice(null, LocalDate.parse("2021-05-07"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe 2.", 5, subjectB, teacher, null));
             //practiceA.setStudents(new ArrayList<>(List.of(student)));
             //practiceRepo.save(practiceA);
             //practiceB.setStudents(new ArrayList<>(List.of(student)));

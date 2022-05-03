@@ -15,39 +15,34 @@ function refreshPage() {
 
 const NavbarComponent = () => {
 
-    const [role, setRole] = useState("");
-    
-    useEffect(() => {
-        getCurrentRole()
-    }, [])
-
-    const getCurrentRole = () => {
-        let temp;
-        temp = JSON.parse(localStorage.getItem("user"));
-        setRole(temp);
-    }
-
     const redirectBasedOnRoleMainView = () => {
-        switch (role.role) {
+        console.log("role", JSON.parse(localStorage.getItem("user")).role);
+        switch (JSON.parse(localStorage.getItem("user")).role) {
             case 'ROLE_STUDENT':
                 return window.location.href = '/studentHome';
             case "ROLE_TEACHER":
                 return window.location.href = '/teacherHome';
             case 'ROLE_COORDINATOR':
                 return window.location.href = '/coordinatorHome';
+            case 'ROLE_ADMIN':
+                console.log("admin");
+                return window.location.href = '/adminHome';
             default:
+                console.log("fail");
                 return window.location.href = '/login';
         }
     }
 
     const redirectBasedOnRolePersonalPage = () => {
-        switch (role.role) {
+        switch (JSON.parse(localStorage.getItem("user")).role) {
             case 'ROLE_STUDENT':
-                return window.location.href = '/studentPersonal'; //not yet implemented
+                return window.location.href = '/studentPersonal';
             case "ROLE_TEACHER":
                 return window.location.href = '/teacherPersonal';
             case 'ROLE_COORDINATOR':
-                return window.location.href = '/coordinatorPersonal'; //not yet implemented
+                return window.location.href = '/coordinatorPersonal';
+            case 'ROLE_ADMIN':
+                return window.location.href = '/adminPersonal';
             default:
                 return window.location.href = '/login';
         }

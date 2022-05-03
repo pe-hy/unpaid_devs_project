@@ -53,7 +53,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.school.id = :school WHERE u.username = :username")
-    int assignSchool(@Param("username") String username, long school);
+    int assignSchool(@Param("username") String username, @Param("school") long school);
 
     @Transactional
     @Modifying

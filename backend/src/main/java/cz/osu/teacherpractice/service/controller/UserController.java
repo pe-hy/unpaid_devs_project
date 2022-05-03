@@ -58,8 +58,12 @@ public class UserController {
     }
 
     @PostMapping("/user/changePassword")
-    public String changePassword(Principal principal, @Valid @RequestBody PasswordDto passwordDto){
-        return userService.changePassword(principal.getName(), passwordDto);
+    public ResponseEntity<String> changePassword(Principal principal, @Valid @RequestBody PasswordDto passwordDto){
+        if(userService.changePassword(principal.getName(), passwordDto)){
+            return new ResponseEntity<>("Heslo bylo změněno", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Heslo se nepodařilo změnit", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/user/subjects")

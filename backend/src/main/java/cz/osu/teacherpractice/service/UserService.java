@@ -48,7 +48,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String changePassword(String username, PasswordDto passwordDto){
+    public boolean changePassword(String username, PasswordDto passwordDto){
         if(userRepository.findByEmail(username).isPresent()) {
             Long userId = userRepository.findByEmail(username).get().getId();
             String userHashedPassword = userRepository.findByEmail(username).get().getPassword();
@@ -56,11 +56,11 @@ public class UserService {
             if(passwordEncoder.matches(passwordDto.getOldPassword(), userHashedPassword)){
                 String hashedPassword = passwordEncoder.encode(passwordDto.getNewPassword());
                 userRepository.changeUserPassword(hashedPassword,userId);
-                return "Heslo bylo úspěšně změněno.";
+                return true;
             }
-            else return "Staré heslo bylo zadáno chybně.";
+            else return false;
         }
-        else return "User not found";
+        else return false;
     }
 
     public String removeUser(String username){

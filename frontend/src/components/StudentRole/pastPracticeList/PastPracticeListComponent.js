@@ -13,6 +13,7 @@ import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
+import { useSelector } from 'react-redux';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -40,6 +41,8 @@ export const PastPracticeListComponent = () => {
         const [teachers, setTeachers] = useState([]);
         const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
+
+        const pastPracticesRedux = useSelector((state) => state.practices);
 
         const [selectedSchool, setSelectedSchools] = useState("");
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
@@ -91,6 +94,7 @@ export const PastPracticeListComponent = () => {
         };
 
         useEffect(() => {
+            console.log("past practices use effect", pastPracticesRedux);
             getPraxe();
             getSchools();
             getSubjects();

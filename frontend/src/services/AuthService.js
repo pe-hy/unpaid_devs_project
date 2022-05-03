@@ -3,6 +3,7 @@ import axios from "axios";
 const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
+const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
 
 class AuthService {
     login(username, password) {
@@ -54,6 +55,23 @@ class AuthService {
         }).then((response) => {
             if (response) {
                 return response.data
+            }
+            return response.data;
+        });
+    }
+
+    changePassword(oldPassword, newPassword) {
+        var formData = JSON.stringify({oldPassword, newPassword});
+        console.log(formData);
+
+        return axios({
+            url: CHANGE_PASSWORD_URL,
+            headers: {'content-type': 'application/json'},
+            withCredentials: true,
+            method: "POST",
+            data: formData,
+        }).then((response) => {
+            if (response) {
             }
             return response.data;
         });

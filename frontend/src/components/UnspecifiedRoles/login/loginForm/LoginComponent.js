@@ -8,8 +8,6 @@ import Input from "react-validation/build/input";
 import AuthService from "../../../../services/AuthService";
 import { userContext } from "../../../../userContext";
 import "./LoginFormStyles.css";
-import { connect } from 'react-redux';
-import { setRole } from '../../../../redux/roleSlice.js';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -50,7 +48,6 @@ export default class Login extends Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
-        // this.dispatch = useDispatch();
         this.state = {
             username: "",
             password: "",

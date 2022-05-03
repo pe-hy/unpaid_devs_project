@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.config.AppConfig;
+import cz.osu.teacherpractice.dto.request.PasswordDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
@@ -16,6 +17,7 @@ import cz.osu.teacherpractice.service.token.ConfirmationToken;
 import cz.osu.teacherpractice.service.token.ConfirmationTokenRepository;
 import cz.osu.teacherpractice.service.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -44,6 +46,21 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    public String changePassword(String username, PasswordDto passwordDto){
+        if(userRepository.findByEmail(username).isPresent()) {
+            Long userId = userRepository.findByEmail(username).get().getId();
+            String userHashedPassword = userRepository.findByEmail(username).get().getPassword();
+
+            if(passwordEncoder.matches(passwordDto.getOldPassword(), userHashedPassword)){
+                String hashedPassword = passwordEncoder.encode(passwordDto.getNewPassword());
+                userRepository.changeUserPassword(hashedPassword,userId);
+                return "Heslo bylo úspěšně změněno.";
+            }
+            else return "Staré heslo bylo zadáno chybně.";
+        }
+        else return "User not found";
     }
 
     public String removeUser(String username){

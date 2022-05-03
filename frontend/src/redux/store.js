@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import roleReducer from './roleSlice';
+import practicesReducer from './practicesSlice';
 
 export default configureStore({
 	reducer: {
-		role: roleReducer,
+		practices: practicesReducer,
 	},
 });

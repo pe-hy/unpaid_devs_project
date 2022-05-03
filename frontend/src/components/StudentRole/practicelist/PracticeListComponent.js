@@ -15,6 +15,8 @@ import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
+import { useDispatch } from 'react-redux';
+import { setPractices } from '../../../redux/practicesSlice.js';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -45,6 +47,8 @@ export const PracticeListComponent = () => {
         const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
 
+        const dispatch = useDispatch();
+
         const [selectedSchool, setSelectedSchools] = useState("");
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
         const [selectedTeacherName, setSelectedTeacherName] = useState("");
@@ -56,6 +60,16 @@ export const PracticeListComponent = () => {
                 key: 'selection'
             }
         ]);
+
+        const setPastPracticesRedux = () => {
+            if (practices) {
+                dispatch(
+                    setPractices({
+                        pastPractices: practices,
+                    })
+                );
+            }
+        };
 
         const changeBtnText = () => {
             if (!showing) {
@@ -91,6 +105,7 @@ export const PracticeListComponent = () => {
             if (response && response.data) {
                 setPraxe(response.data);
                 setDateRangeLimit(response.data);
+                setPastPracticesRedux();
             }
         };
 

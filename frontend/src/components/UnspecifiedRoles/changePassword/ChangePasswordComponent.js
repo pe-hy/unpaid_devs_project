@@ -54,10 +54,13 @@ export class ChangePasswordComponent extends Component {
         this.state = {
             secondPassword: "",
             password: "",
+            oldPassword: "",
             modalShow: false,
         };
         this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangePasswordSecond = this.onChangePasswordSecond.bind(this);
+        this.onChangePasswordNew = this.onChangePasswordNew.bind(this);
         this.checkSecondPassword = this.checkSecondPassword.bind(this);
     }
 
@@ -73,18 +76,31 @@ export class ChangePasswordComponent extends Component {
     }
 
     handlePasswordReset(e) {
-        console.log("handling register")
+       console.log("form with password", e);
         e.preventDefault();
         this.form.validateAll();
         if (this.checkBtn.context._errors.length === 0) {
-            console.log("success");
+            AuthService.changePassword(this.state.oldPassword, this.state.password);
             return true;
         }
+        console.log("ups");
     }
 
     onChangePassword(e) {
         this.setState({
+            oldPassword: e.target.value,
+        });
+    }
+
+    onChangePasswordNew(e) {
+        this.setState({
             password: e.target.value,
+        });
+    }
+
+    onChangePasswordSecond(e) {
+        this.setState({
+            secondPassword: e.target.value,
         });
     }
 
@@ -105,7 +121,7 @@ export class ChangePasswordComponent extends Component {
                     <Form
                         className="mt-5"
                         id="changePasswordForm"
-                        onSubmit={() => this.handlePasswordReset()}
+                        onSubmit={this.handlePasswordReset}
                           ref={(c) => {
                               this.form = c;
                           }}>
@@ -120,6 +136,8 @@ export class ChangePasswordComponent extends Component {
                          className="form-control"
                          placeholder="Staré heslo"
                          validations={[required]}
+                         onChange={this.onChangePassword}
+                         value={this.state.oldPassword}
                          required/>
                 </span>
                         </label>
@@ -145,7 +163,8 @@ export class ChangePasswordComponent extends Component {
                     <Input type="password"
                            className="form-control"
                            ref={this.passwordRef}
-                           onChange={this.onChangePassword}
+                           onChange={this.onChangePasswordNew}
+                           value={this.state.password}
                            validations={[required, invalidPassword]}
                            required/></div>
                 </span>
@@ -167,6 +186,8 @@ export class ChangePasswordComponent extends Component {
                          ref={this.passwordAgainRef}
                          className="form-control"
                          placeholder="Nové heslo znovu"
+                         onChange={this.onChangePasswordSecond}
+                            value={this.state.secondPassword}
                          validations={[required, this.checkSecondPassword]}
                          required/>
                 </span>
@@ -188,7 +209,8 @@ export class ChangePasswordComponent extends Component {
                     </button>
                     <button form="changePasswordForm" className="accept-btn"
                             onClick={() => {
-                                this.setState({modalShow: false});
+                                if (this.checkBtn.context._errors.length === 0){this.setState({modalShow: false});}
+                                
                             }}>Změnit heslo
                     </button>
                 </Modal.Footer>

@@ -4,8 +4,8 @@ const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
-const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/user/emailForReset`;
-const FORGOT_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/forgotPassword`;
+const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/reset`;
+const FORGOT_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/save`;
 
 class AuthService {
     login(username, password) {
@@ -80,15 +80,15 @@ class AuthService {
     }
 
     forgotPasswordEmail(email) {
-        var formData = JSON.stringify({email});
-        console.log(formData);
+        var data = new FormData();
+        data.append('email', email);
 
         return axios({
             url: EMAIL_FOR_RESET_URL,
             headers: {'content-type': 'application/json'},
-            withCredentials: true,
+            withCredentials: false,
             method: "POST",
-            data: formData,
+            data: data,
         }).then((response) => {
             if (response) {
                 return response.data
@@ -98,15 +98,17 @@ class AuthService {
     }
 
     forgotPasswordAfterAuthorization(password, token) {
-        var formData = JSON.stringify({newPassword: password, token: token});
-        console.log(formData);
+        let form = { "newPassword": password, "token": token };
+        var data = new FormData();
+        data.append('newPassword', password);
+        data.append('token', token);
 
         return axios({
             url: FORGOT_PASSWORD_URL,
             headers: {'content-type': 'application/json'},
             withCredentials: true,
             method: "POST",
-            data: formData,
+            data: form,
         }).then((response) => {
             if (response) {
             }

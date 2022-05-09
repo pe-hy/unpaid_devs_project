@@ -39,19 +39,20 @@ public class ForgotPasswordController {
     @PostMapping("/reset")
     public String resetPassword(HttpServletRequest request,
                                 @RequestParam("email") String userEmail) {
-        User user = userService.getUserByUsername(userEmail);
+        String result = userEmail.replaceAll("\"", "");
+        User user = userService.getUserByUsername(result);
         if (user == null) {
             return "OK";
         }
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
-        String link = baseUrlProduction + "/forgotPassword?token=" + token;
-        emailService.sendForgotPasswordMail(userEmail, forgotPasswordService.buildEmail(user.getFirstName(), link));
+        String link = baseUrlProduction + "/login?forgotPasswordToken=" + token;
+        emailService.sendForgotPasswordMail(result, forgotPasswordService.buildEmail(user.getFirstName(), link));
         return "Na zadaný e-mail byl poslán odkaz pro obnovu hesla";
     }
 
     @PostMapping("/save")
-    public String savePassword(final Locale locale, @Valid ForgotPasswordDto passwordDto) {
+    public String savePassword(@RequestBody ForgotPasswordDto passwordDto) {
 
         String result = securityService.validatePasswordResetToken(passwordDto.getToken());
 

@@ -103,7 +103,7 @@ public class UserService {
             return user.get();
         }
         else{
-            throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");
+            return null;
         }
     }
 

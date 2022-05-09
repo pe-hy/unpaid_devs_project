@@ -57,6 +57,7 @@ export class ForgotPasswordComponent extends Component {
             modalShow: this.props.modalShow,
             alert: "",
             alertIsErr: false,
+            token: this.props.token,
         };
         this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.onChangePasswordSecond = this.onChangePasswordSecond.bind(this);
@@ -80,7 +81,7 @@ export class ForgotPasswordComponent extends Component {
         e.preventDefault();
         this.form.validateAll();
         if (this.checkBtn.context._errors.length === 0) {
-            AuthService.forgotPasswordAfterAuthorization(this.state.password, this.token).then((res) =>{
+            AuthService.forgotPasswordAfterAuthorization(this.state.password, this.state.token).then((res) =>{
                     this.setState({
                         alert: res,
                         alertIsErr: false

@@ -48,6 +48,12 @@ public class TeacherController {
         return teacherService.getPracticesListPast(principal.getName(), date, subjectId, pageable);
     }
 
+    //create getmapping for all students by practice id
+//    @GetMapping("/students-list")
+//    public List<StudentPracticeDto> getStudentsList(@RequestParam Long practiceId, Pageable pageable) {
+//        return teacherService.getStudentsList(practiceId, pageable);
+//    }
+
 
     @DeleteMapping(value = "/deleteFile/{name}")
     public ResponseEntity<String> deletePost(Principal principal, @PathVariable String name) {

@@ -172,6 +172,7 @@ export const AddSubjectComponent = () => {
         if (response) {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
+            document.getElementById("add_subject_input").value = "";
             await getSubjects();
         }
     };
@@ -198,6 +199,7 @@ export const AddSubjectComponent = () => {
                                     <b className="center pb-4" style={{fontSize: "20px"}}>Název předmětu</b>
                                     <InputGroup>
                                         <Form.Control
+                                            id={"add_subject_input"}
                                             required="required"
                                             type="text"
                                             placeholder="Vložte název školy"

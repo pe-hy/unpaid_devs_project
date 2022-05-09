@@ -58,6 +58,7 @@ export class ForgotPasswordComponent extends Component {
             alert: "",
             alertIsErr: false,
             token: this.props.token,
+            disableButton: false,
         };
         this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.onChangePasswordSecond = this.onChangePasswordSecond.bind(this);
@@ -77,16 +78,16 @@ export class ForgotPasswordComponent extends Component {
     }
 
     handlePasswordReset(e) {
-       console.log("form with password", e);
+        console.log("form with password", e);
         e.preventDefault();
         this.form.validateAll();
         if (this.checkBtn.context._errors.length === 0) {
-            AuthService.forgotPasswordAfterAuthorization(this.state.password, this.state.token).then((res) =>{
+            AuthService.forgotPasswordAfterAuthorization(this.state.password, this.state.token).then((res) => {
                     this.setState({
                         alert: res,
                         alertIsErr: false
                     });
-            },
+                },
                 (error) => {
                     this.setState({
                         alert: error.response.data,
@@ -122,14 +123,14 @@ export class ForgotPasswordComponent extends Component {
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Změna hesla</h4>
+                    <h4>Zapomenuté heslo</h4>
                     <Form
                         className="mt-5"
                         id="changePasswordForm"
                         onSubmit={this.handlePasswordReset}
-                          ref={(c) => {
-                              this.form = c;
-                          }}>
+                        ref={(c) => {
+                            this.form = c;
+                        }}>
                         <label className={"label-setting"}>
                 <span className={"span-label"}>
                   <OverlayTrigger
@@ -176,7 +177,7 @@ export class ForgotPasswordComponent extends Component {
                          className="form-control"
                          placeholder="Nové heslo znovu"
                          onChange={this.onChangePasswordSecond}
-                            value={this.state.secondPassword}
+                         value={this.state.secondPassword}
                          validations={[required, this.checkSecondPassword]}
                          required/>
                 </span>
@@ -189,34 +190,44 @@ export class ForgotPasswordComponent extends Component {
                             }}
                         />
                     </Form>
-
-
+                    <div className="center">
+                        <div className="w-75">
+                            {this.renderAlert()}
+                        </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white"
                             onClick={() => this.setState({modalShow: false})}>Storno
                     </button>
-                    <button form="changePasswordForm" className="accept-btn"
+                    <button disabled={this.state.disableButton} id={"btn_modal"} form="changePasswordForm"
+                            className="accept-btn"
                             onClick={() => {
-                                if (this.checkBtn.context._errors.length === 0){this.setState({modalShow: false});}
-                                
-                            }}>Změnit heslo
+                                if (this.checkBtn.context._errors.length === 0) {
+                                    if (document.getElementById("btn_modal")) {
+                                        document.getElementById("btn_modal").disabled = this.state.disableButton;
+                                        document.getElementById("btn_modal").className = "btn_modal";
+                                        document.getElementById("btn_modal").innerText = "Odesláno";
+                                    }
+                                }
+                            }
+                            }>Odeslat
                     </button>
-                </Modal.Footer>
-            </Modal>
-        )
-            ;
+            </Modal.Footer>
+    </Modal>
+    )
+        ;
     }
+
     renderAlert() {
         if (this.state.alert) {
-            if (!this.state.alertIsErr){
+            if (!this.state.alertIsErr) {
                 return (
                     <div className="alert alert-success center" role="alert">
                         {this.state.alert}
                     </div>
                 );
-            }
-            else{
+            } else {
                 return (
                     <div className="alert alert-danger center" role="alert">
                         {this.state.alert}
@@ -230,7 +241,6 @@ export class ForgotPasswordComponent extends Component {
         return (
             <span>
                 {this.CreateModal()}
-                {this.renderAlert()}
             </span>
         )
     }

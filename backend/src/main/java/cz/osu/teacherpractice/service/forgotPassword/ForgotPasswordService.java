@@ -1,15 +1,15 @@
-package cz.osu.teacherpractice.service.registration;
+package cz.osu.teacherpractice.service.forgotPassword;
 
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.request.RegistrationDto;
-import cz.osu.teacherpractice.service.UserService;
-import cz.osu.teacherpractice.service.email.EmailSender;
-import cz.osu.teacherpractice.service.email.EmailValidator;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.service.UserService;
+import cz.osu.teacherpractice.service.email.EmailSender;
+import cz.osu.teacherpractice.service.email.EmailValidator;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -22,90 +22,9 @@ import static cz.osu.teacherpractice.config.AppConfig.baseUrlProduction;
 
 @Service
 @AllArgsConstructor
-public class RegistrationService {
+public class ForgotPasswordService {
 
-    private final UserService userService;
-    private final EmailValidator emailValidator;
-    private final ConfirmationTokenService confirmationTokenService;
-    private final EmailSender emailSender;
-    private final UserRepository userRepository;
-    private final SchoolRepository schoolRepository;
-
-    public String register(RegistrationDto request){
-
-        if(!emailValidator.checkEmail(request.getEmail(), request.getRole())){
-            throw new IllegalStateException("Email není validní");
-        }
-        if(userRepository.findByEmail(request.getEmail()).isPresent()){
-            throw new IllegalStateException("Email již existuje");
-        }
-
-        String email, password, firstName, lastName, phoneNumber;
-        School school;
-        Role role;
-        boolean locked;
-
-        switch (request.getRole()) {
-            case "student":
-                email = request.getEmail();
-                password = request.getPassword();
-                firstName = request.getFirstName();
-                lastName = request.getLastName();
-                phoneNumber = null;
-                school = null;
-                role = Role.STUDENT;
-                locked = false;
-                break;
-            case "teacher":
-                email = request.getEmail();
-                password = request.getPassword();
-                firstName = request.getFirstName();
-                lastName = request.getLastName();
-                phoneNumber = request.getPhoneNumber();
-                school = schoolRepository.getSchoolById(request.getSchool());
-                role = Role.TEACHER;
-                locked = true;
-                break;
-            default:
-                throw new IllegalStateException("Incorrect role that cannot be converted to enum.");
-        }
-
-        String token = userService.signUpUser(
-                new User(email, password, firstName, lastName, school, phoneNumber, role, locked)
-        );
-
-        String link = baseUrlProduction + "/login?token=" + token;
-        emailSender.send(
-                request.getEmail(),
-                buildEmail(request.getFirstName(), link));
-
-        return token;
-    }
-
-    @Transactional
-    public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("Token nenalezen."));
-
-        if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("Účet již byl potvrzen.");
-        }
-
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Potvrzovací odkaz vypršel.");
-        }
-
-        confirmationTokenService.setConfirmedAt(token);
-        userService.enableAppUser(
-                confirmationToken.getAppUser().getUsername());
-        return "E-mail byl úspěšně ověřen.";
-    }
-
-    private String buildEmail(String name, String link) {
+    public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

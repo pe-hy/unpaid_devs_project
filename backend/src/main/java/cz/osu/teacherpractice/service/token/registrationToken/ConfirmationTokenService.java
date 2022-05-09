@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.service.token;
+package cz.osu.teacherpractice.service.token.registrationToken;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

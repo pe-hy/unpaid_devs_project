@@ -13,15 +13,12 @@ import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.fileManagement.FileUtil;
-import cz.osu.teacherpractice.service.token.ConfirmationToken;
-import cz.osu.teacherpractice.service.token.ConfirmationTokenRepository;
-import cz.osu.teacherpractice.service.token.ConfirmationTokenService;
+import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetToken;
+import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenRepository;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +36,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final MapStructMapper mapper;
     private final ConfirmationTokenService confirmationTokenService;
+    private final PasswordResetTokenRepository passwordTokenRepository;
 
     public User createUser(User user) {
         if (userRepository.findByEmail(user.getUsername()).isPresent()) {
@@ -100,9 +98,13 @@ public class UserService {
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findByEmail(username).orElseThrow(() -> {
+        Optional<User> user = userRepository.findByEmail(username);
+        if(user.isPresent()){
+            return user.get();
+        }
+        else{
             throw new ServerErrorException("Uživatel '" + username + "' nenalezen.");
-        });
+        }
     }
 
     public Role getUserRole(String username) {
@@ -146,6 +148,20 @@ public class UserService {
         else{
             throw new ServerErrorException("Uživatel s mailem '" + teacherMail + "' nenalezen.");
         }
+    }
+
+    public void createPasswordResetTokenForUser(User user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordTokenRepository.save(myToken);
+    }
+
+    public Optional<User> getUserByPasswordResetToken(final String token) {
+        return Optional.ofNullable(passwordTokenRepository.findByToken(token).getUser());
+    }
+
+    public void changeUserPassword(final User user, final String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 
 }

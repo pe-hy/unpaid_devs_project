@@ -1,4 +1,4 @@
-package cz.osu.teacherpractice.service.token;
+package cz.osu.teacherpractice.service.token.registrationToken;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

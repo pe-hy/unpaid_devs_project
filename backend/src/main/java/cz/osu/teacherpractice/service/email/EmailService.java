@@ -39,4 +39,23 @@ public class EmailService implements EmailSender{
             throw new IllegalStateException("failed to send email");
         }
     }
+
+    @Override
+    @Async
+    public void sendForgotPasswordMail(String to, String email) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper =
+                    new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(email, true);
+            helper.setTo(to);
+            helper.setSubject("Reset hesla pro registrační systém učitelských praxí.");
+            helper.setFrom(AppConfig.CONFIRMATION_EMAIL_ADDRESS);
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            LOGGER.error("failed to send email", e);
+            throw new IllegalStateException("failed to send email");
+        }
+    }
 }

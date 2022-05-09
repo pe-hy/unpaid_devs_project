@@ -95,4 +95,30 @@ public class CoordinatorService {
         }
         return "Škola nebyla přiřazena.";
     }
+
+    public String editSubject(String originalSubject, String newSubject) {
+        if (subjectRepository.findByName(originalSubject).isPresent()) {
+            System.out.println("Editing" + " " + originalSubject);
+            Optional<Subject> subjectEntity = subjectRepository.findByName(originalSubject);
+
+            int ret = subjectRepository.setSubjectName(originalSubject, newSubject);
+
+            if (ret == 1) return "Subject was edited";
+            else return "Something went wrong;";
+        } else return "Subject wasn't edited";
+
+    }
+
+    public String editSchool(String originalSchool, String newSchool) {
+        if (schoolRepository.findByName(originalSchool).isPresent()) {
+
+            Optional<School> schoolEntity = schoolRepository.findByName(originalSchool);
+
+            int ret = schoolRepository.setSchoolName(originalSchool, newSchool);
+
+            if (ret == 1) return "School was edited";
+            else return "Something went wrong;";
+        } else return "School wasn't edited";
+
+    }
 }

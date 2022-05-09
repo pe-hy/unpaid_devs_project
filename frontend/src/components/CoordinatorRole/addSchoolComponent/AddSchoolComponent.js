@@ -9,6 +9,7 @@ import Combobox from "react-widgets/Combobox";
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const REMOVE_SCHOOL_URL = `${URL}/coordinator/removeSchool`;
+const EDIT_SCHOOL_URL = `${URL}/coordinator/editSchool`;
 const ASSIGN_SCHOOL_URL = `${URL}/coordinator/assignSchool`;
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
 const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSchool`;
@@ -25,6 +26,7 @@ export const AddSchoolComponent = () => {
     const [currSchool, setCurrSchool] = useState("");
     const [currTeacher, setCurrTeacher] = useState();
     const currAssignedSchool = useState("");
+    const newSchoolName = useState("");
 
     const [formData, setFormData] = useState({});
 
@@ -40,6 +42,28 @@ export const AddSchoolComponent = () => {
             withCredentials: true,
             method: "POST",
             data: currSchool,
+        }).catch((err) => {
+            alert(err.response.data.message);
+            console.log(err.response.data.message);
+        });
+        if (response && response.data) {
+            setModalShow(false);
+            getSchools();
+            getTeachersWithoutSchool();
+        }
+    };
+
+    const editSchool = async () => {
+        var schoolEdit = document.getElementById("school_edit_input");
+        var value = schoolEdit.value;
+        newSchoolName[0] = value
+        let form = { "originalSchool": currSchool, "newSchool": newSchoolName[0] };
+        const response = await axios({
+            headers: { 'content-type': 'application/json' },
+            url: EDIT_SCHOOL_URL,
+            withCredentials: true,
+            method: "POST",
+            data: form,
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err.response.data.message);
@@ -128,6 +152,44 @@ export const AddSchoolComponent = () => {
                         assignSchoolToTeacher();
                         currAssignedSchool[1]("");
                     }}>Přiřadit školu
+                    </button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
+    function EditSchoolModal(props) {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Editace názvu školy</h4>
+                    <p>
+                        Napište prosím nový název pro školu: {currSchool}
+                    </p>
+                    <InputGroup>
+                        <Form.Control
+                            id={"school_edit_input"}
+                            required="required"
+                            type="text"
+                            placeholder="Vložte nový název školy"
+                        />
+                    </InputGroup>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
+                    <button type="button" className="accept-btn" onClick={() => {
+                        props.onHide();
+
+                        editSchool();
+                    }}>Editovat školu
                     </button>
                 </Modal.Footer>
             </Modal>
@@ -266,7 +328,7 @@ export const AddSchoolComponent = () => {
                     </div>
                 </div>
             </Row>
-            <CreateModal
+            <EditSchoolModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />

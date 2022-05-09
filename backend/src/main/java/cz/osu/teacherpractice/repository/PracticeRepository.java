@@ -34,6 +34,7 @@ public interface PracticeRepository extends JpaRepository<Practice, Long> {
     @Modifying
     @Query("UPDATE Practice p SET p.subject = null WHERE p.subject = :subject")
     int setSubjectNull(Optional<Subject> subject);
+
     List<Practice> findAllByTeacherUsername(String teacherUsername);
     List<Practice> findAllBystudents_id(Long student_id, Pageable pageable);
 }

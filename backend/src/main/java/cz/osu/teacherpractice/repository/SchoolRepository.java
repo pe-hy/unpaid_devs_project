@@ -26,4 +26,9 @@ public interface SchoolRepository extends JpaRepository<School, Long> {
     @Query("DELETE FROM School WHERE name = :name")
     int deleteSchoolByName(@Param("name") String name);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE School s SET s.name = :newName WHERE s.name = :originalName")
+    int setSchoolName(@Param("originalName") String originalName, @Param("newName") String newName);
+
 }

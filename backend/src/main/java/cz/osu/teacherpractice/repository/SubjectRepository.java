@@ -22,5 +22,10 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Query("DELETE FROM Subject WHERE name = :name")
     int deleteSubjectByName(@Param("name") String name);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Subject s SET s.name = :newName WHERE s.name = :originalName")
+    int setSubjectName(@Param("originalName") String originalName, @Param("newName") String newName);
+
 
 }

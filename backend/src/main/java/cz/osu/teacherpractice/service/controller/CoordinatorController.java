@@ -1,6 +1,8 @@
 package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
+import cz.osu.teacherpractice.dto.request.EditSchoolDto;
+import cz.osu.teacherpractice.dto.request.EditSubjectDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
@@ -67,6 +69,16 @@ public class CoordinatorController {
         String result = request.replaceAll("\"", "");
         System.out.println("result after substring: " + " " + result);
         return coordinatorService.removeSubject(result);
+    }
+
+    @PostMapping(path = "/editSubject")
+    public String editSubject(@RequestBody EditSubjectDto request) {
+        return coordinatorService.editSubject(request.getOriginalSubject(), request.getNewSubject());
+    }
+
+    @PostMapping(path = "/editSchool")
+    public String editSchool(@RequestBody EditSchoolDto request) {
+        return coordinatorService.editSchool(request.getOriginalSchool(), request.getNewSchool());
     }
 
     @PostMapping(path = "/unlockUser")

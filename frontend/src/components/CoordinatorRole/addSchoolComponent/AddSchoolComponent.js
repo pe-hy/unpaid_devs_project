@@ -333,37 +333,6 @@ export const AddSchoolComponent = () => {
                 onHide={() => setModalShow(false)}
             />
             <hr />
-            {teachersWithoutSchool &&
-                <div className="customAlertContainer">
-                    <div className="w-75 p-2 m-3 center alertCustom">
-                        <table className="table align-items-center">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Uživatelé bez přiřazené školy</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {teachersWithoutSchool.map((teacher, index) => (
-                                    <tr key={index} className="align-middle">
-                                        <td>{teacher.firstName.concat(" ", teacher.secondName, " (", teacher.username, ")")}</td>
-
-                                        <td>
-                                            <button type="button" className="accept-btn" onClick={() => {
-                                                setCurrTeacher(teacher);
-                                                setAssignSchoolModalShow(true);
-                                            }}>Přiřadit školu
-                                            </button>
-                                            <AssignSchoolModal
-                                                show={assignSchoolModalShow}
-                                                onHide={() => setAssignSchoolModalShow(false)}
-                                            />
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>}
         </Container>
     );
 };

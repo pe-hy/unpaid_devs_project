@@ -10,6 +10,7 @@ const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 const REMOVE_SUBJECT_URL = `${URL}/coordinator/removeSubject`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const ADD_SUBJECT_URL = `${URL}/coordinator/addSubject`;
+const EDIT_SUBJECT_URL = `${URL}/coordinator/editSubject`;
 
 
 export const AddSubjectComponent = () => {
@@ -21,6 +22,7 @@ export const AddSubjectComponent = () => {
     const [showDangerAlert, setshowDangerAlert] = useState(false);
     const [showSuccessAlert, setshowSuccessAlert] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+    const newSubjectName = useState("");
     const checkRole = () => {
         return localStorage.getItem("role") !== "ROLE_COORDINATOR";
     };
@@ -38,6 +40,27 @@ export const AddSubjectComponent = () => {
         });
         if (response && response.data) {
             console.log(response);
+            setModalShow(false);
+            getSubjects();
+        }
+    };
+
+    const editSubject = async () => {
+        var subjectEdit = document.getElementById("subject_edit_input");
+        var value = subjectEdit.value;
+        newSubjectName[0] = value
+        let form = { "originalSubject": currSubject, "newSubject": newSubjectName[0] };
+        const response = await axios({
+            headers: { 'content-type': 'application/json' },
+            url: EDIT_SUBJECT_URL,
+            withCredentials: true,
+            method: "POST",
+            data: form,
+        }).catch((err) => {
+            alert(err.response.data.message);
+            console.log(err.response.data.message);
+        });
+        if (response && response.data) {
             setModalShow(false);
             getSubjects();
         }
@@ -80,6 +103,44 @@ export const AddSubjectComponent = () => {
                         props.onHide();
                         removeSubject();
                     }}>Smazat předmět
+                    </button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
+    function EditSubjectModal(props) {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Editace názvu předmětu</h4>
+                    <p>
+                        Napište prosím nový název pro předmět: {currSubject}
+                    </p>
+                    <InputGroup>
+                        <Form.Control
+                            id={"subject_edit_input"}
+                            required="required"
+                            type="text"
+                            placeholder="Vložte nový název školy"
+                        />
+                    </InputGroup>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
+                    <button type="button" className="accept-btn" onClick={() => {
+                        props.onHide();
+
+                        editSubject();
+                    }}>Editovat předmět
                     </button>
                 </Modal.Footer>
             </Modal>
@@ -191,38 +252,11 @@ export const AddSubjectComponent = () => {
                     </div>
                 </div>
             </Row>
-            <CreateModal
+            <EditSubjectModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
             <hr/>
-            {subjects.length > 0 &&
-            <div className="customAlertContainer">
-                <div className="w-75 p-2 m-3 center alertCustom">
-                    <table className="table align-items-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">Praxe bez přiřazených předmětů</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {!noSubjects &&
-                        subjects.map((item, index) => (
-                            <tr key={index} className="align-middle">
-                                <td>{item}</td>
-                                <td>
-                                    <button onClick={() => {
-                                        setModalShow(true);
-                                        setCurrSubject(item);
-                                    }} type="button" className="removal-btn">X
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>}
         </Container>
     );
 };

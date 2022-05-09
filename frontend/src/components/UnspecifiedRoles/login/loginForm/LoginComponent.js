@@ -8,6 +8,9 @@ import Input from "react-validation/build/input";
 import AuthService from "../../../../services/AuthService";
 import {userContext} from "../../../../userContext";
 import "./LoginFormStyles.css";
+import ChangePasswordComponent from "../../changePassword/ChangePasswordComponent";
+import ForgotPasswordEmail from "../../forgotPassword/ForgotPasswordEmail";
+import ForgotPasswordComponent from "../../forgotPassword/ForgotPasswordComponent";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -56,6 +59,7 @@ export default class Login extends Component {
             redirectToLogin: false,
             currentRole: null,
             showTokenMessage: false,
+            forgotPasswordTokenPresent: false,
         };
     }
 
@@ -72,41 +76,46 @@ export default class Login extends Component {
     }
 
     componentDidMount(e) {
+        if (window.location.href.includes("forgotPasswordToken")) {
+            console.log("forgotPasswordToken");
+            this.setState({
+                forgotPasswordTokenPresent: true,
+            });
+        }
+            if (window.location.href.includes("token")) {
+                return axios({
+                    url: CONFIRMATION_URL + window.location.href.split("?")[1],
+                    withCredentials: false,
+                    method: "GET",
+                })
+                    .then(
+                        (res) => {
+                            this.setState({
+                                showTokenMessage: true,
+                                message: res.data,
+                            });
+                        },
+                        (error) => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.setState({
+                                showTokenMessage: false,
+                                loading: false,
+                                message: resMessage,
+                            });
+                        }
+                    );
 
-        if (window.location.href.includes("token")) {
-            return axios({
-                url: CONFIRMATION_URL + window.location.href.split("?")[1],
-                withCredentials: false,
-                method: "GET",
-            })
-                .then(
-                    (res) => {
-                        this.setState({
-                            showTokenMessage: true,
-                            message: res.data,
-                        });
-                    },
-                    (error) => {
-                        const resMessage =
-                            (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.setState({
-                            showTokenMessage: false,
-                            loading: false,
-                            message: resMessage,
-                        });
-                    }
-                );
 
+            } else {
 
-        } else {
+            }
 
         }
-
-    }
 
     handleLogin(e) {
         e.preventDefault();
@@ -201,8 +210,8 @@ export default class Login extends Component {
                                 />
                             </div>
                         </div>
-
-                        <a href="forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
+                        <span className={"float-end mt-2 forgot-pswrd"}><ForgotPasswordEmail/>
+                        </span>
                         <div className="form-group button-login pt-5">
                             {this.state.message && !this.state.showTokenMessage && (
                                 <div className="alert alert-danger my-alert1 text-bold" role="alert">
@@ -233,6 +242,7 @@ export default class Login extends Component {
                         />
                     </Form>
                 </div>
+                <ForgotPasswordComponent modalShow={window.location.href.includes("forgotPasswordToken")}/>
             </div>
         );
     }

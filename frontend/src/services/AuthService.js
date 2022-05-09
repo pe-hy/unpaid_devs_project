@@ -4,6 +4,7 @@ const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
+const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/user/emailForReset`;
 
 class AuthService {
     login(username, password) {
@@ -72,6 +73,24 @@ class AuthService {
             data: formData,
         }).then((response) => {
             if (response) {
+            }
+            return response.data;
+        });
+    }
+
+    forgotPasswordEmail(email) {
+        var formData = JSON.stringify({email});
+        console.log(formData);
+
+        return axios({
+            url: EMAIL_FOR_RESET_URL,
+            headers: {'content-type': 'application/json'},
+            withCredentials: true,
+            method: "POST",
+            data: formData,
+        }).then((response) => {
+            if (response) {
+                return response.data
             }
             return response.data;
         });

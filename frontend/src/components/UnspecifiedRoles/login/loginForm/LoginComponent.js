@@ -8,6 +8,8 @@ import Input from "react-validation/build/input";
 import AuthService from "../../../../services/AuthService";
 import {userContext} from "../../../../userContext";
 import "./LoginFormStyles.css";
+import ChangePasswordComponent from "../../changePassword/ChangePasswordComponent";
+import ForgotPasswordEmail from "../../forgotPassword/ForgotPasswordEmail";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -201,8 +203,8 @@ export default class Login extends Component {
                                 />
                             </div>
                         </div>
-
-                        <a href="forgotpassword" className={"float-end mt-2 forgot-pswrd"}>Zapomenuté heslo</a>
+                        <span className={"float-end mt-2 forgot-pswrd"}><ForgotPasswordEmail/>
+                        </span>
                         <div className="form-group button-login pt-5">
                             {this.state.message && !this.state.showTokenMessage && (
                                 <div className="alert alert-danger my-alert1 text-bold" role="alert">

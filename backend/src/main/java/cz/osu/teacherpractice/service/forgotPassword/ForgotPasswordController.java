@@ -42,7 +42,7 @@ public class ForgotPasswordController {
         String result = userEmail.replaceAll("\"", "");
         User user = userService.getUserByUsername(result);
         if (user == null) {
-            return "OK";
+            return "Na zadaný e-mail byl poslán odkaz pro obnovu hesla";
         }
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);

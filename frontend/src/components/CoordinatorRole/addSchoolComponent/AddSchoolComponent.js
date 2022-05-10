@@ -5,7 +5,7 @@ import { Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Ro
 import { BsCheckLg, BsExclamationTriangleFill } from "react-icons/bs";
 import "./AddSchoolComponent.css";
 import Combobox from "react-widgets/Combobox";
-
+import {BsFillPencilFill} from "react-icons/bs";
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const REMOVE_SCHOOL_URL = `${URL}/coordinator/removeSchool`;
@@ -169,7 +169,7 @@ export const AddSchoolComponent = () => {
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Editace názvu školy</h4>
+                    <h4>Úprava názvu školy</h4>
                     <p>
                         Napište prosím nový název pro školu: {currSchool}
                     </p>
@@ -187,9 +187,8 @@ export const AddSchoolComponent = () => {
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
                         props.onHide();
-
                         editSchool();
-                    }}>Editovat školu
+                    }}>Upravit školu
                     </button>
                 </Modal.Footer>
             </Modal>
@@ -316,11 +315,11 @@ export const AddSchoolComponent = () => {
                                     schools.map((item, index) => (
                                         <tr key={index} className="align-middle">
                                             <td><span>{item}</span></td>
-                                            <td>
+                                            <td style={{textAlign: "center"}}>
                                                 <button onClick={() => {
                                                     setModalShow(true);
                                                     setCurrSchool(item);
-                                                }} type="button" className="removal-btn">X
+                                                    }} type="button" className="edit-btn"><BsFillPencilFill/>
                                                 </button>
                                             </td>
                                         </tr>

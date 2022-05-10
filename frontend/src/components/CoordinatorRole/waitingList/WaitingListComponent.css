@@ -101,3 +101,35 @@
     background-color: #507ea1;
     width: 500px;
 }
+
+.edit-btn {
+    background-color: #264d73;
+    border: 1px solid #788fdc;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    outline: none;
+    outline: 0;
+    padding: 2px 10px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.edit-btn:hover,
+.edit-btn:active {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+}
+
+.edit-btn:active {
+    opacity: .5;
+}

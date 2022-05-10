@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {axios} from "../../../axios";
 import {Navigate} from "react-router-dom";
 import {Alert, Button, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
-import {BsCheckLg, BsExclamationTriangleFill} from "react-icons/bs";
+import {BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill} from "react-icons/bs";
 import "./AddSubjectComponent.css";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -120,7 +120,7 @@ export const AddSubjectComponent = () => {
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Editace názvu předmětu</h4>
+                    <h4>Úprava názvu předmětu</h4>
                     <p>
                         Napište prosím nový název pro předmět: {currSubject}
                     </p>
@@ -138,9 +138,8 @@ export const AddSubjectComponent = () => {
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
                         props.onHide();
-
                         editSubject();
-                    }}>Editovat předmět
+                    }}>Upravit předmět
                     </button>
                 </Modal.Footer>
             </Modal>
@@ -240,11 +239,11 @@ export const AddSubjectComponent = () => {
                         subjects.map((item, index) => (
                             <tr key={index} className="align-middle">
                                 <td>{item}</td>
-                                <td>
+                                <td style={{textAlign: "center"}}>
                                     <button onClick={() => {
                                         setModalShow(true);
                                         setCurrSubject(item);
-                                    }} type="button" className="removal-btn">X
+                                    }} type="button" className="edit-btn"><BsFillPencilFill/>
                                     </button>
                                 </td>
                             </tr>

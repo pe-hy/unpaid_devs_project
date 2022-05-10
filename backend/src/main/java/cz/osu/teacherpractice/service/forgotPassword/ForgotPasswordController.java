@@ -57,7 +57,7 @@ public class ForgotPasswordController {
         String result = securityService.validatePasswordResetToken(passwordDto.getToken());
 
         if(result != null) {
-            return "Chybý formát hesla";
+            return "Chybný formát hesla";
         }
 
         Optional<User> user = userService.getUserByPasswordResetToken(passwordDto.getToken());

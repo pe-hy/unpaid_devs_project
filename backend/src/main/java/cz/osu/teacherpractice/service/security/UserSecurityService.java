@@ -19,9 +19,12 @@ public class UserSecurityService implements ISecurityUserService {
     public String validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
 
-        return !isTokenFound(passToken) ? "invalidToken"
+        String ret = !isTokenFound(passToken) ? "invalidToken"
                 : isTokenExpired(passToken) ? "expired"
                 : null;
+
+        passwordTokenRepository.delete(passToken);
+        return ret;
     }
 
     private boolean isTokenFound(PasswordResetToken passToken) {

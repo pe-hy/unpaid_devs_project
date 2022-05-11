@@ -8,6 +8,7 @@ import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.UserService;
 import cz.osu.teacherpractice.service.email.EmailService;
 import cz.osu.teacherpractice.service.security.UserSecurityService;
+import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class ForgotPasswordController {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final ForgotPasswordService forgotPasswordService;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     @PostMapping("/reset")
     public String resetPassword(HttpServletRequest request,
@@ -54,15 +56,17 @@ public class ForgotPasswordController {
     @PostMapping("/save")
     public String savePassword(@RequestBody ForgotPasswordDto passwordDto) {
 
-        String result = securityService.validatePasswordResetToken(passwordDto.getToken());
+        boolean result = securityService.validatePasswordResetToken(passwordDto.getToken());
 
-        if(result != null) {
-            return "Chybný formát hesla";
+        // if true token is valid
+        if(!result) {
+            return "Neplatný ověřovací odkaz.";
         }
 
         Optional<User> user = userService.getUserByPasswordResetToken(passwordDto.getToken());
         if(user.isPresent()) {
             userService.changeUserPassword(user.get(), passwordDto.getNewPassword());
+            passwordResetTokenRepository.deleteByToken(passwordDto.getToken());
             return "Heslo bylo změněno úspěšně";
         } else {
             return "Došlo k chybě při změně hesla";

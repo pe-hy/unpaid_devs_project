@@ -24,6 +24,7 @@ public class PracticeDomain {
     private UserDto teacher;
     private List<UserDto> students;
     private List<String> fileNames;
+    private List<String> studentNames;
 
     @Setter(AccessLevel.NONE)
     private Integer numberOfReservedStudents;
@@ -67,5 +68,9 @@ public class PracticeDomain {
 
     public void setFileNames(List<String> list){
         this.fileNames = list;
+    }
+
+    public void setStudentNames(List<String> list){
+        this.studentNames = list;
     }
 }

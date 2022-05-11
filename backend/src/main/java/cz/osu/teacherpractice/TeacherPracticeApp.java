@@ -6,6 +6,9 @@ import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.UserService;
+import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetToken;
+import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +26,8 @@ public class TeacherPracticeApp {
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UserService userService;
 
     public static void main(String[] args) {
@@ -37,6 +42,8 @@ public class TeacherPracticeApp {
             userRepository.deleteAll();
             subjectRepository.deleteAll();
             schoolRepository.deleteAll();
+            confirmationTokenRepository.deleteAll();
+            passwordResetTokenRepository.deleteAll();
 
             // adding default schools
             School school1 = schoolRepository.save(new School(null, "ZŠ Čeladná", null));
@@ -47,10 +54,12 @@ public class TeacherPracticeApp {
 
 
             // adding default users
-            User st1 = new User("student@student.cz", "student", "Adam", "Kovář", null, null, Role.STUDENT);
+            User st1 = new User("student@student.cz", "student", "Adam", "Kovář", school1, null, Role.STUDENT);
             st1.setEnabled(true);
-            User st2 = new User("student2@student.cz", "student2", "Jan", "Nowak", null, null, Role.STUDENT);
+            User st2 = new User("student2@student.cz", "student2", "Jan", "Nowak", school5, null, Role.STUDENT);
             st2.setEnabled(true);
+            User st3 = new User("P21072@student.osu.cz", "student", "Pavel", "Novotný", school3, null, Role.STUDENT);
+            st3.setEnabled(true);
             User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "448896334", Role.TEACHER);
             tch.setEnabled(true);
             User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
@@ -61,6 +70,7 @@ public class TeacherPracticeApp {
 
             User student = userService.createUser(st1);
             User student2 = userService.createUser(st2);
+            User student3 = userService.createUser(st3);
             User teacher = userService.createUser(tch);
             userService.createUser(coord);
             userService.createUser(adm);

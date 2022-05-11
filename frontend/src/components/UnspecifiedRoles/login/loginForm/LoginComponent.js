@@ -82,7 +82,7 @@ export default class Login extends Component {
                 forgotPasswordTokenPresent: true,
             });
         }
-        if (window.location.href.includes("token")) {
+        else if (window.location.href.includes("token")) {
             return axios({
                 url: CONFIRMATION_URL + window.location.href.split("?")[1],
                 withCredentials: false,

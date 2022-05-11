@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.repository;
 
 import cz.osu.teacherpractice.model.Practice;
+import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.User;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +61,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.password = :newPasswordHash WHERE u.id = :id")
     int changeUserPassword(@Param("newPasswordHash") String passwordHash, @Param("id") Long id);
-//    List<User> findAllBypractice(Long practiceId, Pageable pageable);
+
+    @Query(value = "select student_id from user_practice where practice_id = 8",
+            nativeQuery = true)
+    List<Long> findAllStudentIdsByStudentPracticeIds(@Param("id") Long id, Pageable pageable);
+
+    User findUserById(Long id);
 }

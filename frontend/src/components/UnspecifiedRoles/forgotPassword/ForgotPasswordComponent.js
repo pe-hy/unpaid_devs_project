@@ -89,6 +89,7 @@ export class ForgotPasswordComponent extends Component {
                     });
                 },
                 (error) => {
+                    console.log(error.response.data);
                     this.setState({
                         alert: error.response.data,
                         alertIsErr: true

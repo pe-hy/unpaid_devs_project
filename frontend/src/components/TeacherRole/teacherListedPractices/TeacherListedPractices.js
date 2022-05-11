@@ -354,7 +354,7 @@ export const TeacherListedPractices = () => {
                                         </Badge>
                                     </span>
 
-                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> jméno -{">"} modal s infem o studentovi</p>
+                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> {item.studentNames.map((item,index) => (<p>{item}</p>))}</p>
 
                                         <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 

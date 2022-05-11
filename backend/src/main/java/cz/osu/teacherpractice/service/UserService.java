@@ -156,7 +156,12 @@ public class UserService {
     }
 
     public Optional<User> getUserByPasswordResetToken(final String token) {
-        return Optional.ofNullable(passwordTokenRepository.findByToken(token).getUser());
+        if(passwordTokenRepository.findByToken(token).isPresent()){
+            return Optional.ofNullable(passwordTokenRepository.findByToken(token).get().getUser());
+        }
+        else{
+            return Optional.empty();
+        }
     }
 
     public void changeUserPassword(final User user, final String password) {

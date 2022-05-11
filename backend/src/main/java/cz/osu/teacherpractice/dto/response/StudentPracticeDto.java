@@ -17,6 +17,7 @@ public class StudentPracticeDto {
     private SubjectDto subject;
     private UserDto teacher;
     private List<String> fileNames;
+    private List<String> studentNames;
 
     private Integer numberOfReservedStudents;
     private Boolean isCurrentStudentReserved;

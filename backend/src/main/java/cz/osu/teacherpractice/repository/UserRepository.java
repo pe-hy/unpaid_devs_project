@@ -62,7 +62,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User u SET u.password = :newPasswordHash WHERE u.id = :id")
     int changeUserPassword(@Param("newPasswordHash") String passwordHash, @Param("id") Long id);
 
-    @Query(value = "select student_id from user_practice where practice_id = 8",
+    @Query(value = "select student_id from user_practice where practice_id = :id",
             nativeQuery = true)
     List<Long> findAllStudentIdsByStudentPracticeIds(@Param("id") Long id, Pageable pageable);
 

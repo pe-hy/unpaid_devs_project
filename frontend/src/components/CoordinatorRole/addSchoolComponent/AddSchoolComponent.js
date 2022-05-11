@@ -333,7 +333,6 @@ export const AddSchoolComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-            <hr />
         </Container>
     );
 };

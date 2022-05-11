@@ -41,7 +41,6 @@ public class EmailService implements EmailSender{
     }
 
     @Override
-    @Async
     public void sendForgotPasswordMail(String to, String email) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();

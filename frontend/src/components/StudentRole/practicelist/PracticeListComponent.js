@@ -302,10 +302,9 @@ export const PracticeListComponent = () => {
                         <div style={{ overflow: 'hidden' }}>
                             <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
                                 <div className="customFilters">
-                                    <h3 className="filters-heading">Filtry</h3>
                                     <div className="col align-self-center">
                                         <div className="align-self-center search-school">
-                                            <p>Vyhledávání podle školy</p>
+                                            <p>Vyberte školu</p>
                                             <Combobox
                                                 data={schools}
                                                 value={selectedSchool}
@@ -313,7 +312,7 @@ export const PracticeListComponent = () => {
                                             />
                                         </div>
                                         <div className="align-self-center search-school">
-                                            <p>Vyhledávání podle názvu předmětu</p>
+                                            <p>Vyberte předmět</p>
                                             <Combobox
                                                 data={subjects}
                                                 value={selectedSubjectName}
@@ -321,7 +320,7 @@ export const PracticeListComponent = () => {
                                             />
                                         </div>
                                         <div className="align-self-center search-school">
-                                            <p>Vyhledávání podle jména učitele</p>
+                                            <p>Vyberte učitele</p>
                                             <Combobox
                                                 data={teachers}
                                                 value={selectedTeacherName}
@@ -330,7 +329,7 @@ export const PracticeListComponent = () => {
                                         </div>
                                     </div>
                                     <div className="col align-self-center search-date">
-                                        <p>Vyhledávání podle data praxe</p>
+                                        <p>Vyberte datum (od - do)</p>
                                         <DateRange
                                             editableDateInputs={true}
                                             onChange={item => selectDateRange(item)}

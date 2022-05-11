@@ -129,7 +129,7 @@ export const AddSubjectComponent = () => {
                             id={"subject_edit_input"}
                             required="required"
                             type="text"
-                            placeholder="Vložte nový název školy"
+                            placeholder="Vložte nový název předmětu"
                         />
                     </InputGroup>
 
@@ -257,7 +257,6 @@ export const AddSubjectComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-            <hr/>
         </Container>
     );
 };

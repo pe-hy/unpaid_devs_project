@@ -347,7 +347,7 @@ export const TeacherPassedPractices = () => {
                                             {item.numberOfReservedStudents} / {item.capacity}
                                         </Badge>
                                     </span>
-                                        <p style={{marginTop: "10px"}}><b>Registrovaní studenti:</b> {item.studentNames.map((item,index) => (<p>{item}</p>))} </p>
+                                        <div className="d-flex" style={{marginTop: "10px"}}><div><b>Registrovaní studenti:</b></div> <div>{item.studentNames.map((item,index) => (<div className="margin-left-cstm">{item}</div>))}</div></div>
 
                                         <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
 

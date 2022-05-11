@@ -49,7 +49,11 @@ public class ForgotPasswordController {
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
         String link = baseUrlProduction + "/login?forgotPasswordToken=" + token;
-        emailService.sendForgotPasswordMail(result, forgotPasswordService.buildEmail(user.getFirstName(), link));
+        new Thread(new Runnable() {
+            public void run() {
+                emailService.sendForgotPasswordMail(result, forgotPasswordService.buildEmail(user.getFirstName(), link));
+            }
+        }).start();
         return "Na zadaný e-mail byl poslán odkaz pro obnovu hesla";
     }
 

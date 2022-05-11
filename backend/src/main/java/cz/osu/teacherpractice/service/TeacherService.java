@@ -107,7 +107,7 @@ public class TeacherService {
         for (Long id :
                 ids) {
             User u = userRepository.findUserById(id);
-            String name = u.getFirstName() + " " + u.getSecondName();
+            String name = u.getFirstName() + " " + u.getSecondName() + " (" + u.getUsername() + ")";
             names.add(name);
         }
         return names;

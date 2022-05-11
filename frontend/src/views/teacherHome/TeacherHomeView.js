@@ -13,7 +13,7 @@ const TeacherHomeView = () => {
   if(checkRole()) return <Navigate to="/login"/>;
   return (
     <div className="studentHomeBody">
-      <Tabs defaultActiveKey="tab1" id="tab" className="tab">
+      <Tabs defaultActiveKey="tab1" id="teacher-home-tabs" className="tab">
         <Tab eventKey="tab1" title="Přidání praxe">
           <AddPracticeComponent />
         </Tab>

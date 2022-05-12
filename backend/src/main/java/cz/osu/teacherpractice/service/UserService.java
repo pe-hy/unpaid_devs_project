@@ -89,7 +89,7 @@ public class UserService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
+                LocalDateTime.now().plusMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME),
                 user
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);

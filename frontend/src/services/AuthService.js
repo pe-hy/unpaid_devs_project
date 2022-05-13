@@ -2,6 +2,7 @@ import axios from "axios";
 
 const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
+const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/admin/registerCoordinator`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
 const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/reset`;
@@ -40,6 +41,23 @@ class AuthService {
             url: REGISTER_URL,
             headers: {'content-type': 'application/json'},
             withCredentials: false,
+            method: "POST",
+            data: formData,
+        }).then((response) => {
+            if (response) {
+            }
+            return response.data;
+        });
+    }
+
+    registerCoordinator(email, firstName, lastName, school, phoneNumber, password, role) {
+        var formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
+        console.log(formData);
+
+        return axios({
+            url: REGISTER_COORDINATOR_URL,
+            headers: {'content-type': 'application/json'},
+            withCredentials: true,
             method: "POST",
             data: formData,
         }).then((response) => {

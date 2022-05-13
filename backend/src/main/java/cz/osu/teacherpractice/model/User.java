@@ -44,6 +44,18 @@ public class User {
         this.locked = locked;
     }
 
+    public User(String username, String password, String firstName, String secondName, School school, String phoneNumber, Role role, boolean locked, boolean enabled){
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.school = school;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.locked = locked;
+        this.enabled = enabled;
+    }
+
     @OneToMany(mappedBy="teacher")
     private List<Practice> teacherPractices = new ArrayList<>();
 

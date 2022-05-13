@@ -81,6 +81,11 @@ public class UserService {
         return "email not found";
     }
 
+    public String signUpCoordinator(User user){
+        createUser(user);
+        return "Koordinátor byl vytvořen";
+    }
+
     public String signUpUser(User user){
         createUser(user);
 

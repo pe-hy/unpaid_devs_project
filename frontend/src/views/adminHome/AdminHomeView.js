@@ -1,6 +1,7 @@
 import { Tab, Tabs } from "react-bootstrap";
 import "./AdminHomeStyles.css";
 import {Navigate} from "react-router-dom";
+import AdminAddCoordinatorComponent from "../../components/AdminRole/AdminAddCoordinator/AdminAddCoordinatorComponent.js";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_ADMIN";
@@ -12,7 +13,7 @@ const AdminHomeView = () => {
         <div className="studentHomeBody">
             <Tabs defaultActiveKey="tab1" id="tab" className="tab">
                 <Tab eventKey="tab1" title="Koordinátoři">
-                    not implemented
+                    <AdminAddCoordinatorComponent />
                 </Tab>
                 <Tab eventKey="tab2" title="Učitelé">
                     not implemented

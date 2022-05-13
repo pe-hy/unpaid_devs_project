@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {axios} from "../../../axios";
-import {Navigate} from "react-router-dom";
-import {Alert, Button, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
-import {BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill} from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { axios } from "../../../axios";
+import { Navigate } from "react-router-dom";
+import { Alert, Button, Container, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import { BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill } from "react-icons/bs";
 import "./AddSubjectComponent.css";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -11,6 +11,10 @@ const REMOVE_SUBJECT_URL = `${URL}/coordinator/removeSubject`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const ADD_SUBJECT_URL = `${URL}/coordinator/addSubject`;
 const EDIT_SUBJECT_URL = `${URL}/coordinator/editSubject`;
+
+const MAX_TEXT_LENGTH = 50;
+const MIN_TEXT_LENGTH = 2;
+const LENGTH_ERROR_MSG = "Špatná délka předmětu (2 - 50 znaků)";
 
 
 export const AddSubjectComponent = () => {
@@ -27,9 +31,25 @@ export const AddSubjectComponent = () => {
         return localStorage.getItem("role") !== "ROLE_COORDINATOR";
     };
 
+    const validate = () => {
+        if (newSubjectName[0].length < MIN_TEXT_LENGTH || newSubjectName[0].length > MAX_TEXT_LENGTH) {
+            setErrorMsg(LENGTH_ERROR_MSG);
+            return false;
+        }
+        return true;
+    }
+
+    const validateAddSubject = () => {
+        if (formData.name.length < MIN_TEXT_LENGTH || formData.name.length > MAX_TEXT_LENGTH) {
+            setErrorMsg(LENGTH_ERROR_MSG);
+            return false;
+        }
+        return true;
+    }
+
     const removeSubject = async () => {
         const response = await axios({
-            headers: {'content-type': 'application/json'},
+            headers: { 'content-type': 'application/json' },
             url: REMOVE_SUBJECT_URL,
             withCredentials: true,
             method: "POST",
@@ -46,9 +66,6 @@ export const AddSubjectComponent = () => {
     };
 
     const editSubject = async () => {
-        var subjectEdit = document.getElementById("subject_edit_input");
-        var value = subjectEdit.value;
-        newSubjectName[0] = value
         let form = { "originalSubject": currSubject, "newSubject": newSubjectName[0] };
         const response = await axios({
             headers: { 'content-type': 'application/json' },
@@ -137,8 +154,19 @@ export const AddSubjectComponent = () => {
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
-                        props.onHide();
-                        editSubject();
+                        var subjectEdit = document.getElementById("subject_edit_input");
+                        var value = subjectEdit.value;
+                        newSubjectName[0] = value;
+                        if (validate()) {
+                            props.onHide();
+                            editSubject();
+                            setshowSuccessAlert(false);
+                        }
+                        else {
+                            props.onHide();
+                            setshowDangerAlert(true);
+                            setshowSuccessAlert(false);
+                        }
                     }}>Upravit předmět
                     </button>
                 </Modal.Footer>
@@ -148,31 +176,36 @@ export const AddSubjectComponent = () => {
 
     const handleChange = (e) => {
         setshowSuccessAlert(false);
-        setFormData({...formData, "name": e.target.value.trim()});
-        console.log(formData);
+        setshowDangerAlert(false);
+        setFormData({ ...formData, "name": e.target.value.trim() });
     };
 
     const addSubject = async (event) => {
         event.preventDefault();
-        const response = await axios({
-            url: ADD_SUBJECT_URL,
-            withCredentials: true,
-            method: "POST",
-            data: formData,
-        }).catch((err) => {
-            let msg = err.response.data["message"];
-            msg = msg.split(":")[1];
-            setErrorMsg(msg);
-            setshowSuccessAlert(false);
+        if (!validateAddSubject()) {
             setshowDangerAlert(true);
-            console.log(err.response.data);
-            getSubjects();
-        });
-        if (response) {
-            setshowDangerAlert(false);
-            setshowSuccessAlert(true);
-            document.getElementById("add_subject_input").value = "";
-            await getSubjects();
+        }
+        else {
+            const response = await axios({
+                url: ADD_SUBJECT_URL,
+                withCredentials: true,
+                method: "POST",
+                data: formData,
+            }).catch((err) => {
+                let msg = err.response.data["message"];
+                msg = msg.split(":")[1];
+                setErrorMsg(msg);
+                setshowSuccessAlert(false);
+                setshowDangerAlert(true);
+                console.log(err.response.data);
+                getSubjects();
+            });
+            if (response) {
+                setshowDangerAlert(false);
+                setshowSuccessAlert(true);
+                document.getElementById("add_subject_input").value = "";
+                await getSubjects();
+            }
         }
     };
 
@@ -180,7 +213,7 @@ export const AddSubjectComponent = () => {
         getSubjects();
     }, []);
 
-    if (checkRole()) return <Navigate to="/login"/>;
+    if (checkRole()) return <Navigate to="/login" />;
     return (
         <Container fluid>
             <Row>
@@ -195,7 +228,7 @@ export const AddSubjectComponent = () => {
                                 role="form"
                             >
                                 <Row className="center" sm={8}>
-                                    <b className="center pb-4" style={{fontSize: "20px"}}>Název předmětu</b>
+                                    <b className="center pb-4" style={{ fontSize: "20px" }}>Název předmětu</b>
                                     <InputGroup>
                                         <Form.Control
                                             id={"add_subject_input"}
@@ -215,41 +248,42 @@ export const AddSubjectComponent = () => {
                         variant="danger"
                         className="alert-school-error m-4"
                     >
-                        <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
+                        <BsExclamationTriangleFill className={"alert-icon-error"} /> {errorMsg}
                     </Alert>
                     <Alert
                         show={showSuccessAlert}
                         variant="success"
                         className="alert-school-success m-4"
                     >
-                        <BsCheckLg className={"alert-icon-success"}/> Předmět byl přidán
+                        <BsCheckLg className={"alert-icon-success"} /> Předmět byl přidán
                     </Alert>
                 </div>
                 <div className="col p-3">
                     <h4 className="p-3">Seznam předmětů</h4>
                     <div className="center">
-                    <table className="w-75 table table-striped align-items-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">Předmět</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {!noSubjects &&
-                        subjects.map((item, index) => (
-                            <tr key={index} className="align-middle">
-                                <td>{item}</td>
-                                <td style={{textAlign: "center"}}>
-                                    <button onClick={() => {
-                                        setModalShow(true);
-                                        setCurrSubject(item);
-                                    }} type="button" className="edit-btn"><BsFillPencilFill/>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                        <table className="w-75 table table-striped align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Předmět</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {!noSubjects &&
+                                    subjects.map((item, index) => (
+                                        <tr key={index} className="align-middle">
+                                            <td>{item}</td>
+                                            <td style={{ textAlign: "center" }}>
+                                                <button onClick={() => {
+                                                    setModalShow(true);
+                                                    setCurrSubject(item);
+                                                    setshowDangerAlert(false);
+                                                }} type="button" className="edit-btn"><BsFillPencilFill />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </Row>
@@ -257,7 +291,7 @@ export const AddSubjectComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-            <hr/>
+            <hr />
         </Container>
     );
 };

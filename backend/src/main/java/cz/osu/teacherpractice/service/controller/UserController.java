@@ -113,7 +113,7 @@ public class UserController {
     }
 
     @GetMapping("/user/report/download/{id}")
-    public ResponseEntity downloadReportFromLocal(@PathVariable String id) {
+    public ResponseEntity downloadReportFromLocal(@PathVariable String id, @PathVariable String teacherEmail, @PathVariable String fileName) {
         Path path = Paths.get(fileService.figureOutFileNameFor(teacherEmail, fileName));
         Resource resource = null;
         try {

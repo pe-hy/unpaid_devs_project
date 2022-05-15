@@ -1,7 +1,7 @@
 import "./TeacherPassedPractices.css";
 import Accordion from "react-bootstrap/Accordion";
-import React, {useEffect, useState} from "react";
-import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import React, {useEffect, useRef, useState} from "react";
+import {Col, Container, Form, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -27,6 +27,7 @@ export const TeacherPassedPractices = () => {
         const teacherFilterParam = "Teacher";
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
+        const noteNotFound = "Poznámka nevyplněna";
         const [subjects, setSubjects] = useState([]);
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         const [showing, setShowing] = useState(false);
@@ -39,6 +40,7 @@ export const TeacherPassedPractices = () => {
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
         const [selectedTeacherName, setSelectedTeacherName] = useState("");
         const [btnText, setBtnText] = useState("Zobrazit možnosti vyhledávání");
+        const [selectedFile, setSelectedFile] = useState("");
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -46,6 +48,29 @@ export const TeacherPassedPractices = () => {
                 key: 'selection'
             }
         ]);
+
+        const onFileChange = (e) => {
+            setSelectedFile(e.target.files[0]);
+        };
+
+        let onFileUpload = (e) => {
+            e.preventDefault();
+            console.log(selectedFile);
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            axios.post(`${URL}/teacher/upload-report`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        };
 
         const changeBtnText = () => {
             if (!showing) {
@@ -332,9 +357,10 @@ export const TeacherPassedPractices = () => {
                             </div>
 
                             <Accordion.Body>
-                                <div>
+                                <div className="row">
                                     <hr/>
-                                    <div style={{marginLeft: "50px"}}>
+                                    <div className="col" style={{marginLeft: "50px"}}>
+
                                         <b>Kapacita: </b>
                                         <span>
                                         <Badge
@@ -347,18 +373,57 @@ export const TeacherPassedPractices = () => {
                                             {item.numberOfReservedStudents} / {item.capacity}
                                         </Badge>
                                     </span>
-                                        <div className="d-flex" style={{marginTop: "10px"}}><div><b>Registrovaní studenti:</b></div> <div>{item.studentNames.map((item,index) => (<div className="margin-left-cstm">{item}</div>))}</div></div>
+                                        <div className="d-flex" style={{marginTop: "10px"}}>
+                                            <div><b>Registrovaní studenti: </b>
+                                                {item.studentNames.length === 0 &&
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                            </div>
+                                            <div>{item.studentNames.map((item, index) => (
+                                                <div className="margin-left-cstm">{item}</div>))}</div>
+                                        </div>
 
-                                        <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
+                                        <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :
+                                            <i>{noteNotFound}</i>}</p>
 
                                         <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
                                         <ul>
-                                            {item.fileNames.map(function (name, index) {
-                                                return <li key={index}><a
-                                                    href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                                </li>;
-                                            })}
+                                            {item.fileNames.length === 0 ?
+                                                <p><i>Žádný soubor nebyl nahrán</i></p>
+                                                : ""}
+                                            {item.fileNames.map((name, index) => (
+                                                <li key={index}>
+                                                    <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                                </li>
+                                            ))
+                                            }
                                         </ul>
+
+                                    </div>
+                                    <div className="center col div-cstm-flex-direction">
+                                        <Form>
+                                            <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
+                                                <Form.Control type="file" />
+                                            </Form.Group>
+                                            <button className="toggleButtonFilters" onClick={onFileUpload}>
+                                                Nahrát report
+                                            </button>
+                                        </Form>
+
+                                        <div className="mt-3">
+                                            <OverlayTrigger
+                                                overlay={
+                                                    <Tooltip>
+                                                        Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán na
+                                                        tuto praxi.
+                                                    </Tooltip>
+                                                }
+                                            >
+                                    <span>
+                                        <BsInfoCircleFill className={"info-tooltip"}/>
+                                    </span>
+                                            </OverlayTrigger>
+                                            <b>Report ke stažení:</b>
+                                        </div>
                                     </div>
                                 </div>
                             </Accordion.Body>

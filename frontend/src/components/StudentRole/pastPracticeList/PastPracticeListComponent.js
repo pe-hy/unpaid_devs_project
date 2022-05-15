@@ -41,6 +41,7 @@ export const PastPracticeListComponent = () => {
         const [teachers, setTeachers] = useState([]);
         const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
+        const noteNotFound = "Poznámka nevyplněna";
 
         const pastPracticesRedux = useSelector((state) => state.practices);
 
@@ -227,7 +228,7 @@ export const PastPracticeListComponent = () => {
             ranges.selection.endDate.setHours(23, 59, 59);
             setDateRange([ranges.selection]);
         }
-        return (
+    return (
             <Container fluid>
                 <div>
                     <button id="toggleBtn" className="toggleButtonFilters" onClick={() => {
@@ -419,16 +420,21 @@ export const PastPracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
-                                        <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
+                                        <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note : <i>{noteNotFound}</i>}</p>
 
-                                        <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
+                                        <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b></p>
                                         <ul>
-                                            {item.fileNames.map(function (name, index) {
-                                                return <li key={index}><a
-                                                    href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                                </li>;
-                                            })}
+                                            {item.fileNames.length === 0 ?
+                                                <p><i>Žádný soubor nebyl nahrán</i></p>
+                                                : ""}
+                                            {item.fileNames.map((name, index) => (
+                                                <li key={index}>
+                                                    <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                                </li>
+                                            ))
+                                            }
                                         </ul>
+                                        <b>Report ke stažení:</b>
                                     </div>
                                 </div>
                             </Accordion.Body>

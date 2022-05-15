@@ -34,6 +34,7 @@ export const ReservedPracticeListComponent = () => {
     const teacherFilterParam = "Teacher";
     const dateRangeFilterParam = "Date";
     const allFilterParam = "All";
+    const noteNotFound = "Poznámka nevyplněna";
 
     let iconStyles = { fontSize: "1.5em", marginRight: "5px" };
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
@@ -475,15 +476,19 @@ export const ReservedPracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
-                                    <p style={{ marginTop: "10px" }}><i>Poznámka:</i> {item.note}</p>
+                                    <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note : <i>{noteNotFound}</i>}</p>
 
                                     <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b></p>
                                     <ul>
-                                        {item.fileNames.map(function (name, index) {
-                                            return <li key={index}><a
-                                                href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                            </li>;
-                                        })}
+                                        {item.fileNames.length === 0 ?
+                                            <p><i>Žádný soubor nebyl nahrán</i></p>
+                                            : ""}
+                                        {item.fileNames.map((name, index) => (
+                                            <li key={index}>
+                                                <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                            </li>
+                                        ))
+                                        }
                                     </ul>
 
 

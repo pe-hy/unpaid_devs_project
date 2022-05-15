@@ -30,6 +30,7 @@ export const PracticeListComponent = () => {
     const unReservation = "Odrezervovat";
     const schoolNotFound = "Škola nevyplněna";
     const subjectNotFound = "Předmět nevyplněn";
+    const noteNotFound = "Poznámka nevyplněna";
     const schoolFilterParam = "School";
     const subjectFilterParam = "Subject";
     const teacherFilterParam = "Teacher";
@@ -485,15 +486,19 @@ export const PracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
-                                    <p style={{ marginTop: "10px" }}><i>Poznámka:</i> {item.note}</p>
+                                    <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note : <i>{noteNotFound}</i>}</p>
 
                                     <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b></p>
                                     <ul>
-                                        {item.fileNames.map(function (name, index) {
-                                            return <li key={index}><a
-                                                href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                            </li>;
-                                        })}
+                                        {item.fileNames.length === 0 ?
+                                        <p><i>Žádný soubor nebyl nahrán</i></p>
+                                            : ""}
+                                        {item.fileNames.map((name, index) => (
+                                                <li key={index}>
+                                                    <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                                </li>
+                                            ))
+                                        }
                                     </ul>
 
 

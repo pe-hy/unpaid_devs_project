@@ -30,7 +30,7 @@ public class EmailService implements EmailSender{
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Potvrďtě svou registraci pro registrační systém učitelských praxí");
+            helper.setSubject("Potvrďte svou registraci pro registrační systém učitelských praxí");
             helper.setFrom(AppConfig.CONFIRMATION_EMAIL_ADDRESS);
 
             mailSender.send(mimeMessage);

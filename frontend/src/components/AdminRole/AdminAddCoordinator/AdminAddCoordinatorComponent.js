@@ -48,13 +48,13 @@ const getButton = (isRegistered, registerOnClick, disable, btnMessage) => {
             <RegistrationButtonComponent
                 text={btnMessage}
                 click={registerOnClick}
-                disable={disable}
             />
         );
     } else {
         return (
-            <FinishedRegistrationComponent
-                text={finished}
+            <RegistrationButtonComponent
+                text={"Zaregistrovat koordinátora"}
+                click={registerOnClick}
             />
         );
     }
@@ -102,12 +102,13 @@ export class RegistrationComponent extends Component {
         this.phoneRef = React.createRef();
         this.state = {
             email: "",
+            message_success: "",
             name: "",
             surname: "",
-            school: "",
-            telephone: "",
-            secondPassword: "",
-            password: "",
+            school: null,
+            telephone: null,
+            secondPassword: "0000",
+            password: "0000",
             message: "",
             schoolList: [],
             redirectToLogin: false,
@@ -116,53 +117,12 @@ export class RegistrationComponent extends Component {
             disable: false,
             btnMessage: notRegistered,
         };
-        this.handleRegister = this.handleRegister.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.checkSecondPassword = this.checkSecondPassword.bind(this);
-        this.onChangePhone = this.onChangePhone.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeSurname = this.onChangeSurname.bind(this);
-        this.onChangeSchool = this.onChangeSchool.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.invalidEmail = this.invalidEmail.bind(this);
-        this.setSchools = this.setSchools.bind(this);
-    }
-
-    setSchools(e) {
-        console.log("data in e", e)
-        this.setState({
-            schoolList: e.sch,
-        });
-    }
-
-    componentDidMount() {
-        axios({
-            url: GET_SCHOOLS_URL,
-            withCredentials: true,
-            method: "GET",
-        })
-            .then(res => {
-                const schools = res.data;
-                console.log("schools:", schools);
-                var sch = [];
-                schools.forEach(element => sch.push(element));
-                this.setSchools({ sch });
-                this.setState({
-                    school: sch[0].id
-                });
-            })
-
-    }
-
-    checkSecondPassword(e) {
-        if (e !== this.state.password) {
-            return (
-                <div className="alert alert-danger my-alert text-bold" role="alert">
-                    <BsExclamationTriangleFill /> Hesla nesouhlasí!
-                </div>
-            );
-        }
     }
 
     validateEmail(email) {
@@ -197,19 +157,16 @@ export class RegistrationComponent extends Component {
                 disable: true,
                 btnMessage: waiting,
             });
-            AuthService.registerCoordinator(this.state.email, this.state.name, this.state.surname, this.state.school, this.state.telephone, this.state.password, "coordinator").then(
+            AuthService.registerCoordinator(this.state.email, this.state.name, this.state.surname, this.state.password, "coordinator").then(
                 (res) => {
                     console.log("Server Message:", res)
                     this.setState({
                         isRegistered: true,
+                        message_success: res,
                     });
                 },
                 (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
+                    const resMessage = error.response.data.message.split(":")[1];
                         error.toString();
                     console.log("Server Error Message:", resMessage)
                     this.setState({
@@ -227,37 +184,22 @@ export class RegistrationComponent extends Component {
 
     onChangeEmail(e) {
         this.setState({
+            message: "",
             email: e.target.value,
         });
     }
 
     onChangeName(e) {
         this.setState({
+            message: "",
             name: e.target.value,
         });
     }
 
     onChangeSurname(e) {
         this.setState({
+            message: "",
             surname: e.target.value,
-        });
-    }
-
-    onChangePhone(e) {
-        this.setState({
-            telephone: e.target.value,
-        });
-    }
-
-    onChangeSchool(e) {
-        this.setState({
-            school: e.target.value,
-        });
-    }
-
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value,
         });
     }
 
@@ -266,7 +208,20 @@ export class RegistrationComponent extends Component {
         return (
             <div className={"container-registration"}>
                 <div>
-                    <p className="thick">REGISTRACE</p>
+
+                    <p className="thick">
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Po přidání nového koordinátora si koordinátor musí vytvořit heslo pomocí tlačítka Zapomenuté heslo na stránce přihlášení.
+                                </Tooltip>
+                            }
+                        >
+                    <span>
+                      <BsInfoCircleFill className={"info-tooltip"}/>
+                    </span>
+                        </OverlayTrigger>
+                        PŘIDÁNÍ KOORDINÁTORA</p>
                 </div>
 
                 <section className={" card card-container form-cointainer d-flex justify-content-center mt-2"}>
@@ -320,101 +275,14 @@ export class RegistrationComponent extends Component {
                             </span>
                         </label>
                         <br />
-
-                        <label className={"label-setting"}>
-                            <span className={"span-label"}>
-                                <OverlayTrigger
-                                    overlay={
-                                        <Tooltip>
-                                            Pokud nevidíte školu ve které vyučujete, kontaktujte koordinátora.
-                                        </Tooltip>
-                                    }
-                                >
-                                    <span>
-                                        <BsInfoCircleFill className={"info-tooltip"} />
-                                    </span>
-                                </OverlayTrigger>
-                                <b>Škola</b>
-                            </span>
-                            <span className={"span-input"}>
-                                <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control"
-                                    placeholder="Vyberte školu">
-                                    {this.state.schoolList.map((item, index) => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))}
-                                </Select>
-                            </span>
-
-                        </label>
-                        <br />
-
-                        <label className={"label-setting"}>
-                            <span className={"span-label"}>Telefon</span>
-                            <span className={"span-input"}>
-                                <Input type="text"
-                                    className="form-control"
-                                    name={this.phoneRef}
-                                    ref={this.phoneRef}
-                                    onChange={this.onChangePhone}
-                                    validations={[invalidPhoneNum]}
-
-                                /></span>
-                        </label>
-                        <br />
-
-                        <label className={"label-setting"}>
-                            <span className={"span-label"}>
-                                <OverlayTrigger
-                                    overlay={
-                                        <Tooltip>
-                                            Heslo musí být alespoň 6 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1
-                                            speciální znak.
-                                        </Tooltip>
-                                    }
-                                >
-                                    <span>
-                                        <BsInfoCircleFill className={"info-tooltip"} />
-                                    </span>
-                                </OverlayTrigger>
-                                <b>Heslo</b>
-                            </span>
-                            <span className={"span-input"}>
-                                <div className="inner-addon right-addon">
-
-                                    <Input type="password"
-                                        className="form-control"
-                                        name={this.passwordRef}
-                                        ref={this.passwordRef}
-                                        onChange={this.onChangePassword}
-                                        validations={[required, invalidPassword]}
-                                        required /></div>
-                            </span>
-                        </label>
-                        <br />
-                        <span className={"password-strength"}>
-                            <PasswordStrengthBar className={"password"}
-                                minLength={6}
-                                scoreWords={['', '', '', '']}
-                                shortScoreWord={""}
-                                password={this.state.password} />
-                        </span>
-
-                        <label className={"label-setting"}>
-                            <span className={"span-input"}></span>
-                            <span className={"span-input"}>
-                                <Input type="password"
-                                    ref={this.passwordAgainRef}
-                                    name={this.passwordAgainRef}
-                                    className="form-control"
-                                    placeholder="Heslo znovu"
-                                    validations={[required, this.checkSecondPassword]}
-                                    required />
-                            </span>
-                        </label>
-                        <br />
                         {this.state.message && (
                             <div className="alert alert-danger my-alert1 text-bold" role="alert">
                                 <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message}
+                            </div>
+                        )}
+                        {this.state.message_success && (
+                            <div className="alert alert-success center text-bold" role="alert">
+                                <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message_success}
                             </div>
                         )}
 

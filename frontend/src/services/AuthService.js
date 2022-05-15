@@ -50,8 +50,8 @@ class AuthService {
         });
     }
 
-    registerCoordinator(email, firstName, lastName, school, phoneNumber, password, role) {
-        var formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
+    registerCoordinator(email, firstName, lastName, password, role) {
+        var formData = JSON.stringify({email, firstName, lastName, password, role});
         console.log(formData);
 
         return axios({

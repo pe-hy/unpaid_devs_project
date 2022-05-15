@@ -107,8 +107,8 @@ const TabsForm = () => {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
             onSubmit();
-            if (document.getElementById("teacher-home-tabs-tab-tab2")) {
-                document.getElementById("teacher-home-tabs-tab-tab2").click();
+            if (document.getElementById("tab-tab-tab2")) {
+                document.getElementById("tab-tab-tab2").click();
             }
 
         }

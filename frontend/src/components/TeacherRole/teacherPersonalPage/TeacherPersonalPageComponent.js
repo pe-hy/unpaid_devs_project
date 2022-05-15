@@ -54,7 +54,7 @@ const TeacherPersonalPageComponent = () => {
         setDeleteDisable(true);
         const response = await axios({
             headers: {'content-type': 'application/json'},
-            url: `${URL}/user/file/delete/${email}/${fileName}`,
+            url: `${URL}/teacher/file/delete/${email}/${fileName}`,
             withCredentials: true,
             method: "POST",
         }).catch((err) => {

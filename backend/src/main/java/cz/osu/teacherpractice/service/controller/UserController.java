@@ -111,11 +111,4 @@ public class UserController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
-
-    @PostMapping("/user/file/delete/{teacherEmail}/{fileName}")
-    public ResponseEntity<String> deleteFileFromLocal(@PathVariable String teacherEmail, @PathVariable String fileName) throws IOException {
-        Path path = Paths.get(fileService.figureOutFileNameFor(teacherEmail, fileName));
-        Files.delete(path);
-        return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
-    }
 }

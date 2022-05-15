@@ -1,24 +1,28 @@
+.margin-left-cstm-nav {
+    margin-left: auto;
+    justify-content: flex-end
+}
 
 .nav {
     width: 100%;
     padding: 0;
 }
 
-.navbar-main{
+.navbar-main {
     width: 100vw;
 }
 
-.navbar{
+.navbar {
     background-color: #264d73;
     color: #fff;
     height: 100px;
 }
 
-.container{
+.container {
     margin: 0;
 }
 
-.nav-link{
+.nav-link {
     display: flex;
     align-items: center;
 }
@@ -38,18 +42,18 @@
     position: relative;
 }
 
-#prehled,#ucet{
+#prehled, #ucet {
     color: black;
     text-align: center;
 }
 
-#prehled:hover,#ucet:hover{
+#prehled:hover, #ucet:hover {
     color: white;
     text-decoration: underline 20%;
     text-underline-offset: 50%;
 }
 
-.p-margin{
+.p-margin {
     margin-bottom: 0;
 
 }

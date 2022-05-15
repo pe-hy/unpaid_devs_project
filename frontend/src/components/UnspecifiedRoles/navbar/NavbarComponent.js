@@ -62,7 +62,8 @@ const NavbarComponent = () => {
                         />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-                    <Navbar.Collapse id="responsive-navbar-nav">
+                    <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
+                        {JSON.parse(localStorage.getItem("user")) &&
                         <Nav className="me-auto">
                             <Nav.Link className="ms-md-5">
                                 <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
@@ -77,6 +78,7 @@ const NavbarComponent = () => {
                                 </span>
                             </Nav.Link>
                         </Nav>
+                        }
                         <Nav>
                             <Nav eventkey={2} className="navbar-text white">
                                 <LoginControlComponent/>

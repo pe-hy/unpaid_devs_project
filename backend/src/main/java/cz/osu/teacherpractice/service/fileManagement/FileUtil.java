@@ -16,6 +16,7 @@ public final class FileUtil {
     }
 
     public static final String folderPath =  "/home/student/project/myproject/backend/user-files/";
+    public static final String reportsFolderPath =  "/home/student/project/myproject/backend/report-files/";
     public static final Path filePath = Paths.get(folderPath);
 
     public static long getNumberOfFilesInFolder(long id){

@@ -16,6 +16,7 @@ public class StudentPracticeDto {
     private Integer capacity;
     private SubjectDto subject;
     private UserDto teacher;
+    private String report;
     private List<String> fileNames;
     private List<String> studentNames;
 

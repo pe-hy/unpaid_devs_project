@@ -391,7 +391,7 @@ export const TeacherPassedPractices = () => {
                         </div>
 
                         <Accordion.Body>
-                            <div className="row">
+                            <div className="row listed-practices-row">
                                 <hr />
                                 <div className="col" style={{ marginLeft: "50px" }}>
 

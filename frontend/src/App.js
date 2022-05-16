@@ -11,17 +11,20 @@ import RegisterView from "./views/register/RegisterView";
 import { UserContextProvider } from "./userContext";
 import AdminHomeView from "./views/adminHome/AdminHomeView";
 import AdminPersonalPageView from "./views/adminPersonalPage/AdminPersonalPageView";
+import {useState} from "react";
 
 function App() {
+
+  const [stateShouldUpdate, setStateShouldUpdate] = useState(false);
 
   return (
     <div className="main">
       <UserContextProvider>
-        <NavbarComponent />
+        <NavbarComponent update={stateShouldUpdate}/>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginView />} />
-            <Route path="/login" element={<LoginView />} />
+            <Route path="/" element={<LoginView update={stateShouldUpdate}/>} />
+            <Route path="/login" element={<LoginView update={stateShouldUpdate}/>} />
             <Route path="/register" element={<RegisterView />} />
             <Route path="/studentHome" element={<StudentHomeView />} />
             <Route path="/teacherHome" element={<TeacherHomeView />} />

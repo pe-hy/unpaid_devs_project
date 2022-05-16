@@ -36,6 +36,27 @@ div.tab-content {
     border-radius: 4px;
 }
 
+#tab-tab-tab1[aria-selected="true"]{
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+
+#tab-tab-tab2[aria-selected="true"]{
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+
+#tab-tab-tab3[aria-selected="true"]{
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+
 @media (max-width: 858px){
     .studentHomeBody {
         padding: 10px;

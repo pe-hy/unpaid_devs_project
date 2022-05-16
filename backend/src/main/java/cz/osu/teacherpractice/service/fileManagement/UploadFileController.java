@@ -73,7 +73,7 @@ public class UploadFileController {
         }
     }
 
-    @PostMapping("/teacher/uploadReport")
+    @PostMapping("/teacher/report/upload")
     public ResponseEntity<FileUploadResponse> uploadReport(Principal principal,@RequestParam("id") Long id, @RequestParam("files") MultipartFile[] files) {
         try {
             File userFolderPath = new File(FileUtil.reportsFolderPath + id);

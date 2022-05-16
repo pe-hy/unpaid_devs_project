@@ -61,49 +61,49 @@ export const TeacherPassedPractices = () => {
         setSelectedFile(e.target.files[0]);
     };
 
-    const uploadFiles = () => {
-        setFileUploadResponse(null);
-        setFileUploadProgress(true);
+    // const uploadFiles = () => {
+    //     setFileUploadResponse(null);
+    //     setFileUploadProgress(true);
 
-        let formData = new FormData();
+    //     let formData = new FormData();
 
-        for (var i = 0; i < acceptedFiles.length; i++) {
-            if (acceptedFiles[i].size > MAX_FILE_SIZE) {
-                setFileSize(false);
-                setFileUploadProgress(false);
-                setFileUploadResponse(null);
-                return;
-            }
-            let file = acceptedFiles[i];
-            formData.append('files', file);
-        }
+    //     for (var i = 0; i < acceptedFiles.length; i++) {
+    //         if (acceptedFiles[i].size > MAX_FILE_SIZE) {
+    //             setFileSize(false);
+    //             setFileUploadProgress(false);
+    //             setFileUploadResponse(null);
+    //             return;
+    //         }
+    //         let file = acceptedFiles[i];
+    //         formData.append('files', file);
+    //     }
 
 
-        axios({
-            method: 'POST',
-            url: UPLOAD_URL,
-            withCredentials: true,
-            headers: {'content-type': 'application/json'},
-            data: formData,
-        }).then(function (response) {
-            setMessageColor("green");
-            console.log(JSON.stringify(response.data));
-            setFileUploadResponse(response.data.message);
-            setFileUploadProgress(false);
-        })
-            .catch(function (error) {
-                console.log(error);
-                setMessageColor("red");
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setFileUploadResponse(resMessage);
-                setFileUploadProgress(false);
-            });
-    }
+    //     axios({
+    //         method: 'POST',
+    //         url: UPLOAD_URL,
+    //         withCredentials: true,
+    //         headers: {'content-type': 'application/json'},
+    //         data: formData,
+    //     }).then(function (response) {
+    //         setMessageColor("green");
+    //         console.log(JSON.stringify(response.data));
+    //         setFileUploadResponse(response.data.message);
+    //         setFileUploadProgress(false);
+    //     })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //             setMessageColor("red");
+    //             const resMessage =
+    //                 (error.response &&
+    //                     error.response.data &&
+    //                     error.response.data.message) ||
+    //                 error.message ||
+    //                 error.toString();
+    //             setFileUploadResponse(resMessage);
+    //             setFileUploadProgress(false);
+    //         });
+    // }
 
     let onFileUpload = () => {
 

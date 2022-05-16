@@ -13,7 +13,7 @@ import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -28,6 +28,7 @@ export const TeacherListedPractices = () => {
         const teacherFilterParam = "Teacher";
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
+        const noteNotFound = "Poznámka nevyplněna";
         const [subjects, setSubjects] = useState([]);
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         const [showing, setShowing] = useState(false);
@@ -353,17 +354,29 @@ export const TeacherListedPractices = () => {
                                         </Badge>
                                     </span>
 
-                                        <div className="d-flex" style={{marginTop: "10px"}}><div><b>Registrovaní studenti:</b></div> <div>{item.studentNames.map((item,index) => (<div className="margin-left-cstm">{item}</div>))}</div></div>
+                                        <div className="d-flex" style={{marginTop: "10px"}}>
+                                            <div><b>Registrovaní studenti: </b>
+                                            {item.studentNames.length === 0 &&
+                                                <span><i>Žádný student se prozatím na praxi nezaregistroval.</i></span>}
+                                            </div>
+                                            <div>{item.studentNames.map((item, index) => (
+                                                <div className="margin-left-cstm">{item}</div>))}</div>
+                                        </div>
 
-                                        <p style={{marginTop: "10px"}}><i>Poznámka:</i> {item.note}</p>
+                                        <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :
+                                            <i>{noteNotFound}</i>}</p>
 
                                         <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
                                         <ul>
-                                            {item.fileNames.map(function (name, index) {
-                                                return <li key={index}><a
-                                                    href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                                </li>;
-                                            })}
+                                            {item.fileNames.length === 0 ?
+                                                <p><i>Žádný soubor nebyl nahrán</i></p>
+                                                : ""}
+                                            {item.fileNames.map((name, index) => (
+                                                <li key={index}>
+                                                    <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                                </li>
+                                            ))
+                                            }
                                         </ul>
                                     </div>
                                 </div>

@@ -111,4 +111,19 @@ public class UserController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
+    @GetMapping("/user/report/download/{id}")
+    public ResponseEntity downloadReportFromLocal(@PathVariable String id, @PathVariable String teacherEmail, @PathVariable String fileName) {
+        Path path = Paths.get(fileService.figureOutFileNameFor(teacherEmail, fileName));
+        Resource resource = null;
+        try {
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
 }

@@ -23,4 +23,8 @@ public class FileService {
         User teacher = userRepository.findByEmail(teacherMail).get();
         return FileUtil.folderPath + teacher.getId() + "/" + fileName;
     }
+
+    public String figureOutReportNameFor(Long id){
+        return FileUtil.reportsFolderPath + "/" + id;
+    }
 }

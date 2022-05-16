@@ -433,7 +433,7 @@ export const PastPracticeListComponent = () => {
                                             ))
                                             }
                                         </ul>
-                                        <b>Report ke stažení:</b>
+                                        <b>Report ke stažení: {item.report}</b>
                                     </div>
                                 </div>
                             </Accordion.Body>

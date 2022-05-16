@@ -28,4 +28,13 @@ public final class FileUtil {
         }
     }
 
+    public static long getNumberOfReportsInFolder(long id){
+        try (Stream<Path> files = Files.list(Paths.get(reportsFolderPath + id))) {
+            return files.count();
+        }
+        catch (Exception e){
+            return 999;
+        }
+    }
+
 }

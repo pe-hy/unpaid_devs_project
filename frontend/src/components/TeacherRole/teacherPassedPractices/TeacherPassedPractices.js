@@ -18,7 +18,7 @@ const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_PRACTICE_LIST_URL_LISTED = `${URL}/teacher/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
-
+const UPLOAD_URL = `${URL}/teacher/report/upload`;
 
 export const TeacherPassedPractices = () => {
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
@@ -61,51 +61,34 @@ export const TeacherPassedPractices = () => {
         setSelectedFile(e.target.files[0]);
     };
 
-    const uploadFiles = () => {
-        setFileUploadResponse(null);
-        setFileUploadProgress(true);
-
+    const onFileUpload = (e, id) => {
+        e.preventDefault();
         let formData = new FormData();
-
-        for (var i = 0; i < acceptedFiles.length; i++) {
-            if (acceptedFiles[i].size > MAX_FILE_SIZE) {
-                setFileSize(false);
-                setFileUploadProgress(false);
-                setFileUploadResponse(null);
-                return;
-            }
-            let file = acceptedFiles[i];
-            formData.append('files', file);
-        }
-
+        console.log(id, "selected id");
+        formData.append('file', selectedFile);
+        formData.append('id', id);
 
         axios({
             method: 'POST',
             url: UPLOAD_URL,
             withCredentials: true,
-            headers: {'content-type': 'application/json'},
+            headers: { 'content-type': 'application/json' },
             data: formData,
         }).then(function (response) {
-            setMessageColor("green");
             console.log(JSON.stringify(response.data));
-            setFileUploadResponse(response.data.message);
-            setFileUploadProgress(false);
         })
             .catch(function (error) {
                 console.log(error);
-                setMessageColor("red");
                 const resMessage =
                     (error.response &&
                         error.response.data &&
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setFileUploadResponse(resMessage);
-                setFileUploadProgress(false);
             });
     }
 
-    let onFileUpload = () => {
+    let onFileUploada = () => {
 
         console.log(selectedFile);
         const formData = new FormData();
@@ -454,7 +437,7 @@ export const TeacherPassedPractices = () => {
                                         <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
                                             <Form.Control type="file" />
                                         </Form.Group>
-                                        <button className="toggleButtonFilters" onClick={() => { onFileUpload(); setSelectedId(item.id) }}>
+                                        <button className="toggleButtonFilters" onClick={(e) => {onFileUpload(e, item.id) }}>
                                             Nahrát report
                                         </button>
                                     </Form>

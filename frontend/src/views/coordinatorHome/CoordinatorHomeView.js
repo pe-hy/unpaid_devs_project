@@ -23,6 +23,12 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab3" title="Předměty">
                     <AddSubjectComponent />
                 </Tab>
+                <Tab eventKey="tab4" title="Vypsané praxe">
+                    <PracticesListCoordinator />
+                </Tab>
+                <Tab eventKey="tab5" title="Proběhlé praxe">
+                    <PassedPracticesCoordinator />
+                </Tab>
             </Tabs>
         </div>
     );

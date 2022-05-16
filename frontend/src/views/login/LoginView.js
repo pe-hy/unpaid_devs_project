@@ -5,7 +5,7 @@ const LoginView = () => {
 
   return (
     <Container className={"login-main"}>
-      <LoginComponent update={this.props.stateShouldUpdate}/>
+      <LoginComponent />
     </Container>
   );
 };

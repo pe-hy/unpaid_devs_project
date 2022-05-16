@@ -15,16 +15,14 @@ import {useState} from "react";
 
 function App() {
 
-  const [stateShouldUpdate, setStateShouldUpdate] = useState(false);
-
   return (
     <div className="main">
       <UserContextProvider>
-        <NavbarComponent update={stateShouldUpdate}/>
+        <NavbarComponent />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginView update={stateShouldUpdate}/>} />
-            <Route path="/login" element={<LoginView update={stateShouldUpdate}/>} />
+            <Route path="/" element={<LoginView/>} />
+            <Route path="/login" element={<LoginView />} />
             <Route path="/register" element={<RegisterView />} />
             <Route path="/studentHome" element={<StudentHomeView />} />
             <Route path="/teacherHome" element={<TeacherHomeView />} />

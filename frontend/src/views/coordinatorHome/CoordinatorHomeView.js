@@ -4,6 +4,10 @@ import "./CoordinatorHomeStyles.css";
 import AddSchoolComponent from "../../components/CoordinatorRole/addSchoolComponent/AddSchoolComponent";
 import AddSubjectComponent from "../../components/CoordinatorRole/addSubjectComponent/AddSubjectComponent";
 import {Navigate} from "react-router-dom";
+import PassedPracticesCoordinator
+    from "../../components/CoordinatorRole/passedPracticesCoordinator/PassedPracticesCoordinator";
+import PracticesListCoordinator
+    from "../../components/CoordinatorRole/practicesListCoordinator/PracticesListCoordinator";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_COORDINATOR";

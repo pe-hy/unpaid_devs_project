@@ -105,7 +105,7 @@ export const WaitingListComponent = () => {
 
     if (checkRole()) return <Navigate to="/login"/>;
     return (
-        <Container fluid>
+        <Container fluid className="mb-3">
             <table className="table table-striped">
                 <thead>
                 <tr>

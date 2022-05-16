@@ -350,7 +350,7 @@ export const AddSchoolComponent = () => {
                                 {schools &&
                                     schools.map((item, index) => (
                                         <tr key={index} className="align-middle">
-                                            <td><span>{item}</span></td>
+                                            <td className="w-100"><span>{item}</span></td>
                                             <td style={{ textAlign: "center" }}>
                                                 <button onClick={() => {
                                                     setModalShow(true);

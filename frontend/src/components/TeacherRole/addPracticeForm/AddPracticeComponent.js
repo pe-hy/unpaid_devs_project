@@ -107,8 +107,8 @@ const TabsForm = () => {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
             onSubmit();
-            if (document.getElementById("tab-tab-tab2")) {
-                document.getElementById("tab-tab-tab2").click();
+            if (document.getElementById("tab-tab-tab1")) {
+                document.getElementById("tab-tab-tab1").click();
             }
 
         }

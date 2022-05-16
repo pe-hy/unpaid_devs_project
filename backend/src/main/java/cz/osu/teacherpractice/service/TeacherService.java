@@ -102,7 +102,7 @@ public class TeacherService {
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
-    private List<String> getStudentNamesByPractice(PracticeDomain p, Pageable pageable) {
+    public List<String> getStudentNamesByPractice(PracticeDomain p, Pageable pageable) {
         List<Long> ids = userRepository.findAllStudentIdsByStudentPracticeIds(p.getId(), pageable);
         List<String> names = new ArrayList<>();
         for (Long id :

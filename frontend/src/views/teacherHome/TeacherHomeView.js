@@ -14,14 +14,14 @@ const TeacherHomeView = () => {
   return (
     <div className="studentHomeBody">
       <Tabs defaultActiveKey="tab1" id="tab" className="tab">
-        <Tab eventKey="tab1" title="Přidání praxe">
-          <AddPracticeComponent />
-        </Tab>
-        <Tab eventKey="tab2" title="Vypsané praxe">
+        <Tab eventKey="tab1" title="Vypsané praxe">
           <TeacherListedPractices />
         </Tab>
-        <Tab eventKey="tab3" title="Proběhlé praxe">
+        <Tab eventKey="tab2" title="Proběhlé praxe">
           <TeacherPassedPractices />
+        </Tab>
+        <Tab eventKey="tab3" title="Přidání praxe">
+          <AddPracticeComponent />
         </Tab>
       </Tabs>
     </div>

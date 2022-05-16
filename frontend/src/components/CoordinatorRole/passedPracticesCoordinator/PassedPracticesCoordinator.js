@@ -1,7 +1,7 @@
-import "./PastPracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
+import "./PassedPracticesCoordinator.css";
 import React, {useEffect, useState} from "react";
-import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import {Col, Container, Form, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -13,18 +13,20 @@ import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
-import { useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {addTodo} from '../../../redux/todoSlice.js';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/passed-practices-list`;
+const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
-export const PastPracticeListComponent = () => {
+export const PassedPracticesCoordinator = () => {
         const schoolNotFound = "Škola nevyplněna";
         const subjectNotFound = "Předmět nevyplněn";
+        const noteNotFound = "Poznámka nevyplněna";
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";
@@ -33,7 +35,6 @@ export const PastPracticeListComponent = () => {
 
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
-        const duration = 250;
         const [showing, setShowing] = useState(false);
         const [practices, setPraxe] = useState([]);
         const [filterParam, setFilterParam] = useState([allFilterParam]);
@@ -41,9 +42,8 @@ export const PastPracticeListComponent = () => {
         const [teachers, setTeachers] = useState([]);
         const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
-        const noteNotFound = "Poznámka nevyplněna";
 
-        const pastPracticesRedux = useSelector((state) => state.practices);
+        const dispatch = useDispatch();
 
         const [selectedSchool, setSelectedSchools] = useState("");
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
@@ -56,6 +56,14 @@ export const PastPracticeListComponent = () => {
                 key: 'selection'
             }
         ]);
+
+        const onSubmit = () => {
+            dispatch(
+                addTodo({
+                    title: "a",
+                })
+            );
+        };
 
         const changeBtnText = () => {
             if (!showing) {
@@ -91,11 +99,11 @@ export const PastPracticeListComponent = () => {
             if (response && response.data) {
                 setPraxe(response.data);
                 setDateRangeLimit(response.data);
+                onSubmit();
             }
         };
 
         useEffect(() => {
-            console.log("past practices use effect", pastPracticesRedux);
             getPraxe();
             getSchools();
             getSubjects();
@@ -228,7 +236,7 @@ export const PastPracticeListComponent = () => {
             ranges.selection.endDate.setHours(23, 59, 59);
             setDateRange([ranges.selection]);
         }
-    return (
+        return (
             <Container fluid className="mb-3">
                 <div>
                     <button id="toggleBtn" className="toggleButtonFilters" onClick={() => {
@@ -347,28 +355,30 @@ export const PastPracticeListComponent = () => {
                             style={{display: "block"}}
                         >
                             <div style={{display: "flex"}}>
-                                <Accordion.Header className={"accordion-header-past-practices"}>
+                                <Accordion.Header className={"accordion-header-coord"}>
                                     <Row style={{width: "100%"}}>
-                                        <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
+                                        <Col
+                                            className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
-                                        <Col className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
+                                        <Col
+                                            className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                                ". " +
+                                                item.date.split("-")[1] +
+                                                ". " +
+                                                item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +
-                                            ":" +
-                                            item.start.split(":")[1] +
-                                            " - " +
-                                            item.end.split(":")[0] +
-                                            ":" +
-                                            item.end.split(":")[1]}
+                                                ":" +
+                                                item.start.split(":")[1] +
+                                                " - " +
+                                                item.end.split(":")[0] +
+                                                ":" +
+                                                item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -391,20 +401,20 @@ export const PastPracticeListComponent = () => {
                             </div>
 
                             <Accordion.Body>
-                                <div>
+                                <div className="row">
                                     <hr/>
-                                    <div style={{marginLeft: "50px"}}>
+                                    <div className="col" style={{marginLeft: "50px"}}>
                                         <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                         <p><b>E-mail:</b> {item.teacher.username}</p>
                                         <p><b>Čas: </b>
                                             <span>
                                             {item.start.split(":")[0] +
-                                            ":" +
-                                            item.start.split(":")[1] +
-                                            " - " +
-                                            item.end.split(":")[0] +
-                                            ":" +
-                                            item.end.split(":")[1]}</span></p>
+                                                ":" +
+                                                item.start.split(":")[1] +
+                                                " - " +
+                                                item.end.split(":")[0] +
+                                                ":" +
+                                                item.end.split(":")[1]}</span></p>
 
                                         <b>Kapacita: </b>
                                         <span>
@@ -419,9 +429,10 @@ export const PastPracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
-                                        <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note : <i>{noteNotFound}</i>}</p>
+                                        <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :
+                                            <i>{noteNotFound}</i>}</p>
 
-                                        <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b></p>
+                                        <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
                                         <ul>
                                             {item.fileNames.length === 0 ?
                                                 <p><i>Žádný soubor nebyl nahrán</i></p>
@@ -433,16 +444,33 @@ export const PastPracticeListComponent = () => {
                                             ))
                                             }
                                         </ul>
-                                        <b>Report ke stažení: {item.report}</b>
                                     </div>
-                                </div>
-                            </Accordion.Body>
+                                        <div className="center col div-cstm-flex-direction">
+                                            <div className="mt-3">
+                                                <OverlayTrigger
+                                                    overlay={
+                                                        <Tooltip>
+                                                            Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
+                                                            na
+                                                            tuto praxi.
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                            <span>
+                                                <BsInfoCircleFill className={"info-tooltip"}/>
+                                            </span>
+                                                </OverlayTrigger>
+                                                <b>Report ke stažení:</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </Accordion.Body>
                         </Accordion.Item>
-                    ))}
+                        ))}
                 </Accordion>
             </Container>
         );
     }
 ;
 
-export default PastPracticeListComponent;
+export default PassedPracticesCoordinator;

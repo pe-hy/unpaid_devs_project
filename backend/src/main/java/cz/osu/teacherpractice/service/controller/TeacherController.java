@@ -54,12 +54,6 @@ public class TeacherController {
         return teacherService.getPracticesListPast(principal.getName(), date, subjectId, pageable);
     }
 
-    //create getmapping for all students by practice id
-//    @GetMapping("/students-list")
-//    public List<StudentPracticeDto> getStudentsList(@RequestParam Long practiceId, Pageable pageable) {
-//        return teacherService.getStudentsList(practiceId, pageable);
-//    }
-
 
     @PostMapping("/file/delete/{teacherEmail}/{fileName}")
     public ResponseEntity<String> deleteFileFromLocal(@PathVariable String teacherEmail, @PathVariable String fileName) throws IOException {

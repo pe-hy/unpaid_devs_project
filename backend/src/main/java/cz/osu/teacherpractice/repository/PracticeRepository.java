@@ -37,4 +37,5 @@ public interface PracticeRepository extends JpaRepository<Practice, Long> {
 
     List<Practice> findAllByTeacherUsername(String teacherUsername);
     List<Practice> findAllBystudents_id(Long student_id, Pageable pageable);
+
 }

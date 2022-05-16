@@ -271,7 +271,7 @@ export const AddSubjectComponent = () => {
                                 {!noSubjects &&
                                     subjects.map((item, index) => (
                                         <tr key={index} className="align-middle">
-                                            <td>{item}</td>
+                                            <td className="w-100">{item}</td>
                                             <td style={{ textAlign: "center" }}>
                                                 <button onClick={() => {
                                                     setModalShow(true);
@@ -291,7 +291,6 @@ export const AddSubjectComponent = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-            <hr />
         </Container>
     );
 };

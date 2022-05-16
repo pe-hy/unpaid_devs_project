@@ -394,7 +394,6 @@ export const TeacherPassedPractices = () => {
                             <div className="row listed-practices-row">
                                 <hr />
                                 <div className="col" style={{ marginLeft: "50px" }}>
-
                                     <b>Kapacita: </b>
                                     <span>
                                         <Badge

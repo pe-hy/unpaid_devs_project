@@ -1,6 +1,6 @@
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
-import {Col, Container, Form, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -400,9 +400,9 @@ export const PracticesListCoordinator = () => {
                             </div>
 
                             <Accordion.Body>
-                                <div className="row">
+                                <div>
                                     <hr/>
-                                    <div className="col" style={{marginLeft: "50px"}}>
+                                    <div style={{marginLeft: "50px"}}>
                                         <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                         <p><b>E-mail:</b> {item.teacher.username}</p>
                                         <p><b>Čas: </b>
@@ -443,23 +443,6 @@ export const PracticesListCoordinator = () => {
                                             ))
                                             }
                                         </ul>
-                                        <div className="center col div-cstm-flex-direction">
-                                            <div className="mt-3">
-                                                <OverlayTrigger
-                                                    overlay={
-                                                        <Tooltip>
-                                                            Toto uvidíte pouze vy, učitel který tuto praxi vypsal a student, který byl zapsán na
-                                                            tuto praxi.
-                                                        </Tooltip>
-                                                    }
-                                                >
-                                            <span>
-                                                <BsInfoCircleFill className={"info-tooltip"} />
-                                            </span>
-                                                </OverlayTrigger>
-                                                <b>Report ke stažení:</b>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </Accordion.Body>

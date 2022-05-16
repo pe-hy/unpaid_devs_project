@@ -1,3 +1,14 @@
 .accordion-header-coord {
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .accordion-button::after {
+        position: absolute;
+        width: 0;
+    }
+    .listed-practices-row{
+        display: flex;
+        flex-direction: column;
+    }
+}

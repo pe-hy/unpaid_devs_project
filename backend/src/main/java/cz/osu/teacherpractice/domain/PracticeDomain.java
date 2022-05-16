@@ -23,6 +23,7 @@ public class PracticeDomain {
     private SubjectDto subject;
     private UserDto teacher;
     private List<UserDto> students;
+    private String report;
     private List<String> fileNames;
     private List<String> studentNames;
 
@@ -70,7 +71,7 @@ public class PracticeDomain {
         this.fileNames = list;
     }
 
-    public void setReport(String report) {this.setReport(report);}
+    public void setReport(String report) {this.report = report;}
 
     public void setStudentNames(List<String> list){
         this.studentNames = list;

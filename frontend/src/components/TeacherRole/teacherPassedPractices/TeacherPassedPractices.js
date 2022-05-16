@@ -455,7 +455,7 @@ export const TeacherPassedPractices = () => {
                                                 <BsInfoCircleFill className={"info-tooltip"} />
                                             </span>
                                         </OverlayTrigger>
-                                        <b>Report ke stažení:</b>
+                                        <b>Report ke stažení: {item.report}</b>
                                     </div>
                                 </div>
                             </div>

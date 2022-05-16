@@ -10,7 +10,7 @@ div.tab-content {
     border-top: none;
 }
 
-#tab-tab-tab3, #tab-tab-tab2 {
+#tab-tab-tab5 ,#tab-tab-tab4, #tab-tab-tab3, #tab-tab-tab2 {
     background-color: rgb(52, 80, 105);
     color: white;
     margin-left: 10px;
@@ -21,7 +21,7 @@ div.tab-content {
     color: white;
 }
 
-#tab-tab-tab1:focus, #tab-tab-tab2:focus, #tab-tab-tab3:focus, #tab-tab-tab1.nav-link.active {
+#tab-tab-tab1:focus, #tab-tab-tab2:focus, #tab-tab-tab3:focus, #tab-tab-tab4:focus, #tab-tab-tab5:focus, #tab-tab-tab1.nav-link.active {
     background-color: white;
     color: rgb(52, 80, 105);
     border: 2px solid rgb(52, 80, 105);
@@ -51,6 +51,18 @@ div.tab-content {
 }
 
 #tab-tab-tab3[aria-selected="true"]{
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+#tab-tab-tab4[aria-selected="true"]{
+    background-color: white;
+    color: rgb(52, 80, 105);
+    border: 2px solid rgb(52, 80, 105);
+    border-bottom: none;
+}
+#tab-tab-tab5[aria-selected="true"]{
     background-color: white;
     color: rgb(52, 80, 105);
     border: 2px solid rgb(52, 80, 105);

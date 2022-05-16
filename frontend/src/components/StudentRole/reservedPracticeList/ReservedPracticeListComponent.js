@@ -282,7 +282,7 @@ export const ReservedPracticeListComponent = () => {
         }
     };
     return (
-        <Container fluid>
+        <Container fluid className="mb-3">
             <div>
                 <button id="toggleBtn" className="toggleButtonFilters" onClick={() => {
                     setShowing(!showing);

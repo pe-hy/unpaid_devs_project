@@ -1,12 +1,10 @@
-import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
+import "./PassedPracticesCoordinator.css";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
-import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
-import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import 'react-date-range/dist/styles.css'; // main style file
@@ -21,7 +19,7 @@ import {addTodo} from '../../../redux/todoSlice.js';
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
@@ -239,7 +237,7 @@ export const PassedPracticesCoordinator = () => {
             setDateRange([ranges.selection]);
         }
         return (
-            <Container fluid>
+            <Container fluid className="mb-3">
                 <div>
                     <button id="toggleBtn" className="toggleButtonFilters" onClick={() => {
                         setShowing(!showing);
@@ -308,7 +306,7 @@ export const PassedPracticesCoordinator = () => {
                     </div>
                 </div>}
                 <Accordion>
-                    <div style={{width: "85%"}}>
+                    <div style={{width: "100%"}}>
                         <div className="title-container text-info-practice">
                             <Row style={{width: "100%"}}>
                                 <Col className="text-center">
@@ -357,7 +355,7 @@ export const PassedPracticesCoordinator = () => {
                             style={{display: "block"}}
                         >
                             <div style={{display: "flex"}}>
-                                <Accordion.Header className={"accordion-header"}>
+                                <Accordion.Header className={"accordion-header-coord"}>
                                     <Row style={{width: "100%"}}>
                                         <Col
                                             className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>

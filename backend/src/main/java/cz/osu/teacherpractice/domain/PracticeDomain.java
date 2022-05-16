@@ -70,6 +70,8 @@ public class PracticeDomain {
         this.fileNames = list;
     }
 
+    public void setReport(String report) {this.setReport(report);}
+
     public void setStudentNames(List<String> list){
         this.studentNames = list;
     }

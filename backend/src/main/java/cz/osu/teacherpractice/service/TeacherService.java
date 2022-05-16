@@ -90,6 +90,7 @@ public class TeacherService {
             p.setNumberOfReservedStudents();
             p.setStudentNames(getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            p.setReport(userService.getPracticeReport());
             toDelete.add(p);
         });
 

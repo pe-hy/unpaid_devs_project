@@ -74,14 +74,14 @@ public class UploadFileController {
     }
 
     @PostMapping("/teacher/report/upload")
-    public ResponseEntity<FileUploadResponse> uploadReport(Principal principal,@RequestParam("id") Long id, @RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<FileUploadResponse> uploadReport(Principal principal,@RequestParam("id") Long id, @RequestParam("file") MultipartFile[] files) {
         try {
             File userFolderPath = new File(FileUtil.reportsFolderPath + id);
             createDirIfNotExist(userFolderPath);
             int maxFiles = AppConfig.MAXIMUM_NUMBER_OF_REPORTS;
             int numberOfFilesUploaded = files.length;
 
-            long filesNum = FileUtil.getNumberOfFilesInFolder(id);
+            long filesNum = FileUtil.getNumberOfReportsInFolder(id);
             if((filesNum + numberOfFilesUploaded) > maxFiles){
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                         .body(new FileUploadResponse("Byl překročen limit počtu souborů na uživatele. Maximum je: " + maxFiles));
@@ -99,7 +99,7 @@ public class UploadFileController {
                     if(fileExists(id, fileName)){
                         fileName = renameExistingFile(userFolderPath, fileName);
                     }
-                    Files.write(Paths.get(FileUtil.folderPath + id + "//" + fileName), bytes);
+                    Files.write(Paths.get(FileUtil.reportsFolderPath + id + "//" + fileName), bytes);
                     fileNames.add(file.getOriginalFilename());
                 } catch (IOException e) {
 

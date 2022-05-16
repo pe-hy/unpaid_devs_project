@@ -58,6 +58,14 @@ public class CoordinatorController {
         return coordinatorService.addSchool(newSchoolDto);
     }
 
+    //add endpoint for changing phone number
+    @PostMapping("/changePhoneNumber")
+    @ResponseStatus(HttpStatus.OK)
+    public String changePhoneNumber(@Valid @RequestBody String phoneNumber, Principal principal) {
+        String result = phoneNumber.replaceAll("\"", "");
+        return coordinatorService.changePhoneNumber(principal.getName(), result);
+    }
+
     @PostMapping("/addSubject")
     @ResponseStatus(HttpStatus.CREATED)
     public String addSubject(@Valid @RequestBody SubjectDto subjectDto) {

@@ -67,4 +67,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<Long> findAllStudentIdsByStudentPracticeIds(@Param("id") Long id, Pageable pageable);
 
     User findUserById(Long id);
+
+    //create a query to change the phone number of a user
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.id = :id")
+    int changeUserPhoneNumber(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
 }

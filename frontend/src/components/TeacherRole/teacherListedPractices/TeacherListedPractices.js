@@ -11,7 +11,6 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {addDays} from 'date-fns';
 import {useSelector} from 'react-redux';
 
@@ -201,44 +200,40 @@ export const TeacherListedPractices = () => {
                         setShowing(!showing);
                         changeBtnText();
                     }}><BsSearch style={iconStyles}/> {btnText}</button>
-                    <TransitionGroup>
-                        <CSSTransition>
-                            <div style={{overflow: 'hidden'}}>
-                                <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
-                                    <div className="customFilters">
-                                        <div className="col align-self-center">
-                                            <div className="align-self-center search-school">
-                                                <p>Vyberte předmět</p>
-                                                <Combobox
-                                                    data={subjects}
-                                                    value={selectedSubjectName}
-                                                    onChange={value => selectSubjectChange(value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col align-self-center search-date">
-                                            <p>Vyberte datum (od - do)</p>
-                                            <DateRange
-                                                editableDateInputs={true}
-                                                onChange={item => selectDateRange(item)}
-                                                moveRangeOnFirstSelection={false}
-                                                ranges={dateRange}
-                                                locale={rdrLocales.cs}
-                                                minDate={dateLimit[0]}
-                                                maxDate={dateLimit[1]}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="center">
-                                        <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
-                                            resetFilter();
-                                        }}><BsFillXCircleFill style={iconStyles}/> Reset
-                                        </button>
+                    <div style={{overflow: 'hidden'}}>
+                        <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                            <div className="customFilters">
+                                <div className="col align-self-center">
+                                    <div className="align-self-center search-school">
+                                        <p>Vyberte předmět</p>
+                                        <Combobox
+                                            data={subjects}
+                                            value={selectedSubjectName}
+                                            onChange={value => selectSubjectChange(value)}
+                                        />
                                     </div>
                                 </div>
+                                <div className="col align-self-center search-date">
+                                    <p>Vyberte datum (od - do)</p>
+                                    <DateRange
+                                        editableDateInputs={true}
+                                        onChange={item => selectDateRange(item)}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={dateRange}
+                                        locale={rdrLocales.cs}
+                                        minDate={dateLimit[0]}
+                                        maxDate={dateLimit[1]}
+                                    />
+                                </div>
                             </div>
-                        </CSSTransition>
-                    </TransitionGroup>
+                            <div className="center">
+                                <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
+                                    resetFilter();
+                                }}><BsFillXCircleFill style={iconStyles}/> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <hr/>
                 </div>
                 {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -356,8 +351,8 @@ export const TeacherListedPractices = () => {
 
                                         <div className="d-flex" style={{marginTop: "10px"}}>
                                             <div><b>Registrovaní studenti: </b>
-                                            {item.studentNames.length === 0 &&
-                                                <span><i>Žádný student se prozatím na praxi nezaregistroval.</i></span>}
+                                                {item.studentNames.length === 0 &&
+                                                    <span><i>Žádný student se prozatím na praxi nezaregistroval.</i></span>}
                                             </div>
                                             <div>{item.studentNames.map((item, index) => (
                                                 <div className="margin-left-cstm">{item}</div>))}</div>

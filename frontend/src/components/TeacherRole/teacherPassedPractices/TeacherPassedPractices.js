@@ -43,6 +43,7 @@ export const TeacherPassedPractices = () => {
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedId, setSelectedId] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [errorId, setErrorId] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [dateRange, setDateRange] = useState([
         {
@@ -60,13 +61,13 @@ export const TeacherPassedPractices = () => {
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
 
     const onFileChange = (e) => {
+
         setSelectedFile(e.target.files[0]);
     };
 
-    const onFileUpload = (e, id) => {
+    const onFileUpload = (e, id, index) => {
         e.preventDefault();
         let formData = new FormData();
-        console.log(id, "selected id");
         formData.append('file', selectedFile);
         formData.append('id', id);
 
@@ -78,6 +79,7 @@ export const TeacherPassedPractices = () => {
             data: formData,
         }).then(function (response) {
             console.log(JSON.stringify(response.data));
+            setErrorId(index);
             setSuccessMessage("Soubor byl úspěšně nahrán.");
             setErrorMessage("");
             getPraxe();
@@ -90,8 +92,9 @@ export const TeacherPassedPractices = () => {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                    setSuccessMessage("");
-            setErrorMessage(resMessage);
+                setErrorId(index);
+                setSuccessMessage("");
+                setErrorMessage(resMessage);
             });
     }
 
@@ -444,7 +447,7 @@ export const TeacherPassedPractices = () => {
                                         <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
                                             <Form.Control type="file" />
                                         </Form.Group>
-                                        <button className="toggleButtonFilters" disabled={selectedFile.length == 0} onClick={(e) => { onFileUpload(e, item.id) }}>
+                                        <button className="toggleButtonFilters" disabled={selectedFile != null ? selectedFile.length == 0 : false} onClick={(e) => { onFileUpload(e, item.id, index) }}>
                                             Nahrát report
                                         </button>
                                     </Form>
@@ -464,8 +467,8 @@ export const TeacherPassedPractices = () => {
                                         </OverlayTrigger>
                                         <b>Report ke stažení: </b>
                                         <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
-                                        {errorMessage && <div className="alert alert-danger center warnTextPractices"><span>{errorMessage}</span></div>}
-                                        {successMessage && <div className="alert alert-success center text-bold" role="alert">
+                                        {errorMessage && errorId === index && <div className="alert alert-danger center warnTextPractices"><span>{errorMessage}</span></div>}
+                                        {successMessage && errorId === index && <div className="alert alert-success center text-bold" role="alert">
                                             <span>{successMessage}</span>
                                         </div>}
                                     </div>

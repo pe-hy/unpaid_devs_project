@@ -47,7 +47,7 @@ const CoordinatorPersonalPageComponent = () => {
 
     const validatePhoneNum = (number) => {
         if (number === "") {
-            return true;
+            return false;
         }
         return String(number)
             .toLowerCase()

@@ -463,6 +463,9 @@ export const TeacherPassedPractices = () => {
                                             </span>
                                         </OverlayTrigger>
                                         <b>Report ke stažení: </b>
+                                        {!item.report &&
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                        }
                                         <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
                                         {errorMessage && <div className="alert alert-danger center warnTextPractices"><span>{errorMessage}</span></div>}
                                         {successMessage && <div className="alert alert-success center text-bold" role="alert">

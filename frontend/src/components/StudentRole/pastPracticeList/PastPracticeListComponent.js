@@ -434,6 +434,9 @@ export const PastPracticeListComponent = () => {
                                         }
                                     </ul>
                                     <b>Report ke stažení: </b>
+                                    {!item.report &&
+                                        <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                    }
                                     <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
                                 </div>
                             </div>

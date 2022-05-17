@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +153,20 @@ public class CoordinatorService {
             if (ret == 1) return "School was edited";
             else return "Something went wrong;";
         } else return "School wasn't edited";
+
+    }
+
+    public String changePhoneNumber(String username, String phoneNumber) {
+        System.out.println(username + " " + phoneNumber);
+        if (userRepository.findByEmail(username).isPresent()) {
+            Long userId = userRepository.findByEmail(username).get().getId();
+            System.out.println("Editing" + " " + username + " " + "phone number.");
+
+            int ret = userRepository.changeUserPhoneNumber(phoneNumber, userId);
+
+            if (ret == 1) return "Phone number was edited";
+            else return "Something went wrong;";
+        } else return "Phone number wasn't edited";
 
     }
 }

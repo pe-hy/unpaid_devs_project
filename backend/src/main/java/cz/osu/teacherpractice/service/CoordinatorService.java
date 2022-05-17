@@ -57,6 +57,8 @@ public class CoordinatorService {
             p.setNumberOfReservedStudents();
             p.setStudentNames(teacherService.getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            String report = userService.getPracticeReport(p.getId());
+            p.setReport(report);
             toDelete.add(p);
         });
 

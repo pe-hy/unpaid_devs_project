@@ -6,6 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +31,12 @@ public class FileService {
     }
 
     public String figureOutReportNameFor(Long id){
-        return FileUtil.reportsFolderPath + "/" + id;
+        try (Stream<Path> files = Files.list(Paths.get(FileUtil.reportsFolderPath + id))) {
+            String fileName = files.collect(Collectors.toList()).get(0).toString();
+            return fileName;
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 }

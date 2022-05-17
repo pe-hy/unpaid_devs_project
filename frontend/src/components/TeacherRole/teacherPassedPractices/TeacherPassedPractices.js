@@ -42,6 +42,8 @@ export const TeacherPassedPractices = () => {
     const [btnText, setBtnText] = useState("Zobrazit možnosti vyhledávání");
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedId, setSelectedId] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const [dateRange, setDateRange] = useState([
         {
             startDate: new Date(),
@@ -76,6 +78,9 @@ export const TeacherPassedPractices = () => {
             data: formData,
         }).then(function (response) {
             console.log(JSON.stringify(response.data));
+            setSuccessMessage("Soubor byl úspěšně nahrán.");
+            setErrorMessage("");
+            getPraxe();
         })
             .catch(function (error) {
                 console.log(error);
@@ -85,6 +90,8 @@ export const TeacherPassedPractices = () => {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
+                    setSuccessMessage("");
+            setErrorMessage(resMessage);
             });
     }
 
@@ -437,7 +444,7 @@ export const TeacherPassedPractices = () => {
                                         <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
                                             <Form.Control type="file" />
                                         </Form.Group>
-                                        <button className="toggleButtonFilters" onClick={(e) => {onFileUpload(e, item.id) }}>
+                                        <button className="toggleButtonFilters" disabled={selectedFile.length == 0} onClick={(e) => { onFileUpload(e, item.id) }}>
                                             Nahrát report
                                         </button>
                                     </Form>
@@ -455,7 +462,12 @@ export const TeacherPassedPractices = () => {
                                                 <BsInfoCircleFill className={"info-tooltip"} />
                                             </span>
                                         </OverlayTrigger>
-                                        <b>Report ke stažení: {item.report}</b>
+                                        <b>Report ke stažení: </b>
+                                        <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
+                                        {errorMessage && <div className="alert alert-danger center warnTextPractices"><span>{errorMessage}</span></div>}
+                                        {successMessage && <div className="alert alert-success center text-bold" role="alert">
+                                            <span>{successMessage}</span>
+                                        </div>}
                                     </div>
                                 </div>
                             </div>

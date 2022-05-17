@@ -1,13 +1,13 @@
 import Navbar from "react-bootstrap/Navbar";
-import {Container, Nav} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import { Container, Nav } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../../../resources/OUbile.png";
 import "./NavbarStyles.css";
-import {BsFillHouseFill, BsFillPersonFill} from "react-icons/bs";
+import { BsFillHouseFill, BsFillPersonFill } from "react-icons/bs";
 import LoginControlComponent from "../login/logincontrol/LoginControlComponent";
 
-let iconStyles = {fontSize: "2.5em"};
+let iconStyles = { fontSize: "2.5em" };
 
 function refreshPage() {
     window.location.reload();
@@ -61,27 +61,27 @@ const NavbarComponent = () => {
                             alt="logo"
                         />
                     </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
-                        {JSON.parse(localStorage.getItem("user")) &&
+
                         <Nav className="me-auto">
                             <Nav.Link className="ms-md-5">
                                 <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
-                                  <BsFillHouseFill style={iconStyles}/>
-                                  <p className={"p-margin"}>Home</p>
+                                    <BsFillHouseFill style={iconStyles} />
+                                    <p className={"p-margin"}>Home</p>
                                 </span>
                             </Nav.Link>
                             <Nav.Link className="ms-md-5">
                                 <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
-                                  <BsFillPersonFill style={iconStyles}/>
-                                  <p className={"p-margin"}>Účet</p>
+                                    <BsFillPersonFill style={iconStyles} />
+                                    <p className={"p-margin"}>Účet</p>
                                 </span>
                             </Nav.Link>
                         </Nav>
-                        }
+
                         <Nav>
                             <Nav eventkey={2} className="navbar-text white">
-                                <LoginControlComponent/>
+                                <LoginControlComponent />
                             </Nav>
                         </Nav>
                     </Navbar.Collapse>

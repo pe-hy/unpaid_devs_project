@@ -460,7 +460,8 @@ export const PassedPracticesCoordinator = () => {
                                                 <BsInfoCircleFill className={"info-tooltip"} />
                                             </span>
                                         </OverlayTrigger>
-                                        <b>Report ke stažení:</b>
+                                        <b>Report ke stažení: </b>
+                                        <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
                                     </div>
                                 </div>
                             </div>

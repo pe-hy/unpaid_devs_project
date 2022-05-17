@@ -166,6 +166,7 @@ public class UserService {
             ArrayList<String> list = new ArrayList<>();
 
             if(listOfFiles == null) return null;
+            if(listOfFiles.length == 0) return null;
 
             return listOfFiles[0].getName();
         }

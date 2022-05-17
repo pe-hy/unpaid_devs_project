@@ -147,7 +147,7 @@ export class RegistrationComponent extends Component {
             .then(res => {
                 const schools = res.data;
                 console.log("schools:", schools);
-                var sch = [];
+                const sch = [];
                 schools.forEach(element => sch.push(element));
                 this.setSchools({sch});
                 this.setState({

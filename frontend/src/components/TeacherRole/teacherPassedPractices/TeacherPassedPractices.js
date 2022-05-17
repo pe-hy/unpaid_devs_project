@@ -141,7 +141,7 @@ export const TeacherPassedPractices = () => {
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {
-                var sch = [];
+                const sch = [];
                 response.data.forEach(element => sch.push(element.name));
                 setSubjects(sch);
 
@@ -190,15 +190,15 @@ export const TeacherPassedPractices = () => {
                     return true;
                 }
 
-                if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name != selectedSchool)) {
+                if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name !== selectedSchool)) {
                     return false;
                 }
 
-                if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name != selectedSubjectName)) {
+                if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name !== selectedSubjectName)) {
                     return false;
                 }
 
-                if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName != selectedTeacherName.split(" ")[0] || item.teacher.secondName != selectedTeacherName.split(" ")[1])) {
+                if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName !== selectedTeacherName.split(" ")[0] || item.teacher.secondName !== selectedTeacherName.split(" ")[1])) {
                     return false;
                 }
 
@@ -339,7 +339,7 @@ export const TeacherPassedPractices = () => {
                             </Row>
                         </div>
                     </div>
-                    {search(practices).length == 0 ?
+                    {search(practices).length === 0 ?
                         <div className="alert alert-danger center warnTextPractices"><span>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</span>
                         </div> : null}
                     {practices && search(practices).map((item, index) => (
@@ -439,7 +439,7 @@ export const TeacherPassedPractices = () => {
                                             <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
                                                 <Form.Control type="file"/>
                                             </Form.Group>
-                                            <button className="toggleButtonFilters" disabled={selectedFile.length == 0}
+                                            <button className="toggleButtonFilters" disabled={selectedFile.length === 0}
                                                     onClick={(e) => {
                                                         onFileUpload(e, item.id)
                                                     }}>

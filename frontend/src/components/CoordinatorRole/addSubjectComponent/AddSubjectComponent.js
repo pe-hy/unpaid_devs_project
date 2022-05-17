@@ -89,7 +89,7 @@ export const AddSubjectComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSubjects(sch);
         });
@@ -154,8 +154,8 @@ export const AddSubjectComponent = () => {
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
-                        var subjectEdit = document.getElementById("subject_edit_input");
-                        var value = subjectEdit.value;
+                        const subjectEdit = document.getElementById("subject_edit_input");
+                        const value = subjectEdit.value;
                         newSubjectName[0] = value;
                         if (validate()) {
                             props.onHide();

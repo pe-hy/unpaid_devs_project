@@ -34,7 +34,7 @@ class AuthService {
     }
 
     register(email, firstName, lastName, school, phoneNumber, password, role) {
-        var formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
+        const formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
         console.log(formData);
 
         return axios({
@@ -51,7 +51,7 @@ class AuthService {
     }
 
     registerCoordinator(email, firstName, lastName, password, role) {
-        var formData = JSON.stringify({email, firstName, lastName, password, role});
+        const formData = JSON.stringify({email, firstName, lastName, password, role});
         console.log(formData);
 
         return axios({
@@ -81,7 +81,7 @@ class AuthService {
     }
 
     changePassword(oldPassword, newPassword) {
-        var formData = JSON.stringify({oldPassword, newPassword});
+        const formData = JSON.stringify({oldPassword, newPassword});
         console.log(formData);
 
         return axios({
@@ -98,7 +98,7 @@ class AuthService {
     }
 
     forgotPasswordEmail(email) {
-        var data = new FormData();
+        const data = new FormData();
         data.append('email', email);
 
         return axios({
@@ -117,7 +117,7 @@ class AuthService {
 
     forgotPasswordAfterAuthorization(password, token) {
         let form = { "newPassword": password, "token": token };
-        var data = new FormData();
+        const data = new FormData();
         data.append('newPassword', password);
         data.append('token', token);
 

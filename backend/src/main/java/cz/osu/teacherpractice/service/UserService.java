@@ -130,6 +130,16 @@ public class UserService {
         return mapper.usersToUsersDto(userRepository.getAllTeachers());
     }
 
+    //create getStudents method
+    public List<UserDto> getStudents() {
+        return mapper.usersToUsersDto(userRepository.getAllStudents());
+    }
+
+    //create getCoordinators method
+    public List<UserDto> getCoordinators() {
+        return mapper.usersToUsersDto(userRepository.getAllCoordinators());
+    }
+
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
     }
@@ -193,5 +203,4 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
-
 }

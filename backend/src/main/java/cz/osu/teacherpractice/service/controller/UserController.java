@@ -86,6 +86,17 @@ public class UserController {
     public List<UserDto> getTeachers() {
         return userService.getTeachers();
     }
+    // create getmapping for students
+    @GetMapping("/user/students")
+    public List<UserDto> getStudents() {
+        return userService.getStudents();
+    }
+
+    //create getmapping for coordinators
+    @GetMapping("/user/coordinators")
+    public List<UserDto> getCoordinators() {
+        return userService.getCoordinators();
+    }
 
     @GetMapping("/user/schools")
     public List<SchoolDto> getSchools() {

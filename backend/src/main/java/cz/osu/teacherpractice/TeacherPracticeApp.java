@@ -76,11 +76,11 @@ public class TeacherPracticeApp {
             st2.setEnabled(true);
             User st3 = new User("P21072@student.osu.cz", "student", "Pavel", "Novotný", school3, null, Role.STUDENT);
             st3.setEnabled(true);
-            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "448896334", Role.TEACHER);
+            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "+420 776 123 456", Role.TEACHER);
             tch.setEnabled(true);
-            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
+            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, "+420 657 142", Role.COORDINATOR);
             coord.setEnabled(true);
-            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, null, Role.ADMIN);
+            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, "775 874 236", Role.ADMIN);
             adm.setEnabled(true);
 
 

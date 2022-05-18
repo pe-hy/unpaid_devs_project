@@ -56,6 +56,17 @@ const CoordinatorPersonalPageComponent = () => {
             );
     }
 
+    const formatPhoneNum = (number) => {
+        let ret = number.replaceAll(" ", "");
+        let formattedNum = "";
+
+        if(ret.substring(3) === "+420"){
+            formattedNum + "+420 ";
+        }
+
+        return ret;
+    }
+
 
 
     const editPhone = async () => {
@@ -88,7 +99,7 @@ const CoordinatorPersonalPageComponent = () => {
                     <p><b><BsAt style={iconStyles} />E-mail:</b> {email}</p>
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-6"><b><BsPhone style={iconStyles} />Telefon</b>: {phone}</div>
+                            <div className="col-sm-6"><b><BsPhone style={iconStyles} />Telefon</b>: {formatPhoneNum(phone)}</div>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 editPhone();

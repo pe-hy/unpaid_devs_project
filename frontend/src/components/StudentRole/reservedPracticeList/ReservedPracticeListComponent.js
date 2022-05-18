@@ -477,7 +477,7 @@ export const ReservedPracticeListComponent = () => {
                                         <p style={{marginTop: "10px"}}><b>Soubory ke stažení:</b></p>
                                         <ul>
                                             {item.fileNames.length === 0 ?
-                                                <p><i>Žádný soubor nebyl nahrán</i></p>
+                                                <p><i>Žádný soubor nebyl nahrán.</i></p>
                                                 : ""}
                                             {item.fileNames.map((name, index) => (
                                                 <li key={index}>

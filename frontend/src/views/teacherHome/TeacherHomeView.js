@@ -4,6 +4,7 @@ import {Navigate} from "react-router-dom";
 import "./TeacherHomeStyles.css";
 import TeacherListedPractices from "../../components/TeacherRole/teacherListedPractices/TeacherListedPractices";
 import TeacherPassedPractices from "../../components/TeacherRole/teacherPassedPractices/TeacherPassedPractices";
+import CoordinatorsComponent from "../../components/UnspecifiedRoles/users/CoordinatorsComponent";
 
 const checkRole = () => {
   return localStorage.getItem("role") !== "ROLE_TEACHER";
@@ -22,6 +23,9 @@ const TeacherHomeView = () => {
         </Tab>
         <Tab eventKey="tab3" title="Přidání praxe">
           <AddPracticeComponent />
+        </Tab>
+        <Tab eventKey="tab4" title="Koordinátoři">
+          <CoordinatorsComponent />
         </Tab>
       </Tabs>
     </div>

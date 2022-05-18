@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.service.token.forgotPasswordToken;
 
+import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.model.User;
 
 import java.util.Calendar;
@@ -16,7 +17,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class PasswordResetToken {
 
-    private static final int EXPIRATION = 60 * 24;
+    private static final int EXPIRATION = AppConfig.FORGOT_PASSWORD_TOKEN_EXPIRY_TIME;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -68,12 +68,20 @@ public class StudentService {
         practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
 
         List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
 
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
             p.setIsCurrentStudentReserved(studentUsername);
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
         });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removeNotPassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
 
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
@@ -85,7 +93,6 @@ public class StudentService {
         );
 
         Long studentId = student.getId();
-
 
         List<Practice> practices = practiceRepository.findAllBystudents_id(studentId, pageable);
 
@@ -99,6 +106,8 @@ public class StudentService {
             p.setNumberOfReservedStudents();
             p.setIsCurrentStudentReserved(studentUsername);
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            String report = userService.getPracticeReport(p.getId());
+            p.setReport(report);
             toDelete.add(p);
         });
 

@@ -5,7 +5,7 @@ import { Alert, Button, ButtonGroup, Col, Container, Form, InputGroup, Modal, Ro
 import { BsCheckLg, BsExclamationTriangleFill } from "react-icons/bs";
 import "./AddSchoolComponent.css";
 import Combobox from "react-widgets/Combobox";
-import {BsFillPencilFill} from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const REMOVE_SCHOOL_URL = `${URL}/coordinator/removeSchool`;
@@ -14,6 +14,10 @@ const ASSIGN_SCHOOL_URL = `${URL}/coordinator/assignSchool`;
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
 const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSchool`;
 const ADD_SCHOOL_URL = `${URL}/coordinator/addSchool`;
+
+const MAX_TEXT_LENGTH = 50;
+const MIN_TEXT_LENGTH = 10;
+const LENGTH_ERROR_MSG = "Špatná délka školy (10 - 50 znaků)";
 
 
 export const AddSchoolComponent = () => {
@@ -35,6 +39,22 @@ export const AddSchoolComponent = () => {
 
     const [errorMsg, setErrorMsg] = useState("");
 
+    const validate = () => {
+        if (newSchoolName[0].length < MIN_TEXT_LENGTH || newSchoolName[0].length > MAX_TEXT_LENGTH) {
+            setErrorMsg(LENGTH_ERROR_MSG);
+            return false;
+        }
+        return true;
+    }
+
+    const validateAddSchool = () => {
+        if (formData.name.length < MIN_TEXT_LENGTH || formData.name.length > MAX_TEXT_LENGTH) {
+            setErrorMsg(LENGTH_ERROR_MSG);
+            return false;
+        }
+        return true;
+    }
+
     const removeSchool = async () => {
         const response = await axios({
             headers: { 'content-type': 'application/json' },
@@ -54,9 +74,6 @@ export const AddSchoolComponent = () => {
     };
 
     const editSchool = async () => {
-        var schoolEdit = document.getElementById("school_edit_input");
-        var value = schoolEdit.value;
-        newSchoolName[0] = value
         let form = { "originalSchool": currSchool, "newSchool": newSchoolName[0] };
         const response = await axios({
             headers: { 'content-type': 'application/json' },
@@ -101,14 +118,14 @@ export const AddSchoolComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSchools(sch);
         });
     };
 
     const selectSchoolChange = (value) => {
-        var combobox = document.getElementById("combo_input");
+        const combobox = document.getElementById("combo_input");
         currAssignedSchool[0] = value
         combobox.value = value;
     }
@@ -186,8 +203,20 @@ export const AddSchoolComponent = () => {
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
-                        props.onHide();
-                        editSchool();
+                        const schoolEdit = document.getElementById("school_edit_input");
+                        const value = schoolEdit.value;
+                        newSchoolName[0] = value
+                        if (validate()) {
+                            props.onHide();
+                            editSchool();
+                            setshowSuccessAlert(false);
+                        }
+                        else {
+                            props.onHide();
+                            setshowDangerAlert(true);
+                            setshowSuccessAlert(false);
+                        }
+
                     }}>Upravit školu
                     </button>
                 </Modal.Footer>
@@ -225,30 +254,37 @@ export const AddSchoolComponent = () => {
 
     const handleChange = (e) => {
         setshowSuccessAlert(false);
+        setshowDangerAlert(false);
         setFormData({ ...formData, "name": e.target.value.trim() });
     };
 
     const addSchool = async (event) => {
         event.preventDefault();
-        const response = await axios({
-            url: ADD_SCHOOL_URL,
-            withCredentials: true,
-            method: "POST",
-            data: formData,
-        }).catch((err) => {
-            let msg = err.response.data["message"];
-            msg = msg.split(":")[1];
-            setErrorMsg(msg);
-            setshowSuccessAlert(false);
+        if (!validateAddSchool()) {
             setshowDangerAlert(true);
-            console.log(err.response.data);
-            getSchools();
-        });
-        if (response) {
-            setshowDangerAlert(false);
-            setshowSuccessAlert(true);
-            document.getElementById("add_school_input").value = "";
-            await getSchools();
+        }
+        else {
+            event.preventDefault();
+            const response = await axios({
+                url: ADD_SCHOOL_URL,
+                withCredentials: true,
+                method: "POST",
+                data: formData,
+            }).catch((err) => {
+                let msg = err.response.data["message"];
+                msg = msg.split(":")[1];
+                setErrorMsg(msg);
+                setshowSuccessAlert(false);
+                setshowDangerAlert(true);
+                console.log(err.response.data);
+                getSchools();
+            });
+            if (response) {
+                setshowDangerAlert(false);
+                setshowSuccessAlert(true);
+                document.getElementById("add_school_input").value = "";
+                await getSchools();
+            }
         }
     };
 
@@ -314,12 +350,13 @@ export const AddSchoolComponent = () => {
                                 {schools &&
                                     schools.map((item, index) => (
                                         <tr key={index} className="align-middle">
-                                            <td><span>{item}</span></td>
-                                            <td style={{textAlign: "center"}}>
+                                            <td className="w-100"><span>{item}</span></td>
+                                            <td style={{ textAlign: "center" }}>
                                                 <button onClick={() => {
                                                     setModalShow(true);
                                                     setCurrSchool(item);
-                                                    }} type="button" className="edit-btn"><BsFillPencilFill/>
+                                                    setshowDangerAlert(false);
+                                                }} type="button" className="edit-btn"><BsFillPencilFill />
                                                 </button>
                                             </td>
                                         </tr>

@@ -9,6 +9,7 @@ import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
@@ -37,6 +38,7 @@ public class UserService {
     private final MapStructMapper mapper;
     private final ConfirmationTokenService confirmationTokenService;
     private final PasswordResetTokenRepository passwordTokenRepository;
+    private final PracticeRepository practiceRepository;
 
     public User createUser(User user) {
         if (userRepository.findByEmail(user.getUsername()).isPresent()) {
@@ -81,6 +83,11 @@ public class UserService {
         return "email not found";
     }
 
+    public String signUpCoordinator(User user){
+        createUser(user);
+        return "Koordinátor byl vytvořen";
+    }
+
     public String signUpUser(User user){
         createUser(user);
 
@@ -89,7 +96,7 @@ public class UserService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME),
+                LocalDateTime.now().plusMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME),
                 user
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
@@ -123,6 +130,16 @@ public class UserService {
         return mapper.usersToUsersDto(userRepository.getAllTeachers());
     }
 
+    //create getStudents method
+    public List<UserDto> getStudents() {
+        return mapper.usersToUsersDto(userRepository.getAllStudents());
+    }
+
+    //create getCoordinators method
+    public List<UserDto> getCoordinators() {
+        return mapper.usersToUsersDto(userRepository.getAllCoordinators());
+    }
+
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
     }
@@ -150,6 +167,24 @@ public class UserService {
         }
     }
 
+    public String getPracticeReport(Long id){
+        if(practiceRepository.findById(id).isPresent()){
+
+            File folder = new File(FileUtil.reportsFolderPath + id);
+            File[] listOfFiles = folder.listFiles();
+
+            ArrayList<String> list = new ArrayList<>();
+
+            if(listOfFiles == null) return null;
+            if(listOfFiles.length == 0) return null;
+
+            return listOfFiles[0].getName();
+        }
+        else{
+            throw new ServerErrorException("Praxe nebyla nalezena.");
+        }
+    }
+
     public void createPasswordResetTokenForUser(User user, String token) {
         PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordTokenRepository.save(myToken);
@@ -168,5 +203,4 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
-
 }

@@ -4,16 +4,20 @@ import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSubjectDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,6 +38,12 @@ public class CoordinatorController {
 
         return coordinatorService.getWaitingList();
     }
+    @GetMapping("/practices-list-past")
+    public List<StudentPracticeDto> getPracticesListPast(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                         @RequestParam(required=false) Long subjectId, Pageable pageable) {
+
+        return coordinatorService.getPracticesListPast(date, subjectId, pageable);
+    }
 
     @PostMapping(path = "/removeUser")
     public String removeUser(@RequestBody String request) {
@@ -46,6 +56,14 @@ public class CoordinatorController {
     public String addSchool(@Valid @RequestBody SchoolDto newSchoolDto) {
         System.out.println(newSchoolDto);
         return coordinatorService.addSchool(newSchoolDto);
+    }
+
+    //add endpoint for changing phone number
+    @PostMapping("/changePhoneNumber")
+    @ResponseStatus(HttpStatus.OK)
+    public String changePhoneNumber(@Valid @RequestBody String phoneNumber, Principal principal) {
+        String result = phoneNumber.replaceAll("\"", "");
+        return coordinatorService.changePhoneNumber(principal.getName(), result);
     }
 
     @PostMapping("/addSubject")

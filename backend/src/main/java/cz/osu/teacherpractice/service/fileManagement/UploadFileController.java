@@ -1,5 +1,7 @@
 package cz.osu.teacherpractice.service.fileManagement;
 import cz.osu.teacherpractice.config.AppConfig;
+import cz.osu.teacherpractice.model.Practice;
+import cz.osu.teacherpractice.repository.PracticeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ import cz.osu.teacherpractice.repository.UserRepository;
 public class UploadFileController {
 
     private final UserRepository userRepository;
+    private final PracticeRepository practiceRepository;
+    private final FileService fileService;
 
     @PostMapping("/teacher/upload")
     public ResponseEntity<FileUploadResponse> uploadFiles(Principal principal, @RequestParam("files") MultipartFile[] files) {
@@ -55,6 +59,57 @@ public class UploadFileController {
                         fileName = renameExistingFile(userFolderPath, fileName);
                     }
                     Files.write(Paths.get(FileUtil.folderPath + id + "//" + fileName), bytes);
+                    fileNames.add(file.getOriginalFilename());
+                } catch (IOException e) {
+
+                }
+            });
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new FileUploadResponse("Soubory byly úspěšně nahrány: " + fileNames));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new FileUploadResponse("Došlo k neočekávané chybě!"));
+        }
+    }
+
+    @PostMapping("/teacher/report/upload")
+    public ResponseEntity<FileUploadResponse> uploadReport(Principal principal,@RequestParam("id") Long id, @RequestParam("file") MultipartFile[] files) {
+        try {
+            File userFolderPath = new File(FileUtil.reportsFolderPath + id);
+            createDirIfNotExist(userFolderPath);
+            int maxFiles = AppConfig.MAXIMUM_NUMBER_OF_REPORTS;
+            int numberOfFilesUploaded = files.length;
+
+            long filesNum = FileUtil.getNumberOfReportsInFolder(id);
+            if((filesNum + numberOfFilesUploaded) > maxFiles){
+                String name = fileService.figureOutReportNameFor(id);
+
+                File file
+                        = new File(name);
+
+                if (file.delete()) {
+                    System.out.println("File deleted successfully");
+                }
+                else {
+                    System.out.println("Failed to delete the file");
+                }
+            }
+
+            List<String> fileNames = new ArrayList<>();
+
+            // read and write the file to the local folder
+            Arrays.asList(files).stream().forEach(file -> {
+                byte[] bytes = new byte[0];
+                try {
+                    bytes = file.getBytes();
+                    String fileName = file.getOriginalFilename();
+                    File path = new File(FileUtil.folderPath + id + "//" + fileName);
+                    if(fileExists(id, fileName)){
+                        fileName = renameExistingFile(userFolderPath, fileName);
+                    }
+                    Files.write(Paths.get(FileUtil.reportsFolderPath + id + "//" + fileName), bytes);
                     fileNames.add(file.getOriginalFilename());
                 } catch (IOException e) {
 

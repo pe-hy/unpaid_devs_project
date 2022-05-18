@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Alert, Button, ButtonGroup, Col, Form, InputGroup, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
-import {BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill, BsInfoCircleFill} from "react-icons/bs";
-import {Navigate} from "react-router-dom";
-import {axios} from "../../../axios";
+import React, { useEffect, useState } from "react";
+import { Alert, Button, ButtonGroup, Col, Form, InputGroup, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { BsCheckLg, BsExclamationTriangleFill, BsFillPencilFill, BsInfoCircleFill } from "react-icons/bs";
+import { Navigate } from "react-router-dom";
+import { axios } from "../../../axios";
 import "./TabsStyles.css";
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../../../redux/todoSlice.js';
@@ -26,19 +26,19 @@ const TabsForm = () => {
     const [errorMsg, setErrorMsg] = useState("");
     const [noteLen, setNoteLen] = useState(0);
 
-	const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const onSubmit = () => {
-			dispatch(
-				addTodo({
-					title: "a",
-				})
-			);
-	};
+        dispatch(
+            addTodo({
+                title: "a",
+            })
+        );
+    };
 
     const handleChange = (e) => {
         setshowSuccessAlert(false);
-        setFormData({...formData, [e.target.name]: e.target.value.trim()});
+        setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
     };
 
     const handleTyping = (e) => {
@@ -66,11 +66,11 @@ const TabsForm = () => {
 
     const checkFormData = () => {
         if (!formData["subject"]) {
-            formData["subject"] = {id: subjects.at(0).id, name: subjects.at(0).name};
+            formData["subject"] = { id: subjects.at(0).id, name: subjects.at(0).name };
         } else {
             subjects.forEach((element) => {
                 if (element.name === formData["subject"]) {
-                    formData["subject"] = {id: element.id, name: element.name};
+                    formData["subject"] = { id: element.id, name: element.name };
                 }
             });
         }
@@ -107,6 +107,10 @@ const TabsForm = () => {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
             onSubmit();
+            if (document.getElementById("tab-tab-tab1")) {
+                document.getElementById("tab-tab-tab1").click();
+            }
+
         }
     };
 
@@ -114,7 +118,7 @@ const TabsForm = () => {
         return localStorage.getItem("role") !== "ROLE_TEACHER";
     };
 
-    if (checkRole()) return <Navigate to="/login"/>;
+    if (checkRole()) return <Navigate to="/login" />;
     return (
         <Form onSubmit={addPraxe} id="Form">
             <Row>
@@ -224,9 +228,9 @@ const TabsForm = () => {
                                     </Tooltip>
                                 }
                             >
-                <span>
-                  <BsInfoCircleFill className={"info-tooltip"}/>
-                </span>
+                                <span>
+                                    <BsInfoCircleFill className={"info-tooltip"} />
+                                </span>
                             </OverlayTrigger>
                             Kapacita</Col>
                         <Col sm={8}>
@@ -246,7 +250,7 @@ const TabsForm = () => {
                 </Col>
                 <Col sm={5} className={"p-padding"}>
                     <Form.Group className="m-4" role="form">
-                        <p className={"p-padding"}><BsFillPencilFill className={"info-tooltip"}/>{noteLen}/250</p>
+                        <p className={"p-padding"}><BsFillPencilFill className={"info-tooltip"} />{noteLen}/250</p>
                         <Form.Control
                             name="note"
                             id="Poznamka"
@@ -281,14 +285,14 @@ const TabsForm = () => {
                     variant="danger"
                     className="alert-practice-error"
                 >
-                    <BsExclamationTriangleFill className={"alert-icon-error"}/> {errorMsg}
+                    <BsExclamationTriangleFill className={"alert-icon-error"} /> {errorMsg}
                 </Alert>
                 <Alert
                     show={showSuccessAlert}
                     variant="success"
                     className="alert-practice-success"
                 >
-                    <BsCheckLg className={"alert-icon-success "}/> Vytvoření proběhlo úspěšně
+                    <BsCheckLg className={"alert-icon-success "} /> Vytvoření proběhlo úspěšně
                 </Alert>
             </div>
         </Form>

@@ -147,7 +147,7 @@ export class RegistrationComponent extends Component {
             .then(res => {
                 const schools = res.data;
                 console.log("schools:", schools);
-                var sch = [];
+                const sch = [];
                 schools.forEach(element => sch.push(element));
                 this.setSchools({sch});
                 this.setState({
@@ -368,7 +368,7 @@ export class RegistrationComponent extends Component {
                   <OverlayTrigger
                       overlay={
                           <Tooltip>
-                              Heslo musí být alespoň 6 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1
+                              Heslo musí být alespoň 8 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1
                               speciální znak.
                           </Tooltip>
                       }
@@ -559,7 +559,7 @@ export class RegistrationComponent extends Component {
                   <OverlayTrigger
                       overlay={
                           <Tooltip>
-                              Heslo musí být alespoň 6 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1
+                              Heslo musí být alespoň 8 znaků dlouhé. Heslo musí obsahovat alespoň 1 písmeno, 1 číslo a 1
                               speciální znak.
                           </Tooltip>
                       }

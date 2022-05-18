@@ -2,6 +2,7 @@ import axios from "axios";
 
 const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
+const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/admin/registerCoordinator`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
 const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/reset`;
@@ -33,13 +34,30 @@ class AuthService {
     }
 
     register(email, firstName, lastName, school, phoneNumber, password, role) {
-        var formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
+        const formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
         console.log(formData);
 
         return axios({
             url: REGISTER_URL,
             headers: {'content-type': 'application/json'},
             withCredentials: false,
+            method: "POST",
+            data: formData,
+        }).then((response) => {
+            if (response) {
+            }
+            return response.data;
+        });
+    }
+
+    registerCoordinator(email, firstName, lastName, password, role) {
+        const formData = JSON.stringify({email, firstName, lastName, password, role});
+        console.log(formData);
+
+        return axios({
+            url: REGISTER_COORDINATOR_URL,
+            headers: {'content-type': 'application/json'},
+            withCredentials: true,
             method: "POST",
             data: formData,
         }).then((response) => {
@@ -63,7 +81,7 @@ class AuthService {
     }
 
     changePassword(oldPassword, newPassword) {
-        var formData = JSON.stringify({oldPassword, newPassword});
+        const formData = JSON.stringify({oldPassword, newPassword});
         console.log(formData);
 
         return axios({
@@ -80,7 +98,7 @@ class AuthService {
     }
 
     forgotPasswordEmail(email) {
-        var data = new FormData();
+        const data = new FormData();
         data.append('email', email);
 
         return axios({
@@ -99,7 +117,7 @@ class AuthService {
 
     forgotPasswordAfterAuthorization(password, token) {
         let form = { "newPassword": password, "token": token };
-        var data = new FormData();
+        const data = new FormData();
         data.append('newPassword', password);
         data.append('token', token);
 

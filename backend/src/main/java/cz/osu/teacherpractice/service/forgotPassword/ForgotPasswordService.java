@@ -1,24 +1,8 @@
 package cz.osu.teacherpractice.service.forgotPassword;
 
 import cz.osu.teacherpractice.config.AppConfig;
-import cz.osu.teacherpractice.dto.request.RegistrationDto;
-import cz.osu.teacherpractice.model.Role;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.repository.SchoolRepository;
-import cz.osu.teacherpractice.repository.UserRepository;
-import cz.osu.teacherpractice.service.UserService;
-import cz.osu.teacherpractice.service.email.EmailSender;
-import cz.osu.teacherpractice.service.email.EmailValidator;
-import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
-import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-
-import static cz.osu.teacherpractice.config.AppConfig.baseUrlProduction;
 
 @Service
 @AllArgsConstructor
@@ -80,7 +64,7 @@ public class ForgotPasswordService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Dobrý den, " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Zažádali jste o změnu hesla. Pokud jste to nebyli Vy, tak tento e-mail ignorujte. Otevřete prosím následující odkaz k potvrzení e-mailu: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Odkaz na změnu hesla</a> </p></blockquote>\n Odkaz na změnu hesla vyprší za " + AppConfig.CONFIRMATION_TOKEN_EXPIRY_TIME + " minut." +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Dobrý den, " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Zažádali jste o změnu hesla. Pokud jste to nebyli Vy, tak tento e-mail ignorujte. Otevřete prosím následující odkaz k potvrzení e-mailu: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Odkaz na změnu hesla</a> </p></blockquote>\n Odkaz na změnu hesla vyprší za " + AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME + " minut." +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

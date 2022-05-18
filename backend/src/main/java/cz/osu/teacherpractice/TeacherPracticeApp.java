@@ -1,25 +1,33 @@
 package cz.osu.teacherpractice;
 
+import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.model.*;
 import cz.osu.teacherpractice.repository.PracticeRepository;
 import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import cz.osu.teacherpractice.service.UserService;
-import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetToken;
 import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenRepository;
+import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 
-@SpringBootApplication @RequiredArgsConstructor @Lazy
+@SpringBootApplication @RequiredArgsConstructor @Lazy @EnableScheduling
 public class TeacherPracticeApp {
 
     private final PracticeRepository practiceRepository;
@@ -32,6 +40,14 @@ public class TeacherPracticeApp {
 
     public static void main(String[] args) {
         SpringApplication.run(TeacherPracticeApp.class, args);
+    }
+
+    @Scheduled(cron = AppConfig.CRON_SCHEDULE_CONFIG)
+    public void runScheduler() {
+        System.out.println("Deleting expired tokens:: " + Calendar.getInstance().getTime());
+
+        passwordResetTokenRepository.deleteByExpiryDateLessThan(new Date());
+        confirmationTokenRepository.deleteByExpiresAtLessThan(LocalDateTime.now());
     }
 
     @Bean
@@ -60,11 +76,11 @@ public class TeacherPracticeApp {
             st2.setEnabled(true);
             User st3 = new User("P21072@student.osu.cz", "student", "Pavel", "Novotný", school3, null, Role.STUDENT);
             st3.setEnabled(true);
-            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "448896334", Role.TEACHER);
+            User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "+420 776 123 456", Role.TEACHER);
             tch.setEnabled(true);
-            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, null, Role.COORDINATOR);
+            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, "+420 657 142 441", Role.COORDINATOR);
             coord.setEnabled(true);
-            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, null, Role.ADMIN);
+            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, "775 874 236", Role.ADMIN);
             adm.setEnabled(true);
 
 
@@ -92,6 +108,18 @@ public class TeacherPracticeApp {
             //practiceRepo.save(practiceA);
             //practiceB.setStudents(new ArrayList<>(List.of(student)));
             //practiceRepo.save(practiceB);
+//            String token = UUID.randomUUID().toString();
+//            userService.createPasswordResetTokenForUser(student, token);
+//
+//            String tokenReg = UUID.randomUUID().toString();
+//            ConfirmationToken confirmationToken = new ConfirmationToken(
+//                    tokenReg,
+//                    LocalDateTime.now(),
+//                    LocalDateTime.now().plusMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME),
+//                    student
+//            );
+//            confirmationTokenService.saveConfirmationToken(confirmationToken);
+
         };
     }
 }

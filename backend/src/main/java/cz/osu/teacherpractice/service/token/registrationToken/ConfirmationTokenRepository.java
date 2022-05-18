@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,6 +17,12 @@ public interface ConfirmationTokenRepository
         extends JpaRepository<ConfirmationToken, Long> {
 
     Optional<ConfirmationToken> findByToken(String token);
+
+    List<ConfirmationToken> findAll();
+
+    @Transactional
+    @Modifying
+    void deleteByExpiresAtLessThan(LocalDateTime now);
 
     @Transactional
     @Modifying

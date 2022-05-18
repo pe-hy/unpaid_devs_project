@@ -90,6 +90,8 @@ public class TeacherService {
             p.setNumberOfReservedStudents();
             p.setStudentNames(getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            String report = userService.getPracticeReport(p.getId());
+            p.setReport(report);
             toDelete.add(p);
         });
 
@@ -101,11 +103,10 @@ public class TeacherService {
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
-    private List<String> getStudentNamesByPractice(PracticeDomain p, Pageable pageable) {
+    public List<String> getStudentNamesByPractice(PracticeDomain p, Pageable pageable) {
         List<Long> ids = userRepository.findAllStudentIdsByStudentPracticeIds(p.getId(), pageable);
         List<String> names = new ArrayList<>();
-        for (Long id :
-                ids) {
+        for (Long id : ids) {
             User u = userRepository.findUserById(id);
             String name = u.getFirstName() + " " + u.getSecondName() + " (" + u.getUsername() + ")";
             names.add(name);

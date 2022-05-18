@@ -12,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -50,23 +54,12 @@ public class TeacherController {
         return teacherService.getPracticesListPast(principal.getName(), date, subjectId, pageable);
     }
 
-    //create getmapping for all students by practice id
-//    @GetMapping("/students-list")
-//    public List<StudentPracticeDto> getStudentsList(@RequestParam Long practiceId, Pageable pageable) {
-//        return teacherService.getStudentsList(practiceId, pageable);
-//    }
 
-
-    @DeleteMapping(value = "/deleteFile/{name}")
-    public ResponseEntity<String> deletePost(Principal principal, @PathVariable String name) {
-
-        boolean isRemoved = fileService.deleteFile(principal.getName(), name);
-
-        if (!isRemoved) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(name, HttpStatus.OK);
+    @PostMapping("/file/delete/{teacherEmail}/{fileName}")
+    public ResponseEntity<String> deleteFileFromLocal(@PathVariable String teacherEmail, @PathVariable String fileName) throws IOException {
+        Path path = Paths.get(fileService.figureOutFileNameFor(teacherEmail, fileName));
+        Files.delete(path);
+        return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
     }
 
 

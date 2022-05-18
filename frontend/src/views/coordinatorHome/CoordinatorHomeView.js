@@ -4,6 +4,12 @@ import "./CoordinatorHomeStyles.css";
 import AddSchoolComponent from "../../components/CoordinatorRole/addSchoolComponent/AddSchoolComponent";
 import AddSubjectComponent from "../../components/CoordinatorRole/addSubjectComponent/AddSubjectComponent";
 import {Navigate} from "react-router-dom";
+import PassedPracticesCoordinator
+    from "../../components/CoordinatorRole/passedPracticesCoordinator/PassedPracticesCoordinator";
+import PracticesListCoordinator
+    from "../../components/CoordinatorRole/practicesListCoordinator/PracticesListCoordinator";
+import ShowStudents from "../../components/UnspecifiedRoles/users/StudentsComponent";
+import ShowTeachers from "../../components/UnspecifiedRoles/users/TeachersComponent";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_COORDINATOR";
@@ -22,6 +28,18 @@ const CoordinatorHomeView = () => {
                 </Tab>
                 <Tab eventKey="tab3" title="Předměty">
                     <AddSubjectComponent />
+                </Tab>
+                <Tab eventKey="tab4" title="Vypsané praxe">
+                    <PracticesListCoordinator />
+                </Tab>
+                <Tab eventKey="tab5" title="Proběhlé praxe">
+                    <PassedPracticesCoordinator />
+                </Tab>
+                <Tab eventKey="tab6" title="Studenti">
+                    <ShowStudents />
+                </Tab>
+                <Tab eventKey="tab7" title="Učitelé">
+                    <ShowTeachers />
                 </Tab>
             </Tabs>
         </div>

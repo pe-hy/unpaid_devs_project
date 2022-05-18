@@ -63,11 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/login/**", "/register/**", "/forgotPassword/**").permitAll();
-        http.authorizeRequests().antMatchers("/student/**").hasAuthority(Role.STUDENT.getCode());
+        http.authorizeRequests().antMatchers("/student/**").hasAnyAuthority(Role.STUDENT.getCode(), Role.COORDINATOR.getCode());
         http.authorizeRequests().antMatchers("/teacher/**").hasAuthority(Role.TEACHER.getCode());
         http.authorizeRequests().antMatchers("/coordinator/**").hasAnyAuthority(Role.COORDINATOR.getCode(), Role.ADMIN.getCode());
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ADMIN.getCode());
-        http.authorizeRequests().antMatchers("/upload").hasAuthority(Role.TEACHER.getCode());
+        http.authorizeRequests().antMatchers("/upload", "/report/upload").hasAuthority(Role.TEACHER.getCode());
         http.authorizeRequests().antMatchers("/teacher/upload").hasAuthority(Role.TEACHER.getCode());
         http.authorizeRequests().anyRequest().authenticated();
 

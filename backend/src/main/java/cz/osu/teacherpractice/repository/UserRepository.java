@@ -44,6 +44,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER'")
     List<User> getAllTeachers();
 
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_STUDENT'")
+    List<User> getAllStudents();
+
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_COORDINATOR'")
+    List<User> getAllCoordinators();
+
     @Query("SELECT u FROM User u WHERE u.school is null and u.role = 'ROLE_TEACHER'")
     List<User> getAllTeachersWithoutSchool();
 
@@ -67,4 +73,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<Long> findAllStudentIdsByStudentPracticeIds(@Param("id") Long id, Pageable pageable);
 
     User findUserById(Long id);
+
+    //create a query to change the phone number of a user
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.id = :id")
+    int changeUserPhoneNumber(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
 }

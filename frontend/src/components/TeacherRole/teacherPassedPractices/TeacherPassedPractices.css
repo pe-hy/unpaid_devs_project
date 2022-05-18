@@ -13,6 +13,17 @@ body, html {
         position: absolute;
         width: 0;
     }
+    .listed-practices-row{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.div-cstm-flex{
+    display: flex;
+}
+.div-cstm-flex-direction{
+    flex-direction: column;
 }
 
 .accordion-button:hover {

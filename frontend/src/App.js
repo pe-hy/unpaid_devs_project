@@ -11,6 +11,7 @@ import RegisterView from "./views/register/RegisterView";
 import { UserContextProvider } from "./userContext";
 import AdminHomeView from "./views/adminHome/AdminHomeView";
 import AdminPersonalPageView from "./views/adminPersonalPage/AdminPersonalPageView";
+import {useState} from "react";
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
         <NavbarComponent />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginView />} />
+            <Route path="/" element={<LoginView/>} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/register" element={<RegisterView />} />
             <Route path="/studentHome" element={<StudentHomeView />} />

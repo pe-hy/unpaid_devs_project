@@ -1,12 +1,10 @@
-import "./PracticeListComponent.css";
 import Accordion from "react-bootstrap/Accordion";
+import "./PassedPracticesCoordinator.css";
 import React, { useEffect, useState } from "react";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { axios } from "../../../axios.js";
 import { BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders } from "react-icons/bs";
-import ReservationButtonComponent from "./reservationButton/ReservationButtonComponent";
 import Badge from "react-bootstrap/Badge";
-import UnReservationButtonComponent from "./reservationButton/UnReservationButtonComponent";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import 'react-date-range/dist/styles.css'; // main style file
@@ -20,13 +18,11 @@ import { addTodo } from '../../../redux/todoSlice.js';
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
-export const PracticeListComponent = () => {
-    const reservation = "Rezervovat";
-    const unReservation = "Odrezervovat";
+export const PassedPracticesCoordinator = () => {
     const schoolNotFound = "Škola nevyplněna";
     const subjectNotFound = "Předmět nevyplněn";
     const noteNotFound = "Poznámka nevyplněna.";
@@ -46,7 +42,7 @@ export const PracticeListComponent = () => {
     const [subjects, setSubjects] = useState([]);
     const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
 
-	const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const [selectedSchool, setSelectedSchools] = useState("");
     const [selectedSubjectName, setSelectedSubjectName] = useState("");
@@ -61,12 +57,12 @@ export const PracticeListComponent = () => {
     ]);
 
     const onSubmit = () => {
-			dispatch(
-				addTodo({
-					title: "a",
-				})
-			);
-	};
+        dispatch(
+            addTodo({
+                title: "a",
+            })
+        );
+    };
 
     const changeBtnText = () => {
         if (!showing) {
@@ -154,38 +150,6 @@ export const PracticeListComponent = () => {
         });
     }
 
-    const registerRequest = async (id) => {
-        const response = await axios({
-            url: `student/practices/${id}/make-reservation`,
-            withCredentials: true,
-            method: "PUT",
-        }).catch((err) => {
-            alert(err.response.data.message);
-            console.log(err.response.data.message);
-        });
-        if (response && response.data) {
-            console.log(response);
-            setPraxe(response.data);
-        }
-        await getPraxe();
-    };
-
-    const unRegisterRequest = async (id) => {
-        const response = await axios({
-            url: `student/practices/${id}/cancel-reservation`,
-            withCredentials: true,
-            method: "PUT",
-        }).catch((err) => {
-            alert(err.response.data.message);
-            console.log(err.response.data.message);
-        });
-        if (response && response.data) {
-            console.log(response);
-            setPraxe(response.data);
-        }
-        await getPraxe();
-    };
-
     const getSchools = async () => {
         const response = await axios({
             url: GET_SCHOOLS_URL,
@@ -271,24 +235,6 @@ export const PracticeListComponent = () => {
         ranges.selection.endDate.setHours(23, 59, 59);
         setDateRange([ranges.selection]);
     }
-
-    const getButton = (isReserved, id) => {
-        if (!isReserved) {
-            return (
-                <ReservationButtonComponent
-                    text={reservation}
-                    onClick={() => registerRequest(id)}
-                />
-            );
-        } else {
-            return (
-                <UnReservationButtonComponent
-                    text={unReservation}
-                    onClick={() => unRegisterRequest(id)}
-                />
-            );
-        }
-    };
     return (
         <Container fluid className="mb-3">
             <div>
@@ -355,7 +301,7 @@ export const PracticeListComponent = () => {
                 </div>
             </div>}
             <Accordion>
-                <div style={{ width: "85%" }}>
+                <div style={{ width: "100%" }}>
                     <div className="title-container text-info-practice">
                         <Row style={{ width: "100%" }}>
                             <Col className="text-center">
@@ -404,13 +350,15 @@ export const PracticeListComponent = () => {
                         style={{ display: "block" }}
                     >
                         <div style={{ display: "flex" }}>
-                            <Accordion.Header className={"accordion-header"}>
+                            <Accordion.Header className={"accordion-header-coord"}>
                                 <Row style={{ width: "100%" }}>
-                                    <Col className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
+                                    <Col
+                                        className="text-center  ">{item.subject != null ? item.subject.name : subjectNotFound}</Col>
                                     <Col className="text-center d-none">
                                         {item.teacher.firstName + " " + item.teacher.secondName}
                                     </Col>
-                                    <Col className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
+                                    <Col
+                                        className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                     <Col className="text-center">
                                         {item.date.split("-")[2] +
                                             ". " +
@@ -445,15 +393,12 @@ export const PracticeListComponent = () => {
                                     </Col>
                                 </Row>
                             </Accordion.Header>
-                            <div className="center d-none d-xl-block" style={{ width: "15%" }}>
-                                {getButton(item.isCurrentStudentReserved, item.id)}
-                            </div>
                         </div>
 
                         <Accordion.Body>
-                            <div>
+                            <div className="row listed-practices-row">
                                 <hr />
-                                <div style={{ marginLeft: "50px" }}>
+                                <div className="col" style={{ marginLeft: "50px" }}>
                                     <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                     <p><b>E-mail:</b> {item.teacher.username}</p>
                                     <p><b>Čas: </b>
@@ -479,26 +424,43 @@ export const PracticeListComponent = () => {
                                         </Badge>
                                     </span>
 
-                                    <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note : <i>{noteNotFound}</i>}</p>
+                                    <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note :
+                                        <i>{noteNotFound}</i>}</p>
 
                                     <p style={{ marginTop: "10px" }}><b>Soubory ke stažení:</b></p>
                                     <ul>
                                         {item.fileNames.length === 0 ?
-                                        <p><i>Žádný soubor nebyl nahrán.</i></p>
+                                            <p><i>Žádný soubor nebyl nahrán.</i></p>
                                             : ""}
                                         {item.fileNames.map((name, index) => (
-                                                <li key={index}>
-                                                    <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
-                                                </li>
-                                            ))
+                                            <li key={index}>
+                                                <a href={`${URL}/user/download/${item.teacher.username}/${name}`}>{name}</a>
+                                            </li>
+                                        ))
                                         }
                                     </ul>
-
-
-                                    <div className="center d-xl-none" style={{ width: "15%" }}>
-                                        {getButton(item.isCurrentStudentReserved, item.id)}
+                                </div>
+                                <div className="center col div-cstm-flex-direction">
+                                    <div className="mt-3">
+                                        <OverlayTrigger
+                                            overlay={
+                                                <Tooltip>
+                                                    Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
+                                                    na
+                                                    tuto praxi.
+                                                </Tooltip>
+                                            }
+                                        >
+                                            <span>
+                                                <BsInfoCircleFill className={"info-tooltip"} />
+                                            </span>
+                                        </OverlayTrigger>
+                                        <b>Report ke stažení: </b>
+                                        {!item.report &&
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                        }
+                                        <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
                                     </div>
-
                                 </div>
                             </div>
                         </Accordion.Body>
@@ -510,4 +472,4 @@ export const PracticeListComponent = () => {
 }
     ;
 
-export default PracticeListComponent;
+export default PassedPracticesCoordinator;

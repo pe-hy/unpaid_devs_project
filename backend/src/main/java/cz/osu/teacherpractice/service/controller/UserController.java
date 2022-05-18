@@ -86,6 +86,17 @@ public class UserController {
     public List<UserDto> getTeachers() {
         return userService.getTeachers();
     }
+    // create getmapping for students
+    @GetMapping("/user/students")
+    public List<UserDto> getStudents() {
+        return userService.getStudents();
+    }
+
+    //create getmapping for coordinators
+    @GetMapping("/user/coordinators")
+    public List<UserDto> getCoordinators() {
+        return userService.getCoordinators();
+    }
 
     @GetMapping("/user/schools")
     public List<SchoolDto> getSchools() {
@@ -112,10 +123,19 @@ public class UserController {
                 .body(resource);
     }
 
-    @PostMapping("/user/file/delete/{teacherEmail}/{fileName}")
-    public ResponseEntity<String> deleteFileFromLocal(@PathVariable String teacherEmail, @PathVariable String fileName) throws IOException {
-        Path path = Paths.get(fileService.figureOutFileNameFor(teacherEmail, fileName));
-        Files.delete(path);
-        return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
+    @GetMapping("/user/report/download/{id}")
+    public ResponseEntity downloadReportFromLocal(@PathVariable String id) {
+        String name = fileService.figureOutReportNameFor(Long.valueOf(id));
+        Path path = Paths.get(name);
+        Resource resource = null;
+        try {
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 }

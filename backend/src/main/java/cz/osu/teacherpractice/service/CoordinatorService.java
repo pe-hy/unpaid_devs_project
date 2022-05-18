@@ -1,10 +1,14 @@
 package cz.osu.teacherpractice.service;
 
+import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
+import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
+import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.School;
 import cz.osu.teacherpractice.model.Subject;
 import cz.osu.teacherpractice.model.User;
@@ -13,8 +17,12 @@ import cz.osu.teacherpractice.repository.SchoolRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +36,39 @@ public class CoordinatorService {
     private final MapStructMapper mapper;
     private final SchoolRepository schoolRepository;
 
+    private final TeacherService teacherService;
+
+    private final UserService userService;
+
     public List<UserDto> getWaitingList() {
         List<User> users = userRepository.getAllLocked();
         return mapper.usersToUsersDto(users);
     }
 
+    public List<StudentPracticeDto> getPracticesListPast(LocalDate date, Long subjectId, Pageable pageable) {
+        List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setStudentNames(teacherService.getStudentNamesByPractice(p, pageable));
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            String report = userService.getPracticeReport(p.getId());
+            p.setReport(report);
+            toDelete.add(p);
+        });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removePassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
     public String addSchool(SchoolDto newSchoolDto) {
         String schoolName = newSchoolDto.getName();
         if(schoolRepository.findByName(schoolName).isPresent()) {
@@ -119,6 +155,20 @@ public class CoordinatorService {
             if (ret == 1) return "School was edited";
             else return "Something went wrong;";
         } else return "School wasn't edited";
+
+    }
+
+    public String changePhoneNumber(String username, String phoneNumber) {
+        System.out.println(username + " " + phoneNumber);
+        if (userRepository.findByEmail(username).isPresent()) {
+            Long userId = userRepository.findByEmail(username).get().getId();
+            System.out.println("Editing" + " " + username + " " + "phone number.");
+
+            int ret = userRepository.changeUserPhoneNumber(phoneNumber, userId);
+
+            if (ret == 1) return "Phone number was edited";
+            else return "Something went wrong;";
+        } else return "Phone number wasn't edited";
 
     }
 }

@@ -57,14 +57,22 @@ const CoordinatorPersonalPageComponent = () => {
     }
 
     const formatPhoneNum = (number) => {
+        if(number === null || number === "") return;
         let ret = number.replaceAll(" ", "");
         let formattedNum = "";
+        let index = 0;
 
-        if(ret.substring(3) === "+420"){
-            formattedNum.append("+420 ");
+        if (ret.substring(0,4) === "+420") {
+            formattedNum = formattedNum.concat("+420 ");
+            index += 4;
+        }
+        for (let i = 0; i < 3; i++) {
+            formattedNum = formattedNum.concat(ret.substring(index, index + 3));
+            if (i < 2) { formattedNum = formattedNum.concat(" "); }
+            index += 3;
         }
 
-        return ret;
+        return formattedNum;
     }
 
 
@@ -116,8 +124,8 @@ const CoordinatorPersonalPageComponent = () => {
                                     </div>
                                 </div>
                                 {errorMessage && <div className="mt-1 mb-2 alert alert-danger my-alert-phone text-bold" role="alert">
-                                <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
-                            </div>}
+                                    <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
+                                </div>}
                                 <div className="col-sm-4 mt-3 mb-3">
                                     <button type="submit" className="change-btn">Změnit telefon</button>
                                 </div>

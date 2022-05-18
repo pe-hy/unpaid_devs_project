@@ -27,7 +27,7 @@ export const TeacherListedPractices = () => {
         const teacherFilterParam = "Teacher";
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
-        const noteNotFound = "Poznámka nevyplněna";
+        const noteNotFound = "Poznámka nevyplněna.";
         const [subjects, setSubjects] = useState([]);
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         const [showing, setShowing] = useState(false);

@@ -61,7 +61,7 @@ const CoordinatorPersonalPageComponent = () => {
         let formattedNum = "";
 
         if(ret.substring(3) === "+420"){
-            formattedNum + "+420 ";
+            formattedNum.append("+420 ");
         }
 
         return ret;

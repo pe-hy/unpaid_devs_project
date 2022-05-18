@@ -78,7 +78,7 @@ public class TeacherPracticeApp {
             st3.setEnabled(true);
             User tch = new User("karel.svoboda@email.cz", "teacher", "Karel", "Svoboda", school2, "+420 776 123 456", Role.TEACHER);
             tch.setEnabled(true);
-            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, "+420 657 142", Role.COORDINATOR);
+            User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, "+420 657 142 441", Role.COORDINATOR);
             coord.setEnabled(true);
             User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, "775 874 236", Role.ADMIN);
             adm.setEnabled(true);

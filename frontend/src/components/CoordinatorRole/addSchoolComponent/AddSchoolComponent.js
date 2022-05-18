@@ -118,14 +118,14 @@ export const AddSchoolComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSchools(sch);
         });
     };
 
     const selectSchoolChange = (value) => {
-        var combobox = document.getElementById("combo_input");
+        const combobox = document.getElementById("combo_input");
         currAssignedSchool[0] = value
         combobox.value = value;
     }
@@ -203,8 +203,8 @@ export const AddSchoolComponent = () => {
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
                     <button type="button" className="accept-btn" onClick={() => {
-                        var schoolEdit = document.getElementById("school_edit_input");
-                        var value = schoolEdit.value;
+                        const schoolEdit = document.getElementById("school_edit_input");
+                        const value = schoolEdit.value;
                         newSchoolName[0] = value
                         if (validate()) {
                             props.onHide();

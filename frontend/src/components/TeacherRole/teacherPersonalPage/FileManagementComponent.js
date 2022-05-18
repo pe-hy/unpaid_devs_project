@@ -49,11 +49,11 @@ const FileManagementComponent = ({userDataRef}) => {
     function errorMessage(e) {
         console.log(e.code);
         let message = "Neznámá chyba.";
-        if (e.code == "file-too-large") {
+        if (e.code === "file-too-large") {
             message = e.message;
-        } else if (e.code == "file-invalid-type") {
+        } else if (e.code === "file-invalid-type") {
             message = "Nepovolená přípona souboru.";
-        } else if (e.code == "too-many-files") {
+        } else if (e.code === "too-many-files") {
             message = `Bylo zvoleno příliš mnoho souborů. Maximum je ${MAX_NUMBER_OF_FILES}.`;
         }
         return message;
@@ -67,7 +67,7 @@ const FileManagementComponent = ({userDataRef}) => {
 
             let formData = new FormData();
 
-            for (var i = 0; i < acceptedFiles.length; i++) {
+            for (let i = 0; i < acceptedFiles.length; i++) {
                 if (acceptedFiles[i].size > MAX_FILE_SIZE) {
                     setFileSize(false);
                     setFileUploadProgress(false);

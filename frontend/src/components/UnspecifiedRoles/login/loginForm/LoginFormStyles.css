@@ -23,6 +23,17 @@
     padding-bottom: 0;
 }
 
+.my-alert-phone{
+    text-align: left;
+    padding-top: 5px;
+    background-color: transparent;
+    border-color: transparent;
+    height: 10px;
+    color: #D92F24;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
 .my-alert1 {
     text-align: center;
     color: #D92F24;

@@ -56,10 +56,6 @@ const CoordinatorPersonalPageComponent = () => {
             );
     }
 
-    const formatPhoneNum = (number) => {
-        
-    }
-
 
 
     const editPhone = async () => {
@@ -92,7 +88,7 @@ const CoordinatorPersonalPageComponent = () => {
                     <p><b><BsAt style={iconStyles} />E-mail:</b> {email}</p>
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-4"><b><BsPhone style={iconStyles} />Telefon</b>: {formatPhoneNum(phone)}</div>
+                            <div className="col-sm-6"><b><BsPhone style={iconStyles} />Telefon</b>: {phone}</div>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 editPhone();
@@ -108,7 +104,7 @@ const CoordinatorPersonalPageComponent = () => {
                                             }} />
                                     </div>
                                 </div>
-                                {errorMessage && <div className="alert alert-danger my-alert text-bold" role="alert">
+                                {errorMessage && <div className="mt-1 mb-2 alert alert-danger my-alert-phone text-bold" role="alert">
                                 <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
                             </div>}
                                 <div className="col-sm-4 mt-3 mb-3">

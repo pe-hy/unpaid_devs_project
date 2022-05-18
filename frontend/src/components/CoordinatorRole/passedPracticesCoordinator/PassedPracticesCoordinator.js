@@ -11,7 +11,6 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import * as rdrLocales from 'react-date-range/dist/locale';
 import { DateRange } from 'react-date-range';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { addDays } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../../../redux/todoSlice.js';
@@ -132,15 +131,15 @@ export const PassedPracticesCoordinator = () => {
                 return true;
             }
 
-            if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name != selectedSchool)) {
+            if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name !== selectedSchool)) {
                 return false;
             }
 
-            if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name != selectedSubjectName)) {
+            if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name !== selectedSubjectName)) {
                 return false;
             }
 
-            if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName != selectedTeacherName.split(" ")[0] || item.teacher.secondName != selectedTeacherName.split(" ")[1])) {
+            if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName !== selectedTeacherName.split(" ")[0] || item.teacher.secondName !== selectedTeacherName.split(" ")[1])) {
                 return false;
             }
 
@@ -157,7 +156,7 @@ export const PassedPracticesCoordinator = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSchools(sch);
         });
@@ -169,7 +168,7 @@ export const PassedPracticesCoordinator = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSubjects(sch);
 
@@ -182,7 +181,7 @@ export const PassedPracticesCoordinator = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             let res =
                 response.data.forEach(element => {
                     let str = element.firstName.concat(" ", element.secondName);
@@ -243,8 +242,6 @@ export const PassedPracticesCoordinator = () => {
                     setShowing(!showing);
                     changeBtnText();
                 }}><BsSearch style={iconStyles} /> {btnText}</button>
-                <TransitionGroup>
-                    <CSSTransition>
                         <div style={{ overflow: 'hidden' }}>
                             <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
                                 <div className="customFilters">
@@ -295,8 +292,6 @@ export const PassedPracticesCoordinator = () => {
                                 </div>
                             </div>
                         </div>
-                    </CSSTransition>
-                </TransitionGroup>
                 <hr />
             </div>
             {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -345,7 +340,7 @@ export const PassedPracticesCoordinator = () => {
                         </Row>
                     </div>
                 </div>
-                {search(practices).length == 0 ?
+                {search(practices).length === 0 ?
                     <div className="alert alert-danger center warnTextPractices"><span>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</span>
                     </div> : null}
                 {practices && search(practices).map((item, index) => (
@@ -461,6 +456,9 @@ export const PassedPracticesCoordinator = () => {
                                             </span>
                                         </OverlayTrigger>
                                         <b>Report ke stažení: </b>
+                                        {!item.report &&
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                        }
                                         <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
                                     </div>
                                 </div>

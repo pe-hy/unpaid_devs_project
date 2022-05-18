@@ -13,7 +13,6 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import * as rdrLocales from 'react-date-range/dist/locale';
 import { DateRange } from 'react-date-range';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { addDays } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../../../redux/todoSlice.js';
@@ -39,7 +38,6 @@ export const PracticeListComponent = () => {
 
     let iconStyles = { fontSize: "1.5em", marginRight: "5px" };
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
-    const duration = 250;
     const [showing, setShowing] = useState(false);
     const [practices, setPraxe] = useState([]);
     const [filterParam, setFilterParam] = useState([allFilterParam]);
@@ -137,15 +135,15 @@ export const PracticeListComponent = () => {
                 return true;
             }
 
-            if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name != selectedSchool)) {
+            if (filterParam.includes(schoolFilterParam) && (item.teacher.school == null || item.teacher.school.name !== selectedSchool)) {
                 return false;
             }
 
-            if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name != selectedSubjectName)) {
+            if (filterParam.includes(subjectFilterParam) && (item.subject == null || item.subject.name !== selectedSubjectName)) {
                 return false;
             }
 
-            if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName != selectedTeacherName.split(" ")[0] || item.teacher.secondName != selectedTeacherName.split(" ")[1])) {
+            if (filterParam.includes(teacherFilterParam) && (item.teacher.firstName !== selectedTeacherName.split(" ")[0] || item.teacher.secondName !== selectedTeacherName.split(" ")[1])) {
                 return false;
             }
 
@@ -194,7 +192,7 @@ export const PracticeListComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSchools(sch);
         });
@@ -206,7 +204,7 @@ export const PracticeListComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             response.data.forEach(element => sch.push(element.name));
             setSubjects(sch);
 
@@ -219,7 +217,7 @@ export const PracticeListComponent = () => {
             withCredentials: true,
             method: "GET",
         }).then((response) => {
-            var sch = [];
+            const sch = [];
             let res =
                 response.data.forEach(element => {
                     let str = element.firstName.concat(" ", element.secondName);
@@ -298,8 +296,6 @@ export const PracticeListComponent = () => {
                     setShowing(!showing);
                     changeBtnText();
                 }}><BsSearch style={iconStyles} /> {btnText}</button>
-                <TransitionGroup>
-                    <CSSTransition>
                         <div style={{ overflow: 'hidden' }}>
                             <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
                                 <div className="customFilters">
@@ -350,8 +346,6 @@ export const PracticeListComponent = () => {
                                 </div>
                             </div>
                         </div>
-                    </CSSTransition>
-                </TransitionGroup>
                 <hr />
             </div>
             {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -400,7 +394,7 @@ export const PracticeListComponent = () => {
                         </Row>
                     </div>
                 </div>
-                {search(practices).length == 0 ?
+                {search(practices).length === 0 ?
                     <div className="alert alert-danger center warnTextPractices"><span>Nebyly nalezeny žádné praxe odpovídající zadaným parametrům.</span>
                     </div> : null}
                 {practices && search(practices).map((item, index) => (

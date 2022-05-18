@@ -163,6 +163,7 @@ export class RegistrationComponent extends Component {
                     this.setState({
                         isRegistered: true,
                         message_success: res,
+                        message: "",
                     });
                 },
                 (error) => {
@@ -172,6 +173,7 @@ export class RegistrationComponent extends Component {
                     this.setState({
                         loading: false,
                         message: resMessage,
+                        message_success: "",
                         disable: false,
                         btnMessage: notRegistered,
                     });

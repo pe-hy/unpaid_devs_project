@@ -1,15 +1,17 @@
 import React from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { BsExclamationCircleFill, BsExclamationTriangleFill, BsInfoCircleFill } from "react-icons/bs";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {BsExclamationCircleFill, BsExclamationTriangleFill, BsInfoCircleFill} from "react-icons/bs";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
-import { axios } from "../../../axios";
+import {axios} from "../../../axios";
 import AuthService from "../../../services/AuthService";
-import FinishedRegistrationComponent from "../../UnspecifiedRoles/registration/registrationButton/FinishedRegistrationComponent";
-import RegistrationButtonComponent from "../../UnspecifiedRoles/registration/registrationButton/RegistrationButtonComponent";
+import FinishedRegistrationComponent
+    from "../../UnspecifiedRoles/registration/registrationButton/FinishedRegistrationComponent";
+import RegistrationButtonComponent
+    from "../../UnspecifiedRoles/registration/registrationButton/RegistrationButtonComponent";
 import "../../UnspecifiedRoles/registration/RegistrationComponent.css";
 
 const notRegistered = "Zaregistrovat koordinátora";
@@ -35,7 +37,7 @@ const invalidPhoneNum = (value) => {
     if (!validatePhoneNum(value)) {
         return (
             <div className="alert alert-danger my-alert text-bold" role="alert">
-                <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
+                <BsExclamationTriangleFill/> Špatný formát telefonního čísla!
             </div>
         );
     }
@@ -69,13 +71,13 @@ const validatePassword = (password) => {
     if (!format.test(password)) return "Heslo neobsahuje speciální znak!"
 }
 
-const { Component } = React;
+const {Component} = React;
 
 const required = (value) => {
     if (!value) {
         return (
             <div className="alert my-alert text-bold" role="alert">
-                <BsExclamationCircleFill /> Toto pole je povinné!
+                <BsExclamationCircleFill/> Toto pole je povinné!
             </div>
         );
     }
@@ -85,7 +87,7 @@ const invalidPassword = (value) => {
     if (validatePassword(value)) {
         return (
             <div className="alert alert-danger my-alert text-bold" role="alert">
-                <BsExclamationTriangleFill /> {validatePassword(value)}
+                <BsExclamationTriangleFill/> {validatePassword(value)}
             </div>
         );
     }
@@ -139,7 +141,7 @@ export class RegistrationComponent extends Component {
         if (!this.validateEmail(value)) {
             return (
                 <div className="alert alert-danger my-alert text-bold" role="alert">
-                    <BsExclamationTriangleFill /> Špatný formát e-mailu!
+                    <BsExclamationTriangleFill/> Špatný formát e-mailu!
                 </div>
             );
         }
@@ -168,7 +170,7 @@ export class RegistrationComponent extends Component {
                 },
                 (error) => {
                     const resMessage = error.response.data.message.split(":")[1];
-                        error.toString();
+                    error.toString();
                     console.log("Server Error Message:", resMessage)
                     this.setState({
                         loading: false,
@@ -212,79 +214,82 @@ export class RegistrationComponent extends Component {
                 <div>
 
                     <p className="thick">
-                        <OverlayTrigger
-                            overlay={
-                                <Tooltip>
-                                    Po přidání nového koordinátora si koordinátor musí vytvořit heslo pomocí tlačítka Zapomenuté heslo na stránce přihlášení.
-                                </Tooltip>
-                            }
-                        >
-                    <span>
-                      <BsInfoCircleFill className={"info-tooltip"}/>
-                    </span>
-                        </OverlayTrigger>
                         PŘIDÁNÍ KOORDINÁTORA</p>
                 </div>
 
                 <section className={" card card-container form-cointainer d-flex justify-content-center mt-2"}>
                     <Form onSubmit={this.handleRegister}
-                        ref={(c) => {
-                            this.form = c;
-                        }}
+                          ref={(c) => {
+                              this.form = c;
+                          }}
                     >
-                        <br />
+                        <br/>
 
                         <label className={"label-setting"}>
-                            <span className={"span-label"}> <b>E-mail</b></span>
+                            <span className={"span-label"}>
+                                                        <OverlayTrigger
+                                                            overlay={
+                                                                <Tooltip>
+                                                                    Po přidání nového koordinátora si koordinátor musí
+                                                                    vytvořit heslo pomocí tlačítka Zapomenuté heslo na
+                                                                    stránce přihlášení.
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                    <span>
+                      <BsInfoCircleFill className={"info-tooltip"}/>
+                    </span>
+                        </OverlayTrigger>
+                                <b>E-mail</b></span>
                             <span className={"span-input"}>
                                 <Input type="email"
-                                    className="form-control"
-                                    ref={this.emailRef}
-                                    name={this.emailRef}
-                                    value={this.state.email}
-                                    onChange={this.onChangeEmail}
-                                    validations={[required, this.invalidEmail]}
-                                    required />
+                                       className="form-control"
+                                       ref={this.emailRef}
+                                       name={this.emailRef}
+                                       value={this.state.email}
+                                       onChange={this.onChangeEmail}
+                                       validations={[required, this.invalidEmail]}
+                                       required/>
                             </span>
                         </label>
-                        <br />
+                        <br/>
 
                         <label className={"label-setting"}>
                             <span className={"span-label"}><b>Jméno</b></span>
                             <span className={"span-input"}>
                                 <Input type="text"
-                                    onChange={this.onChangeName}
-                                    className="form-control"
-                                    name={this.nameRef}
-                                    ref={this.nameRef}
+                                       onChange={this.onChangeName}
+                                       className="form-control"
+                                       name={this.nameRef}
+                                       ref={this.nameRef}
 
-                                    required />
+                                       required/>
                             </span>
                         </label>
-                        <br />
+                        <br/>
 
 
                         <label className={"label-setting"}>
                             <span className={"span-label"}><b>Příjmení</b></span>
                             <span className={"span-input"}>
                                 <Input type="text"
-                                    ref={this.lastNameRef}
-                                    onChange={this.onChangeSurname}
-                                    className="form-control"
-                                    name={this.lastNameRef}
+                                       ref={this.lastNameRef}
+                                       onChange={this.onChangeSurname}
+                                       className="form-control"
+                                       name={this.lastNameRef}
 
-                                    required />
+                                       required/>
                             </span>
                         </label>
-                        <br />
+                        <br/>
                         {this.state.message && (
                             <div className="alert alert-danger my-alert1 text-bold" role="alert">
-                                <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message}
+                                <BsExclamationTriangleFill className={"alert-icon"}/>{this.state.message}
                             </div>
                         )}
                         {this.state.message_success && (
                             <div className="alert alert-success center text-bold" role="alert">
-                                <BsExclamationTriangleFill className={"alert-icon"} />{this.state.message_success}
+                                <BsExclamationTriangleFill className={"alert-icon"}/>{this.state.message_success}
                             </div>
                         )}
 
@@ -294,7 +299,7 @@ export class RegistrationComponent extends Component {
                         </div>
 
                         <CheckButton
-                            style={{ display: "none" }}
+                            style={{display: "none"}}
                             ref={(c) => {
                                 this.checkBtn = c;
                             }}

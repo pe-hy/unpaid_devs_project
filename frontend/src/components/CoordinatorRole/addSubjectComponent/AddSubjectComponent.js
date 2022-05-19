@@ -234,7 +234,7 @@ export const AddSubjectComponent = () => {
                                             id={"add_subject_input"}
                                             required="required"
                                             type="text"
-                                            placeholder="Vložte název školy"
+                                            placeholder="Vložte název předmětu"
                                             onChange={handleChange}
                                         />
                                     </InputGroup>

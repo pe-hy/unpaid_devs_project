@@ -10,6 +10,7 @@ import PracticesListCoordinator
     from "../../components/CoordinatorRole/practicesListCoordinator/PracticesListCoordinator";
 import ShowStudents from "../../components/UnspecifiedRoles/users/StudentsComponent";
 import ShowTeachers from "../../components/UnspecifiedRoles/users/TeachersComponent";
+import ShowCoordinators from "../../components/UnspecifiedRoles/users/CoordinatorsComponent";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_COORDINATOR";
@@ -40,6 +41,9 @@ const CoordinatorHomeView = () => {
                 </Tab>
                 <Tab eventKey="tab7" title="Učitelé">
                     <ShowTeachers />
+                </Tab>
+                <Tab eventKey="tab8" title="Koordinátoři">
+                    <ShowCoordinators />
                 </Tab>
             </Tabs>
         </div>

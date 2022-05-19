@@ -2,6 +2,14 @@
     margin-left: auto;
     justify-content: flex-end
 }
+@media (max-width: 1024px) {
+    .nav-tabs .nav-link {
+        margin-bottom: -1px;
+        background: 0 0;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+}
 
 .nav {
     width: 100%;

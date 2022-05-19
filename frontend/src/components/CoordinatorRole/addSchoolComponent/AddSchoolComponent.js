@@ -16,14 +16,13 @@ const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSc
 const ADD_SCHOOL_URL = `${URL}/coordinator/addSchool`;
 
 const MAX_TEXT_LENGTH = 50;
-const MIN_TEXT_LENGTH = 10;
-const LENGTH_ERROR_MSG = "Špatná délka školy (10 - 50 znaků)";
+const MIN_TEXT_LENGTH = 5;
+const LENGTH_ERROR_MSG = "Špatná délka školy (5 - 50 znaků)";
 
 
 export const AddSchoolComponent = () => {
     const [schools, setSchools] = useState([]);
     const [teachersWithoutSchool, setTeachersWithoutSchools] = useState([]);
-
     const [modalShow, setModalShow] = React.useState(false);
     const [assignSchoolModalShow, setAssignSchoolModalShow] = useState(false);
 

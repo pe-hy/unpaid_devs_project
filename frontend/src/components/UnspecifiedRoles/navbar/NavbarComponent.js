@@ -68,7 +68,7 @@ const NavbarComponent = () => {
                             <Nav.Link className="ms-md-5">
                                 <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
                                     <BsFillHouseFill style={iconStyles} />
-                                    <p className={"p-margin"}>Home</p>
+                                    <p className={"p-margin"}>Domů</p>
                                 </span>
                             </Nav.Link>
                             <Nav.Link className="ms-md-5">

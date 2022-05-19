@@ -24,7 +24,7 @@ const GET_TEACHERS_URL = `${URL}/user/teachers`;
 export const PracticesListCoordinator = () => {
         const schoolNotFound = "Škola nevyplněna";
         const subjectNotFound = "Předmět nevyplněn";
-        const noteNotFound = "Poznámka nevyplněna";
+        const noteNotFound = "Poznámka nevyplněna.";
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";

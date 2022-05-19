@@ -29,7 +29,7 @@ export const PracticeListComponent = () => {
     const unReservation = "Odrezervovat";
     const schoolNotFound = "Škola nevyplněna";
     const subjectNotFound = "Předmět nevyplněn";
-    const noteNotFound = "Poznámka nevyplněna";
+    const noteNotFound = "Poznámka nevyplněna.";
     const schoolFilterParam = "School";
     const subjectFilterParam = "Subject";
     const teacherFilterParam = "Teacher";

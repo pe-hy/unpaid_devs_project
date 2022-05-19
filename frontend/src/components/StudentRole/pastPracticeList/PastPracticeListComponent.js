@@ -39,7 +39,7 @@ export const PastPracticeListComponent = () => {
     const [teachers, setTeachers] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
-    const noteNotFound = "Poznámka nevyplněna";
+    const noteNotFound = "Poznámka nevyplněna.";
 
     const pastPracticesRedux = useSelector((state) => state.practices);
 
@@ -233,56 +233,56 @@ export const PastPracticeListComponent = () => {
                     setShowing(!showing);
                     changeBtnText();
                 }}><BsSearch style={iconStyles} /> {btnText}</button>
-                        <div style={{ overflow: 'hidden' }}>
-                            <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
-                                <div className="customFilters">
-                                    <div className="col align-self-center">
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte školu</p>
-                                            <Combobox
-                                                data={schools}
-                                                value={selectedSchool}
-                                                onChange={value => selectSchoolsChange(value)}
-                                            />
-                                        </div>
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte předmět</p>
-                                            <Combobox
-                                                data={subjects}
-                                                value={selectedSubjectName}
-                                                onChange={value => selectSubjectChange(value)}
-                                            />
-                                        </div>
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte učitele</p>
-                                            <Combobox
-                                                data={teachers}
-                                                value={selectedTeacherName}
-                                                onChange={value => selectTeacherChange(value)}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col align-self-center search-date">
-                                        <p>Vyberte datum (od - do)</p>
-                                        <DateRange
-                                            editableDateInputs={true}
-                                            onChange={item => selectDateRange(item)}
-                                            moveRangeOnFirstSelection={false}
-                                            ranges={dateRange}
-                                            locale={rdrLocales.cs}
-                                            minDate={dateLimit[0]}
-                                            maxDate={dateLimit[1]}
-                                        />
-                                    </div>
+                <div style={{ overflow: 'hidden' }}>
+                    <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                        <div className="customFilters">
+                            <div className="col align-self-center">
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte školu</p>
+                                    <Combobox
+                                        data={schools}
+                                        value={selectedSchool}
+                                        onChange={value => selectSchoolsChange(value)}
+                                    />
                                 </div>
-                                <div className="center">
-                                    <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
-                                        resetFilter();
-                                    }}><BsFillXCircleFill style={iconStyles} /> Reset
-                                    </button>
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte předmět</p>
+                                    <Combobox
+                                        data={subjects}
+                                        value={selectedSubjectName}
+                                        onChange={value => selectSubjectChange(value)}
+                                    />
+                                </div>
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte učitele</p>
+                                    <Combobox
+                                        data={teachers}
+                                        value={selectedTeacherName}
+                                        onChange={value => selectTeacherChange(value)}
+                                    />
                                 </div>
                             </div>
+                            <div className="col align-self-center search-date">
+                                <p>Vyberte datum (od - do)</p>
+                                <DateRange
+                                    editableDateInputs={true}
+                                    onChange={item => selectDateRange(item)}
+                                    moveRangeOnFirstSelection={false}
+                                    ranges={dateRange}
+                                    locale={rdrLocales.cs}
+                                    minDate={dateLimit[0]}
+                                    maxDate={dateLimit[1]}
+                                />
+                            </div>
                         </div>
+                        <div className="center">
+                            <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
+                                resetFilter();
+                            }}><BsFillXCircleFill style={iconStyles} /> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <hr />
             </div>
             {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -385,9 +385,9 @@ export const PastPracticeListComponent = () => {
                         </div>
 
                         <Accordion.Body>
-                            <div>
+                            <div className="row listed-practices-row">
                                 <hr />
-                                <div style={{ marginLeft: "50px" }}>
+                                <div className="col" style={{ marginLeft: "50px" }}>
                                     <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                     <p><b>E-mail:</b> {item.teacher.username}</p>
                                     <p><b>Čas: </b>
@@ -427,11 +427,29 @@ export const PastPracticeListComponent = () => {
                                         ))
                                         }
                                     </ul>
-                                    <b>Report ke stažení: </b>
-                                    {!item.report &&
-                                        <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
-                                    }
-                                    <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
+                                </div>
+                                <div className="center col div-cstm-flex-direction">
+                                    <div className="mt-3">
+                                        <OverlayTrigger
+                                            overlay={
+                                                <Tooltip>
+                                                    Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
+                                                    na
+                                                    tuto praxi.
+                                                </Tooltip>
+                                            }
+                                        >
+                                            <span>
+                                                <BsInfoCircleFill className={"info-tooltip"} />
+                                            </span>
+                                        </OverlayTrigger>
+                                        <b>Report ke stažení: </b>
+                                        {!item.report &&
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                        }
+                                        <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </Accordion.Body>

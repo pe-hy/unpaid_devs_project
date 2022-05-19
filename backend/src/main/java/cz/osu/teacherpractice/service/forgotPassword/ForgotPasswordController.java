@@ -44,7 +44,7 @@ public class ForgotPasswordController {
         String result = userEmail.replaceAll("\"", "");
         User user = userService.getUserByUsername(result);
         if (user == null) {
-            return "Na zadaný e-mail byl poslán odkaz pro obnovu hesla";
+            return "Na zadaný e-mail (pokud existuje) byl poslán odkaz pro obnovu hesla";
         }
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
@@ -54,7 +54,7 @@ public class ForgotPasswordController {
                 emailService.sendForgotPasswordMail(result, forgotPasswordService.buildEmail(user.getFirstName(), link));
             }
         }).start();
-        return "Na zadaný e-mail byl poslán odkaz pro obnovu hesla";
+        return "Na zadaný e-mail (pokud existuje) byl poslán odkaz pro obnovu hesla";
     }
 
     @PostMapping("/save")

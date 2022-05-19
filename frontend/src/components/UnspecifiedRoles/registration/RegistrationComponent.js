@@ -63,7 +63,7 @@ const getButton = (isRegistered, registerOnClick, disable, btnMessage) => {
 
 const validatePassword = (password) => {
     const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    if (password.length < 6) return "Příliš krátké heslo!"
+    if (password.length < 8) return "Příliš krátké heslo!"
     if (!/[A-Za-z]/.test(password)) return "Heslo neobsahuje znak abecedy!"
     if (!/\d/.test(password)) return "Heslo neobsahuje číslo!"
     if (!format.test(password)) return "Heslo neobsahuje speciální znak!"

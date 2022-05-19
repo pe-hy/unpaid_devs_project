@@ -110,6 +110,25 @@ const TeacherPersonalPageComponent = () => {
         getUserData();
     }, []);
 
+    const formatPhoneNum = (number) => {
+        if(number === null || number === "") return;
+        let ret = number.replaceAll(" ", "");
+        let formattedNum = "";
+        let index = 0;
+
+        if (ret.substring(0,4) === "+420") {
+            formattedNum = formattedNum.concat("+420 ");
+            index += 4;
+        }
+        for (let i = 0; i < 3; i++) {
+            formattedNum = formattedNum.concat(ret.substring(index, index + 3));
+            if (i < 2) { formattedNum = formattedNum.concat(" "); }
+            index += 3;
+        }
+
+        return formattedNum;
+    }
+
     return (
         <div style={{marginTop: "30px"}}>
             <div className="row">
@@ -118,7 +137,7 @@ const TeacherPersonalPageComponent = () => {
                     <p style={{paddingTop: "25px"}}><BsFillPersonFill style={iconStyles}/><b>Jméno:</b> {name}</p>
                     <p><b><FaGraduationCap style={iconStyles}/>Škola:</b> {school}</p>
                     <p><b><BsAt style={iconStyles}/>E-mail:</b> {email}</p>
-                    <p><b><BsPhone style={iconStyles}/>Telefon</b>: {phone}</p>
+                    <p><b><BsPhone style={iconStyles}/>Telefon</b>: {formatPhoneNum(phone)}</p>
                     <p><b><BsTools style={iconStyles}/>Změna hesla: <ChangePasswordComponent/></b></p>
                 </div>
                 <div className="col-sm">

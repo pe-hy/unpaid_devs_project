@@ -12,6 +12,8 @@ import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenS
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 import static cz.osu.teacherpractice.config.AppConfig.baseUrlProduction;
 
 @Service
@@ -40,7 +42,7 @@ public class AdminService {
         boolean locked, enabled;
 
         email = request.getEmail();
-        password = request.getPassword();
+        password = UUID.randomUUID().toString();
         firstName = request.getFirstName();
         lastName = request.getLastName();
         phoneNumber = request.getPhoneNumber();

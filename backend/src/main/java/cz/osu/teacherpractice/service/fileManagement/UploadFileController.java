@@ -29,6 +29,7 @@ public class UploadFileController {
 
     private final UserRepository userRepository;
     private final PracticeRepository practiceRepository;
+    private final FileService fileService;
 
     @PostMapping("/teacher/upload")
     public ResponseEntity<FileUploadResponse> uploadFiles(Principal principal, @RequestParam("files") MultipartFile[] files) {
@@ -83,8 +84,17 @@ public class UploadFileController {
 
             long filesNum = FileUtil.getNumberOfReportsInFolder(id);
             if((filesNum + numberOfFilesUploaded) > maxFiles){
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                        .body(new FileUploadResponse("Byl překročen limit počtu souborů na uživatele. Maximum je: " + maxFiles));
+                String name = fileService.figureOutReportNameFor(id);
+
+                File file
+                        = new File(name);
+
+                if (file.delete()) {
+                    System.out.println("File deleted successfully");
+                }
+                else {
+                    System.out.println("Failed to delete the file");
+                }
             }
 
             List<String> fileNames = new ArrayList<>();

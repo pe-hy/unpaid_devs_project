@@ -33,7 +33,7 @@ export const ReservedPracticeListComponent = () => {
         const teacherFilterParam = "Teacher";
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
-        const noteNotFound = "Poznámka nevyplněna";
+        const noteNotFound = "Poznámka nevyplněna.";
 
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};

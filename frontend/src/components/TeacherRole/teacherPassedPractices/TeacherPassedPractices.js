@@ -19,6 +19,10 @@ const GET_PRACTICE_LIST_URL_LISTED = `${URL}/teacher/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const UPLOAD_URL = `${URL}/teacher/report/upload`;
 
+const MAX_REPORT_FILE_SIZE = 5; //MB
+const ALLOWED_REPORT_EXTENSIONS = ["pdf","docx","txt"];
+const ALLOWED_REPORT_EXTENSIONS_WITH_DOT = [".pdf",".docx",".txt"];
+
 export const TeacherPassedPractices = () => {
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
     const schoolFilterParam = "School";
@@ -26,7 +30,7 @@ export const TeacherPassedPractices = () => {
     const teacherFilterParam = "Teacher";
     const dateRangeFilterParam = "Date";
     const allFilterParam = "All";
-    const noteNotFound = "Poznámka nevyplněna";
+    const noteNotFound = "Poznámka nevyplněna.";
     const [subjects, setSubjects] = useState([]);
     let iconStyles = { fontSize: "1.5em", marginRight: "5px" };
     const [showing, setShowing] = useState(false);
@@ -41,6 +45,7 @@ export const TeacherPassedPractices = () => {
     const [btnText, setBtnText] = useState("Zobrazit možnosti vyhledávání");
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedId, setSelectedId] = useState("");
+    const [buttonDisabled, setButtonDisabled] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [alertId, setAlertId] = useState("");
@@ -58,15 +63,34 @@ export const TeacherPassedPractices = () => {
     const [fileUploadProgress, setFileUploadProgress] = useState(false);
     //for displaying response message
     const [fileUploadResponse, setFileUploadResponse] = useState(null);
+    const [fileExt, setFileExt] = useState("");
 
     const onFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
+        setFileSize(e.target.files[0].size / 1000000);
+        
+        let split = e.target.files[0].name.split(".");
+        setFileExt(split[split.length-1]);
+        setButtonDisabled(false);
     };
 
     const onFileUpload = (e, id, index) => {
         e.preventDefault();
+        setButtonDisabled(true);
+        if (fileSize > MAX_REPORT_FILE_SIZE) {
+            setAlertId(index);
+            setSuccessMessage("");
+            setErrorMessage(`Soubor nesmí být větší než ${MAX_REPORT_FILE_SIZE} MB.`);
+            return;
+        }
+        if(!ALLOWED_REPORT_EXTENSIONS.includes(fileExt)){
+            setAlertId(index);
+            setSuccessMessage("");
+            setErrorMessage(`Nepovolená přípona souboru (mohou být jen: ${ALLOWED_REPORT_EXTENSIONS.join(', ')}).`);
+            console.log(errorMessage);
+            return;
+        }
         let formData = new FormData();
-        console.log(id, "selected id");
         formData.append('file', selectedFile);
         formData.append('id', id);
 
@@ -440,17 +464,17 @@ export const TeacherPassedPractices = () => {
                                 <div className="center col div-cstm-flex-direction">
                                     <Form>
                                         <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
-                                            <Form.Control type="file" />
+                                            <Form.Control type="file" accept={ALLOWED_REPORT_EXTENSIONS_WITH_DOT} />
                                         </Form.Group>
-                                        <button className="toggleButtonFilters" disabled={selectedFile != null ? selectedFile.length === 0 : false}
+                                        <button className="toggleButtonFilters" disabled={buttonDisabled}
                                             onClick={(e) => {
                                                 onFileUpload(e, item.id, index)
                                             }}>
                                             Nahrát report
                                         </button>
                                     </Form>
-
                                     <div className="mt-3">
+                                    <hr />
                                         <OverlayTrigger
                                             overlay={
                                                 <Tooltip>
@@ -468,10 +492,10 @@ export const TeacherPassedPractices = () => {
                                             <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                         }
                                         <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
-                                        {errorMessage && alertId == - index && <div className="alert alert-danger center warnTextPractices">
+                                        {errorMessage && alertId === index && <div className="alert alert-danger mt-2 center warnTextPractices">
                                             <span>{errorMessage}</span></div>}
                                         {successMessage && alertId === index &&
-                                            <div className="alert alert-success center text-bold" role="alert">
+                                            <div className="alert alert-success mt-2 center text-bold" role="alert">
                                                 <span>{successMessage}</span>
                                             </div>}
                                     </div>

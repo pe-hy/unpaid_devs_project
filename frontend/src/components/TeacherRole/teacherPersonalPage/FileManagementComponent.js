@@ -15,7 +15,7 @@ const FileManagementComponent = ({userDataRef}) => {
 
     const [messageColor, setMessageColor] = useState("green");
 
-    const MAX_FILE_SIZE = 20000000;
+    const MAX_FILE_SIZE = 2000000;
     const MAX_NUMBER_OF_FILES = 3;
 
     const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -148,8 +148,8 @@ const FileManagementComponent = ({userDataRef}) => {
             <section className="container">
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input {...getInputProps()} />
-                    <p>Přetáhnětě soubory zde nebo klikněte a vyberte soubor</p>
-                    <p>Povolené přípony: .zip, .png, .jpg, .jpeg, .doc, .docx, .odt .txt, .pdf,</p>
+                    <p>Přetáhněte soubory zde nebo klikněte a vyberte soubor</p>
+                    <p>Povolené přípony: .zip, .png, .jpg, .jpeg, .doc, .docx, .odt, .txt, .pdf</p>
                     <p>Maximum souborů k nahrání: {MAX_NUMBER_OF_FILES}</p>
                     <p>Maximální velikost 1 souboru: {unitConversion(MAX_FILE_SIZE)} MB</p>
                 </div>

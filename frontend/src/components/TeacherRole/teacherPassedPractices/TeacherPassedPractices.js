@@ -19,9 +19,9 @@ const GET_PRACTICE_LIST_URL_LISTED = `${URL}/teacher/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const UPLOAD_URL = `${URL}/teacher/report/upload`;
 
-const MAX_REPORT_FILE_SIZE = 5; //MB
-const ALLOWED_REPORT_EXTENSIONS = ["pdf","docx","txt"];
-const ALLOWED_REPORT_EXTENSIONS_WITH_DOT = [".pdf",".docx",".txt"];
+const MAX_REPORT_FILE_SIZE = 2; //MB
+const ALLOWED_REPORT_EXTENSIONS = ["zip", "docx", "doc", "odt", "pdf", "txt"];
+const ALLOWED_REPORT_EXTENSIONS_WITH_DOT = [".zip", ".doc", ".odt", ".pdf",".docx",".txt"];
 
 export const TeacherPassedPractices = () => {
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
@@ -104,7 +104,7 @@ export const TeacherPassedPractices = () => {
             console.log(JSON.stringify(response.data));
             setAlertId(index);
             setSuccessMessage("Soubor byl úspěšně nahrán.");
-            setErrorMessage("Soubor nebyl nahrán.");
+            setErrorMessage("");
             getPraxe();
         })
             .catch(function (error) {

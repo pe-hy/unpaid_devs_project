@@ -49,7 +49,7 @@ const NavbarComponent = () => {
     }
     return (
         <div className={"navbar-main"}>
-            <Navbar collapseOnSelect expand="lg" variant="light">
+            <Navbar collapseOnSelect expand="md" variant="light">
                 <Container fluid>
                     <Navbar.Brand href="#">
                         <img
@@ -61,9 +61,8 @@ const NavbarComponent = () => {
                             alt="logo"
                         />
                     </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav margin-left-cstm-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
-
                         <Nav className="me-auto">
                             <Nav.Link className="ms-md-5">
                                 <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">

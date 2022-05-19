@@ -106,7 +106,7 @@ class LoginControl extends React.Component {
             return (
                 <div>
                     <ul className="nav" style={{marginRight: "60px"}}>
-                        <div style={{marginRight: "60px"}}>
+                        <div style={{marginRight: "30px"}}>
                             <li
                                 className="nav-item d-flex"
                                 style={textStyles}

@@ -2,6 +2,8 @@
     margin-left: auto;
     justify-content: flex-end
 }
+
+
 @media (max-width: 1024px) {
     .nav-tabs .nav-link {
         margin-bottom: -1px;

@@ -24,7 +24,7 @@ const FileManagementComponent = ({userDataRef}) => {
 
     //base end point url
     const FILE_UPLOAD_BASE_ENDPOINT = URL;
-    const fileTypes = ["JPG", "JPEG", "PNG", "DOCX", "PDF"];
+    const fileTypes = ["ZIP", "JPG", "JPEG", "PNG", "DOCX", "DOC", "ODT", "PDF"];
 
     //https://www.npmjs.com/package/react-drag-drop-files
 
@@ -105,7 +105,7 @@ const FileManagementComponent = ({userDataRef}) => {
                 });
         }
         const {acceptedFiles, getRootProps, fileRejections, getInputProps} = useDropzone({
-            accept: 'image/jpeg, image/png, image/png, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain, application/pdf',
+            accept: 'image/jpeg, image/png, image/png, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain, application/pdf, application/zip, application/vnd.oasis.opendocument.text, application/msword',
             onFileDialogOpen: () => {
                 if (document.getElementById("messageResponse")) {
                     document.getElementById("messageResponse").textContent = "";
@@ -149,7 +149,7 @@ const FileManagementComponent = ({userDataRef}) => {
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input {...getInputProps()} />
                     <p>Přetáhnětě soubory zde nebo klikněte a vyberte soubor</p>
-                    <p>Povolené přípony: .png, .jpg, .jpeg, .docx, .txt, .pdf</p>
+                    <p>Povolené přípony: .zip, .png, .jpg, .jpeg, .doc, .docx, .odt .txt, .pdf,</p>
                     <p>Maximum souborů k nahrání: {MAX_NUMBER_OF_FILES}</p>
                     <p>Maximální velikost 1 souboru: {unitConversion(MAX_FILE_SIZE)} MB</p>
                 </div>

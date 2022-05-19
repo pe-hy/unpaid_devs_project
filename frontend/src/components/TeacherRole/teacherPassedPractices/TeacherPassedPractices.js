@@ -80,7 +80,7 @@ export const TeacherPassedPractices = () => {
             console.log(JSON.stringify(response.data));
             setAlertId(index);
             setSuccessMessage("Soubor byl úspěšně nahrán.");
-            setErrorMessage("");
+            setErrorMessage("Soubor nebyl nahrán.");
             getPraxe();
         })
             .catch(function (error) {

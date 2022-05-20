@@ -425,6 +425,15 @@ export const PassedPracticesCoordinator = () => {
                                         </Badge>
                                     </span>
 
+                                    <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                        <div><b>Registrovaní studenti: </b>
+                                            {item.studentNames.length === 0 &&
+                                                <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                        </div>
+                                        <div>{item.studentNames.map((item, index) => (
+                                            <div className="margin-left-cstm">{item}</div>))}</div>
+                                    </div>
+
                                     <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note :
                                         <i>{noteNotFound}</i>}</p>
 

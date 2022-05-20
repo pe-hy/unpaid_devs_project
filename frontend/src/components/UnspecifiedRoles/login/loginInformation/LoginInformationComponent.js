@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {axios} from "../../../../axios";
+import "./LoginInformationStyles.css";
 
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -51,7 +52,7 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
 
     if (name != null && isLoggedIn) {
         return (
-            <div className="text-center" style={{marginTop: "12px"}}>
+            <div className="text-center login-info" style={{marginTop: "12px"}}>
                 <p style={{marginBottom: "0px"}}>Přihlášen jako: <b>{name}</b></p>
                 <p>Role: <b>{role}</b></p>
             </div>

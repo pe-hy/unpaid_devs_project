@@ -48,46 +48,85 @@ const NavbarComponent = () => {
         }
     }
     return (
-        <div className={"navbar-main"}>
-            <Navbar collapseOnSelect expand="md" variant="light">
-                <Container fluid>
-                    <Navbar.Brand href="#">
+        <div className="navbar-main">
+            <Navbar>
+                <div className="main-container">
+                    <Navbar.Brand href="#" className="navbar-brand">
                         <img
                             onClick={refreshPage}
-                            width="90px"
-                            height="90px"
                             className="img-responsive"
                             src={Logo}
                             alt="logo"
                         />
                     </Navbar.Brand>
+                    <Nav className="navbar-links">
+                        <Nav.Link className="nav-link">
+                            <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
+                                <BsFillHouseFill className="icon" style={iconStyles} />
+                                <p className={"p-margin"}>Domů</p>
+                            </span>
+                        </Nav.Link>
+                        <Nav.Link className="nav-link">
+                            <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
+                                <BsFillPersonFill className="icon" style={iconStyles} />
+                                <p className={"p-margin"}>Účet</p>
+                            </span>
+                        </Nav.Link>
+                    </Nav>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav margin-left-cstm-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link className="ms-md-5">
-                                <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
-                                    <BsFillHouseFill style={iconStyles} />
-                                    <p className={"p-margin"}>Domů</p>
-                                </span>
-                            </Nav.Link>
-                            <Nav.Link className="ms-md-5">
-                                <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
-                                    <BsFillPersonFill style={iconStyles} />
-                                    <p className={"p-margin"}>Účet</p>
-                                </span>
-                            </Nav.Link>
-                        </Nav>
-
                         <Nav>
                             <Nav eventkey={2} className="navbar-text white">
-                                <LoginControlComponent />
+                            <div className="login-control">
+                            <LoginControlComponent />
+                            </div>
                             </Nav>
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
+                </div>
             </Navbar>
         </div>
     );
+    // return (
+    //     <div className={"navbar-main"}>
+    //         <Navbar collapseOnSelect expand="md" variant="light">
+    //             <Container fluid className="max-height-css">
+    //                 <Navbar.Brand href="#">
+    //                     <img
+    //                         onClick={refreshPage}
+    //                         width="90px"
+    //                         height="90px"
+    //                         className="img-responsive"
+    //                         src={Logo}
+    //                         alt="logo"
+    //                     />
+    //                 </Navbar.Brand>
+    //                 <Nav className="me-auto">
+    //                         <Nav.Link className="ms-md-5">
+    //                             <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
+    //                                 <BsFillHouseFill style={iconStyles} />
+    //                                 <p className={"p-margin"}>Domů</p>
+    //                             </span>
+    //                         </Nav.Link>
+    //                         <Nav.Link className="ms-md-5">
+    //                             <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
+    //                                 <BsFillPersonFill style={iconStyles} />
+    //                                 <p className={"p-margin"}>Účet</p>
+    //                             </span>
+    //                         </Nav.Link>
+    //                     </Nav>
+    //                 <Navbar.Toggle aria-controls="responsive-navbar-nav margin-left-cstm-nav" />
+    //                 <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
+    //                     <Nav>
+    //                         <Nav eventkey={2} className="navbar-text white">
+    //                             <LoginControlComponent />
+    //                         </Nav>
+    //                     </Nav>
+    //                 </Navbar.Collapse>
+    //             </Container>
+    //         </Navbar>
+    //     </div>
+    // );
 };
 
 export default NavbarComponent;

@@ -15,7 +15,7 @@ let textStyles = {color: "white"};
 
 function LoginButton(props) {
     return (
-        <Container fluid>
+        <Container fluid className="button-control"> 
             <div onClick={props.onClick}>
                 <BsPersonCheckFill style={iconStyles}/>{" "}
                 <span style={textStyles}>Přihlásit se</span>
@@ -41,7 +41,7 @@ function RegisterButton(props) {
 
 function LogoutButton(props) {
     return (
-        <Container fluid>
+        <Container fluid className="button-control">
             <div onClick={props.onClick}>
                 <BsPower style={iconStyles}/>{" "}
                 <span style={textStyles}>Odhlásit se</span>
@@ -105,8 +105,8 @@ class LoginControl extends React.Component {
         if (isLoggedIn) {
             return (
                 <div>
-                    <ul className="nav" style={{marginRight: "60px"}}>
-                        <div style={{marginRight: "30px"}}>
+                    <ul className="nav">
+                        <div>
                             <li
                                 className="nav-item d-flex"
                                 style={textStyles}

@@ -33,6 +33,20 @@ public class RegistrationService {
 
     public String register(RegistrationDto request){
 
+        //check if phone number is in the Czech format
+        if(!request.getPhoneNumber().matches("^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$")){
+            throw new IllegalStateException("Telefonní číslo musí být v českém formátu.");
+        }
+
+        //check if request.getName is lower or equal to 2 or if its bigger or equal to 20
+        if (request.getFirstName().length() <= 2 || request.getFirstName().length() >= 20) {
+            throw new IllegalStateException("Jméno musí být dlouhé 2 až 20 znaků.");
+        }
+
+        if (request.getLastName().length() <= 2 || request.getLastName().length() >= 20) {
+            throw new IllegalStateException("Příjmení musí být dlouhé 2 až 20 znaků.");
+        }
+
         if(!emailValidator.checkEmail(request.getEmail(), request.getRole())){
             throw new IllegalStateException("Email není validní");
         }

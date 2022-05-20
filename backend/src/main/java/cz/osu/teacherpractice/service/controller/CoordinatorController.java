@@ -63,6 +63,10 @@ public class CoordinatorController {
     @ResponseStatus(HttpStatus.OK)
     public String changePhoneNumber(@Valid @RequestBody String phoneNumber, Principal principal) {
         String result = phoneNumber.replaceAll("\"", "");
+        //check if phone number is not in Czech format
+        if(!result.matches("^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$")) {
+            throw new IllegalStateException("Telefonní číslo musí být v českém formátu.");
+        }
         return coordinatorService.changePhoneNumber(principal.getName(), result);
     }
 

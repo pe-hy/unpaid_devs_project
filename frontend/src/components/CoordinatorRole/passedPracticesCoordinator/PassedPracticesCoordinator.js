@@ -1,5 +1,6 @@
 import Accordion from "react-bootstrap/Accordion";
 import "./PassedPracticesCoordinator.css";
+import DLImage from "../../../resources/DLImg.svg";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { axios } from "../../../axios.js";
@@ -333,7 +334,7 @@ export const PassedPracticesCoordinator = () => {
                                     }
                                 >
                                     <span>
-                                        <BsInfoCircleFill className={"info-tooltip"} />
+                                        <BsInfoCircleFill className={"info-tooltip mb-1"} />
                                     </span>
                                 </OverlayTrigger>
                             </Col>
@@ -441,25 +442,29 @@ export const PassedPracticesCoordinator = () => {
                                     </ul>
                                 </div>
                                 <div className="center col div-cstm-flex-direction">
-                                    <div className="mt-3">
-                                        <OverlayTrigger
-                                            overlay={
-                                                <Tooltip>
-                                                    Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
-                                                    na
-                                                    tuto praxi.
-                                                </Tooltip>
-                                            }
-                                        >
+                                    <div className="mt-3 mb-3">
+                                        <div className="center">
+                                            <OverlayTrigger
+                                                overlay={
+                                                    <Tooltip>
+                                                        Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán na
+                                                        tuto praxi.
+                                                    </Tooltip>
+                                                }
+                                            >
                                             <span>
-                                                <BsInfoCircleFill className={"info-tooltip"} />
+                                                <BsInfoCircleFill className={"info-tooltip mb-1"} />
                                             </span>
-                                        </OverlayTrigger>
-                                        <b>Report ke stažení: </b>
+                                            </OverlayTrigger>
+                                            <b>Report ke stažení: </b>
+                                        </div>
+                                        <br/>
                                         {!item.report &&
                                             <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                         }
-                                        <a href={`${URL}/user/report/download/${item.id}`}>{item.report}</a>
+                                        <span className="d-inline-block text-truncate" style={{maxWidth: "300px"}}>
+                                            <a className="report-dl" href={`${URL}/user/report/download/${item.id}`}><img src={DLImage} style={{height: "30px", marginRight: "5px", textOverflow: 'ellipsis'}} alt={"DLImg"}></img> {item.report}</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

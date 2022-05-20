@@ -164,7 +164,7 @@ export class ChangePasswordComponent extends Component {
                       }
                   >
                     <span>
-                      <BsInfoCircleFill className={"info-tooltip"}/>
+                      <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                     </span>
                   </OverlayTrigger>
                   <b>Nové heslo</b>

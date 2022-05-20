@@ -271,7 +271,7 @@ export const TeacherListedPractices = () => {
                                         }
                                     >
                                     <span>
-                                        <BsInfoCircleFill className={"info-tooltip"}/>
+                                        <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                                     </span>
                                     </OverlayTrigger>
                                     <b>Kapacita</b>

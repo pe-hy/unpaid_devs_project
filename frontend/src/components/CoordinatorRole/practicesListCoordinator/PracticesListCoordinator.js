@@ -332,7 +332,7 @@ export const PracticesListCoordinator = () => {
                                         }
                                     >
                                     <span>
-                                        <BsInfoCircleFill className={"info-tooltip"}/>
+                                        <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                                     </span>
                                     </OverlayTrigger>
                                 </Col>

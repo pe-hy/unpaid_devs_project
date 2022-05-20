@@ -237,7 +237,7 @@ export class RegistrationComponent extends Component {
                                                             }
                                                         >
                     <span>
-                      <BsInfoCircleFill className={"info-tooltip"}/>
+                      <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                     </span>
                         </OverlayTrigger>
                                 <b>E-mail</b></span>

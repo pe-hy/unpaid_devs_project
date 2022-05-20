@@ -127,6 +127,8 @@ export class RegistrationComponent extends Component {
         this.onChangeSurname = this.onChangeSurname.bind(this);
         this.onChangeSchool = this.onChangeSchool.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
+        this.validateName = this.validateName.bind(this);
+        this.invalidName = this.invalidName.bind(this);
         this.invalidEmail = this.invalidEmail.bind(this);
         this.setSchools = this.setSchools.bind(this);
     }
@@ -182,12 +184,28 @@ export class RegistrationComponent extends Component {
                 );
         }
     };
+    //create a function to check if name length is lower or equal to 2 OR if its bigger or equal to 30
+    validateName(name) {
+        if (name.length <= 20 && name.length >= 2){
+            return String(name)
+        }
+    };
 
     invalidEmail(value) {
         if (!this.validateEmail(value)) {
             return (
                 <div className="alert alert-danger my-alert text-bold" role="alert">
                     <BsExclamationTriangleFill/> Špatný formát e-mailu!
+                </div>
+            );
+        }
+    };
+
+    invalidName(value) {
+        if (!this.validateName(value)) {
+            return (
+                <div className="alert alert-danger my-alert text-bold" role="alert">
+                    <BsExclamationTriangleFill/> Délka musí být v rozmezí 2 až 20!
                 </div>
             );
         }
@@ -273,7 +291,6 @@ export class RegistrationComponent extends Component {
         this.setState({
             occupation: e.target.value,
         });
-
     }
 
     render() {
@@ -343,7 +360,7 @@ export class RegistrationComponent extends Component {
                          className="form-control"
                          onChange={this.onChangeName}
                          ref={this.nameRef}
-
+                         validations={[required, this.invalidName]}
                          required/>
                 </span>
                             </label>
@@ -357,6 +374,7 @@ export class RegistrationComponent extends Component {
                          ref={this.lastNameRef}
                          onChange={this.onChangeSurname}
                          className="form-control"
+                         validations={[required, this.invalidName]}
 
                          required/>
                 </span>
@@ -447,7 +465,7 @@ export class RegistrationComponent extends Component {
                         <p className="thick">REGISTRACE</p>
                     </div>
 
-                    <section className={" card card-container form-cointainer d-flex justify-content-center mt-2"}>
+                    <section className={"card card-container form-cointainer d-flex justify-content-center mt-2"}>
                         <Form onSubmit={this.handleRegister}
                               ref={(c) => {
                                   this.form = c;
@@ -492,6 +510,7 @@ export class RegistrationComponent extends Component {
                          className="form-control"
                          name={this.nameRef}
                          ref={this.nameRef}
+                         validations={[required, this.invalidName]}
 
                          required/>
                 </span>
@@ -505,6 +524,7 @@ export class RegistrationComponent extends Component {
                   <Input type="text"
                          ref={this.lastNameRef}
                          onChange={this.onChangeSurname}
+                         validations={[required, this.invalidName]}
                          className="form-control"
                          name={this.lastNameRef}
 
@@ -528,7 +548,7 @@ export class RegistrationComponent extends Component {
                   </OverlayTrigger>
                   <b>Škola</b>
                 </span>
-                                <span className={"span-input"}>
+                                <span className="span-input">
                   <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control"
                           placeholder="Vyberte školu">
                     {this.state.schoolList.map((item, index) => (

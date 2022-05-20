@@ -430,8 +430,8 @@ export const PastPracticeListComponent = () => {
                                     </ul>
                                 </div>
                                 <div className="center col div-cstm-flex-direction">
-                                    <div className="mt-3 mb-3">
-                                        <div className="center">
+                                    <div className="mt-3 mb-1 flex-cont">
+                                        <div className="center flex-it">
                                             <OverlayTrigger
                                                 overlay={
                                                     <Tooltip>

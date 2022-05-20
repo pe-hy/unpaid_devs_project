@@ -349,7 +349,7 @@ export const TeacherListedPractices = () => {
                                         </Badge>
                                     </span>
 
-                                        <div className="d-flex" style={{marginTop: "10px"}}>
+                                        <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
                                             <div><b>Registrovaní studenti: </b>
                                                 {item.studentNames.length === 0 &&
                                                     <span><i>Žádný student se prozatím na praxi nezaregistroval.</i></span>}

@@ -436,7 +436,7 @@ export const TeacherPassedPractices = () => {
                                             {item.numberOfReservedStudents} / {item.capacity}
                                         </Badge>
                                     </span>
-                                        <div className="d-flex" style={{marginTop: "10px"}}>
+                                        <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
                                             <div><b>Registrovaní studenti: </b>
                                                 {item.studentNames.length === 0 &&
                                                     <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
@@ -474,9 +474,9 @@ export const TeacherPassedPractices = () => {
                                                 Nahrát report
                                             </button>
                                         </Form>
-                                        <div className="mt-3 mb-3">
-                                            <hr/>
-                                            <div className="center">
+                                        <div className="mt-3 mb-1 flex-cont">
+                                            <hr style={{width: "150%"}}/>
+                                            <div className="center flex-it">
                                                 <OverlayTrigger
                                                     overlay={
                                                         <Tooltip>
@@ -496,7 +496,7 @@ export const TeacherPassedPractices = () => {
                                             {!item.report &&
                                                 <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
-                                            <span className="d-inline-block text-truncate" style={{maxWidth: "300px"}}>
+                                            <span className="d-inline-block text-truncate flex-it" style={{maxWidth: "300px"}}>
                                             <a className="report-dl" href={`${URL}/user/report/download/${item.id}`}><img src={DLImage} style={{height: "30px", marginRight: "5px", textOverflow: 'ellipsis'}} alt={"DLImg"}></img> {item.report}</a>
                                         </span>
                                             {errorMessage && alertId === index &&

@@ -22,6 +22,25 @@ function ShowCoordinators() {
         });
     };
 
+    const formatPhoneNum = (number) => {
+        if(number === null || number === "") return;
+        let ret = number.replaceAll(" ", "");
+        let formattedNum = "";
+        let index = 0;
+
+        if (ret.substring(0,4) === "+420") {
+            formattedNum = formattedNum.concat("+420 ");
+            index += 4;
+        }
+        for (let i = 0; i < 3; i++) {
+            formattedNum = formattedNum.concat(ret.substring(index, index + 3));
+            if (i < 2) { formattedNum = formattedNum.concat(" "); }
+            index += 3;
+        }
+
+        return formattedNum;
+    }
+
     React.useEffect(() => {
         getStudents();
         console.log(coordinators);
@@ -35,7 +54,7 @@ function ShowCoordinators() {
                     <td>{info.firstName}</td>
                     <td>{info.secondName}</td>
                     <td>{info.username}</td>
-                    <td>{info.phoneNumber}</td>
+                    <td>{info.phoneNumber.length != 0 ? formatPhoneNum(info.phoneNumber) : "-"}</td>
                 </tr>
             )
         }

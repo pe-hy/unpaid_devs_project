@@ -287,13 +287,6 @@ const TabsForm = () => {
                 >
                     <BsExclamationTriangleFill className={"alert-icon-error"} /> {errorMsg}
                 </Alert>
-                <Alert
-                    show={showSuccessAlert}
-                    variant="success"
-                    className="alert-practice-success"
-                >
-                    <BsCheckLg className={"alert-icon-success "} /> Vytvoření proběhlo úspěšně
-                </Alert>
             </div>
         </Form>
     );

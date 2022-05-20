@@ -33,6 +33,25 @@ export const WaitingListComponent = () => {
         }
     };
 
+    const formatPhoneNum = (number) => {
+        if(number === null || number === "") return;
+        let ret = number.replaceAll(" ", "");
+        let formattedNum = "";
+        let index = 0;
+
+        if (ret.substring(0,4) === "+420") {
+            formattedNum = formattedNum.concat("+420 ");
+            index += 4;
+        }
+        for (let i = 0; i < 3; i++) {
+            formattedNum = formattedNum.concat(ret.substring(index, index + 3));
+            if (i < 2) { formattedNum = formattedNum.concat(" "); }
+            index += 3;
+        }
+
+        return formattedNum;
+    }
+
     useEffect(() => {
         getLockedUsers();
     }, []);
@@ -121,7 +140,7 @@ export const WaitingListComponent = () => {
                     <tr className="align-middle">
                         <th scope="row">{item.firstName + " " + item.secondName}</th>
                         <td>{item.school != null ? item.school.name : schoolNotFound}</td>
-                        <td>{item.phoneNumber}</td>
+                        <td>{formatPhoneNum(item.phoneNumber)}</td>
                         <td>{item.username}</td>
                         <td>
                             <button onClick={() => acceptUser(item.username)} type="button"

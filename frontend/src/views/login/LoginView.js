@@ -1,10 +1,15 @@
 import { Container } from "react-bootstrap";
 import LoginComponent from "../../components/UnspecifiedRoles/login/loginForm/LoginComponent";
-import {Navigate} from "react-router-dom";
- 
+import { Navigate } from "react-router-dom";
+
 
 const autoRedirectBasedOnRole = () => {
   let role = localStorage.getItem("role");
+  if (window.location.href.indexOf("token") > -1) {
+    return <Container className={"login-main"}>
+      <LoginComponent />
+    </Container>;
+  }
   switch (role) {
     case "ROLE_STUDENT":
       return <Navigate to="/studentHome" />;

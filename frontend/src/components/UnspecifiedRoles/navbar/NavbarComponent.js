@@ -73,13 +73,10 @@ const NavbarComponent = () => {
                             </span>
                         </Nav.Link>
                     </Nav>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav margin-left-cstm-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
+                    <Navbar.Collapse className="margin-left-cstm-nav">
                         <Nav>
                             <Nav eventkey={2} className="navbar-text white">
-                            <div className="login-control">
-                            <LoginControlComponent />
-                            </div>
+                                <LoginControlComponent />
                             </Nav>
                         </Nav>
                     </Navbar.Collapse>

@@ -1,13 +1,17 @@
 .vertical-center {
     align-items: center;
 }
+
 #button:hover{
     color: white;
     text-decoration: underline 10%;
     text-underline-offset: 50%;
 }
 
-.button-control{
-    margin-right: 30px;
-    margin-left: 40px;
+#button{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+

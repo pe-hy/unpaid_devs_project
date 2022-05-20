@@ -11,21 +11,39 @@
         border: 1px solid transparent;
         border-radius: 0.25rem;
     }
+}
+
+@media (max-width: 800px) {
+    .nav-tabs .nav-link {
+        margin-bottom: -1px;
+        background: 0 0;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
     .img-responsive{
         margin-left: 10px !important;
-        height: 80% !important;
+        height: 90% !important;
         width: auto;
     }
     a.nav-link:nth-child(2){
         margin-left: 5px !important;
     }
-    
+    li.nav-item.d-flex:nth-child(2){
+        margin-left: -10px !important;
+        margin-right: 5px !important;
+    }
     .navbar-links{
-        margin-left: 5px !important;
+        margin-left: 10px !important;
     }
 }
 
 @media (max-width: 365px) {
+    .nav-tabs .nav-link {
+        margin-bottom: -1px;
+        background: 0 0;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
     .icon{
         font-size: 2em !important;
     }
@@ -40,6 +58,10 @@
     
     .navbar-links{
         margin-left: -5px !important;
+    }
+    li.nav-item.d-flex:nth-child(2){
+        margin-left: -10px !important;
+        margin-right: -10px !important;
     }
 }
 
@@ -65,7 +87,12 @@ a.nav-link:nth-child(2){
 }
 
 .navbar-links{
-    margin-left: 10px;
+    margin-left: 30px;
+}
+
+li.nav-item.d-flex:nth-child(2){
+    margin-left: 20px !important;
+    margin-right: 20px !important;
 }
 
 .navbar-brand{
@@ -93,6 +120,7 @@ a.nav-link:nth-child(2){
 .nav-link {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .white {

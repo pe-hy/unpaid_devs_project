@@ -39,11 +39,11 @@ public class RegistrationService {
         }
 
         //check if request.getName is lower or equal to 2 or if its bigger or equal to 20
-        if (request.getFirstName().length() <= 2 || request.getFirstName().length() >= 20) {
+        if (request.getFirstName().length() < 2 || request.getFirstName().length() > 20) {
             throw new IllegalStateException("Jméno musí být dlouhé 2 až 20 znaků.");
         }
 
-        if (request.getLastName().length() <= 2 || request.getLastName().length() >= 20) {
+        if (request.getLastName().length() < 2 || request.getLastName().length() > 20) {
             throw new IllegalStateException("Příjmení musí být dlouhé 2 až 20 znaků.");
         }
 

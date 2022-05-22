@@ -13,7 +13,7 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 725px) {
     .nav-tabs .nav-link {
         margin-bottom: -1px;
         background: 0 0;
@@ -35,6 +35,10 @@
     .navbar-links{
         margin-left: 10px !important;
     }
+    li.nav-item.d-flex:nth-child(2){
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
 }
 
 @media (max-width: 365px) {
@@ -54,6 +58,10 @@
     }
     a.nav-link:nth-child(2){
         margin-left: 5px !important;
+    }
+
+    .navbar-text{
+        margin-left: -30px;
     }
     
     .navbar-links{

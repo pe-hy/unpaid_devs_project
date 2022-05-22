@@ -1,9 +1,6 @@
 package cz.osu.teacherpractice.repository;
 
-import cz.osu.teacherpractice.model.Practice;
-import cz.osu.teacherpractice.model.Role;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.model.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -8,6 +8,7 @@ import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
+import cz.osu.teacherpractice.model.Practice;
 import cz.osu.teacherpractice.model.Review;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
@@ -202,22 +203,5 @@ public class UserService {
     public void changeUserPassword(final User user, final String password) {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
-    }
-
-    public List<ReviewDto> getStudentReviews(Long id) {
-        List<Review> revs = reviewRepository.getAllByPracticeId(id);
-        System.out.println(revs.get(0).getText());
-        //return mapper.reviewsToReviewsDto(revs); //mapper blbne
-
-        //temporary fix for now
-        List<ReviewDto> ret = new ArrayList<>();
-        for (Review rev :
-                revs) {
-            ReviewDto revDto = new ReviewDto();
-            revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
-            revDto.setReviewText(rev.getText());
-            ret.add(revDto);
-        }
-        return ret;
     }
 }

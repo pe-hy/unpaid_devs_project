@@ -15,6 +15,10 @@ body, html {
     }
 }
 
+.col-in-practices{
+    margin-left: 50px;
+}
+
 .accordion-button:hover {
     background-color: #EDEDED;
 }

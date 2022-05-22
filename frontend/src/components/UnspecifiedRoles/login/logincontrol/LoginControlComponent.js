@@ -44,7 +44,7 @@ function LogoutButton(props) {
         <Container fluid className="button-control">
             <div onClick={props.onClick}>
                 <BsPower style={iconStyles} />{" "}
-                <span style={textStyles}>Odhlásit se</span>
+                <span id="sign-out-text" style={textStyles}>Odhlásit se</span>
             </div>
         </Container>
     );

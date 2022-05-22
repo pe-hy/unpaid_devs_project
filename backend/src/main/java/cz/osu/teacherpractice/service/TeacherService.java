@@ -2,14 +2,17 @@ package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
+import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.exception.UserErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.Practice;
+import cz.osu.teacherpractice.model.Review;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
 import cz.osu.teacherpractice.repository.PracticeRepository;
+import cz.osu.teacherpractice.repository.ReviewRepository;
 import cz.osu.teacherpractice.repository.SubjectRepository;
 import cz.osu.teacherpractice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service @RequiredArgsConstructor
 public class TeacherService {
@@ -27,6 +28,7 @@ public class TeacherService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final PracticeRepository practiceRepository;
+    private final ReviewRepository reviewRepository;
     private final MapStructMapper mapper;
 
     private final UserService userService;
@@ -112,5 +114,36 @@ public class TeacherService {
             names.add(name);
         }
         return names;
+    }
+
+    public List<Map<Long, List<ReviewDto>>> getStudentReviews(String username) {
+
+        Optional<User> u = userRepository.findByEmail(username);
+        List<Map<Long, List<ReviewDto>>> mappedReviews = new ArrayList<>();
+
+        if(u.isPresent()){
+            List<Practice> practices = practiceRepository.findAllByTeacherUsername(username);
+            List<Practice> practices = practiceRepository.findAll(username);
+
+            for (Practice practice :
+                    practices) {
+
+                List<Review> revs = reviewRepository.getAllByPracticeId(practice.getId());
+
+                List<ReviewDto> ret = new ArrayList<>();
+                for (Review rev :
+                        revs) {
+                    ReviewDto revDto = new ReviewDto();
+                    revDto.setPracticeId(practice.getId());
+                    revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
+                    revDto.setReviewText(rev.getText());
+                    ret.add(revDto);
+                }
+
+                mappedReviews.add(Map.of(practice.getId(), ret));
+
+            }
+        }
+        return mappedReviews;
     }
 }

@@ -13,6 +13,9 @@ body, html {
         position: absolute;
         width: 0;
     }
+    .col-in-practices{
+        margin-left: 0px !important;
+    }
 }
 
 .accordion-button:hover {

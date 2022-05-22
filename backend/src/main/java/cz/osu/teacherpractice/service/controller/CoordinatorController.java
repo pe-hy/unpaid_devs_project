@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/coordinator")
@@ -117,8 +118,8 @@ public class CoordinatorController {
         return coordinatorService.assignSchool(request);
     }
 
-    @GetMapping("/getReviews/{id}")
-    public List<ReviewDto> getReviews(@PathVariable Long id) {
-        return userService.getStudentReviews(id);
+    @GetMapping("/getReviews")
+    public List<Map<Long, List<ReviewDto>>> getReviews() {
+        return coordinatorService.getStudentReviews();
     }
 }

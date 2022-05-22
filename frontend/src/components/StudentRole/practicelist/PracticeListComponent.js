@@ -453,7 +453,7 @@ export const PracticeListComponent = () => {
                         <Accordion.Body>
                             <div>
                                 <hr />
-                                <div style={{ marginLeft: "50px" }}>
+                                <div className="col-in-practices">
                                     <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                     <p><b>E-mail:</b> {item.teacher.username}</p>
                                     <p><b>Čas: </b>

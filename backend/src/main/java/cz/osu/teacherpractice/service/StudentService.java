@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -210,8 +211,23 @@ public class StudentService {
         return "Chyba při ukládání hodnocení.";
     }
 
-    public ReviewDto getStudentReview(Long studentId){
-        Review rev = reviewRepository.getReviewByStudentId(studentId);
-        return mapper.reviewToReviewDto(rev);
+    public List<ReviewDto> getStudentReviews(String username){
+        Optional<User> student = userRepository.findByEmail(username);
+        if(student.isPresent()){
+            List<Review> revs = reviewRepository.getAllByStudentId(student.get().getId());
+
+            //temporary fix for now
+            List<ReviewDto> ret = new ArrayList<>();
+            for (Review rev :
+                    revs) {
+                ReviewDto revDto = new ReviewDto();
+                revDto.setPracticeId(rev.getPractice().getId());
+                revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
+                revDto.setReviewText(rev.getText());
+                ret.add(revDto);
+            }
+            return ret;
+        }
+        return new ArrayList<>();
     }
 }

@@ -1,3 +1,9 @@
+@media (max-width: 725px) {
+    #sign-out-text{
+        display: none;
+    }
+}
+
 .vertical-center {
     align-items: center;
 }

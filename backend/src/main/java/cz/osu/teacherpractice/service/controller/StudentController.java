@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
@@ -66,8 +67,9 @@ public class StudentController {
         return studentService.submitReview(principal.getName(), practiceId, text);
     }
 
-    @GetMapping("/getReview/{id}")
-    public ReviewDto getReviews(@PathVariable Long id) {
-        return studentService.getStudentReview(id);
+    @GetMapping("/getReviews")
+    public List<ReviewDto> getReviews(Principal principal) {
+
+        return studentService.getStudentReviews(principal.getName());
     }
 }

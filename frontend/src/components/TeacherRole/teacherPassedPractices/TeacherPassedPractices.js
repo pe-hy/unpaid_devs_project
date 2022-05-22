@@ -437,12 +437,19 @@ export const TeacherPassedPractices = () => {
                                         </Badge>
                                     </span>
                                         <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
-                                            <div><b>Registrovaní studenti: </b>
-                                                {item.studentNames.length === 0 &&
-                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                            <div className="w-75"><b>Registrovaní studenti: </b>
+                                                <div className="mb-2 mt-2">
+                                                    {item.studentNames.length === 0 &&
+                                                        <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                                </div>
+                                                <div>{item.studentNames.map((item, index) => (
+                                                    <div className="margin-left-cstm"> ✓ {item}
+                                                        <div
+                                                            className="review-btn review-show-btn">Hodnocení
+                                                        </div>
+                                                    </div>))}
+                                                </div>
                                             </div>
-                                            <div>{item.studentNames.map((item, index) => (
-                                                <div className="margin-left-cstm">{item}</div>))}</div>
                                         </div>
 
                                         <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :
@@ -482,7 +489,8 @@ export const TeacherPassedPractices = () => {
                                                     <OverlayTrigger
                                                         overlay={
                                                             <Tooltip>
-                                                                Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
+                                                                Toto uvidíte pouze vy, koordinátoři a student, který byl
+                                                                zapsán
                                                                 na
                                                                 tuto praxi.
                                                             </Tooltip>

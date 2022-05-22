@@ -70,6 +70,12 @@ body, html {
     align-items: center;
 }
 
+.move-storno-to-right{
+    justify-content: end;
+    height: 80%;
+    align-self: center;
+}
+
 .info-tooltip {
     font-size: 1.1em;
     margin: 4px;

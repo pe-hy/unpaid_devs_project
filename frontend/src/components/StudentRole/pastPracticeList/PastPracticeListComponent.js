@@ -158,25 +158,30 @@ export const PastPracticeListComponent = () => {
                     }}>
                         <div className="mt-3 mb-3">
                             <div className="form-group">
-                                <textarea required maxLength={maxReviewLength} className="form-control" id="reviewTextArea"
+                                <textarea rows="6" required maxLength={maxReviewLength} className="form-control" id="reviewTextArea"
                                     placeholder="Začněte psát recenzi" onChange={() => {
                                         review[0] = document.getElementById("reviewTextArea").value; document.getElementById("reviewTextArea").value = review[0];
                                         document.getElementById("review-len").innerText = `${review[0].length}/${maxReviewLength}`
                                     }}></textarea>
+                                <div className="float-end mb-3 pt-1" style={{marginRight: "5px"}}>
+                                    <p id="review-len"><i>Zbývá znaků: {`${review[0].length}/${maxReviewLength}`}</i></p>
+                                </div>
                             </div>
+                            <div className="class-name pt-5"></div>
                         </div>
-                        <p id="review-len">{`${review[0].length}/${maxReviewLength}`}</p>
-                        
-                        <hr />
-                        <div className="float-end">
+                        <div className="row float-end">
+                            <div className="col d-flex move-storno-to-right" style={{padding: "0"}}>
                             <button type="button" onClick={props.onHide}
-                                className="mt-3 accept-btn my-btn-white">Storno
+                                className="accept-btn my-btn-white">Storno
                             </button>
-                            <button type="button" form="form_review" className="btn button-add" onClick={() => {
+                            </div>
+                            <div className="col" style={{width: "200px"}}>
+                            <button type="button" form="form_review" className="review-btn my-hover-btn-send" onClick={() => {
                                 props.onHide();
                                 createReview();
                             }}>Odeslat
                             </button>
+                                </div>
                         </div>
                     </form>
                 </Modal.Body>
@@ -545,7 +550,7 @@ export const PastPracticeListComponent = () => {
                                     <hr className="w-75" />
                                     <div className="d-flex align-items-center w-50">
                                         <button onClick={() => {setModalShow(true); setCurrentPracticeId(item.id)}}
-                                            className="btn toggleButtonFilters">Přidat recenzi
+                                            className="btn toggleButtonFilters my-hover-btn-send">Přidat recenzi
                                         </button>
                                     </div>
                                 </div>

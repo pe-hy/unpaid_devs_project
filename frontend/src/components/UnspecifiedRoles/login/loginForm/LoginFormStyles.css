@@ -51,7 +51,6 @@ p.thick {
 .button-login {
     text-align: center;
     padding-top: 20px;
-    padding-bottom: 10px;
 }
 
 .button-lg {
@@ -136,5 +135,13 @@ p.thick {
 
 .alignment-right {
     margin-right: -10px;
+}
+.my-hover{
+    transition: transform 150ms, box-shadow 150ms;
+}
+.my-hover:hover{
+    cursor: pointer;
+    color: #48819B;
+    transform: translateY(-2px);
 }
 

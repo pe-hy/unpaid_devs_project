@@ -238,10 +238,10 @@ export default class Login extends Component {
                             </button>
                         </div>
 
-
+<hr/>
                         <div className="flex-parent alignment">
-                            <span className="margin-right alignment-left">
-                                <a href="register" style={{textDecoration: "none"}} className={"d-flex mt-2 rgstr"}>Zaregistrovat se</a>
+                            <span className="margin-right alignment-left mt-2">
+                                <a href="register" style={{textDecoration: "none"}} className={"d-flex rgstr my-hover"}>Zaregistrovat se</a>
                                 <CheckButton
                                     style={{display: "none"}}
                                     ref={(c) => {

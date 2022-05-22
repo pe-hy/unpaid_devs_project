@@ -144,12 +144,12 @@ export class ForgotPasswordEmail extends Component {
 
     render() {
         return (
-            <span>
-                    <button className="change-btn"
+            <div>
+                    <button type="button" className="mb-3 remove-styles-btn my-hover"
                             onClick={() => this.setState({modalShow: true})}>Zapomenuté heslo
                     </button>
                 {this.CreateModal()}
-            </span>
+            </div>
 
         )
     }

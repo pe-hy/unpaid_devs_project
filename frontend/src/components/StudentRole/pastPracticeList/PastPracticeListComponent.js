@@ -154,13 +154,15 @@ export const PastPracticeListComponent = () => {
                             <div className="mt-3 mb-3">
                                 <div className="form-group">
                                     <textarea required maxLength="1000" className="form-control" id="phoneNew"
-                                           placeholder="Začněte psát recenzi"
-                                           />
+                                              placeholder="Začněte psát recenzi"
+                                    />
                                 </div>
                             </div>
                             <hr/>
                             <div className="float-end">
-                                <button type="button" onClick={props.onHide} className="mt-3 accept-btn my-btn-white">Storno</button>
+                                <button type="button" onClick={props.onHide}
+                                        className="mt-3 accept-btn my-btn-white">Storno
+                                </button>
                                 <button type="submit" form="form_review" className="btn button-add" onClick={() => {
                                     props.onHide();
                                 }}>Odeslat
@@ -518,15 +520,17 @@ export const PastPracticeListComponent = () => {
                                                 <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
                                             <span className="d-inline-block text-truncate" style={{maxWidth: "300px"}}>
-                                            <a className="report-dl"
-                                               href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
-                                                                                                    style={{
-                                                                                                        height: "30px",
-                                                                                                        marginRight: "5px",
-                                                                                                        textOverflow: 'ellipsis'
-                                                                                                    }}
-                                                                                                    alt={"DLImg"}></img> {item.report}</a>
-                                                                                <hr/>
+                                                {item.report &&
+                                                    <a className="report-dl"
+                                                       href={`${URL}/user/report/download/${item.id}`}><img
+                                                        src={DLImage}
+                                                        style={{
+                                                            height: "30px",
+                                                            marginRight: "5px",
+                                                            textOverflow: 'ellipsis'
+                                                        }}
+                                                        alt={"DLImg"}></img> {item.report}</a>}
+                                                <hr/>
                                         </span>
                                             <div className="d-flex align-items-center w-75">
                                                 <button onClick={() => setModalShow(true)}

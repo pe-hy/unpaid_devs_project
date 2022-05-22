@@ -477,20 +477,22 @@ export const TeacherPassedPractices = () => {
                                         <div className="mt-3 mb-1 flex-cont">
                                             <hr style={{width: "150%"}}/>
                                             <div className="center flex-it">
-                                                <OverlayTrigger
-                                                    overlay={
-                                                        <Tooltip>
-                                                            Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
-                                                            na
-                                                            tuto praxi.
-                                                        </Tooltip>
-                                                    }
-                                                >
+                                                <b>Report ke stažení: </b>
+                                                <div>
+                                                    <OverlayTrigger
+                                                        overlay={
+                                                            <Tooltip>
+                                                                Toto uvidíte pouze vy, koordinátoři a student, který byl zapsán
+                                                                na
+                                                                tuto praxi.
+                                                            </Tooltip>
+                                                        }
+                                                    >
                                             <span>
                                                 <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                                             </span>
-                                                </OverlayTrigger>
-                                                <b>Report ke stažení: </b>
+                                                    </OverlayTrigger>
+                                                </div>
                                             </div>
                                             <br/>
                                             {!item.report &&

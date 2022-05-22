@@ -105,10 +105,9 @@ const CoordinatorPersonalPageComponent = () => {
                     <h1>Osobní stránka</h1>
                     <p style={{ paddingTop: "25px" }}><BsFillPersonFill style={iconStyles} /><b>Jméno:</b> {name}</p>
                     <p><b><BsAt style={iconStyles} />E-mail:</b> {email}</p>
-                    <div className="container">
-                        <div className="row">
+                        <div className="row row-setting">
                             <div className="col-sm-6"><b><BsPhone style={iconStyles} />Telefon</b>: {formatPhoneNum(phone)}</div>
-                            <form onSubmit={(e) => {
+                            <form className={"form-format"} onSubmit={(e) => {
                                 e.preventDefault();
                                 editPhone();
                             }}>
@@ -127,11 +126,10 @@ const CoordinatorPersonalPageComponent = () => {
                                     <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
                                 </div>}
                                 <div className="col-sm-4 mt-3 mb-3">
-                                    <button type="submit" className="change-btn">Změnit telefon</button>
+                                    <button type="submit" className="change-btn button-setting">Změnit telefon</button>
                                 </div>
                             </form>
                         </div>
-                    </div>
                     <p><b><BsTools style={iconStyles} />Změna hesla: <ChangePasswordComponent /></b></p>
                 </div>
                 <div className="col-sm uploadCol"></div>

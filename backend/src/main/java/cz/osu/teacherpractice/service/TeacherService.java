@@ -123,7 +123,6 @@ public class TeacherService {
 
         if(u.isPresent()){
             List<Practice> practices = practiceRepository.findAllByTeacherUsername(username);
-            List<Practice> practices = practiceRepository.findAll(username);
 
             for (Practice practice :
                     practices) {
@@ -139,9 +138,7 @@ public class TeacherService {
                     revDto.setReviewText(rev.getText());
                     ret.add(revDto);
                 }
-
                 mappedReviews.add(Map.of(practice.getId(), ret));
-
             }
         }
         return mappedReviews;

@@ -61,13 +61,13 @@ const NavbarComponent = () => {
                     </Navbar.Brand>
                     <Nav className="navbar-links">
                         <Nav.Link className="nav-link">
-                            <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
+                            <span className="my-hover" onClick={() => redirectBasedOnRoleMainView()} id="prehled">
                                 <BsFillHouseFill className="icon" style={iconStyles} />
                                 <p className={"p-margin"}>Domů</p>
                             </span>
                         </Nav.Link>
                         <Nav.Link className="nav-link">
-                            <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
+                            <span className="my-hover" onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
                                 <BsFillPersonFill className="icon" style={iconStyles} />
                                 <p className={"p-margin"}>Účet</p>
                             </span>

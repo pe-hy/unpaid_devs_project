@@ -147,12 +147,6 @@ li.nav-item.d-flex:nth-child(2){
     text-align: center;
 }
 
-#prehled:hover, #ucet:hover {
-    color: white;
-    text-decoration: underline 20%;
-    text-underline-offset: 50%;
-}
-
 .p-margin {
     margin-bottom: 0;
 

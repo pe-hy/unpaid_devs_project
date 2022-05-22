@@ -145,3 +145,13 @@ p.thick {
     transform: translateY(-2px);
 }
 
+.my-hover-btn-send{
+    transition: transform 150ms, box-shadow 150ms;
+}
+
+.my-hover-btn-send:hover{
+    cursor: pointer;
+    color: white;
+    transform: translateY(-2px);
+}
+

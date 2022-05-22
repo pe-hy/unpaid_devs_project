@@ -129,3 +129,12 @@ p.thick {
     font-size: 1.2em;
 }
 
+.flex-parent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alignment-right {
+    margin-right: -10px;
+}
+

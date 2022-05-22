@@ -145,7 +145,7 @@ export class ForgotPasswordEmail extends Component {
     render() {
         return (
             <span>
-                    <button type="button" className="change-btn"
+                    <button className="change-btn"
                             onClick={() => this.setState({modalShow: true})}>Zapomenuté heslo
                     </button>
                 {this.CreateModal()}

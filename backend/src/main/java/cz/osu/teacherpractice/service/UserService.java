@@ -2,17 +2,16 @@ package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.dto.request.PasswordDto;
+import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.SchoolDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
+import cz.osu.teacherpractice.model.Review;
 import cz.osu.teacherpractice.model.Role;
 import cz.osu.teacherpractice.model.User;
-import cz.osu.teacherpractice.repository.PracticeRepository;
-import cz.osu.teacherpractice.repository.SchoolRepository;
-import cz.osu.teacherpractice.repository.SubjectRepository;
-import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.repository.*;
 import cz.osu.teacherpractice.service.fileManagement.FileUtil;
 import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetToken;
 import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
@@ -39,6 +38,7 @@ public class UserService {
     private final ConfirmationTokenService confirmationTokenService;
     private final PasswordResetTokenRepository passwordTokenRepository;
     private final PracticeRepository practiceRepository;
+    private final ReviewRepository reviewRepository;
 
     public User createUser(User user) {
         if (userRepository.findByEmail(user.getUsername()).isPresent()) {
@@ -202,5 +202,22 @@ public class UserService {
     public void changeUserPassword(final User user, final String password) {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
+    }
+
+    public List<ReviewDto> getStudentReviews(Long id) {
+        List<Review> revs = reviewRepository.getAllByPracticeId(id);
+        System.out.println(revs.get(0).getText());
+        //return mapper.reviewsToReviewsDto(revs); //mapper blbne
+
+        //temporary fix for now
+        List<ReviewDto> ret = new ArrayList<>();
+        for (Review rev :
+                revs) {
+            ReviewDto revDto = new ReviewDto();
+            revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
+            revDto.setReviewText(rev.getText());
+            ret.add(revDto);
+        }
+        return ret;
     }
 }

@@ -1,6 +1,8 @@
 package cz.osu.teacherpractice.service.controller;
 
+import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
+import cz.osu.teacherpractice.model.Review;
 import cz.osu.teacherpractice.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -57,5 +59,15 @@ public class StudentController {
     @PutMapping("/practices/{id}/cancel-reservation")
     public void cancelReservation(Principal principal, @PathVariable("id") Long practiceId) {
         studentService.cancelReservation(principal.getName(), practiceId);
+    }
+
+    @PostMapping("/practices/{id}/submitReview")
+    public String submitReview(Principal principal, @PathVariable("id") Long practiceId, @RequestBody String text) {
+        return studentService.submitReview(principal.getName(), practiceId, text);
+    }
+
+    @GetMapping("/getReview/{id}")
+    public ReviewDto getReviews(@PathVariable Long id) {
+        return studentService.getStudentReview(id);
     }
 }

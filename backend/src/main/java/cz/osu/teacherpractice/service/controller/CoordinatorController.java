@@ -3,10 +3,7 @@ package cz.osu.teacherpractice.service.controller;
 import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSubjectDto;
-import cz.osu.teacherpractice.dto.response.SchoolDto;
-import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
-import cz.osu.teacherpractice.dto.response.SubjectDto;
-import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.dto.response.*;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -118,5 +115,10 @@ public class CoordinatorController {
     public String assignSchool(@RequestBody AssignSchoolDto request) {
         System.out.println(request.getUsername() + " " + request.getSchool());
         return coordinatorService.assignSchool(request);
+    }
+
+    @GetMapping("/getReviews/{id}")
+    public List<ReviewDto> getReviews(@PathVariable Long id) {
+        return userService.getStudentReviews(id);
     }
 }

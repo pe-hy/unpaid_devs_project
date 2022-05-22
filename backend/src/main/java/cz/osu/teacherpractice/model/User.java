@@ -26,6 +26,7 @@ public class User {
     private Boolean locked = false;
     private Boolean enabled = false;
 
+
     @ManyToOne
     private School school;
 
@@ -55,6 +56,9 @@ public class User {
         this.locked = locked;
         this.enabled = enabled;
     }
+
+    @OneToMany(mappedBy="student")
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy="teacher")
     private List<Practice> teacherPractices = new ArrayList<>();

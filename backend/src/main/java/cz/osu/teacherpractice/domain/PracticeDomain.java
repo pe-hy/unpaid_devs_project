@@ -2,6 +2,7 @@ package cz.osu.teacherpractice.domain;
 
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
+import cz.osu.teacherpractice.model.Review;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class PracticeDomain {
     private UserDto teacher;
     private List<UserDto> students;
     private String report;
+    private List<Review> reviews;
     private List<String> fileNames;
     private List<String> studentNames;
 
@@ -76,4 +78,6 @@ public class PracticeDomain {
     public void setStudentNames(List<String> list){
         this.studentNames = list;
     }
+
+    public void setReviews(List<Review> list){this.reviews = list;}
 }

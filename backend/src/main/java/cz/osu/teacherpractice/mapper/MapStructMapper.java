@@ -1,15 +1,9 @@
 package cz.osu.teacherpractice.mapper;
 
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
-import cz.osu.teacherpractice.dto.response.SchoolDto;
-import cz.osu.teacherpractice.dto.response.SubjectDto;
+import cz.osu.teacherpractice.dto.response.*;
 import cz.osu.teacherpractice.domain.PracticeDomain;
-import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
-import cz.osu.teacherpractice.dto.response.UserDto;
-import cz.osu.teacherpractice.model.Practice;
-import cz.osu.teacherpractice.model.School;
-import cz.osu.teacherpractice.model.Subject;
-import cz.osu.teacherpractice.model.User;
+import cz.osu.teacherpractice.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -45,4 +39,10 @@ public interface MapStructMapper {
     StudentPracticeDto practiceDomainToStudentPracticeDto(PracticeDomain practiceDomain);
 
     List<StudentPracticeDto> practicesDomainToStudentPracticesDto(List<PracticeDomain> practiceDomain);
+
+    Review reviewDtoToReview(ReviewDto reviewDto);
+
+    ReviewDto reviewToReviewDto(Review review);
+
+    List<ReviewDto> reviewsToReviewsDto(List<Review> reviews);
 }

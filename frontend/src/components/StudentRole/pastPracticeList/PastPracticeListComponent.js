@@ -149,13 +149,11 @@ export const PastPracticeListComponent = () => {
                         <h4 className="mb-3">Přidání recenze</h4>
                         <form id="form_review" onSubmit={(e) => {
                             e.preventDefault();
-                            createReview();
                         }}>
                             <div className="mt-3 mb-3">
                                 <div className="form-group">
                                     <textarea required maxLength="1000" className="form-control" id="phoneNew"
-                                              placeholder="Začněte psát recenzi"
-                                    />
+                                              placeholder="Začněte psát recenzi" value={review} onChange={(e) => { setReview(e.target.value) }}></textarea>
                                 </div>
                             </div>
                             <hr/>
@@ -163,8 +161,9 @@ export const PastPracticeListComponent = () => {
                                 <button type="button" onClick={props.onHide}
                                         className="mt-3 accept-btn my-btn-white">Storno
                                 </button>
-                                <button type="submit" form="form_review" className="btn button-add" onClick={() => {
+                                <button type="button" form="form_review" className="btn button-add" onClick={() => {
                                     props.onHide();
+                                    createReview();
                                 }}>Odeslat
                                 </button>
                             </div>

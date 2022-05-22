@@ -30,5 +30,4 @@ public interface SchoolRepository extends JpaRepository<School, Long> {
     @Modifying
     @Query("UPDATE School s SET s.name = :newName WHERE s.name = :originalName")
     int setSchoolName(@Param("originalName") String originalName, @Param("newName") String newName);
-
 }

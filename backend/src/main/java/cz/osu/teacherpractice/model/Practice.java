@@ -38,6 +38,9 @@ public class Practice {
     @ManyToOne
     private User teacher;
 
+    @OneToMany(mappedBy = "practice")
+    private List<Review> reviews;
+
     @ManyToMany
     @JoinTable(
             name = "user_practice",

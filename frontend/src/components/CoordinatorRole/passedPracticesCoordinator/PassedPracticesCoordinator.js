@@ -473,8 +473,18 @@ export const PassedPracticesCoordinator = () => {
                                             <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                         }
                                         <span className="d-inline-block text-truncate styles-dl" style={{maxWidth: "300px"}}>
-                                            <a className="report-dl" href={`${URL}/user/report/download/${item.id}`}><img src={DLImage} style={{height: "30px", marginRight: "5px", textOverflow: 'ellipsis'}} alt={"DLImg"}></img> {item.report}</a>
-                                        </span>
+                                            {item.report &&
+                                                <a className="report-dl"
+                                                   href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
+                                                                                                        style={{
+                                                                                                            height: "30px",
+                                                                                                            marginRight: "5px",
+                                                                                                            textOverflow: 'ellipsis'
+                                                                                                        }}
+                                                                                                        alt={"DLImg"}></img> {item.report}
+                                                </a>
+                                            }
+                                            </span>
                                     </div>
                                 </div>
                             </div>

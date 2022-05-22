@@ -1,8 +1,10 @@
 package cz.osu.teacherpractice.service.controller;
 
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
+import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
 import cz.osu.teacherpractice.service.TeacherService;
+import cz.osu.teacherpractice.service.UserService;
 import cz.osu.teacherpractice.service.fileManagement.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,7 @@ public class TeacherController {
 
     private final TeacherService teacherService;
     private final FileService fileService;
+    private final UserService userService;
 
     @GetMapping("/hi")
     public String getTeacher(Principal principal) {
@@ -62,5 +65,8 @@ public class TeacherController {
         return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
     }
 
-
+    @GetMapping("/getReviews/{id}")
+    public List<ReviewDto> getReviews(@PathVariable Long id) {
+        return userService.getStudentReviews(id);
+    }
 }

@@ -2,10 +2,7 @@ package cz.osu.teacherpractice;
 
 import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.model.*;
-import cz.osu.teacherpractice.repository.PracticeRepository;
-import cz.osu.teacherpractice.repository.SchoolRepository;
-import cz.osu.teacherpractice.repository.SubjectRepository;
-import cz.osu.teacherpractice.repository.UserRepository;
+import cz.osu.teacherpractice.repository.*;
 import cz.osu.teacherpractice.service.UserService;
 import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
@@ -37,6 +34,7 @@ public class TeacherPracticeApp {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UserService userService;
+    private final ReviewRepository reviewRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TeacherPracticeApp.class, args);
@@ -60,6 +58,8 @@ public class TeacherPracticeApp {
             schoolRepository.deleteAll();
             confirmationTokenRepository.deleteAll();
             passwordResetTokenRepository.deleteAll();
+            reviewRepository.deleteAll();
+
 
             // adding default schools
             School school1 = schoolRepository.save(new School(null, "ZŠ Čeladná", null));
@@ -97,13 +97,13 @@ public class TeacherPracticeApp {
             Subject subjectC = subjectRepository.save(new Subject(null, "Biologie", null));
 
             // adding default practices
-            Practice practiceA = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-27"), LocalTime.now().withHour(8).withMinute(0), LocalTime.now().withHour(8).withMinute(45), null, 2, subjectA, teacher, null));
-            Practice practiceB = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-26"), LocalTime.now().withHour(11).withMinute(15), LocalTime.now().withHour(12).withMinute(0), null, 2, subjectA, teacher, null));
-            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().withHour(9).withMinute(0), LocalTime.now().withHour(9).withMinute(45), null, 2, subjectB, teacher, null));
-            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().withHour(10).withMinute(0), LocalTime.now().withHour(10).withMinute(45), null, 2, subjectC, teacher, null));
-            practiceRepository.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), null, 2, subjectC, teacher, null));
-            practiceRepository.save(new Practice(null, LocalDate.parse("2022-01-01"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe.", 5, subjectB, teacher, null));
-            practiceRepository.save(new Practice(null, LocalDate.parse("2021-05-07"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe 2.", 5, subjectB, teacher, null));
+            Practice practiceA = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-27"), LocalTime.now().withHour(8).withMinute(0), LocalTime.now().withHour(8).withMinute(45), null, 2, subjectA, teacher, null, null));
+            Practice practiceB = practiceRepository.save(new Practice(null, LocalDate.parse("2022-11-26"), LocalTime.now().withHour(11).withMinute(15), LocalTime.now().withHour(12).withMinute(0), null, 2, subjectA, teacher, null, null));
+            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(1), LocalTime.now().withHour(9).withMinute(0), LocalTime.now().withHour(9).withMinute(45), null, 2, subjectB, teacher, null, null));
+            practiceRepository.save(new Practice(null, LocalDate.now().plusDays(10), LocalTime.now().withHour(10).withMinute(0), LocalTime.now().withHour(10).withMinute(45), null, 2, subjectC, teacher, null, null));
+            practiceRepository.save(new Practice(null, LocalDate.parse("2022-10-27"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), null, 2, subjectC, teacher, null, null));
+            practiceRepository.save(new Practice(null, LocalDate.parse("2022-01-01"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe.", 5, subjectB, teacher, null, null));
+            practiceRepository.save(new Practice(null, LocalDate.parse("2021-05-07"), LocalTime.now().withHour(14).withMinute(10), LocalTime.now().withHour(14).withMinute(55), "Testovací proběhlá praxe 2.", 5, subjectB, teacher, null, null));
             //practiceA.setStudents(new ArrayList<>(List.of(student)));
             //practiceRepo.save(practiceA);
             //practiceB.setStudents(new ArrayList<>(List.of(student)));
@@ -119,6 +119,13 @@ public class TeacherPracticeApp {
 //                    student
 //            );
 //            confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+//            database script
+//            INSERT INTO teacher_practice.user_practice (practice_id, student_id)
+//            VALUES (12, 1);
+//
+//            INSERT INTO teacher_practice.user_practice (practice_id, student_id)
+//            VALUES (13, 1);
 
         };
     }

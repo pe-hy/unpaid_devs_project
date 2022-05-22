@@ -496,8 +496,18 @@ export const TeacherPassedPractices = () => {
                                             {!item.report &&
                                                 <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
-                                            <span className="d-inline-block text-truncate flex-it" style={{maxWidth: "300px"}}>
-                                            <a className="report-dl" href={`${URL}/user/report/download/${item.id}`}><img src={DLImage} style={{height: "30px", marginRight: "5px", textOverflow: 'ellipsis'}} alt={"DLImg"}></img> {item.report}</a>
+                                            <span className="d-inline-block text-truncate flex-it"
+                                                  style={{maxWidth: "300px"}}>
+                                                {item.report && <a className="report-dl"
+                                                                   href={`${URL}/user/report/download/${item.id}`}><img
+                                                    src={DLImage} style={{
+                                                    height: "30px",
+                                                    marginRight: "5px",
+                                                    textOverflow: 'ellipsis'
+                                                }} alt={"DLImg"}></img> {item.report}</a>
+
+
+                                                }
                                         </span>
                                             {errorMessage && alertId === index &&
                                                 <div className="alert alert-danger mt-2 center warnTextPractices">

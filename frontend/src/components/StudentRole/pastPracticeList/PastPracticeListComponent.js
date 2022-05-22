@@ -530,14 +530,13 @@ export const PastPracticeListComponent = () => {
                                                             textOverflow: 'ellipsis'
                                                         }}
                                                         alt={"DLImg"}></img> {item.report}</a>}
-                                                <hr/>
                                         </span>
-                                            <div className="d-flex align-items-center w-75">
-                                                <button onClick={() => setModalShow(true)}
-                                                        className="btn toggleButtonFilters">Přidat recenzi
-                                                </button>
-                                            </div>
-
+                                        </div>
+                                        <hr className="w-75"/>
+                                        <div className="d-flex align-items-center w-50">
+                                            <button onClick={() => setModalShow(true)}
+                                                    className="btn toggleButtonFilters">Přidat recenzi
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

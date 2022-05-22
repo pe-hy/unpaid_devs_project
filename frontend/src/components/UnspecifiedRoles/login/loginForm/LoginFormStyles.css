@@ -51,7 +51,6 @@ p.thick {
 .button-login {
     text-align: center;
     padding-top: 20px;
-    padding-bottom: 10px;
 }
 
 .button-lg {
@@ -127,5 +126,22 @@ p.thick {
 .alert-icon {
     margin-right: 8px;
     font-size: 1.2em;
+}
+
+.flex-parent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alignment-right {
+    margin-right: -10px;
+}
+.my-hover{
+    transition: transform 150ms, box-shadow 150ms;
+}
+.my-hover:hover{
+    cursor: pointer;
+    color: #48819B;
+    transform: translateY(-2px);
 }
 

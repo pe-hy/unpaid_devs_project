@@ -210,11 +210,9 @@ export default class Login extends Component {
                                 />
                             </div>
                         </div>
-                        <span className={"float-end mt-2 forgot-pswrd"}><ForgotPasswordEmail/>
 
-                        </span>
 
-                        <div className="form-group button-login pt-5">
+                        <div className="form-group button-login">
                             {this.state.message && !this.state.showTokenMessage && (
                                 <div className="alert alert-danger my-alert1 text-bold" role="alert">
                                     <BsExclamationTriangleFill className={"alert-icon"}/>{this.state.message}
@@ -239,13 +237,22 @@ export default class Login extends Component {
                                 <span className="text-bold">Přihlásit se</span>
                             </button>
                         </div>
-                        <a href="register" className={"d-flex justify-content-center mt-2 rgstr"}>Zaregistrovat se</a>
-                        <CheckButton
-                            style={{display: "none"}}
-                            ref={(c) => {
-                                this.checkBtn = c;
-                            }}
-                        />
+
+<hr/>
+                        <div className="flex-parent alignment">
+                            <span className="margin-right alignment-left mt-2">
+                                <a href="register" style={{textDecoration: "none"}} className={"d-flex rgstr my-hover"}>Zaregistrovat se</a>
+                                <CheckButton
+                                    style={{display: "none"}}
+                                    ref={(c) => {
+                                        this.checkBtn = c;
+                                    }}
+                                />
+                            </span>
+                            <div className="alignment-right"><span className={"float-end mt-2 forgot-pswrd"}><ForgotPasswordEmail/></span></div>
+
+                        </div>
+
                     </Form>
                 </div>
             </div>

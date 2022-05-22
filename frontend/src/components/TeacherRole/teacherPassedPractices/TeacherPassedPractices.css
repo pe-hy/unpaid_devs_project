@@ -40,6 +40,10 @@ body, html {
     text-decoration: none;
 }
 
+.styles-dl{
+    margin-top: 10px;
+}
+
 .div-cstm-flex{
     display: flex;
 }
@@ -104,7 +108,7 @@ body, html {
 }
 
 .info-tooltip {
-    font-size: 1.1em;
+    font-size: 1em;
     margin: 4px;
     color: #326496;
 }

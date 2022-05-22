@@ -453,6 +453,7 @@ export const PassedPracticesCoordinator = () => {
                                 <div className="center col div-cstm-flex-direction">
                                     <div className="mt-3 mb-1 flex-cont">
                                         <div className="center flex-it">
+                                            <b>Report ke stažení: </b>
                                             <OverlayTrigger
                                                 overlay={
                                                     <Tooltip>
@@ -465,13 +466,13 @@ export const PassedPracticesCoordinator = () => {
                                                 <BsInfoCircleFill className={"info-tooltip mb-1"} />
                                             </span>
                                             </OverlayTrigger>
-                                            <b>Report ke stažení: </b>
+                                            <br/>
                                         </div>
-                                        <br/>
+
                                         {!item.report &&
                                             <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                         }
-                                        <span className="d-inline-block text-truncate" style={{maxWidth: "300px"}}>
+                                        <span className="d-inline-block text-truncate styles-dl" style={{maxWidth: "300px"}}>
                                             <a className="report-dl" href={`${URL}/user/report/download/${item.id}`}><img src={DLImage} style={{height: "30px", marginRight: "5px", textOverflow: 'ellipsis'}} alt={"DLImg"}></img> {item.report}</a>
                                         </span>
                                     </div>

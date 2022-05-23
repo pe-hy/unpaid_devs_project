@@ -530,7 +530,7 @@ export const TeacherPassedPractices = () => {
                                             {!item.report &&
                                                 <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
-                                            <div style={{marginRight: "15px"}}>
+                                            <div style={{marginRight: "20px"}}>
                                             <span className="d-inline-block text-truncate flex-it"
                                                   style={{maxWidth: "300px"}}>
                                                 {item.report && <a className="report-dl"

@@ -21,8 +21,8 @@
         border-radius: 0.25rem;
     }
     .img-responsive{
-        margin-left: 10px !important;
-        height: 90% !important;
+        margin-left: 20px !important;
+        height: 60% !important;
         width: auto;
     }
     a.nav-link:nth-child(2){
@@ -52,8 +52,8 @@
         font-size: 2em !important;
     }
     .img-responsive{
-        margin-left: 10px !important;
-        height: 80% !important;
+        margin-left: 20px !important;
+        height: 70% !important;
         width: auto;
     }
     a.nav-link:nth-child(2){
@@ -110,8 +110,8 @@ li.nav-item.d-flex:nth-child(2){
 }
 
 .img-responsive{
-    margin-left: 10px;
-    height: 100%;
+    margin-left: 20px;
+    height: 70%;
     width: auto;
 }
 
@@ -151,7 +151,7 @@ li.nav-item.d-flex:nth-child(2){
 }
 
 #prehled, #ucet {
-    color: black;
+    color: white;
     text-align: center;
 }
 

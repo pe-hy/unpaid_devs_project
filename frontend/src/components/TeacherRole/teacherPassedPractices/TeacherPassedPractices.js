@@ -530,6 +530,7 @@ export const TeacherPassedPractices = () => {
                                             {!item.report &&
                                                 <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
+                                            <div style={{marginRight: "15px"}}>
                                             <span className="d-inline-block text-truncate flex-it"
                                                   style={{maxWidth: "300px"}}>
                                                 {item.report && <a className="report-dl"
@@ -543,6 +544,7 @@ export const TeacherPassedPractices = () => {
 
                                                 }
                                         </span>
+                                            </div>
                                             {errorMessage && alertId === index &&
                                                 <div className="alert alert-danger mt-2 center warnTextPractices">
                                                     <span>{errorMessage}</span></div>}

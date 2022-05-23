@@ -2,7 +2,7 @@ import "./TeacherPassedPractices.css";
 import DLImage from "../../../resources/DLImg.svg";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useRef, useState} from "react";
-import {Col, Container, Form, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import {Col, Container, Form, Modal, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
 import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -50,6 +50,7 @@ export const TeacherPassedPractices = () => {
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState("");
         const [alertId, setAlertId] = useState("");
+        const [modalShow, setModalShow] = React.useState(false);
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -209,6 +210,29 @@ export const TeacherPassedPractices = () => {
                 }
             });
             setDateLimit([addDays(lowestDate, -1), addDays(highestDate, 1)]);
+        }
+
+        function CreateModal(props) {
+            return (
+                <Modal
+                    {...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h4>Recenze studenta {props.studentName}</h4>
+                        <p>
+                            {props.review}
+                        </p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Odejít</button>
+                    </Modal.Footer>
+                </Modal>
+            );
         }
 
         function search(items) {
@@ -444,9 +468,9 @@ export const TeacherPassedPractices = () => {
                                                 </div>
                                                 <div>{item.studentNames.map((item, index) => (
                                                     <div className="margin-left-cstm"> ✓ {item}
-                                                        <div
-                                                            className="review-btn review-show-btn">Hodnocení
-                                                        </div>
+                                                        <button onClick={() => setModalShow(true)}
+                                                                className="review-btn review-show-btn">Hodnocení
+                                                        </button>
                                                     </div>))}
                                                 </div>
                                             </div>
@@ -533,6 +557,10 @@ export const TeacherPassedPractices = () => {
                         </Accordion.Item>
                     ))}
                 </Accordion>
+                <CreateModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
             </Container>
         );
     }

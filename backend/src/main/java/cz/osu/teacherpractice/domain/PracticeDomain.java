@@ -28,6 +28,7 @@ public class PracticeDomain {
     private List<Review> reviews;
     private List<String> fileNames;
     private List<String> studentNames;
+    private List<String> studentEmails;
 
     @Setter(AccessLevel.NONE)
     private Integer numberOfReservedStudents;
@@ -78,6 +79,8 @@ public class PracticeDomain {
     public void setStudentNames(List<String> list){
         this.studentNames = list;
     }
+
+    public void setStudentEmails(List<String> list) {this.studentEmails = list;}
 
     public void setReviews(List<Review> list){this.reviews = list;}
 }

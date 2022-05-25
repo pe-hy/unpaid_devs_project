@@ -67,8 +67,8 @@ public class TeacherController {
         return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
     }
 
-    @GetMapping("/getReviews")
-    public List<Map<Long, List<ReviewDto>>> getReviews(Principal principal) {
-        return teacherService.getStudentReviews(principal.getName());
-    }
+//    @GetMapping("/getReviews")
+//    public List<Map<Long, List<ReviewDto>>> getReviews(Principal principal) {
+//        return teacherService.getStudentReviews(principal.getName());
+//    }
 }

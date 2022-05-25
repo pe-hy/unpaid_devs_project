@@ -19,6 +19,9 @@ public class StudentPracticeDto {
     private String report;
     private List<String> fileNames;
     private List<String> studentNames;
+    private List<String> studentEmails;
+    private List<String> studentReviews;
+
 
     private Integer numberOfReservedStudents;
     private Boolean isCurrentStudentReserved;

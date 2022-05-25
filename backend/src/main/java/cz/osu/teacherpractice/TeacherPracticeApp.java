@@ -125,6 +125,12 @@ public class TeacherPracticeApp {
 //            VALUES (12, 1);
 //
 //            INSERT INTO teacher_practice.user_practice (practice_id, student_id)
+//            VALUES (12, 2);
+//
+//            INSERT INTO teacher_practice.user_practice (practice_id, student_id)
+//            VALUES (12, 3);
+//
+//            INSERT INTO teacher_practice.user_practice (practice_id, student_id)
 //            VALUES (13, 1);
 
         };

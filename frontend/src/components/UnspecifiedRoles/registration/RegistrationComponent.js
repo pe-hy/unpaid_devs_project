@@ -299,6 +299,7 @@ export class RegistrationComponent extends Component {
                 <div className={"container-registration"}>
                     <div>
                         <p className="thick">REGISTRACE</p>
+                        <b style={{color: "red"}}>! HESLO NENÍ ZABEZPEČENO A MŮŽE BÝT ODCIZENO, POUŽIJTE UNIKÁTNÍ HESLO !</b>
                     </div>
 
                     <section className={" card card-container form-cointainer d-flex justify-content-center mt-2"}>
@@ -463,6 +464,7 @@ export class RegistrationComponent extends Component {
                 <div className={"container-registration"}>
                     <div>
                         <p className="thick">REGISTRACE</p>
+                        <b style={{color: "red"}}>! HESLO NENÍ ZABEZPEČENO A MŮŽE BÝT ODCIZENO, POUŽIJTE UNIKÁTNÍ HESLO !</b>
                     </div>
 
                     <section className={"card card-container form-cointainer d-flex justify-content-center mt-2"}>

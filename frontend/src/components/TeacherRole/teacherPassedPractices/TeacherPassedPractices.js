@@ -50,7 +50,10 @@ export const TeacherPassedPractices = () => {
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState("");
         const [alertId, setAlertId] = useState("");
-        const [modalShow, setModalShow] = React.useState(false);
+        const [modalShowReview, setModalShowReview] = React.useState(false);
+        const [modalShowUpload, setModalShowUpload] = React.useState(false);
+        const [fileId, setFileId] = React.useState("");
+        const [fileIndex, setFileIndex] = React.useState("");
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -212,7 +215,7 @@ export const TeacherPassedPractices = () => {
             setDateLimit([addDays(lowestDate, -1), addDays(highestDate, 1)]);
         }
 
-        function CreateModal(props) {
+        function CreateModalReview(props) {
             return (
                 <Modal
                     {...props}
@@ -305,6 +308,35 @@ export const TeacherPassedPractices = () => {
             ranges.selection.endDate.setHours(23, 59, 59);
             setDateRange([ranges.selection]);
         }
+
+        function CreateModalUpload(props) {
+            return (
+                <Modal
+                    {...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h4>Nahrazení souboru reportu</h4>
+                        <p>
+                            Jste si jisti, že chcete již nahraný report nahradit?
+                        </p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
+                        <button type="button" className="removal-btn" onClick={(e) => {
+                            props.onHide();
+                            onFileUpload(e, fileId, fileIndex);
+                        }}>Přepsat
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+            );
+        }
+
         return (
             <Container fluid>
                 <div>
@@ -410,19 +442,19 @@ export const TeacherPassedPractices = () => {
                                         </Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                                ". " +
-                                                item.date.split("-")[1] +
-                                                ". " +
-                                                item.date.split("-")[0]}
+                                            ". " +
+                                            item.date.split("-")[1] +
+                                            ". " +
+                                            item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center">
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -464,11 +496,11 @@ export const TeacherPassedPractices = () => {
                                             <div className="w-75"><b>Registrovaní studenti: </b>
                                                 <div className="mb-2 mt-2">
                                                     {item.studentNames.length === 0 &&
-                                                        <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
                                                 </div>
                                                 <div>{item.studentNames.map((item, index) => (
                                                     <div className="margin-left-cstm"> ✓ {item}
-                                                        <button onClick={() => setModalShow(true)}
+                                                        <button onClick={() => setModalShowReview(true)}
                                                                 className="review-btn review-show-btn">Hodnocení
                                                         </button>
                                                     </div>))}
@@ -498,13 +530,15 @@ export const TeacherPassedPractices = () => {
                                             <Form.Group onChange={onFileChange} controlId="formFile" className="mb-3">
                                                 <Form.Control type="file" accept={ALLOWED_REPORT_EXTENSIONS_WITH_DOT}/>
                                             </Form.Group>
-                                            <button className="toggleButtonFilters" disabled={buttonDisabled}
-                                                    onClick={(e) => {
-                                                        onFileUpload(e, item.id, index)
+                                        </Form>
+                                            <button className="toggleButtonFilters w-50" disabled={buttonDisabled}
+                                                    onClick={() => {
+                                                        setFileId(item.id);
+                                                        setFileIndex(index);
+                                                        setModalShowUpload(true);
                                                     }}>
                                                 Nahrát report
                                             </button>
-                                        </Form>
                                         <div className="mt-3 mb-1 flex-cont">
                                             <hr style={{width: "150%"}}/>
                                             <div className="center flex-it">
@@ -528,30 +562,32 @@ export const TeacherPassedPractices = () => {
                                             </div>
                                             <br/>
                                             {!item.report &&
-                                                <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
                                             <div style={{marginRight: "20px"}}>
                                             <span className="d-inline-block text-truncate flex-it"
                                                   style={{maxWidth: "300px"}}>
                                                 {item.report && <a className="report-dl"
-                                                                   href={`${URL}/user/report/download/${item.id}`}><img
-                                                    src={DLImage} style={{
-                                                    height: "30px",
-                                                    marginRight: "5px",
-                                                    textOverflow: 'ellipsis'
-                                                }} alt={"DLImg"}></img> {item.report}</a>
+                                                                   href={`${URL}/user/report/download/${item.id}`}>
+                                                    <img
+                                                        src={DLImage}
+                                                        style={{
+                                                            height: "30px",
+                                                            marginRight: "5px",
+                                                            textOverflow: 'ellipsis'
+                                                        }} alt={"DLImg"}/> {item.report}</a>
 
 
                                                 }
                                         </span>
                                             </div>
                                             {errorMessage && alertId === index &&
-                                                <div className="alert alert-danger mt-2 center warnTextPractices">
-                                                    <span>{errorMessage}</span></div>}
+                                            <div className="alert alert-danger mt-2 center warnTextPractices">
+                                                <span>{errorMessage}</span></div>}
                                             {successMessage && alertId === index &&
-                                                <div className="alert alert-success mt-2 center text-bold" role="alert">
-                                                    <span>{successMessage}</span>
-                                                </div>}
+                                            <div className="alert alert-success mt-2 center text-bold" role="alert">
+                                                <span>{successMessage}</span>
+                                            </div>}
                                         </div>
                                     </div>
                                 </div>
@@ -559,9 +595,13 @@ export const TeacherPassedPractices = () => {
                         </Accordion.Item>
                     ))}
                 </Accordion>
-                <CreateModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
+                <CreateModalReview
+                    show={modalShowReview}
+                    onHide={() => setModalShowReview(false)}
+                />
+                <CreateModalUpload
+                    show={modalShowUpload}
+                    onHide={() => setModalShowUpload(false)}
                 />
             </Container>
         );

@@ -92,6 +92,7 @@ public class TeacherService {
             p.setNumberOfReservedStudents();
             p.setStudentNames(getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
             String report = userService.getPracticeReport(p.getId());
             p.setReport(report);
             toDelete.add(p);
@@ -110,37 +111,47 @@ public class TeacherService {
         List<String> names = new ArrayList<>();
         for (Long id : ids) {
             User u = userRepository.findUserById(id);
-            String name = u.getFirstName() + " " + u.getSecondName() + " (" + u.getUsername() + ")";
+            String name = u.getFirstName() + " " + u.getSecondName();
             names.add(name);
         }
         return names;
     }
 
-    public List<Map<Long, List<ReviewDto>>> getStudentReviews(String username) {
-
-        Optional<User> u = userRepository.findByEmail(username);
-        List<Map<Long, List<ReviewDto>>> mappedReviews = new ArrayList<>();
-
-        if(u.isPresent()){
-            List<Practice> practices = practiceRepository.findAllByTeacherUsername(username);
-
-            for (Practice practice :
-                    practices) {
-
-                List<Review> revs = reviewRepository.getAllByPracticeId(practice.getId());
-
-                List<ReviewDto> ret = new ArrayList<>();
-                for (Review rev :
-                        revs) {
-                    ReviewDto revDto = new ReviewDto();
-                    revDto.setPracticeId(practice.getId());
-                    revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
-                    revDto.setReviewText(rev.getText());
-                    ret.add(revDto);
-                }
-                mappedReviews.add(Map.of(practice.getId(), ret));
-            }
+    public List<String> getStudentEmailsByPractice(PracticeDomain p, Pageable pageable){
+        List<Long> ids = userRepository.findAllStudentIdsByStudentPracticeIds(p.getId(), pageable);
+        List<String> emails = new ArrayList<>();
+        for(Long id: ids){
+            User u = userRepository.findUserById(id);
+            String email = u.getUsername();
+            emails.add(email);
         }
-        return mappedReviews;
+        return emails;
     }
+
+//    public List<ReviewDto> getStudentReviews(PracticeDomain practiceDomain) {
+//
+//
+//
+//        if(u.isPresent()){
+//            List<Practice> practices = practiceRepository.findAllByTeacherUsername(username);
+//
+//            for (Practice practice :
+//                    practices) {
+//
+//                List<Review> revs = reviewRepository.getAllByPracticeId(practice.getId());
+//
+//                List<ReviewDto> ret = new ArrayList<>();
+//                for (Review rev :
+//                        revs) {
+//                    ReviewDto revDto = new ReviewDto();
+//                    revDto.setPracticeId(practice.getId());
+//                    revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
+//                    revDto.setReviewText(rev.getText());
+//                    ret.add(revDto);
+//                }
+//                mappedReviews.add(Map.of(practice.getId(), ret));
+//            }
+//        }
+//        return mappedReviews;
+//    }
 }

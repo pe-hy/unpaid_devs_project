@@ -4,7 +4,7 @@ import DLImage from "../../../resources/DLImg.svg";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Modal, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { axios } from "../../../axios.js";
-import { BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders } from "react-icons/bs";
+import { BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders, BsCheckLg } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
@@ -515,7 +515,7 @@ export const PassedPracticesCoordinator = () => {
                                             </div>
                                             <div>{item.studentNames.map((name, index) => (
                                                 <div className="col">
-                                                <div className="margin-left-cstm d-flex justify-content-between mb-3 mt-3"><div> <p>✓ {name}</p> <p><BsMailbox style={iconStylesMail}/> {item.studentEmails[index]}</p></div>
+                                                <div className="margin-left-cstm d-flex justify-content-between mb-3 mt-3"><div> <p><BsCheckLg style={iconStylesMail}/> {name}</p> <p><BsMailbox style={iconStylesMail}/> {item.studentEmails[index]}</p></div>
                                                     <div className="d-flex justify-content-center align-items-center">
                                                         <button
                                                             id={item.id + " " + name}

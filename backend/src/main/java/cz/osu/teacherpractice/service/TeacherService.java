@@ -63,6 +63,7 @@ public class TeacherService {
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
             p.setStudentNames(getStudentNamesByPractice(p, pageable));
+            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
             toDelete.add(p);
         });

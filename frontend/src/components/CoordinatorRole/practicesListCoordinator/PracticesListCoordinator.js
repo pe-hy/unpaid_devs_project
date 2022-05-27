@@ -2,7 +2,7 @@ import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
-import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
+import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders, BsCheckLg, BsMailbox} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
@@ -17,7 +17,7 @@ import {addTodo} from '../../../redux/todoSlice.js';
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
 const GET_SCHOOLS_URL = `${URL}/user/schools`;
-const GET_PRACTICE_LIST_URL = `${URL}/student/practices-list`;
+const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 
@@ -40,7 +40,7 @@ export const PracticesListCoordinator = () => {
         const [teachers, setTeachers] = useState([]);
         const [subjects, setSubjects] = useState([]);
         const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
-
+        let iconStylesMail = {fontSize: "1.2em", marginRight: "5px"};
         const dispatch = useDispatch();
 
         const [selectedSchool, setSelectedSchools] = useState("");
@@ -241,56 +241,56 @@ export const PracticesListCoordinator = () => {
                         setShowing(!showing);
                         changeBtnText();
                     }}><BsSearch style={iconStyles}/> {btnText}</button>
-                            <div style={{overflow: 'hidden'}}>
-                                <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
-                                    <div className="customFilters">
-                                        <div className="col align-self-center">
-                                            <div className="align-self-center search-school">
-                                                <p>Vyberte školu</p>
-                                                <Combobox
-                                                    data={schools}
-                                                    value={selectedSchool}
-                                                    onChange={value => selectSchoolsChange(value)}
-                                                />
-                                            </div>
-                                            <div className="align-self-center search-school">
-                                                <p>Vyberte předmět</p>
-                                                <Combobox
-                                                    data={subjects}
-                                                    value={selectedSubjectName}
-                                                    onChange={value => selectSubjectChange(value)}
-                                                />
-                                            </div>
-                                            <div className="align-self-center search-school">
-                                                <p>Vyberte učitele</p>
-                                                <Combobox
-                                                    data={teachers}
-                                                    value={selectedTeacherName}
-                                                    onChange={value => selectTeacherChange(value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col align-self-center search-date">
-                                            <p>Vyberte datum (od - do)</p>
-                                            <DateRange
-                                                editableDateInputs={true}
-                                                onChange={item => selectDateRange(item)}
-                                                moveRangeOnFirstSelection={false}
-                                                ranges={dateRange}
-                                                locale={rdrLocales.cs}
-                                                minDate={dateLimit[0]}
-                                                maxDate={dateLimit[1]}
-                                            />
-                                        </div>
+                    <div style={{overflow: 'hidden'}}>
+                        <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                            <div className="customFilters">
+                                <div className="col align-self-center">
+                                    <div className="align-self-center search-school">
+                                        <p>Vyberte školu</p>
+                                        <Combobox
+                                            data={schools}
+                                            value={selectedSchool}
+                                            onChange={value => selectSchoolsChange(value)}
+                                        />
                                     </div>
-                                    <div className="center">
-                                        <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
-                                            resetFilter();
-                                        }}><BsFillXCircleFill style={iconStyles}/> Reset
-                                        </button>
+                                    <div className="align-self-center search-school">
+                                        <p>Vyberte předmět</p>
+                                        <Combobox
+                                            data={subjects}
+                                            value={selectedSubjectName}
+                                            onChange={value => selectSubjectChange(value)}
+                                        />
+                                    </div>
+                                    <div className="align-self-center search-school">
+                                        <p>Vyberte učitele</p>
+                                        <Combobox
+                                            data={teachers}
+                                            value={selectedTeacherName}
+                                            onChange={value => selectTeacherChange(value)}
+                                        />
                                     </div>
                                 </div>
+                                <div className="col align-self-center search-date">
+                                    <p>Vyberte datum (od - do)</p>
+                                    <DateRange
+                                        editableDateInputs={true}
+                                        onChange={item => selectDateRange(item)}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={dateRange}
+                                        locale={rdrLocales.cs}
+                                        minDate={dateLimit[0]}
+                                        maxDate={dateLimit[1]}
+                                    />
+                                </div>
                             </div>
+                            <div className="center">
+                                <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
+                                    resetFilter();
+                                }}><BsFillXCircleFill style={iconStyles}/> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <hr/>
                 </div>
                 {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -360,19 +360,19 @@ export const PracticesListCoordinator = () => {
                                             className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                                ". " +
-                                                item.date.split("-")[1] +
-                                                ". " +
-                                                item.date.split("-")[0]}
+                                            ". " +
+                                            item.date.split("-")[1] +
+                                            ". " +
+                                            item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -403,12 +403,12 @@ export const PracticesListCoordinator = () => {
                                         <p><b>Čas: </b>
                                             <span>
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}</span></p>
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}</span></p>
 
                                         <b>Kapacita: </b>
                                         <span>
@@ -422,6 +422,28 @@ export const PracticesListCoordinator = () => {
                                             {item.numberOfReservedStudents} / {item.capacity}
                                         </Badge>
                                     </span>
+
+                                        <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                            <div className="w-75"><b>Registrovaní studenti: </b>
+                                                <div className="mb-2 mt-2">
+                                                    {item.studentNames.length === 0 &&
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                                </div>
+                                                <div>{item.studentNames.map((name, index) => (
+                                                    <div className="col">
+                                                        <div
+                                                            className="margin-left-cstm d-flex justify-content-between mb-3 mt-3">
+                                                            <div><p><BsCheckLg style={iconStylesMail}/> {name}</p> <p>
+                                                                <BsMailbox
+                                                                    style={iconStylesMail}/> {item.studentEmails[index]}</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div className="class-name"></div>
+                                                    </div>))}
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :
                                             <i>{noteNotFound}</i>}</p>

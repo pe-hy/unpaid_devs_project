@@ -35,6 +35,10 @@ body, html {
     }
 }
 
+.passed-btn{
+    height:40px !important;
+}
+
 .flex-cont{
     display: flex;
     flex-direction: column;

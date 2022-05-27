@@ -15,6 +15,7 @@ import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../../../redux/todoSlice.js';
+import {BsMailbox} from "react-icons/bs";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -22,6 +23,7 @@ const GET_SCHOOLS_URL = `${URL}/user/schools`;
 const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
+const GET_REVIEWS_URL = `${URL}/coordinator/getAllReviews`;
 
 export const PassedPracticesCoordinator = () => {
     const schoolNotFound = "Škola nevyplněna";
@@ -33,6 +35,7 @@ export const PassedPracticesCoordinator = () => {
     const dateRangeFilterParam = "Date";
     const allFilterParam = "All";
 
+    let iconStylesMail = { fontSize: "1.2em", marginRight: "5px" };
     let iconStyles = { fontSize: "1.5em", marginRight: "5px" };
     let iconStyleFilter = { fontSize: "1.5em", marginRight: "15px" };
     const [showing, setShowing] = useState(false);
@@ -44,6 +47,8 @@ export const PassedPracticesCoordinator = () => {
     const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
     const [modalShowReview, setModalShowReview] = React.useState(false);
     const [selectedReview, setSelectedReview] = useState("");
+    const [shouldCall, setShouldCall] = useState(true);
+    const [reviews, setReviews] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -110,7 +115,39 @@ export const PassedPracticesCoordinator = () => {
         getSchools();
         getSubjects();
         getTeachers();
+        getStudentReviews();
     }, []);
+
+    const getStudentReviews = async () => {
+        const response = await axios({
+            url: GET_REVIEWS_URL,
+            withCredentials: true,
+            method: "GET",
+        }).then((response) => {
+            setReviews(response.data)
+        });
+    };
+
+    function isReviewPresent() {
+        if (!reviews || reviews.length == 0) {
+            return;
+        }
+        if (shouldCall === false) {
+            return;
+        }
+        if (shouldCall) {
+            setShouldCall(false);
+        }
+        console.log();
+        Object.keys(reviews).forEach(key => {
+            let id = key;
+            let name = reviews[key]
+            console.log(id, name);
+
+            document.getElementById(key + " " + name).classList.remove('review-btn-not-disabled');
+
+        });
+    }
 
     function setDateRangeLimit(practices) {
         let lowestDate = new Date(practices[0].date.split('-'));
@@ -228,7 +265,6 @@ export const PassedPracticesCoordinator = () => {
     }
 
     const getStudentReview = async (email, practiceId) => {
-            
         const response = await axios({
             url: `${URL}/coordinator/getReview/${email}/${practiceId}`,
             withCredentials: true,
@@ -237,13 +273,12 @@ export const PassedPracticesCoordinator = () => {
             setModalShowReview(true);
         });
         if (response && response.data) {
+            console.log(response.data);
             setSelectedReview(response.data);
             setModalShowReview(true);
-        }
-        else{
+        } else {
             setModalShowReview(true);
         }
-        
     };
 
     const selectDateRange = (ranges) => {
@@ -393,6 +428,7 @@ export const PassedPracticesCoordinator = () => {
                 {practices && search(practices).map((item, index) => (
                     <Accordion.Item
                         eventKey={item.id}
+                        onClick={() => isReviewPresent()}
                         key={index}
                         style={{ display: "block" }}
                     >
@@ -472,17 +508,30 @@ export const PassedPracticesCoordinator = () => {
                                     </span>
 
                                     <div className="d-flex registered-student-right-margin" style={{ marginTop: "10px" }}>
-                                        <div><b>Registrovaní studenti: </b>
-                                            {item.studentNames.length === 0 &&
-                                                <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
-                                        </div>
-                                        <div>{item.studentNames.map((name, index) => (
-                                                    <div className="margin-left-cstm"> ✓ {name}
-                                                        <button onClick={() => {getStudentReview(item.studentEmails[index], item.id)}}
-                                                                className="review-btn review-show-btn">Hodnocení
+                                        <div className="w-75"><b>Registrovaní studenti: </b>
+                                            <div className="mb-2 mt-2">
+                                                {item.studentNames.length === 0 &&
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                            </div>
+                                            <div>{item.studentNames.map((name, index) => (
+                                                <div className="col">
+                                                <div className="margin-left-cstm d-flex justify-content-between mb-3 mt-3"><div> <p>✓ {name}</p> <p><BsMailbox style={iconStylesMail}/> {item.studentEmails[index]}</p></div>
+                                                    <div className="d-flex justify-content-center align-items-center">
+                                                        <button
+                                                            id={item.id + " " + name}
+                                                            disabled={false}
+                                                            onClick={() => {
+                                                                getStudentReview(item.studentEmails[index], item.id)
+                                                            }}
+                                                            className="review-btn review-show-btn review-btn-not-disabled passed-btn">Hodnocení
                                                         </button>
-                                                    </div>))}
+                                                    </div>
+                                                    
                                                 </div>
+                                                <div className="class-name"></div>
+                                                </div>))}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note :

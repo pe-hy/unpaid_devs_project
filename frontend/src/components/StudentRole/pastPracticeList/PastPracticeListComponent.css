@@ -169,10 +169,9 @@ body, html {
     vertical-align: baseline;
 }
 
-.review-btn:disabled{
-    background-color: #a15050;
-    color: #fff;
-    cursor: not-allowed;
+.review-btn-not-disabled{
+    background-color: #a15050 !important;
+    color: #fff !important;
 }
 
 .review-btn {
@@ -219,19 +218,19 @@ body, html {
     transform: translateY(0);
 }
 
-.review-btn:hover:disabled,
-.review-btn:focus:disabled {
-    background-color: #8c1919;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+.review-btn-not-disabled:hover,
+.review-btn-not-disabled:focus {
+    background-color: #8c1919 !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px !important;
 }
 
-.review-btn:hover:disabled {
-    transform: translateY(0px);
+.review-btn-not-disabled:hover {
+    transform: translateY(0px) !important;
 }
 
-.review-btn:active:disabled {
-    background-color: #882828;
-    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+.review-btn-not-disabled:active {
+    background-color: #882828 !important;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px !important;
 }
 
 

@@ -7,6 +7,11 @@ body, html {
     width: 100px!important;
 }
 
+.review-show-btn-student{
+    min-height: 35px!important;
+    width: 200px!important;
+}
+
 @media (min-width: 768px) {
     .accordion-button::after {
         position: absolute;

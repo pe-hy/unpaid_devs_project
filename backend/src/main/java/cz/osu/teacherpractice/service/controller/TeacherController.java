@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
@@ -68,5 +69,10 @@ public class TeacherController {
     @GetMapping("/getReview/{email}/{practiceId}")
     public ReviewDto getReviews(@PathVariable String email, @PathVariable Long practiceId) {
         return userService.getStudentReview(email, practiceId);
+    }
+
+    @GetMapping("/getAllReviews")
+    public Map<Long, String> getAllReviews() {
+        return userService.getAllReviews();
     }
 }

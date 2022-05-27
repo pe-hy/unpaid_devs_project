@@ -122,4 +122,10 @@ public class CoordinatorController {
     public ReviewDto getReviews(@PathVariable String email, @PathVariable Long practiceId) {
         return userService.getStudentReview(email, practiceId);
     }
+
+    //create getmapping to get all reviews
+    @GetMapping("/getAllReviews")
+    public Map<Long, String> getAllReviews() {
+        return userService.getAllReviews();
+    }
 }

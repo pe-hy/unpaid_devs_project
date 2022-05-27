@@ -169,6 +169,12 @@ body, html {
     vertical-align: baseline;
 }
 
+.review-btn:disabled{
+    background-color: #a15050;
+    color: #fff;
+    cursor: not-allowed;
+}
+
 .review-btn {
     text-align: center;
     justify-content: center;
@@ -211,6 +217,21 @@ body, html {
     background-color: #285988;
     box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
     transform: translateY(0);
+}
+
+.review-btn:hover:disabled,
+.review-btn:focus:disabled {
+    background-color: #8c1919;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.review-btn:hover:disabled {
+    transform: translateY(0px);
+}
+
+.review-btn:active:disabled {
+    background-color: #882828;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
 }
 
 

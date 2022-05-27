@@ -220,4 +220,19 @@ public class UserService {
         }
         return null;
     }
+
+    public Map<Long, String> getAllReviews() {
+        List<ReviewDto> reviews = new ArrayList<>();
+        Map<Long, String> practicesAndNames = new HashMap<>();
+
+        List<Review> allReviews = reviewRepository.findAll();
+        for(Review r : allReviews){
+            ReviewDto revDto = new ReviewDto();
+            revDto.setPracticeId(r.getPractice().getId());
+            revDto.setName(r.getStudent().getFirstName() + " " + r.getStudent().getSecondName());
+            reviews.add(revDto);
+            practicesAndNames.put(r.getPractice().getId(), r.getStudent().getFirstName() + " " + r.getStudent().getSecondName());
+        }
+        return practicesAndNames;
+    }
 }

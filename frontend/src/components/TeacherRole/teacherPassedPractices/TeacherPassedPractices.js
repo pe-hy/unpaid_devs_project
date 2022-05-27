@@ -20,6 +20,8 @@ const GET_PRACTICE_LIST_URL_LISTED = `${URL}/teacher/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const UPLOAD_URL = `${URL}/teacher/report/upload`;
 
+const GET_REVIEWS_URL = `${URL}/teacher/getAllReviews`;
+
 const MAX_REPORT_FILE_SIZE = 2; //MB
 const ALLOWED_REPORT_EXTENSIONS = ["zip", "docx", "doc", "odt", "pdf", "txt"];
 const ALLOWED_REPORT_EXTENSIONS_WITH_DOT = [".zip", ".doc", ".odt", ".pdf", ".docx", ".txt"];
@@ -55,6 +57,10 @@ export const TeacherPassedPractices = () => {
         const [fileId, setFileId] = React.useState("");
         const [fileIndex, setFileIndex] = React.useState("");
         const [selectedReview, setSelectedReview] = useState("");
+        const [reviews, setReviews] = useState([]);
+        const [reviewBtnState, setReviewBtnState] = useState(false);
+        const [studentNames, setStudentNames] = useState([])
+        const [shouldCall, setShouldCall]  = useState(true);
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -127,25 +133,6 @@ export const TeacherPassedPractices = () => {
                 });
         }
 
-        let onFileUploada = () => {
-
-            console.log(selectedFile);
-            const formData = new FormData();
-            formData.append('files', selectedFile);
-            formData.append('id', selectedId);
-            axios.post(`${URL}/teacher/report/upload`, formData, {
-                headers: {'content-type': 'application/json'},
-                withCredentials: true,
-            })
-                .then(res => {
-                    console.log(res);
-                    console.log(res.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        };
-
         const changeBtnText = () => {
             if (!showing) {
                 setBtnText("Schovat možnosti vyhledávání");
@@ -196,8 +183,8 @@ export const TeacherPassedPractices = () => {
             }
         };
 
+
         const getStudentReview = async (email, practiceId) => {
-            
             const response = await axios({
                 url: `${URL}/teacher/getReview/${email}/${practiceId}`,
                 withCredentials: true,
@@ -206,18 +193,30 @@ export const TeacherPassedPractices = () => {
                 setModalShowReview(true);
             });
             if (response && response.data) {
+                console.log(response.data);
                 setSelectedReview(response.data);
                 setModalShowReview(true);
-            }
-            else{
+            } else {
                 setModalShowReview(true);
             }
-            
         };
+
+
+    const getStudentReviews = async () => {
+        const response = await axios({
+            url: GET_REVIEWS_URL,
+            withCredentials: true,
+            method: "GET",
+        }).then((response) => {
+            setReviews(response.data)
+        });
+    };
+
 
         useEffect(() => {
             getPraxe();
             getSubjects();
+            getStudentReviews();
         }, []);
 
         function setDateRangeLimit(practices) {
@@ -249,8 +248,8 @@ export const TeacherPassedPractices = () => {
                         <h4>Recenze studenta {props.studentName}</h4>
                         {selectedReview ? <p>
                             {selectedReview.reviewText}
-                        </p> : <p>Student zatím praxi nehodnotil...</p>}
-                        
+                        </p> : <p>Student zatím praxi neohodnotil...</p>}
+
                     </Modal.Body>
                     <Modal.Footer>
                         <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Odejít</button>
@@ -358,6 +357,29 @@ export const TeacherPassedPractices = () => {
             );
         }
 
+        function isReviewPresent() {
+            if(shouldCall === false){
+                return;
+            }
+            if(shouldCall){
+                setShouldCall(false);
+            }
+            console.log("isReviewPresent (practice ids):", practices[0].id);
+            console.log("isReviewPresent (reviews state):", reviews);
+            //console.log("isReviewPresent (reviews array): ", reviews);
+            // console.log("isReviewPresent", name, practices);
+            // for (let i = 0; i < reviews.length; i++) {
+            //     if (reviews[0].contains(practices[i].id) && reviews[0].contains(practiceId)) {
+            //         setReviewBtnState(false);
+            //         console.log("isReviewPresent if", name, practiceId);
+            //     }else{
+            //         setReviewBtnState(true);
+            //         console.log("isReviewPresent else", name, practiceId);
+            //     }
+            // }
+            // return false;
+        }
+
         return (
             <Container fluid>
                 <div>
@@ -450,6 +472,7 @@ export const TeacherPassedPractices = () => {
                     {practices && search(practices).map((item, index) => (
                         <Accordion.Item
                             eventKey={item.id}
+                            onClick={() => isReviewPresent()}
                             key={index}
                             style={{display: "block"}}
                         >
@@ -521,8 +544,12 @@ export const TeacherPassedPractices = () => {
                                                 </div>
                                                 <div>{item.studentNames.map((name, index) => (
                                                     <div className="margin-left-cstm"> ✓ {name}
-                                                        <button onClick={() => {getStudentReview(item.studentEmails[index], item.id)}}
-                                                                className="review-btn review-show-btn">Hodnocení
+                                                        <button
+                                                            disabled={reviewBtnState}
+                                                            onClick={() => {
+                                                                getStudentReview(item.studentEmails[index], item.id)
+                                                            }}
+                                                            className="review-btn review-show-btn">Hodnocení
                                                         </button>
                                                     </div>))}
                                                 </div>
@@ -552,14 +579,14 @@ export const TeacherPassedPractices = () => {
                                                 <Form.Control type="file" accept={ALLOWED_REPORT_EXTENSIONS_WITH_DOT}/>
                                             </Form.Group>
                                         </Form>
-                                            <button className="toggleButtonFilters w-50" disabled={buttonDisabled}
-                                                    onClick={() => {
-                                                        setFileId(item.id);
-                                                        setFileIndex(index);
-                                                        setModalShowUpload(true);
-                                                    }}>
-                                                Nahrát report
-                                            </button>
+                                        <button className="toggleButtonFilters w-50" disabled={buttonDisabled}
+                                                onClick={() => {
+                                                    setFileId(item.id);
+                                                    setFileIndex(index);
+                                                    setModalShowUpload(true);
+                                                }}>
+                                            Nahrát report
+                                        </button>
                                         <div className="mt-3 mb-1 flex-cont">
                                             <hr style={{width: "150%"}}/>
                                             <div className="center flex-it">
@@ -618,7 +645,10 @@ export const TeacherPassedPractices = () => {
                 </Accordion>
                 <CreateModalReview
                     show={modalShowReview}
-                    onHide={() => {setModalShowReview(false); setSelectedReview("")}}
+                    onHide={() => {
+                        setModalShowReview(false);
+                        setSelectedReview("")
+                    }}
                 />
                 <CreateModalUpload
                     show={modalShowUpload}

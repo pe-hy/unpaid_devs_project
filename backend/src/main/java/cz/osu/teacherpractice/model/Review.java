@@ -1,6 +1,7 @@
 package cz.osu.teacherpractice.model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -19,6 +20,7 @@ public class Review {
     @ManyToOne
     private Practice practice;
 
+    @Length(max = 4096)
     private String text;
 
 }

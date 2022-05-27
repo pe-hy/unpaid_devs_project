@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.domain;
 
+import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.SubjectDto;
 import cz.osu.teacherpractice.dto.response.UserDto;
 import cz.osu.teacherpractice.model.Review;
@@ -25,7 +26,7 @@ public class PracticeDomain {
     private UserDto teacher;
     private List<UserDto> students;
     private String report;
-    private List<Review> reviews;
+    private List<ReviewDto> reviews;
     private List<String> fileNames;
     private List<String> studentNames;
     private List<String> studentEmails;
@@ -82,5 +83,5 @@ public class PracticeDomain {
 
     public void setStudentEmails(List<String> list) {this.studentEmails = list;}
 
-    public void setReviews(List<Review> list){this.reviews = list;}
+    public void setReviews(List<ReviewDto> list){this.reviews = list;}
 }

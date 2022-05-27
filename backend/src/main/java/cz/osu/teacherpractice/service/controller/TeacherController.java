@@ -3,7 +3,6 @@ package cz.osu.teacherpractice.service.controller;
 import cz.osu.teacherpractice.dto.request.NewPracticeDto;
 import cz.osu.teacherpractice.dto.response.ReviewDto;
 import cz.osu.teacherpractice.dto.response.StudentPracticeDto;
-import cz.osu.teacherpractice.model.Review;
 import cz.osu.teacherpractice.service.TeacherService;
 import cz.osu.teacherpractice.service.UserService;
 import cz.osu.teacherpractice.service.fileManagement.FileService;
@@ -22,7 +21,6 @@ import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
@@ -67,8 +65,8 @@ public class TeacherController {
         return new ResponseEntity<>("Soubor smazán.", HttpStatus.OK);
     }
 
-//    @GetMapping("/getReviews")
-//    public List<Map<Long, List<ReviewDto>>> getReviews(Principal principal) {
-//        return teacherService.getStudentReviews(principal.getName());
-//    }
+    @GetMapping("/getReview/{email}/{practiceId}")
+    public ReviewDto getReviews(@PathVariable String email, @PathVariable Long practiceId) {
+        return userService.getStudentReview(email, practiceId);
+    }
 }

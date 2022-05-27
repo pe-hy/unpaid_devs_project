@@ -118,8 +118,8 @@ public class CoordinatorController {
         return coordinatorService.assignSchool(request);
     }
 
-    @GetMapping("/getReviews")
-    public List<Map<Long, List<ReviewDto>>> getReviews() {
-        return coordinatorService.getStudentReviews();
+    @GetMapping("/getReview/{email}/{practiceId}")
+    public ReviewDto getReviews(@PathVariable String email, @PathVariable Long practiceId) {
+        return userService.getStudentReview(email, practiceId);
     }
 }

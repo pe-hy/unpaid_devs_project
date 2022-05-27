@@ -127,31 +127,4 @@ public class TeacherService {
         }
         return emails;
     }
-
-//    public List<ReviewDto> getStudentReviews(PracticeDomain practiceDomain) {
-//
-//
-//
-//        if(u.isPresent()){
-//            List<Practice> practices = practiceRepository.findAllByTeacherUsername(username);
-//
-//            for (Practice practice :
-//                    practices) {
-//
-//                List<Review> revs = reviewRepository.getAllByPracticeId(practice.getId());
-//
-//                List<ReviewDto> ret = new ArrayList<>();
-//                for (Review rev :
-//                        revs) {
-//                    ReviewDto revDto = new ReviewDto();
-//                    revDto.setPracticeId(practice.getId());
-//                    revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
-//                    revDto.setReviewText(rev.getText());
-//                    ret.add(revDto);
-//                }
-//                mappedReviews.add(Map.of(practice.getId(), ret));
-//            }
-//        }
-//        return mappedReviews;
-//    }
 }

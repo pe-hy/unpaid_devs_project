@@ -103,7 +103,9 @@ export const PastPracticeListComponent = () => {
     };
 
     const postReview = async (practiceId, review) => {
+        console.log("review text",review);
         const response = await axios({
+            headers: {'content-type': 'text/plain'},
             url: `${URL}/student/practices/${practiceId}/submitReview`,
             withCredentials: true,
             method: "POST",
@@ -114,6 +116,7 @@ export const PastPracticeListComponent = () => {
         });
         if (response && response.data) {
             console.log(response.data);
+            getPraxe();
         }
     };
 
@@ -548,11 +551,15 @@ export const PastPracticeListComponent = () => {
                                         </span>
                                     </div>
                                     <hr className="w-75" />
-                                    <div className="d-flex align-items-center w-50">
+                                    {!item.reviews && <div className="d-flex align-items-center w-50">
                                         <button onClick={() => {setModalShow(true); setCurrentPracticeId(item.id)}}
                                             className="btn toggleButtonFilters my-hover-btn-send">Přidat recenzi
                                         </button>
-                                    </div>
+                                    </div>}
+                                    {item.reviews && <div className="d-flex align-items-center w-50">
+                                        <p><b>Mé hodnocení:</b> <br></br>{item.reviews[0].reviewText}</p>
+                                    </div>}
+                                    
                                 </div>
                             </div>
                         </Accordion.Body>

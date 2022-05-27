@@ -204,4 +204,20 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
+
+    public ReviewDto getStudentReview(String username, Long practiceId){
+        Optional<User> student = userRepository.findByEmail(username);
+        if(student.isPresent()){
+            Review rev = reviewRepository.findReviewByStudentIdAndPracticeId(student.get().getId(), practiceId);
+            if(rev != null) {
+
+                ReviewDto revDto = new ReviewDto();
+                revDto.setPracticeId(practiceId);
+                revDto.setName(student.get().getFirstName() + " " + student.get().getSecondName());
+                revDto.setReviewText(rev.getText());
+                return revDto;
+            }
+        }
+        return null;
+    }
 }

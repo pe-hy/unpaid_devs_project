@@ -2,7 +2,7 @@ import Accordion from "react-bootstrap/Accordion";
 import "./PassedPracticesCoordinator.css";
 import DLImage from "../../../resources/DLImg.svg";
 import React, { useEffect, useState } from "react";
-import { Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Col, Container, Form, Modal, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { axios } from "../../../axios.js";
 import { BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -42,6 +42,8 @@ export const PassedPracticesCoordinator = () => {
     const [teachers, setTeachers] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [dateLimit, setDateLimit] = useState([addDays(new Date(), -30), addDays(new Date(), 30)]);
+    const [modalShowReview, setModalShowReview] = React.useState(false);
+    const [selectedReview, setSelectedReview] = useState("");
 
     const dispatch = useDispatch();
 
@@ -225,6 +227,25 @@ export const PassedPracticesCoordinator = () => {
         setSelectedTeacherName(value);
     }
 
+    const getStudentReview = async (email, practiceId) => {
+            
+        const response = await axios({
+            url: `${URL}/coordinator/getReview/${email}/${practiceId}`,
+            withCredentials: true,
+            method: "GET",
+        }).catch((err) => {
+            setModalShowReview(true);
+        });
+        if (response && response.data) {
+            setSelectedReview(response.data);
+            setModalShowReview(true);
+        }
+        else{
+            setModalShowReview(true);
+        }
+        
+    };
+
     const selectDateRange = (ranges) => {
         const index = filterParam.indexOf(allFilterParam);
         if (index > -1) {
@@ -236,6 +257,31 @@ export const PassedPracticesCoordinator = () => {
         ranges.selection.endDate.setHours(23, 59, 59);
         setDateRange([ranges.selection]);
     }
+
+    function CreateModalReview(props) {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Recenze studenta {props.studentName}</h4>
+                    {selectedReview ? <p>
+                        {selectedReview.reviewText}
+                    </p> : <p>Student zatím praxi nehodnotil...</p>}
+                    
+                </Modal.Body>
+                <Modal.Footer>
+                    <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Odejít</button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     return (
         <Container fluid className="mb-3">
             <div>
@@ -243,56 +289,56 @@ export const PassedPracticesCoordinator = () => {
                     setShowing(!showing);
                     changeBtnText();
                 }}><BsSearch style={iconStyles} /> {btnText}</button>
-                        <div style={{ overflow: 'hidden' }}>
-                            <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
-                                <div className="customFilters">
-                                    <div className="col align-self-center">
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte školu</p>
-                                            <Combobox
-                                                data={schools}
-                                                value={selectedSchool}
-                                                onChange={value => selectSchoolsChange(value)}
-                                            />
-                                        </div>
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte předmět</p>
-                                            <Combobox
-                                                data={subjects}
-                                                value={selectedSubjectName}
-                                                onChange={value => selectSubjectChange(value)}
-                                            />
-                                        </div>
-                                        <div className="align-self-center search-school">
-                                            <p>Vyberte učitele</p>
-                                            <Combobox
-                                                data={teachers}
-                                                value={selectedTeacherName}
-                                                onChange={value => selectTeacherChange(value)}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col align-self-center search-date">
-                                        <p>Vyberte datum (od - do)</p>
-                                        <DateRange
-                                            editableDateInputs={true}
-                                            onChange={item => selectDateRange(item)}
-                                            moveRangeOnFirstSelection={false}
-                                            ranges={dateRange}
-                                            locale={rdrLocales.cs}
-                                            minDate={dateLimit[0]}
-                                            maxDate={dateLimit[1]}
-                                        />
-                                    </div>
+                <div style={{ overflow: 'hidden' }}>
+                    <div className={!showing ? 'hideDiv' : 'calendarDivHeight'}>
+                        <div className="customFilters">
+                            <div className="col align-self-center">
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte školu</p>
+                                    <Combobox
+                                        data={schools}
+                                        value={selectedSchool}
+                                        onChange={value => selectSchoolsChange(value)}
+                                    />
                                 </div>
-                                <div className="center">
-                                    <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
-                                        resetFilter();
-                                    }}><BsFillXCircleFill style={iconStyles} /> Reset
-                                    </button>
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte předmět</p>
+                                    <Combobox
+                                        data={subjects}
+                                        value={selectedSubjectName}
+                                        onChange={value => selectSubjectChange(value)}
+                                    />
+                                </div>
+                                <div className="align-self-center search-school">
+                                    <p>Vyberte učitele</p>
+                                    <Combobox
+                                        data={teachers}
+                                        value={selectedTeacherName}
+                                        onChange={value => selectTeacherChange(value)}
+                                    />
                                 </div>
                             </div>
+                            <div className="col align-self-center search-date">
+                                <p>Vyberte datum (od - do)</p>
+                                <DateRange
+                                    editableDateInputs={true}
+                                    onChange={item => selectDateRange(item)}
+                                    moveRangeOnFirstSelection={false}
+                                    ranges={dateRange}
+                                    locale={rdrLocales.cs}
+                                    minDate={dateLimit[0]}
+                                    maxDate={dateLimit[1]}
+                                />
+                            </div>
                         </div>
+                        <div className="center">
+                            <button id="filterResetBtn" className="filterResetBtn" onClick={() => {
+                                resetFilter();
+                            }}><BsFillXCircleFill style={iconStyles} /> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <hr />
             </div>
             {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
@@ -425,13 +471,18 @@ export const PassedPracticesCoordinator = () => {
                                         </Badge>
                                     </span>
 
-                                    <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                    <div className="d-flex registered-student-right-margin" style={{ marginTop: "10px" }}>
                                         <div><b>Registrovaní studenti: </b>
                                             {item.studentNames.length === 0 &&
                                                 <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
                                         </div>
-                                        <div>{item.studentNames.map((item, index) => (
-                                            <div className="margin-left-cstm">{item}</div>))}</div>
+                                        <div>{item.studentNames.map((name, index) => (
+                                                    <div className="margin-left-cstm"> ✓ {name}
+                                                        <button onClick={() => {getStudentReview(item.studentEmails[index], item.id)}}
+                                                                className="review-btn review-show-btn">Hodnocení
+                                                        </button>
+                                                    </div>))}
+                                                </div>
                                     </div>
 
                                     <p style={{ marginTop: "10px" }}><b>Poznámka:</b> {item.note != null ? item.note :
@@ -462,29 +513,29 @@ export const PassedPracticesCoordinator = () => {
                                                     </Tooltip>
                                                 }
                                             >
-                                            <span>
-                                                <BsInfoCircleFill className={"info-tooltip mb-1"} />
-                                            </span>
+                                                <span>
+                                                    <BsInfoCircleFill className={"info-tooltip mb-1"} />
+                                                </span>
                                             </OverlayTrigger>
-                                            <br/>
+                                            <br />
                                         </div>
 
                                         {!item.report &&
                                             <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                         }
-                                        <span className="d-inline-block text-truncate styles-dl" style={{maxWidth: "300px"}}>
+                                        <span className="d-inline-block text-truncate styles-dl" style={{ maxWidth: "300px" }}>
                                             {item.report &&
                                                 <a className="report-dl"
-                                                   href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
-                                                                                                        style={{
-                                                                                                            height: "30px",
-                                                                                                            marginRight: "5px",
-                                                                                                            textOverflow: 'ellipsis'
-                                                                                                        }}
-                                                                                                        alt={"DLImg"}></img> {item.report}
+                                                    href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
+                                                        style={{
+                                                            height: "30px",
+                                                            marginRight: "5px",
+                                                            textOverflow: 'ellipsis'
+                                                        }}
+                                                        alt={"DLImg"}></img> {item.report}
                                                 </a>
                                             }
-                                            </span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -492,6 +543,10 @@ export const PassedPracticesCoordinator = () => {
                     </Accordion.Item>
                 ))}
             </Accordion>
+            <CreateModalReview
+                    show={modalShowReview}
+                    onHide={() => {setModalShowReview(false); setSelectedReview("")}}
+                />
         </Container>
     );
 }

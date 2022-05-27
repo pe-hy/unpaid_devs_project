@@ -1,5 +1,6 @@
 package cz.osu.teacherpractice.dto.response;
 
+import cz.osu.teacherpractice.model.Review;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class StudentPracticeDto {
     private List<String> fileNames;
     private List<String> studentNames;
     private List<String> studentEmails;
-    private List<String> studentReviews;
+    private List<ReviewDto> reviews;
 
 
     private Integer numberOfReservedStudents;

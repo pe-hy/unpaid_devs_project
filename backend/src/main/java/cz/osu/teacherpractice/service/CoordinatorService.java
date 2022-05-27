@@ -38,6 +38,28 @@ public class CoordinatorService {
         return mapper.usersToUsersDto(users);
     }
 
+    public List<String> getStudentNamesByPractice(PracticeDomain p, Pageable pageable) {
+        List<Long> ids = userRepository.findAllStudentIdsByStudentPracticeIds(p.getId(), pageable);
+        List<String> names = new ArrayList<>();
+        for (Long id : ids) {
+            User u = userRepository.findUserById(id);
+            String name = u.getFirstName() + " " + u.getSecondName();
+            names.add(name);
+        }
+        return names;
+    }
+
+    public List<String> getStudentEmailsByPractice(PracticeDomain p, Pageable pageable){
+        List<Long> ids = userRepository.findAllStudentIdsByStudentPracticeIds(p.getId(), pageable);
+        List<String> emails = new ArrayList<>();
+        for(Long id: ids){
+            User u = userRepository.findUserById(id);
+            String email = u.getUsername();
+            emails.add(email);
+        }
+        return emails;
+    }
+
     public List<StudentPracticeDto> getPracticesListPast(LocalDate date, Long subjectId, Pageable pageable) {
         List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
         //sort practices by date
@@ -48,8 +70,9 @@ public class CoordinatorService {
 
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
-            p.setStudentNames(teacherService.getStudentNamesByPractice(p, pageable));
+            p.setStudentNames(getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
             String report = userService.getPracticeReport(p.getId());
             p.setReport(report);
             toDelete.add(p);

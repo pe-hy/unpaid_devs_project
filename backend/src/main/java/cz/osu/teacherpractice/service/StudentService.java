@@ -116,6 +116,10 @@ public class StudentService {
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
             String report = userService.getPracticeReport(p.getId());
             p.setReport(report);
+            List<ReviewDto> reviewList = new ArrayList<>();
+            ReviewDto studentRev = userService.getStudentReview(studentUsername, p.getId());
+            reviewList.add(studentRev);
+            p.setReviews(studentRev == null ? null : reviewList);
             toDelete.add(p);
         });
 
@@ -124,6 +128,16 @@ public class StudentService {
                 practicesDomain.remove(practiceDomain);
             }
         }
+        //mapper doesn't work
+//        List<StudentPracticeDto> ret = new ArrayList<>();
+//
+//        for (PracticeDomain domain :
+//                practicesDomain) {
+//            StudentPracticeDto dto = new StudentPracticeDto();
+//            dto = mapper.practiceDomainToStudentPracticeDto(domain);
+//            ret.add(dto);
+//        }
+
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
     }
 
@@ -209,25 +223,5 @@ public class StudentService {
         }
 
         return "Chyba při ukládání hodnocení.";
-    }
-
-    public List<ReviewDto> getStudentReviews(String username){
-        Optional<User> student = userRepository.findByEmail(username);
-        if(student.isPresent()){
-            List<Review> revs = reviewRepository.getAllByStudentId(student.get().getId());
-
-            //temporary fix for now
-            List<ReviewDto> ret = new ArrayList<>();
-            for (Review rev :
-                    revs) {
-                ReviewDto revDto = new ReviewDto();
-                revDto.setPracticeId(rev.getPractice().getId());
-                revDto.setName(rev.getStudent().getFirstName() + " " + rev.getStudent().getSecondName());
-                revDto.setReviewText(rev.getText());
-                ret.add(revDto);
-            }
-            return ret;
-        }
-        return new ArrayList<>();
     }
 }

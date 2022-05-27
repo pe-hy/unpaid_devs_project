@@ -54,6 +54,7 @@ export const TeacherPassedPractices = () => {
         const [modalShowUpload, setModalShowUpload] = React.useState(false);
         const [fileId, setFileId] = React.useState("");
         const [fileIndex, setFileIndex] = React.useState("");
+        const [selectedReview, setSelectedReview] = useState("");
         const [dateRange, setDateRange] = useState([
             {
                 startDate: new Date(),
@@ -195,6 +196,25 @@ export const TeacherPassedPractices = () => {
             }
         };
 
+        const getStudentReview = async (email, practiceId) => {
+            
+            const response = await axios({
+                url: `${URL}/teacher/getReview/${email}/${practiceId}`,
+                withCredentials: true,
+                method: "GET",
+            }).catch((err) => {
+                setModalShowReview(true);
+            });
+            if (response && response.data) {
+                setSelectedReview(response.data);
+                setModalShowReview(true);
+            }
+            else{
+                setModalShowReview(true);
+            }
+            
+        };
+
         useEffect(() => {
             getPraxe();
             getSubjects();
@@ -227,9 +247,10 @@ export const TeacherPassedPractices = () => {
                     </Modal.Header>
                     <Modal.Body>
                         <h4>Recenze studenta {props.studentName}</h4>
-                        <p>
-                            {props.review}
-                        </p>
+                        {selectedReview ? <p>
+                            {selectedReview.reviewText}
+                        </p> : <p>Student zatím praxi nehodnotil...</p>}
+                        
                     </Modal.Body>
                     <Modal.Footer>
                         <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Odejít</button>
@@ -498,9 +519,9 @@ export const TeacherPassedPractices = () => {
                                                     {item.studentNames.length === 0 &&
                                                     <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
                                                 </div>
-                                                <div>{item.studentNames.map((item, index) => (
-                                                    <div className="margin-left-cstm"> ✓ {item}
-                                                        <button onClick={() => setModalShowReview(true)}
+                                                <div>{item.studentNames.map((name, index) => (
+                                                    <div className="margin-left-cstm"> ✓ {name}
+                                                        <button onClick={() => {getStudentReview(item.studentEmails[index], item.id)}}
                                                                 className="review-btn review-show-btn">Hodnocení
                                                         </button>
                                                     </div>))}
@@ -597,7 +618,7 @@ export const TeacherPassedPractices = () => {
                 </Accordion>
                 <CreateModalReview
                     show={modalShowReview}
-                    onHide={() => setModalShowReview(false)}
+                    onHide={() => {setModalShowReview(false); setSelectedReview("")}}
                 />
                 <CreateModalUpload
                     show={modalShowUpload}

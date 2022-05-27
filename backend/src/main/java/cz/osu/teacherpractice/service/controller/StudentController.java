@@ -67,9 +67,9 @@ public class StudentController {
         return studentService.submitReview(principal.getName(), practiceId, text);
     }
 
-    @GetMapping("/getReviews")
-    public List<ReviewDto> getReviews(Principal principal) {
-
-        return studentService.getStudentReviews(principal.getName());
-    }
+//    @GetMapping("/getReviews")
+//    public List<ReviewDto> getReviews(Principal principal) {
+//
+//        return studentService.getStudentReviews(principal.getName());
+//    }
 }

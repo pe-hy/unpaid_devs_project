@@ -24,6 +24,39 @@
     border-radius: 4px;
 }
 
+.reservation-passed {
+    color: white;
+    background-color: #ccb517;
+    border-radius: 4px;
+}
+
+.btn-passed {
+    background-color: #ccb517 !important;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: not-allowed!important;
+    border-radius: 4px;
+    margin: 20px;
+}
+
+.btn-passed:focus {
+    background-color: #ccb517 !important;
+    color: #ffffff;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: not-allowed!important;
+    border-radius: 4px;
+    box-shadow: none !important;
+    margin: 20px;
+}
+
+.reservation-passed:hover {
+    background-color: #4BAC73;
+    color: white;
+    border-radius: 4px;
+}
+
 .reservation:hover {
     background-color: #4BAC73;
     color: white;

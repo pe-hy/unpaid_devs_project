@@ -397,7 +397,7 @@ export const PracticesListCoordinator = () => {
                             <Accordion.Body>
                                 <div>
                                     <hr/>
-                                    <div style={{marginLeft: "50px"}}>
+                                    <div className="responsive-accordion-body" style={{marginLeft: "50px"}}>
                                         <p><b>Učitel:</b> {item.teacher.firstName + " " + item.teacher.secondName}</p>
                                         <p><b>E-mail:</b> {item.teacher.username}</p>
                                         <p><b>Čas: </b>

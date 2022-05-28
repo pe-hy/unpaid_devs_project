@@ -22,7 +22,7 @@ body, html {
     }
 }
 
-.col-in-practices{
+.col-in-practices {
     margin-left: 50px;
 }
 
@@ -169,9 +169,14 @@ body, html {
     vertical-align: baseline;
 }
 
-.review-btn-not-disabled{
+.review-btn-not-disabled {
     background-color: #a15050 !important;
     color: #fff !important;
+}
+@media (max-width: 500px) {
+.responsive-accordion-body {
+    margin-left: 0 !important;
+}
 }
 
 .review-btn {

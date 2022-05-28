@@ -337,7 +337,7 @@ export const TeacherListedPractices = () => {
                             <Accordion.Body>
                                 <div>
                                     <hr/>
-                                    <div style={{marginLeft: "50px"}}>
+                                    <div className="responsive-accordion-body" style={{marginLeft: "50px"}}>
                                         <b>Kapacita: </b>
                                         <span>
                                         <Badge

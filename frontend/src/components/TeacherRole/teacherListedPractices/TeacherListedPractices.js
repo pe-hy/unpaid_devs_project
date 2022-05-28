@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useState} from "react";
 import {Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
-import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders} from "react-icons/bs";
+import {BsFillXCircleFill, BsInfoCircleFill, BsMailbox, BsSearch, BsSliders, BsCheckLg} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
@@ -22,6 +22,8 @@ const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 
 export const TeacherListedPractices = () => {
         let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
+        let iconStylesMail = {fontSize: "1.2em", marginRight: "5px"};
+
         const schoolFilterParam = "School";
         const subjectFilterParam = "Subject";
         const teacherFilterParam = "Teacher";
@@ -298,19 +300,19 @@ export const TeacherListedPractices = () => {
                                         </Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                                ". " +
-                                                item.date.split("-")[1] +
-                                                ". " +
-                                                item.date.split("-")[0]}
+                                            ". " +
+                                            item.date.split("-")[1] +
+                                            ". " +
+                                            item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center">
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -350,12 +352,24 @@ export const TeacherListedPractices = () => {
                                     </span>
 
                                         <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
-                                            <div><b>Registrovaní studenti: </b>
-                                                {item.studentNames.length === 0 &&
-                                                    <span><i>Žádný student se prozatím na praxi nezaregistroval.</i></span>}
+                                            <div className="w-75"><b>Registrovaní studenti: </b>
+                                                <div className="mb-2 mt-2">
+                                                    {item.studentNames.length === 0 &&
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                                </div>
+                                                <div>{item.studentNames.map((name, index) => (
+                                                    <div className="col">
+                                                        <div
+                                                            className="margin-left-cstm d-flex justify-content-between mb-3 mt-3">
+                                                            <div><p><BsCheckLg style={iconStylesMail}/> {name}</p> <p><BsMailbox
+                                                                style={iconStylesMail}/> {item.studentEmails[index]}</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div className="class-name"></div>
+                                                    </div>))}
+                                                </div>
                                             </div>
-                                            <div>{item.studentNames.map((item, index) => (
-                                                <div className="margin-left-cstm">{item}</div>))}</div>
                                         </div>
 
                                         <p style={{marginTop: "10px"}}><b>Poznámka:</b> {item.note != null ? item.note :

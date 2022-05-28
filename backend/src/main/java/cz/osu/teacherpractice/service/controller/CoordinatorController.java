@@ -128,4 +128,11 @@ public class CoordinatorController {
     public Map<Long, String> getAllReviews() {
         return userService.getAllReviews();
     }
+
+    @GetMapping("/practices-list")
+    public List<StudentPracticeDto> getPracticesList(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                     @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {
+
+        return coordinatorService.getPracticesList(date, subjectId, pageable);
+    }
 }

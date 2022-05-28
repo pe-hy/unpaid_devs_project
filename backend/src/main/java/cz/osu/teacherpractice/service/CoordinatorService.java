@@ -190,4 +190,29 @@ public class CoordinatorService {
         }
         return mappedReviews;
     }
+
+    public List<StudentPracticeDto> getPracticesList(LocalDate date, Long subjectId, Pageable pageable) {
+        List<Practice> practices = practiceRepository.findAllByParamsAsList(date, subjectId, pageable);
+        //sort practices by date
+        practices.sort((p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+
+        List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+        List<PracticeDomain> toDelete = new ArrayList<>();
+
+        practicesDomain.forEach(p -> {
+            p.setNumberOfReservedStudents();
+            p.setStudentNames(getStudentNamesByPractice(p, pageable));
+            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
+            p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            toDelete.add(p);
+        });
+
+        for (PracticeDomain practiceDomain : toDelete) {
+            if (practiceDomain.removeNotPassedPractices()) {
+                practicesDomain.remove(practiceDomain);
+            }
+        }
+
+        return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
 }

@@ -127,7 +127,7 @@ public class TeacherService {
                 String[] temp2 = str2.split(" ");
                 String substr2 = temp2[temp2.length-1];
 
-                return substr2.compareTo(substr1);
+                return substr1.compareTo(substr2);
             }
         });
 
@@ -150,7 +150,7 @@ public class TeacherService {
                 String substr1 = userRepository.findByEmail(str1).get().getSecondName();
                 String substr2 = userRepository.findByEmail(str2).get().getSecondName();
 
-                return substr2.compareTo(substr1);
+                return substr1.compareTo(substr2);
             }
         });
 

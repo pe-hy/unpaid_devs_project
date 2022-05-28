@@ -201,8 +201,8 @@ public class CoordinatorService {
 
         practicesDomain.forEach(p -> {
             p.setNumberOfReservedStudents();
-            p.setStudentNames(getStudentNamesByPractice(p, pageable));
-            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
+            p.setStudentNames(teacherService.getStudentNamesByPractice(p, pageable));
+            p.setStudentEmails(teacherService.getStudentEmailsByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
             toDelete.add(p);
         });

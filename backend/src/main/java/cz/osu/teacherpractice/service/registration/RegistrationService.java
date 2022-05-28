@@ -45,7 +45,7 @@ public class RegistrationService {
         if (request.getRole().equals("teacher")) {
             //check if phone number is in the Czech format
             //check if phone number is empty blank or null
-            if (!request.getPhoneNumber().isEmpty() || request.getPhoneNumber() != null || !request.getPhoneNumber().trim().isEmpty()) {
+            if (!request.getPhoneNumber().equals("") || !request.getPhoneNumber().isEmpty() || request.getPhoneNumber() != null || !request.getPhoneNumber().trim().isEmpty()) {
                 if (!request.getPhoneNumber().matches("^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$")) {
                     throw new IllegalStateException("Telefonní číslo musí být v českém formátu.");
                 }

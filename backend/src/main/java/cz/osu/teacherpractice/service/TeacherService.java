@@ -64,6 +64,7 @@ public class TeacherService {
             p.setNumberOfReservedStudents();
             p.setStudentNames(getStudentNamesByPractice(p, pageable));
             p.setFileNames(userService.getTeacherFiles(p.getTeacher().getUsername()));
+            p.setStudentEmails(getStudentEmailsByPractice(p, pageable));
             toDelete.add(p);
         });
 
@@ -114,7 +115,22 @@ public class TeacherService {
             String name = u.getFirstName() + " " + u.getSecondName();
             names.add(name);
         }
-        return names;
+
+        String[] arr = new String[names.size()];
+        arr = names.toArray(arr);
+
+        Arrays.sort(arr, new Comparator<String>() {
+            public int compare(String str1, String str2) {
+                String[] temp1 = str1.split(" ");
+                String substr1 = temp1[temp1.length-1];
+                String[] temp2 = str2.split(" ");
+                String substr2 = temp2[temp2.length-1];
+
+                return substr2.compareTo(substr1);
+            }
+        });
+
+        return new ArrayList<>(Arrays.asList(arr));
     }
 
     public List<String> getStudentEmailsByPractice(PracticeDomain p, Pageable pageable){
@@ -125,6 +141,18 @@ public class TeacherService {
             String email = u.getUsername();
             emails.add(email);
         }
-        return emails;
+        String[] arr = new String[emails.size()];
+        arr = emails.toArray(arr);
+
+        Arrays.sort(arr, new Comparator<String>() {
+            public int compare(String str1, String str2) {
+                String substr1 = userRepository.findByEmail(str1).get().getSecondName();
+                String substr2 = userRepository.findByEmail(str2).get().getSecondName();
+
+                return substr2.compareTo(substr1);
+            }
+        });
+
+        return new ArrayList<>(Arrays.asList(arr));
     }
 }

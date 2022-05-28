@@ -35,19 +35,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User a SET a.locked = False WHERE a.username = :username")
     int unlockAppUser(@Param("username") String username);
 
-    @Query("SELECT u FROM User u WHERE u.locked = True and u.enabled = True")
+    @Query("SELECT u FROM User u WHERE u.locked = True and u.enabled = True order by u.secondName")
     List<User> getAllLocked();
 
-    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER'")
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_TEACHER' order by u.secondName")
     List<User> getAllTeachers();
 
-    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_STUDENT'")
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_STUDENT' order by u.secondName")
     List<User> getAllStudents();
 
-    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_COORDINATOR'")
+    @Query("SELECT u FROM User u WHERE u.role = 'ROLE_COORDINATOR' order by u.secondName")
     List<User> getAllCoordinators();
 
-    @Query("SELECT u FROM User u WHERE u.school is null and u.role = 'ROLE_TEACHER'")
+    @Query("SELECT u FROM User u WHERE u.school is null and u.role = 'ROLE_TEACHER' order by u.secondName")
     List<User> getAllTeachersWithoutSchool();
 
     @Transactional

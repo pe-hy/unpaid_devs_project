@@ -37,14 +37,14 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                     setRole("Učitel");
                 } else if (response.data.role === "ROLE_ADMIN") {
                     setRole("Administrátor");
-                }
-                 else if (response.data.role === "ROLE_STUDENT") {
+                } else if (response.data.role === "ROLE_STUDENT") {
                     setRole("Student");
                 }
-                } else {
-                    setRole("Hacker :)");
-                }
+            } else {
+                document.getElementById("sign-out-click").click(); //should log out the user if he has no token/role
+                //still need to figure out what to do if access token is expired (all requests on page load are rejected but only after they all happen the user gets signed out)
             }
+        }
     };
     useEffect(() => {
         getUserName();

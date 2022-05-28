@@ -42,7 +42,7 @@ function RegisterButton(props) {
 function LogoutButton(props) {
     return (
         <Container fluid className="button-control">
-            <div onClick={props.onClick}>
+            <div id="sign-out-click" onClick={props.onClick}>
                 <BsPower style={iconStyles} />{" "}
                 <span id="sign-out-text" style={textStyles}>Odhlásit se</span>
             </div>

@@ -186,7 +186,7 @@ export class RegistrationComponent extends Component {
     };
     //create a function to check if name length is lower or equal to 2 OR if its bigger or equal to 30
     validateName(name) {
-        if (name.length <= 20 && name.length >= 2){
+        if (name.length <= 30 && name.length >= 2){
             return String(name)
         }
     };
@@ -205,7 +205,7 @@ export class RegistrationComponent extends Component {
         if (!this.validateName(value)) {
             return (
                 <div className="alert alert-danger my-alert text-bold" role="alert">
-                    <BsExclamationTriangleFill/> Délka musí být v rozmezí 2 až 20!
+                    <BsExclamationTriangleFill/> Délka musí být v rozmezí 2 až 30!
                 </div>
             );
         }

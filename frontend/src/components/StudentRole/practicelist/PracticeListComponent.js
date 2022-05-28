@@ -355,7 +355,7 @@ export const PracticeListComponent = () => {
                     </div>
                 </div>}
                 <Accordion>
-                    <div style={{width: "85%"}}>
+                    <div className="my-cstm-width">
                         <div className="title-container text-info-practice">
                             <Row style={{width: "100%"}}>
                                 <Col className="text-center">
@@ -403,7 +403,7 @@ export const PracticeListComponent = () => {
                             key={index}
                             style={{display: "block"}}
                         >
-                            <div style={{display: "flex"}}>
+                            <div className="my-cstm-flex">
                                 <Accordion.Header className={"accordion-header"}>
                                     <Row style={{width: "100%"}}>
                                         <Col

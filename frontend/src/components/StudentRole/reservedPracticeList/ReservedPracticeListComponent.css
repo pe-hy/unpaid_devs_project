@@ -58,9 +58,10 @@ body, html {
     text-align: left;
     text-transform: uppercase;
 }
-
-.accordion-header {
-    width: 85%;
+@media (min-width: 1024px) {
+    .accordion-header {
+        width: 85%;
+    }
 }
 
 .accordion-item {

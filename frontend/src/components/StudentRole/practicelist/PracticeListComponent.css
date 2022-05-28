@@ -10,6 +10,11 @@ body, html {
     color: #fd0c0c;
     width: 100%!important;
 }
+@media (min-width: 1024px) {
+    .my-cstm-width{
+        width: 85%;
+    }
+}
 @media (min-width: 768px) {
     .accordion-button::after {
         position: absolute;
@@ -64,8 +69,10 @@ body, html {
     text-transform: uppercase;
 }
 
-.accordion-header {
-    width: 85%;
+@media (min-width: 1024px) {
+    .accordion-header {
+        width: 85%;
+    }
 }
 
 .accordion-item {

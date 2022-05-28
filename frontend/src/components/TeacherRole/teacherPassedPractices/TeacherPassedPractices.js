@@ -601,7 +601,7 @@ export const TeacherPassedPractices = () => {
                                             Nahrát report
                                         </button>
                                         <div className="mt-3 mb-1 flex-cont">
-                                            <hr style={{width: "150%"}}/>
+                                            <hr style={{width: "100%"}}/>
                                             <div className="center flex-it">
                                                 <b>Report ke stažení: </b>
                                                 <div>

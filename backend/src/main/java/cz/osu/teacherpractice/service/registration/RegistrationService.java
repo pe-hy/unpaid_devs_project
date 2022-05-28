@@ -31,26 +31,45 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final SchoolRepository schoolRepository;
 
-    public String register(RegistrationDto request){
+    public String register(RegistrationDto request) {
 
-        //check if phone number is in the Czech format
-        if(!request.getPhoneNumber().matches("^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$")){
-            throw new IllegalStateException("Telefonní číslo musí být v českém formátu.");
+        //check if email is empty or null
+        if (request.getEmail().isEmpty() || request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            return "Email nesmí být prázdný.";
         }
+        //check if first name or last name is empty or null or blank
+        if (request.getFirstName().isEmpty() || request.getFirstName() == null || request.getFirstName().trim().isEmpty()) {
+            return "Jméno/příjmení nesmí být prázdné.";
+        }
+        //check if user role is teacher
+        if (request.getRole().equals("teacher")) {
+            //check if phone number is in the Czech format
+            //check if phone number is empty blank or null
+            if (!request.getPhoneNumber().isEmpty() || request.getPhoneNumber() != null || !request.getPhoneNumber().trim().isEmpty()) {
+                if (!request.getPhoneNumber().matches("^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$")) {
+                    throw new IllegalStateException("Telefonní číslo musí být v českém formátu.");
+                }
+            }
+            //check if school is null
+            if (request.getSchool() == null) {
+                return "Škola nesmí být prázdná.";
+            }
+        }
+
 
         //check if request.getName is lower or equal to 2 or if its bigger or equal to 20
-        if (request.getFirstName().length() < 2 || request.getFirstName().length() > 20) {
-            throw new IllegalStateException("Jméno musí být dlouhé 2 až 20 znaků.");
+        if (request.getFirstName().length() < 2 || request.getFirstName().length() > 30) {
+            throw new IllegalStateException("Jméno musí být dlouhé 2 až 30 znaků.");
         }
 
-        if (request.getLastName().length() < 2 || request.getLastName().length() > 20) {
-            throw new IllegalStateException("Příjmení musí být dlouhé 2 až 20 znaků.");
+        if (request.getLastName().length() < 2 || request.getLastName().length() > 30) {
+            throw new IllegalStateException("Příjmení musí být dlouhé 2 až 30 znaků.");
         }
 
-        if(!emailValidator.checkEmail(request.getEmail(), request.getRole())){
+        if (!emailValidator.checkEmail(request.getEmail(), request.getRole())) {
             throw new IllegalStateException("Email není validní");
         }
-        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalStateException("Email již existuje");
         }
 

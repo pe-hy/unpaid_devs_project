@@ -304,10 +304,12 @@ export const PassedPracticesCoordinator = () => {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Recenze studenta {props.studentName}</h4>
-                        {selectedReview ? <p>
-                            {selectedReview.reviewText}
-                        </p> : <p>Student zatím praxi nehodnotil...</p>}
+                        <h4>Recenze studenta - {selectedReview.name}</h4>
+                        <div className="mt-3">
+                            {selectedReview ? <p>
+                                {selectedReview.reviewText}
+                            </p> : <p>Student zatím praxi nehodnotil...</p>}
+                        </div>
 
                     </Modal.Body>
                     <Modal.Footer>
@@ -444,19 +446,19 @@ export const PassedPracticesCoordinator = () => {
                                             className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                                ". " +
-                                                item.date.split("-")[1] +
-                                                ". " +
-                                                item.date.split("-")[0]}
+                                            ". " +
+                                            item.date.split("-")[1] +
+                                            ". " +
+                                            item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -487,12 +489,12 @@ export const PassedPracticesCoordinator = () => {
                                         <p><b>Čas: </b>
                                             <span>
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}</span></p>
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}</span></p>
 
                                         <b>Kapacita: </b>
                                         <span>
@@ -507,22 +509,22 @@ export const PassedPracticesCoordinator = () => {
                                         </Badge>
                                     </span>
 
-                                        <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                        <div className="my-cstm-flex registered-student-right-margin" style={{marginTop: "10px"}}>
                                             <div className="w-75"><b>Registrovaní studenti: </b>
                                                 <div className="mb-2 mt-2">
                                                     {item.studentNames.length === 0 &&
-                                                        <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
+                                                    <span><i>Žádný student se na praxi nezaregistroval.</i></span>}
                                                 </div>
                                                 <div>{item.studentNames.map((name, index) => (
                                                     <div className="col">
                                                         <div
-                                                            className="margin-left-cstm d-flex justify-content-between mb-3 mt-3">
+                                                            className="margin-left-cstm my-cstm-flex justify-content-between mb-3 mt-3">
                                                             <div><p><BsCheckLg style={iconStylesMail}/> {name}</p> <p>
                                                                 <BsMailbox
                                                                     style={iconStylesMail}/> {item.studentEmails[index]}</p>
                                                             </div>
                                                             <div
-                                                                className="d-flex justify-content-center align-items-center">
+                                                                className="my-cstm-flex justify-content-center align-items-center">
                                                                 <button
                                                                     id={item.id + " " + name}
                                                                     disabled={false}
@@ -577,20 +579,20 @@ export const PassedPracticesCoordinator = () => {
                                             </div>
 
                                             {!item.report &&
-                                                <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
+                                            <span><i>Této praxi zatím nebyl přiřazen žádný report.</i></span>
                                             }
                                             <span className="d-inline-block text-truncate styles-dl"
                                                   style={{maxWidth: "300px"}}>
                                             {item.report &&
-                                                <a className="report-dl"
-                                                   href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
-                                                                                                        style={{
-                                                                                                            height: "30px",
-                                                                                                            marginRight: "5px",
-                                                                                                            textOverflow: 'ellipsis'
-                                                                                                        }}
-                                                                                                        alt={"DLImg"}></img> {item.report}
-                                                </a>
+                                            <a className="report-dl"
+                                               href={`${URL}/user/report/download/${item.id}`}><img src={DLImage}
+                                                                                                    style={{
+                                                                                                        height: "30px",
+                                                                                                        marginRight: "5px",
+                                                                                                        textOverflow: 'ellipsis'
+                                                                                                    }}
+                                                                                                    alt={"DLImg"}/> {item.report}
+                                            </a>
                                             }
                                         </span>
                                         </div>

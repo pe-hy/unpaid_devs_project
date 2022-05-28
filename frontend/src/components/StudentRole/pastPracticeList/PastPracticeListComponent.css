@@ -173,10 +173,11 @@ body, html {
     background-color: #a15050 !important;
     color: #fff !important;
 }
+
 @media (max-width: 500px) {
-.responsive-accordion-body {
-    margin-left: 0 !important;
-}
+    .responsive-accordion-body {
+        margin-left: 0 !important;
+    }
 }
 
 .review-btn {

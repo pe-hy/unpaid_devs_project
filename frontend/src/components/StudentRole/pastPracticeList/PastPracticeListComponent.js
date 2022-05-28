@@ -210,9 +210,11 @@ export const PastPracticeListComponent = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <h4>Mé hodnocení</h4>
+                    <div className="mt-3">
                     {reviewText ? <p>
                         {reviewText}
                     </p> : <p>Tuto praxi jste zatím neohodnotil...</p>}
+                    </div>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -548,6 +550,7 @@ export const PastPracticeListComponent = () => {
                                     <div className="center col div-cstm-flex-direction">
                                         <div className="mt-3 mb-1 flex-cont">
                                             <div className="center flex-it">
+                                                <b>Report ke stažení: </b>
                                                 <OverlayTrigger
                                                     overlay={
                                                         <Tooltip>
@@ -561,7 +564,6 @@ export const PastPracticeListComponent = () => {
                                                     <BsInfoCircleFill className={"info-tooltip mb-1"}/>
                                                 </span>
                                                 </OverlayTrigger>
-                                                <b>Report ke stažení: </b>
                                             </div>
                                             <br/>
                                             {!item.report &&

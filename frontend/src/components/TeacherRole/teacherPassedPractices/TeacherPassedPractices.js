@@ -246,10 +246,12 @@ export const TeacherPassedPractices = () => {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Recenze studenta {props.studentName}</h4>
+                        <h4>Recenze studenta - {selectedReview.name}</h4>
+                        <div className="mt-3">
                         {selectedReview ? <p>
                             {selectedReview.reviewText}
                         </p> : <p>Student zatím praxi neohodnotil...</p>}
+                        </div>
 
                     </Modal.Body>
                     <Modal.Footer>
@@ -535,7 +537,7 @@ export const TeacherPassedPractices = () => {
                                             {item.numberOfReservedStudents} / {item.capacity}
                                         </Badge>
                                     </span>
-                                        <div className="d-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                        <div className="my-cstm-flex registered-student-right-margin" style={{marginTop: "10px"}}>
                                             <div className="w-75"><b>Registrovaní studenti: </b>
                                                 <div className="mb-2 mt-2">
                                                     {item.studentNames.length === 0 &&
@@ -544,12 +546,12 @@ export const TeacherPassedPractices = () => {
                                                 <div>{item.studentNames.map((name, index) => (
                                                     <div className="col">
                                                         <div
-                                                            className="margin-left-cstm d-flex justify-content-between mb-3 mt-3">
+                                                            className="margin-left-cstm my-cstm-flex justify-content-between mb-3 mt-3">
                                                             <div><p><BsCheckLg style={iconStylesMail}/> {name}</p> <p><BsMailbox
                                                                 style={iconStylesMail}/> {item.studentEmails[index]}</p>
                                                             </div>
                                                             <div
-                                                                className="d-flex justify-content-center align-items-center">
+                                                                className="my-cstm-flex justify-content-center align-items-center">
                                                                 <button
                                                                     id={item.id + " " + name}
                                                                     disabled={false}

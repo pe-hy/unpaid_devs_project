@@ -15,6 +15,10 @@ body, html {
     }
 }
 
+.bg-success-custom{
+    background-color: red;
+}
+
 .accordion-button:hover {
     background-color: #EDEDED;
 
@@ -59,6 +63,10 @@ body, html {
 
 .accordion-header-listed-teacher {
     width: 100%;
+}
+
+.colored{
+    border: 10px solid rgb(106, 227, 106);
 }
 
 .accordion-item {

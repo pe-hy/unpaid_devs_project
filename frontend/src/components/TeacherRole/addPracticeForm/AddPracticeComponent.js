@@ -28,10 +28,10 @@ const TabsForm = () => {
 
     const dispatch = useDispatch();
 
-    const onSubmit = () => {
+    const onSubmit = (id) => {
         dispatch(
             addTodo({
-                title: "a",
+                title: id,
             })
         );
     };
@@ -106,9 +106,25 @@ const TabsForm = () => {
         if (response) {
             setshowDangerAlert(false);
             setshowSuccessAlert(true);
-            onSubmit();
+            onSubmit(response.data);
             if (document.getElementById("tab-tab-tab1")) {
                 document.getElementById("tab-tab-tab1").click();
+                let observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (!mutation.addedNodes) return
+
+
+                        document.getElementById("teacher-listed" + response.data).scrollIntoView();
+                        observer.disconnect();
+
+                    })
+                })
+                observer.observe(document.body, {
+                    childList: true
+                    , subtree: true
+                    , attributes: false
+                    , characterData: false
+                })
             }
 
         }

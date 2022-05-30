@@ -39,8 +39,8 @@ public class TeacherController {
 
     @PostMapping("/practice")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addPractice(Principal principal, @Valid @RequestBody NewPracticeDto newPracticeDto) {
-        teacherService.addPractice(principal.getName(), newPracticeDto);
+    public Long addPractice(Principal principal, @Valid @RequestBody NewPracticeDto newPracticeDto) {
+        return teacherService.addPractice(principal.getName(), newPracticeDto);
     }
     @GetMapping("/practices-list")
     public List<StudentPracticeDto> getPracticesList(@RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,

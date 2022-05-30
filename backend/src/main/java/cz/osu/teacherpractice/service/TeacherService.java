@@ -33,7 +33,7 @@ public class TeacherService {
 
     private final UserService userService;
 
-    public void addPractice(String teacherUsername, NewPracticeDto newPracticeDto) {
+    public Long addPractice(String teacherUsername, NewPracticeDto newPracticeDto) {
         User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(
                 "Učitel '" + teacherUsername + "' nenalezen."
         ));
@@ -46,6 +46,7 @@ public class TeacherService {
         Practice practice = mapper.newPracticeDtoToPractice(newPracticeDto);
         practice.setTeacher(teacher);
         practiceRepository.save(practice);
+        return practice.getId();
     }
     public List<StudentPracticeDto> getPracticesList(String teacherUsername, LocalDate date, Long subjectId, Pageable pageable) {
         User teacher = userRepository.findByEmail(teacherUsername).orElseThrow(() -> new ServerErrorException(

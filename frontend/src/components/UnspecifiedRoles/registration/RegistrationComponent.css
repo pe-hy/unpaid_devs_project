@@ -31,9 +31,15 @@ input[type='radio'] {
     font-size: 25px;
     margin-left: 20px;
 }
-
+@media (max-width: 500px){
+    .container-registration > section{
+        min-width: 350px!important;
+        max-width: 800px;
+        margin-bottom: 50px;
+    }
+}
 .container-registration > section{
-    min-width: 500px;
+    min-width: 600px;
     max-width: 800px;
     margin-bottom: 50px;
 }

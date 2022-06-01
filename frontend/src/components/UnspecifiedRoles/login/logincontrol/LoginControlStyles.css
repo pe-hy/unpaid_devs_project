@@ -20,4 +20,8 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
+@media (max-width: 500px) {
+    .remove-icon-responsive{
+        display: none;
+    }
+}

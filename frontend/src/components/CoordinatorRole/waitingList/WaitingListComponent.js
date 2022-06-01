@@ -24,7 +24,6 @@ export const WaitingListComponent = () => {
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
@@ -80,7 +79,6 @@ export const WaitingListComponent = () => {
             method: "POST",
             data: currEmail,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {

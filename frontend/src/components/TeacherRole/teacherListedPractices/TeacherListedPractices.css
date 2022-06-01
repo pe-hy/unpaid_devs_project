@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 body, html {
     font-family: 'Helvetica', sans-serif;
 }
@@ -66,7 +69,7 @@ body, html {
 }
 
 .colored{
-    border: 10px solid rgb(106, 227, 106);
+    border: 3px solid #507ea1 !important;
 }
 
 .accordion-item {

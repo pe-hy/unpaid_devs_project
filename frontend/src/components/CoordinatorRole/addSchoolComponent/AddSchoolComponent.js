@@ -62,7 +62,6 @@ export const AddSchoolComponent = () => {
             method: "POST",
             data: currSchool,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
@@ -81,7 +80,6 @@ export const AddSchoolComponent = () => {
             method: "POST",
             data: form,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
@@ -100,7 +98,6 @@ export const AddSchoolComponent = () => {
             method: "POST",
             data: form,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
 
         });

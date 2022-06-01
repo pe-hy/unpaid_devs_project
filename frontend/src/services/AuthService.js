@@ -2,7 +2,7 @@ import axios from "axios";
 
 const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
-const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/admin/registerCoordinator`;
+const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/coordinator/registerCoordinator`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
 const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassword`;
 const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/reset`;

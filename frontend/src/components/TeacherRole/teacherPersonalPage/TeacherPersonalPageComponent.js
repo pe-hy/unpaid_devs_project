@@ -58,7 +58,6 @@ const TeacherPersonalPageComponent = () => {
             withCredentials: true,
             method: "POST",
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {

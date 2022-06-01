@@ -55,7 +55,6 @@ export const AddSubjectComponent = () => {
             method: "POST",
             data: currSubject,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {
@@ -74,7 +73,6 @@ export const AddSubjectComponent = () => {
             method: "POST",
             data: form,
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {

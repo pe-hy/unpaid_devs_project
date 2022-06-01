@@ -2,21 +2,20 @@ package cz.osu.teacherpractice.service;
 
 import cz.osu.teacherpractice.domain.PracticeDomain;
 import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
+import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.dto.response.*;
 import cz.osu.teacherpractice.exception.ServerErrorException;
 import cz.osu.teacherpractice.mapper.MapStructMapper;
 import cz.osu.teacherpractice.model.*;
 import cz.osu.teacherpractice.repository.*;
+import cz.osu.teacherpractice.service.email.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +27,7 @@ public class CoordinatorService {
     private final MapStructMapper mapper;
     private final SchoolRepository schoolRepository;
     private final ReviewRepository reviewRepository;
+    private final EmailValidator emailValidator;
 
     private final TeacherService teacherService;
 
@@ -214,5 +214,36 @@ public class CoordinatorService {
         }
 
         return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+    }
+
+    public String register(RegistrationDto request){
+
+        if(!emailValidator.checkEmail(request.getEmail(), request.getRole())){
+            throw new IllegalStateException("Email není validní");
+        }
+        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new IllegalStateException("Email již existuje");
+        }
+
+        String email, password, firstName, lastName, phoneNumber;
+        School school;
+        Role role;
+        boolean locked, enabled;
+
+        email = request.getEmail();
+        password = UUID.randomUUID().toString();
+        firstName = request.getFirstName();
+        lastName = request.getLastName();
+        phoneNumber = request.getPhoneNumber();
+        school = schoolRepository.getSchoolById(request.getSchool());
+        role = Role.COORDINATOR;
+        locked = false;
+        enabled = true;
+
+        userService.signUpCoordinator(
+                new User(email, password, firstName, lastName, school, phoneNumber, role, locked, enabled)
+        );
+
+        return "Účet byl úspěšně vytvořen.";
     }
 }

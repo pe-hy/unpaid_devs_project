@@ -11,6 +11,7 @@ import PracticesListCoordinator
 import ShowStudents from "../../components/UnspecifiedRoles/users/StudentsComponent";
 import ShowTeachers from "../../components/UnspecifiedRoles/users/TeachersComponent";
 import ShowCoordinators from "../../components/UnspecifiedRoles/users/CoordinatorsComponent";
+import AdminAddCoordinatorComponent from "../../components/AdminRole/AdminAddCoordinator/AdminAddCoordinatorComponent.js";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_COORDINATOR";
@@ -24,25 +25,28 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab1" title="Uživatelé čekající na potvrzení">
                     <WaitingListComponent />
                 </Tab>
-                <Tab eventKey="tab2" title="Školy">
+                <Tab eventKey="tab2" title="Přidání koordinátora">
+                    <AdminAddCoordinatorComponent />
+                </Tab>
+                <Tab eventKey="tab3" title="Školy">
                     <AddSchoolComponent />
                 </Tab>
-                <Tab eventKey="tab3" title="Předměty">
+                <Tab eventKey="tab4" title="Předměty">
                     <AddSubjectComponent />
                 </Tab>
-                <Tab eventKey="tab4" title="Vypsané praxe">
+                <Tab eventKey="tab5" title="Vypsané praxe">
                     <PracticesListCoordinator />
                 </Tab>
-                <Tab eventKey="tab5" title="Proběhlé praxe">
+                <Tab eventKey="tab6" title="Proběhlé praxe">
                     <PassedPracticesCoordinator />
                 </Tab>
-                <Tab eventKey="tab6" title="Studenti">
+                <Tab eventKey="tab7" title="Studenti">
                     <ShowStudents />
                 </Tab>
-                <Tab eventKey="tab7" title="Učitelé">
+                <Tab eventKey="tab8" title="Učitelé">
                     <ShowTeachers />
                 </Tab>
-                <Tab eventKey="tab8" title="Koordinátoři">
+                <Tab eventKey="tab9" title="Koordinátoři">
                     <ShowCoordinators />
                 </Tab>
             </Tabs>

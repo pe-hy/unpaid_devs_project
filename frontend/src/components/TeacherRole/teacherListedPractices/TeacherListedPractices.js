@@ -94,7 +94,6 @@ export const TeacherListedPractices = () => {
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
-            alert(err.response.data.message);
             console.log(err.response.data.message);
         });
         if (response && response.data) {

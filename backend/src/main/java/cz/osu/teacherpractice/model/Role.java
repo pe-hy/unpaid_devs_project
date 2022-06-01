@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @AllArgsConstructor @Getter
 public enum Role {
-    STUDENT("ROLE_STUDENT"), TEACHER("ROLE_TEACHER"), COORDINATOR("ROLE_COORDINATOR"), ADMIN("ROLE_ADMIN");
+    STUDENT("ROLE_STUDENT"), TEACHER("ROLE_TEACHER"), COORDINATOR("ROLE_COORDINATOR");
 
     @NonNull private String code;
 }

@@ -54,7 +54,7 @@ function ShowCoordinators() {
                     <td>{info.firstName}</td>
                     <td>{info.secondName}</td>
                     <td>{info.username}</td>
-                    <td>{info.phoneNumber.length != 0 ? formatPhoneNum(info.phoneNumber) : "-"}</td>
+                    <td>{info.phoneNumber != null && info.phoneNumber.length != 0 ? formatPhoneNum(info.phoneNumber) : "-"}</td>
                 </tr>
             )
         }

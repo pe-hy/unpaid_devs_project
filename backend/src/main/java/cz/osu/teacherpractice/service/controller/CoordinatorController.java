@@ -3,6 +3,7 @@ package cz.osu.teacherpractice.service.controller;
 import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSchoolDto;
 import cz.osu.teacherpractice.dto.request.EditSubjectDto;
+import cz.osu.teacherpractice.dto.request.RegistrationDto;
 import cz.osu.teacherpractice.dto.response.*;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
@@ -134,5 +135,11 @@ public class CoordinatorController {
                                                      @RequestParam(required=false) Long subjectId, Principal principal, Pageable pageable) {
 
         return coordinatorService.getPracticesList(date, subjectId, pageable);
+    }
+    @PostMapping("/registerCoordinator")
+    public String register(@RequestBody RegistrationDto request) {
+
+        String ret = coordinatorService.register(request);
+        return ret;
     }
 }

@@ -80,8 +80,6 @@ public class TeacherPracticeApp {
             tch.setEnabled(true);
             User coord = new User("coordinator@coordinator.cz", "coordinator", "Milan", "Novák", null, "+420 657 142 441", Role.COORDINATOR);
             coord.setEnabled(true);
-            User adm = new User("admin@admin.cz", "admin", "Petra", "Konečná", null, "775 874 236", Role.ADMIN);
-            adm.setEnabled(true);
 
 
             User student = userService.createUser(st1);
@@ -89,7 +87,6 @@ public class TeacherPracticeApp {
             User student3 = userService.createUser(st3);
             User teacher = userService.createUser(tch);
             userService.createUser(coord);
-            userService.createUser(adm);
 
             // adding default subjects
             Subject subjectA = subjectRepository.save(new Subject(null, "Španělština", null));

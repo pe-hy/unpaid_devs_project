@@ -51,7 +51,7 @@ public class TeacherPracticeApp {
     @Bean
     CommandLineRunner run() {
         return args -> {
-            // delete all data from database
+            // delete all data from database (turning off in production)
             practiceRepository.deleteAll();
             userRepository.deleteAll();
             subjectRepository.deleteAll();

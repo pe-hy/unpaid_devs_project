@@ -13,7 +13,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
-import {addDays} from 'date-fns';
+import {addDays, format} from 'date-fns';
 import {useSelector} from 'react-redux';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -34,7 +34,7 @@ export const ReservedPracticeListComponent = () => {
         const dateRangeFilterParam = "Date";
         const allFilterParam = "All";
         const noteNotFound = "Poznámka nevyplněna.";
-
+        const [dateMax, setDateMax] = useState(format((addDays(new Date(), +7)), "yyyy-MM-dd"));
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
         const [showing, setShowing] = useState(false);
@@ -342,7 +342,7 @@ export const ReservedPracticeListComponent = () => {
                     </div>
                 </div>}
                 <Accordion>
-                    <div style={{width: "85%"}}>
+                    <div className="my-cstm-width">
                         <div className="title-container text-info-practice">
                             <Row style={{width: "100%"}}>
                                 <Col className="text-center">
@@ -390,7 +390,7 @@ export const ReservedPracticeListComponent = () => {
                             key={index}
                             style={{display: "block"}}
                         >
-                            <div style={{display: "flex"}}>
+                            <div className="my-cstm-flex">
                                 <Accordion.Header className={"accordion-header"}>
                                     <Row style={{width: "100%"}}>
                                         <Col
@@ -402,19 +402,19 @@ export const ReservedPracticeListComponent = () => {
                                             className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
                                             {item.date.split("-")[2] +
-                                                ". " +
-                                                item.date.split("-")[1] +
-                                                ". " +
-                                                item.date.split("-")[0]}
+                                            ". " +
+                                            item.date.split("-")[1] +
+                                            ". " +
+                                            item.date.split("-")[0]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.teacher.username}
@@ -435,7 +435,22 @@ export const ReservedPracticeListComponent = () => {
                                     </Row>
                                 </Accordion.Header>
                                 <div className="center d-none d-xl-block" style={{width: "15%"}}>
-                                    {getButton(item.isCurrentStudentReserved, item.id)}
+                                    {(dateMax < (item.date)) ? getButton(item.isCurrentStudentReserved, item.id) :
+
+                                        <OverlayTrigger
+                                            placement="left"
+                                            delay={{ show: 500, hide: 10 }}
+                                            overlay={
+                                                <Tooltip>
+                                                    <p>Uplynul termín pro odrezervaci</p>
+                                                    Pokud se z praxe chcete omluvit, musíte kontaktovat vyučujícího.
+                                                </Tooltip>
+                                            }
+                                        >
+                                                        <span>
+                                                          <button className="btn btn-passed reservation-passed">Odrezervovat</button>
+                                                        </span>
+                                        </OverlayTrigger>}
                                 </div>
                             </div>
 
@@ -448,12 +463,12 @@ export const ReservedPracticeListComponent = () => {
                                         <p><b>Čas: </b>
                                             <span>
                                             {item.start.split(":")[0] +
-                                                ":" +
-                                                item.start.split(":")[1] +
-                                                " - " +
-                                                item.end.split(":")[0] +
-                                                ":" +
-                                                item.end.split(":")[1]}</span></p>
+                                            ":" +
+                                            item.start.split(":")[1] +
+                                            " - " +
+                                            item.end.split(":")[0] +
+                                            ":" +
+                                            item.end.split(":")[1]}</span></p>
 
                                         <b>Kapacita: </b>
                                         <span>
@@ -485,8 +500,21 @@ export const ReservedPracticeListComponent = () => {
                                         </ul>
 
 
-                                        <div className="center d-xl-none" style={{width: "15%"}}>
-                                            {getButton(item.isCurrentStudentReserved, item.id)}
+                                        <div className="center d-xl-none" style={{width: "100%"}}>
+                                            {(dateMax < (item.date)) ? getButton(item.isCurrentStudentReserved, item.id) :
+                                                <p className="too-late">
+                                                    <hr/>
+                                                    <OverlayTrigger
+                                                        overlay={
+                                                            <Tooltip>
+                                                                Pokud se z praxe chcete omluvit, musíte kontaktovat vyučujícího.
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <span>
+                                                          <BsInfoCircleFill className={"info-tooltip mb-1"}/>
+                                                        </span>
+                                                    </OverlayTrigger> Uplynul termín pro odrezervaci</p>}
                                         </div>
 
                                     </div>

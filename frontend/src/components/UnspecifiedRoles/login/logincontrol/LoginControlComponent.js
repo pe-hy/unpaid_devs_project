@@ -17,7 +17,7 @@ function LoginButton(props) {
     return (
         <Container fluid className="button-control">
             <div onClick={props.onClick}>
-                <BsPersonCheckFill style={iconStyles} />{" "}
+                <BsPersonCheckFill className="remove-icon-responsive" style={iconStyles} />{" "}
                 <span style={textStyles}>Přihlásit se</span>
             </div>
         </Container>

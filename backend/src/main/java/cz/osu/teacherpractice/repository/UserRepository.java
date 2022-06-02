@@ -76,4 +76,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.id = :id")
     int changeUserPhoneNumber(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    int removeUserById(Long id);
 }

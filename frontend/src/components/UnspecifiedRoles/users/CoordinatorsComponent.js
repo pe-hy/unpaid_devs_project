@@ -106,9 +106,9 @@ function ShowCoordinators() {
                     <td>{info.secondName}</td>
                     <td>{info.username}</td>
                     <td>{info.phoneNumber != null && info.phoneNumber.length != 0 ? formatPhoneNum(info.phoneNumber) : "-"}</td>
-                    {localStorage.getItem("role") === "ROLE_COORDINATOR" ? (errorMessage && chosenCoordinatorId == info.id) ? <div className="mt-1 h-50 alert alert-danger my-alert-phone text-bold" role="alert">
-                                    <BsExclamationTriangleFill /> {errorMessage}
-                                </div> : <td><button onClick={() => {setChosenCoordinatorId(info.id);setChosenCoordinatorName(info.firstName + " " + info.secondName);setModalShow(true)}}>X</button></td> : ""}
+                    {localStorage.getItem("role") === "ROLE_COORDINATOR" ? (errorMessage && chosenCoordinatorId == info.id) ? <td><span className="center text-bold" role="alert">
+                                    <BsExclamationTriangleFill style={{marginRight: "5px"}} /> {errorMessage}</span></td>
+                                 : <td><button className="removal-btn-3" onClick={() => {setChosenCoordinatorId(info.id);setChosenCoordinatorName(info.firstName + " " + info.secondName);setModalShow(true)}}>X</button></td> : ""}
                 </tr>
             )
         }

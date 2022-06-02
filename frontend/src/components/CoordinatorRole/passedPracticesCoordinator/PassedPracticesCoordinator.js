@@ -303,7 +303,7 @@ export const PassedPracticesCoordinator = () => {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Recenze studenta - {selectedReview.name}</h4>
+                        <h4>Recenze studenta {selectedReview.name}</h4>
                         <div className="mt-3">
                             {selectedReview ? <p>
                                 {selectedReview.reviewText}

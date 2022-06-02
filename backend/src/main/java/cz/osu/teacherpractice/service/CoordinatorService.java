@@ -246,4 +246,13 @@ public class CoordinatorService {
 
         return "Účet byl úspěšně vytvořen.";
     }
+
+    public String deleteCoordinator(Long id) throws Exception {
+        if(userRepository.removeUserById(id) == 1){
+            return "Koordinátor byl úspěšně smazán.";
+        }
+        else{
+            throw new Exception("Došlo k chybě. Koordinátora nelze smazat.");
+        }
+    }
 }

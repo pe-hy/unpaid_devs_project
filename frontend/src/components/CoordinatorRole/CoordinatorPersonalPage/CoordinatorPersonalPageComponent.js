@@ -118,15 +118,17 @@ const CoordinatorPersonalPageComponent = () => {
                                             onChange={(e) => {
 
                                                 setPhoneNew(e.target.value);
+                                                setErrorMessage("");
                                             }} />
                                     </div>
                                 </div>
-                                {errorMessage && <div className="mt-1 mb-2 alert alert-danger my-alert-phone text-bold" role="alert">
-                                    <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
-                                </div>}
+                                
                                 <div className="col-sm-4 mt-3 mb-3">
                                     <button type="submit" className="change-btn button-setting">Změnit telefon</button>
                                 </div>
+                                {errorMessage && <div className="mt-3 alert alert-danger my-alert-phone text-bold" role="alert">
+                                    <BsExclamationTriangleFill /> Špatný formát telefonního čísla!
+                                </div>}
                             </form>
                         </div>
                     <p><b><BsTools style={iconStyles} />Změna hesla: <ChangePasswordComponent /></b></p>

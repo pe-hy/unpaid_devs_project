@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/coordinator")
@@ -141,5 +142,11 @@ public class CoordinatorController {
 
         String ret = coordinatorService.register(request);
         return ret;
+    }
+
+    @PostMapping("/deleteCoordinator")
+    public String deleteCoordinator(@RequestBody Long id, Principal principal) throws Exception {
+        if(Objects.equals(userService.getUserByUsername(principal.getName()).getId(), id)) throw new Exception("Nelze smazat vlastní účet!");
+        return coordinatorService.deleteCoordinator(id);
     }
 }

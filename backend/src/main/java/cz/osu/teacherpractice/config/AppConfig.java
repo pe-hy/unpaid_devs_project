@@ -17,7 +17,7 @@ public class AppConfig {
     public static final int MAXIMUM_FILE_NUMBER_PER_USER = 3;
     public static final int MAXIMUM_NUMBER_OF_REPORTS = 1;
     public static final String baseUrlDevelopment = "http://localhost:80";
-    public static final String baseUrlProduction = "http://172.16.101.104:80";
+    public static final String baseUrlProduction = "http://172.16.101.104";
     // cron schedule expression which triggers at 3:00 AM every day
     public static final String CRON_SCHEDULE_CONFIG = "0 0 3 * * *";
 }

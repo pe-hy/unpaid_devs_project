@@ -94,6 +94,7 @@ export const TeacherPassedPractices = () => {
         const onFileUpload = (e, id, index) => {
             e.preventDefault();
             setButtonDisabled(true);
+
             if (fileSize > MAX_REPORT_FILE_SIZE) {
                 setAlertId(index);
                 setSuccessMessage("");
@@ -353,17 +354,17 @@ export const TeacherPassedPractices = () => {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Nahrazení souboru reportu</h4>
+                        <h4>Nahrání souboru reportu</h4>
                         <p>
-                            Jste si jisti, že chcete již nahraný report nahradit?
+                            Jste si jisti, že chcete nahrát tento soubor? <b style={{color: "red"}}>Pokud jste již jiný soubor nahráli, bude přepsán.</b>
                         </p>
                     </Modal.Body>
                     <Modal.Footer>
                         <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
-                        <button type="button" className="removal-btn" onClick={(e) => {
+                        <button type="button" className="accept-btn" onClick={(e) => {
                             props.onHide();
                             onFileUpload(e, fileId, fileIndex);
-                        }}>Přepsat
+                        }}>Nahrát
                         </button>
                     </Modal.Footer>
                 </Modal>

@@ -17,6 +17,7 @@ const FileManagementComponent = ({userDataRef}) => {
 
     const MAX_FILE_SIZE = 2000000;
     const MAX_NUMBER_OF_FILES = 3;
+    const MAX_LENGTH = 20;
 
     const URL = `${process.env.REACT_APP_AXIOS_URL}`;
 
@@ -32,17 +33,21 @@ const FileManagementComponent = ({userDataRef}) => {
         let ret;
         ret = size / 1000000 > 1 ? size / 1000000 : size / 1000;
         return Math.round((ret + Number.EPSILON) * 100) / 100
-
     }
 
-    function fileSizeValidator(file) {
+    function customValidator(file) {
         if (file.size > MAX_FILE_SIZE) {
             return {
                 code: "file-too-large",
                 message: `Soubor přesahuje maximální povolenou velikost ${MAX_FILE_SIZE / 1000000} MB.`
             };
         }
-
+        else if (file.name.length > MAX_LENGTH) {
+            return {
+                code: "name-too-large",
+                message: `Název souboru přesahuje délku ${MAX_LENGTH} znaků.`
+            };
+        }
         return null
     }
 
@@ -55,6 +60,8 @@ const FileManagementComponent = ({userDataRef}) => {
             message = "Nepovolená přípona souboru.";
         } else if (e.code === "too-many-files") {
             message = `Bylo zvoleno příliš mnoho souborů. Maximum je ${MAX_NUMBER_OF_FILES}.`;
+        } else if (e.code === "name-too-large") {
+            message = `Název souboru přesahuje délku ${MAX_LENGTH} znaků.`
         }
         return message;
     }
@@ -117,9 +124,8 @@ const FileManagementComponent = ({userDataRef}) => {
                 }
 
             },
-            validator: fileSizeValidator,
+            validator: customValidator,
             maxFiles: MAX_NUMBER_OF_FILES,
-
         });
 
 
@@ -152,6 +158,7 @@ const FileManagementComponent = ({userDataRef}) => {
                     <p>Povolené přípony: .zip, .png, .jpg, .jpeg, .doc, .docx, .odt, .txt, .pdf</p>
                     <p>Maximum souborů k nahrání: {MAX_NUMBER_OF_FILES}</p>
                     <p>Maximální velikost 1 souboru: {unitConversion(MAX_FILE_SIZE)} MB</p>
+                    <p>Maximální délka názvu souboru: {MAX_LENGTH} znaků.</p>
                 </div>
                 {(files.length > 0) && <React.Fragment>
                     <div>

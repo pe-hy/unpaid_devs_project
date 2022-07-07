@@ -14,12 +14,13 @@ function ShowCoordinators() {
     const [coordinators, setCoordinators] = React.useState([]);
     const [chosenCoordinatorId, setChosenCoordinatorId] = React.useState();
     const [chosenCoordinatorName, setChosenCoordinatorName] = React.useState("");
+    const [chosenCoordinatorEmail, setChosenCoordinatorEmail] = React.useState("");
     const [modalShow, setModalShow] = React.useState(false);
     const [successMessage, setSuccessMessage] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
 
     //create UseEffect
-    const getStudents = async () => {
+    const getCoordinators = async () => {
         const response = await axios({
             url: GET_COORDINATORS_URL,
             withCredentials: true,
@@ -50,7 +51,7 @@ function ShowCoordinators() {
     }
 
     React.useEffect(() => {
-        getStudents();
+        getCoordinators();
         console.log(coordinators);
     }, []);
 
@@ -66,7 +67,7 @@ function ShowCoordinators() {
             setErrorMessage(err.response.data.message.split(":")[1]);
         });
         if (response && response.data) {
-            getStudents();
+            getCoordinators();
         }
     }
 
@@ -85,9 +86,13 @@ function ShowCoordinators() {
                     <p>
                         Jste si skutečně jisti, že chcete smazat tohoto koordinátora?
                     </p>
+                    <div className="center">
+                    <div className="my-alert1 w-75">
                     <b>
-                        - {chosenCoordinatorName} -
+                        {chosenCoordinatorName} - <span className="my-alert-phone" style={{fontSize: "16px"}}>{chosenCoordinatorEmail}</span>
                     </b>
+                    </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="accept-btn my-btn-white" onClick={props.onHide}>Storno</button>
@@ -108,7 +113,7 @@ function ShowCoordinators() {
                     <td>{info.phoneNumber != null && info.phoneNumber.length != 0 ? formatPhoneNum(info.phoneNumber) : "-"}</td>
                     {localStorage.getItem("role") === "ROLE_COORDINATOR" ? (errorMessage && chosenCoordinatorId == info.id) ? <td><span className="center text-bold" role="alert">
                                     <BsExclamationTriangleFill style={{marginRight: "5px"}} /> {errorMessage}</span></td>
-                                 : <td><button className="removal-btn-3" onClick={() => {setChosenCoordinatorId(info.id);setChosenCoordinatorName(info.firstName + " " + info.secondName);setModalShow(true)}}>X</button></td> : ""}
+                                 : <td><button className="removal-btn-3" onClick={() => {setChosenCoordinatorId(info.id); setChosenCoordinatorEmail(info.username); setChosenCoordinatorName(info.firstName + " " + info.secondName);setModalShow(true)}}>X</button></td> : ""}
                 </tr>
             )
         }

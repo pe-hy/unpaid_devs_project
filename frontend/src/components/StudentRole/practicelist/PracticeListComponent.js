@@ -452,7 +452,7 @@ export const PracticeListComponent = () => {
                                                 delay={{ show: 500, hide: 10 }}
                                                 overlay={
                                                     <Tooltip>
-                                                        <p>Uplynul termín pro rezervaci</p>
+                                                        <p>Uplynul termín pro rezervaci.</p>
                                                         Pokud přesto máte zájem se praxe zúčastnit, zkuste kontaktovat vyučujícího.
                                                     </Tooltip>
                                                 }

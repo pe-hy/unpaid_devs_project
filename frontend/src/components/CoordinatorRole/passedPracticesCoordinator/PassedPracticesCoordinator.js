@@ -4,7 +4,14 @@ import DLImage from "../../../resources/DLImg.svg";
 import React, {useEffect, useState} from "react";
 import {Col, Container, Form, Modal, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {axios} from "../../../axios.js";
-import {BsFillXCircleFill, BsInfoCircleFill, BsSearch, BsSliders, BsCheckLg} from "react-icons/bs";
+import {
+    BsFillXCircleFill,
+    BsInfoCircleFill,
+    BsSearch,
+    BsSliders,
+    BsCheckLg,
+    BsFillCloudDownloadFill
+} from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
@@ -39,6 +46,7 @@ export const PassedPracticesCoordinator = () => {
         let iconStyles = {fontSize: "1.5em", marginRight: "5px"};
         let iconStyleFilter = {fontSize: "1.5em", marginRight: "15px"};
         const [showing, setShowing] = useState(false);
+        const [showingExport, setShowingExport] = useState(false);
         const [practices, setPraxe] = useState([]);
         const [filterParam, setFilterParam] = useState([allFilterParam]);
         const [schools, setSchools] = useState([]);
@@ -56,7 +64,16 @@ export const PassedPracticesCoordinator = () => {
         const [selectedSubjectName, setSelectedSubjectName] = useState("");
         const [selectedTeacherName, setSelectedTeacherName] = useState("");
         const [btnText, setBtnText] = useState("Zobrazit možnosti vyhledávání");
+        const [btnTextExport, setBtnTextExport] = useState("Zobrazit možnosti exportu");
         const [dateRange, setDateRange] = useState([
+            {
+                startDate: new Date(),
+                endDate: new Date(),
+                key: 'selection'
+            }
+        ]);
+
+        const [dateRangeExport, setDateRangeExport] = useState([
             {
                 startDate: new Date(),
                 endDate: new Date(),
@@ -77,6 +94,13 @@ export const PassedPracticesCoordinator = () => {
                 setBtnText("Schovat možnosti vyhledávání");
             } else {
                 setBtnText("Zobrazit možnosti vyhledávání");
+            }
+        }
+        const changeBtnTextExport = () => {
+            if (!showingExport) {
+                setBtnTextExport("Schovat možnosti exportu");
+            } else {
+                setBtnTextExport("Zobrazit možnosti exportu");
             }
         }
 
@@ -374,8 +398,8 @@ export const PassedPracticesCoordinator = () => {
                                 </button>
                             </div>
                         </div>
+                        <hr/>
                     </div>
-                    <hr/>
                 </div>
                 {!filterParam.includes(allFilterParam) && <div className="customAlertContainer">
                     <div className="p-3 m-3 center my-alert-filter alert-danger alertCustom">
@@ -508,7 +532,8 @@ export const PassedPracticesCoordinator = () => {
                                         </Badge>
                                     </span>
 
-                                        <div className="my-cstm-flex registered-student-right-margin" style={{marginTop: "10px"}}>
+                                        <div className="my-cstm-flex registered-student-right-margin"
+                                             style={{marginTop: "10px"}}>
                                             <div className="w-75"><b>Registrovaní studenti: </b>
                                                 <div className="mb-2 mt-2">
                                                     {item.studentNames.length === 0 &&

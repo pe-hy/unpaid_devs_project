@@ -24,6 +24,7 @@ const UPLOAD_URL = `${URL}/teacher/report/upload`;
 const GET_REVIEWS_URL = `${URL}/teacher/getAllReviews`;
 
 const MAX_REPORT_FILE_SIZE = 2; //MB
+const MAX_REPORT_FILE_NAME_LENGTH = 20; //znaky
 const ALLOWED_REPORT_EXTENSIONS = ["zip", "docx", "doc", "odt", "pdf", "txt"];
 const ALLOWED_REPORT_EXTENSIONS_WITH_DOT = [".zip", ".doc", ".odt", ".pdf", ".docx", ".txt"];
 
@@ -69,7 +70,8 @@ export const TeacherPassedPractices = () => {
                 key: 'selection'
             }
         ]);
-
+        //state for checking file name length
+        const [fileNameLength, setFileNameLength] = useState(true);
         //state for checking file size
         const [fileSize, setFileSize] = useState(true);
         // for file upload progress message
@@ -81,6 +83,8 @@ export const TeacherPassedPractices = () => {
         const onFileChange = (e) => {
             setSelectedFile(e.target.files[0]);
             setFileSize(e.target.files[0].size / 1000000);
+            setFileNameLength(e.target.files[0].name.length);
+            console.log(e.target.files[0].name.length);
 
             let split = e.target.files[0].name.split(".");
             setFileExt(split[split.length - 1]);
@@ -94,6 +98,13 @@ export const TeacherPassedPractices = () => {
                 setAlertId(index);
                 setSuccessMessage("");
                 setErrorMessage(`Soubor nesmí být větší než ${MAX_REPORT_FILE_SIZE} MB.`);
+                return;
+            }
+            if (fileNameLength > MAX_REPORT_FILE_NAME_LENGTH) {
+                console.log(fileNameLength)
+                setAlertId(index);
+                setSuccessMessage("");
+                setErrorMessage(`Délka názvu souboru nesmí být větší než ${MAX_REPORT_FILE_NAME_LENGTH} znaků.`);
                 return;
             }
             if (!ALLOWED_REPORT_EXTENSIONS.includes(fileExt)) {

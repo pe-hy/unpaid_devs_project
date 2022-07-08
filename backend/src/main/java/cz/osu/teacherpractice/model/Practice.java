@@ -41,7 +41,7 @@ public class Practice {
     @OneToMany(mappedBy = "practice")
     private List<Review> reviews;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_practice",
             joinColumns = @JoinColumn(name = "practice_id"),

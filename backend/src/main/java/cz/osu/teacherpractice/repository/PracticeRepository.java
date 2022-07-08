@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -37,5 +38,6 @@ public interface PracticeRepository extends JpaRepository<Practice, Long> {
 
     List<Practice> findAllByTeacherUsername(String teacherUsername);
     List<Practice> findAllBystudents_id(Long student_id, Pageable pageable);
+    List<Practice> findByDateBetweenAndDateBefore(LocalDate start, LocalDate end, LocalDate pastLimit);
 
 }

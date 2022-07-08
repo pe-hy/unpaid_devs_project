@@ -1,19 +1,25 @@
 package cz.osu.teacherpractice.service.controller;
 
-import cz.osu.teacherpractice.dto.request.AssignSchoolDto;
-import cz.osu.teacherpractice.dto.request.EditSchoolDto;
-import cz.osu.teacherpractice.dto.request.EditSubjectDto;
-import cz.osu.teacherpractice.dto.request.RegistrationDto;
+import cz.osu.teacherpractice.dto.request.*;
 import cz.osu.teacherpractice.dto.response.*;
 import cz.osu.teacherpractice.service.CoordinatorService;
 import cz.osu.teacherpractice.service.UserService;
+import cz.osu.teacherpractice.service.csvReport.CsvReport;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +33,7 @@ public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
     private final UserService userService;
+    private final CsvReport csvReport;
 
     @GetMapping("")
     public String getCoordinator(Principal principal) {
@@ -148,5 +155,26 @@ public class CoordinatorController {
     public String deleteCoordinator(@RequestBody Long id, Principal principal) throws Exception {
         if(Objects.equals(userService.getUserByUsername(principal.getName()).getId(), id)) throw new Exception("Nelze smazat vlastní účet!");
         return coordinatorService.deleteCoordinator(id);
+    }
+
+    @GetMapping(path = "/export")
+    public ResponseEntity getExport(@RequestBody ExportDatesDto request) {
+        System.out.println("got request");
+        LocalDate start = LocalDate.of(request.getStartYear(), request.getStartMonth(), request.getStartDay());
+        LocalDate end = LocalDate.of(request.getEndYear(), request.getEndMonth(), request.getEndDay());
+        csvReport.createReport("Export_praxí", start, end);
+
+        String name = "Export_praxí";
+        Path path = Paths.get(name);
+        Resource resource = null;
+        try {
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 }

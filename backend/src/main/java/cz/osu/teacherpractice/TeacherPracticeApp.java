@@ -4,6 +4,7 @@ import cz.osu.teacherpractice.config.AppConfig;
 import cz.osu.teacherpractice.model.*;
 import cz.osu.teacherpractice.repository.*;
 import cz.osu.teacherpractice.service.UserService;
+import cz.osu.teacherpractice.service.csvReport.CsvReport;
 import cz.osu.teacherpractice.service.token.forgotPasswordToken.PasswordResetTokenRepository;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationToken;
 import cz.osu.teacherpractice.service.token.registrationToken.ConfirmationTokenRepository;
@@ -35,6 +36,8 @@ public class TeacherPracticeApp {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UserService userService;
     private final ReviewRepository reviewRepository;
+
+    private final CsvReport csvReport;
 
     public static void main(String[] args) {
         SpringApplication.run(TeacherPracticeApp.class, args);

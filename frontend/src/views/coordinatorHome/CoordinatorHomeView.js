@@ -12,6 +12,8 @@ import ShowStudents from "../../components/UnspecifiedRoles/users/StudentsCompon
 import ShowTeachers from "../../components/UnspecifiedRoles/users/TeachersComponent";
 import ShowCoordinators from "../../components/UnspecifiedRoles/users/CoordinatorsComponent";
 import AdminAddCoordinatorComponent from "../../components/AdminRole/AdminAddCoordinator/AdminAddCoordinatorComponent.js";
+import PassedPracticesCoordinatorExport
+    from "../../components/CoordinatorRole/passedPracticesCoordinatorExport/PassedPracticesCoordinatorExport";
 
 const checkRole = () => {
     return localStorage.getItem("role") !== "ROLE_COORDINATOR";
@@ -40,13 +42,16 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab6" title="Proběhlé praxe">
                     <PassedPracticesCoordinator />
                 </Tab>
-                <Tab eventKey="tab7" title="Studenti">
+                <Tab eventKey="tab7" title="Export proběhlých praxí">
+                    <PassedPracticesCoordinatorExport />
+                </Tab>
+                <Tab eventKey="tab8" title="Studenti">
                     <ShowStudents />
                 </Tab>
-                <Tab eventKey="tab8" title="Učitelé">
+                <Tab eventKey="tab9" title="Učitelé">
                     <ShowTeachers />
                 </Tab>
-                <Tab eventKey="tab9" title="Koordinátoři">
+                <Tab eventKey="tab10" title="Koordinátoři">
                     <ShowCoordinators />
                 </Tab>
             </Tabs>

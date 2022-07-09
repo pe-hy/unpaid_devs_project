@@ -31,6 +31,7 @@ const GET_PRACTICE_LIST_URL = `${URL}/coordinator/practices-list-past`;
 const GET_SUBJECTS_URL = `${URL}/user/subjects`;
 const GET_TEACHERS_URL = `${URL}/user/teachers`;
 const GET_REVIEWS_URL = `${URL}/coordinator/getAllReviews`;
+const GET_EXPORTED_PRACTICES_URL = `${URL}/coordinator/export`;
 
 export const PassedPracticesCoordinatorExport = () => {
         const schoolNotFound = "Škola nevyplněna";
@@ -86,6 +87,27 @@ export const PassedPracticesCoordinatorExport = () => {
                 setBtnTextExport("Schovat možnosti exportu");
             } else {
                 setBtnTextExport("Zobrazit možnosti exportu");
+            }
+        }
+
+        const downloadExport = async () => {
+            let start = dateRange[0]["startDate"]
+            let end = dateRange[0]["endDate"]
+            const response = await axios({
+                url: GET_EXPORTED_PRACTICES_URL,
+                withCredentials: true,
+                method: "POST",
+                data:{"startYear":start.getFullYear(),"startMonth":start.getMonth()+1,"startDay":start.getDay()+1,"endYear":end.getFullYear(),"endMonth":end.getMonth()+1,"endDay":end.getDay()+1},
+            }).catch((err) => {
+                console.log(err.response.data.message);
+            });
+            if (response && response.data) {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `Export_praxí_${new Date()}.csv`);
+    document.body.appendChild(link);
+    link.click();
             }
         }
 
@@ -335,7 +357,7 @@ export const PassedPracticesCoordinatorExport = () => {
                             <div className="center">
                                 <button id="filterResetBtn" style={{fontSize: "18px"}} className="accept-btn w-25"
                                         onClick={() => {
-
+                                            downloadExport();
                                             resetFilter();
                                         }}><BsDownload style={iconStyles}/> Export
                                 </button>

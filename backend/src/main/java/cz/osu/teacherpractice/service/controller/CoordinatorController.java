@@ -157,14 +157,13 @@ public class CoordinatorController {
         return coordinatorService.deleteCoordinator(id);
     }
 
-    @GetMapping(path = "/export")
+    @PostMapping(path = "/export")
     public ResponseEntity getExport(@RequestBody ExportDatesDto request) {
-        System.out.println("got request");
         LocalDate start = LocalDate.of(request.getStartYear(), request.getStartMonth(), request.getStartDay());
         LocalDate end = LocalDate.of(request.getEndYear(), request.getEndMonth(), request.getEndDay());
-        csvReport.createReport("Export_praxí", start, end);
+        csvReport.createReport("Export_praxí.csv", start, end);
 
-        String name = "Export_praxí";
+        String name = "Export_praxí.csv";
         Path path = Paths.get(name);
         Resource resource = null;
         try {

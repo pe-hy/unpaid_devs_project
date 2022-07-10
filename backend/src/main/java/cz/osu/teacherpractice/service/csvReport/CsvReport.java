@@ -20,7 +20,8 @@ public class CsvReport {
 
     private final PracticeRepository practiceRepository;
 
-    public String createReport(String filePath, LocalDate start, LocalDate end)
+    public String
+    createReport(String filePath, LocalDate start, LocalDate end)
     {
 
         List<Practice> practices = practiceRepository.findByDateBetweenAndDateBefore(start, end, LocalDate.now());
@@ -38,15 +39,20 @@ public class CsvReport {
             CSVWriter writer = new CSVWriter(new OutputStreamWriter(os));
 
             // adding header to csv
-            String[] header = { "Datum", "Čas", "Škola", "Učitel", "Student" };
+            String[] header = {"Předmět", "Datum", "Čas", "Škola", "Učitel", "Studenti" };
             writer.writeNext(header);
 
             for (Practice p :
                     practices) {
-                String[] data = { p.getDate().toString(), p.getEnd().toString(), p.getTeacher().getSchool().getName(), p.getTeacher().getFirstName() + " " + p.getTeacher().getSecondName() + " (" + p.getTeacher().getUsername() + ")" };
-                writer.writeNext(data);
                 List<User> students = p.getStudents();
-                System.out.println(students.size());
+                String[] data = {p.getSubject().getName(), p.getDate().toString(), p.getEnd().toString(), p.getTeacher().getSchool().getName(), p.getTeacher().getFirstName() + " " + p.getTeacher().getSecondName() + " (" + p.getTeacher().getUsername() + ")", students.size() > 0 ? students.get(0).getFirstName() + " " + students.get(0).getSecondName() + "(" + students.get(0).getUsername() + ")" : "---"};
+                writer.writeNext(data);
+                if(students.size() > 0) students.remove(0);
+                for (User s :
+                        students) {
+                    String[] studentsData = {"", "", "", "", "", s.getFirstName() + " " + s.getSecondName() + " (" + s.getUsername() + ")"};
+                    writer.writeNext(studentsData);
+                }
             }
 
             // closing writer connection

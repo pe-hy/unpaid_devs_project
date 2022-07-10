@@ -45,7 +45,7 @@ public class CsvReport {
             for (Practice p :
                     practices) {
                 List<User> students = p.getStudents();
-                String[] data = {p.getSubject().getName(), p.getDate().toString(), p.getEnd().toString(), p.getTeacher().getSchool().getName(), p.getTeacher().getFirstName() + " " + p.getTeacher().getSecondName() + " (" + p.getTeacher().getUsername() + ")", students.size() > 0 ? students.get(0).getFirstName() + " " + students.get(0).getSecondName() + "(" + students.get(0).getUsername() + ")" : "---"};
+                String[] data = {p.getSubject().getName(), p.getDate().toString(), p.getStart().getHour() + ":" + p.getStart().getMinute() + " - " + p.getEnd().getHour() + ":" + p.getEnd().getMinute(), p.getTeacher().getSchool().getName(), p.getTeacher().getFirstName() + " " + p.getTeacher().getSecondName() + " (" + p.getTeacher().getUsername() + ")", students.size() > 0 ? students.get(0).getFirstName() + " " + students.get(0).getSecondName() + " (" + students.get(0).getUsername() + ")" : "---"};
                 writer.writeNext(data);
                 if(students.size() > 0) students.remove(0);
                 for (User s :

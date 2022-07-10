@@ -91,14 +91,14 @@ export const PassedPracticesCoordinatorExport = () => {
     }
 
     const downloadExport = async () => {
-        let start = addDays(dateRange[0]["startDate"],-1);
-        let end = addDays(dateRange[0]["endDate"], 1);
+        let start = addDays(dateRange[0]["startDate"],0);
+        let end = addDays(dateRange[0]["endDate"],0);
         console.log(start, end);
         const response = await axios({
             url: GET_EXPORTED_PRACTICES_URL,
             withCredentials: true,
             method: "POST",
-            data: { "startYear": start.getFullYear(), "startMonth": start.getMonth() + 1, "startDay": start.getDay() + 1, "endYear": end.getFullYear(), "endMonth": end.getMonth() + 1, "endDay": end.getDay() + 1 },
+            data: { "startYear": start.getFullYear(), "startMonth": start.getMonth() + 1, "startDay": start.getDate(), "endYear": end.getFullYear(), "endMonth": end.getMonth() + 1, "endDay": end.getDate()},
         }).catch((err) => {
             console.log(err.response.data.message);
         });

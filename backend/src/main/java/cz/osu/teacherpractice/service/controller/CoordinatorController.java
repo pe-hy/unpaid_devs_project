@@ -161,9 +161,9 @@ public class CoordinatorController {
     public ResponseEntity getExport(@RequestBody ExportDatesDto request) {
         LocalDate start = LocalDate.of(request.getStartYear(), request.getStartMonth(), request.getStartDay());
         LocalDate end = LocalDate.of(request.getEndYear(), request.getEndMonth(), request.getEndDay());
-        csvReport.createReport("export.csv", start, end);
+        csvReport.createReport("/home/student/project/myproject/backend/export.csv", start, end);
 
-        String name = "export.csv";
+        String name = "/home/student/project/myproject/backend/export.csv";
         Path path = Paths.get(name);
         Resource resource = null;
         try {

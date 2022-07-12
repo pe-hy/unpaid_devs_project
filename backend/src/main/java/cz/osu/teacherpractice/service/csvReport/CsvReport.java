@@ -24,7 +24,7 @@ public class CsvReport {
     createReport(String filePath, LocalDate start, LocalDate end)
     {
 
-        List<Practice> practices = practiceRepository.findByDateBetweenAndDateBefore(start, end, LocalDate.now());
+        List<Practice> practices = practiceRepository.findByDateBetweenAndDateLessThanEqual(start, end, LocalDate.now());
 
         File file = new File(filePath);
         try {

@@ -357,12 +357,13 @@ export const PassedPracticesCoordinatorExport = () => {
                             </div>
                         </div>
                         <div className="center">
+                            {search(practices).length !== 0 &&
                             <button id="filterResetBtn" style={{ fontSize: "18px" }} className="accept-btn w-25"
                                 onClick={() => {
                                     downloadExport();
                                     resetFilter();
                                 }}><BsDownload style={iconStyles} /> Export
-                            </button>
+                            </button>}
                         </div>
                     </div>
                 </div>

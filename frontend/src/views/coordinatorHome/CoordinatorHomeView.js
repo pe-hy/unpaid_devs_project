@@ -42,7 +42,7 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab6" title="Proběhlé praxe">
                     <PassedPracticesCoordinator />
                 </Tab>
-                <Tab eventKey="tab7" title="Export proběhlých praxí">
+                <Tab eventKey="tab7" title="Export praxí">
                     <PassedPracticesCoordinatorExport />
                 </Tab>
                 <Tab eventKey="tab8" title="Studenti">

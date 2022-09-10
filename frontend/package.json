@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:443",
   "name": "prototype",
   "version": "0.1.0",
   "private": true,

@@ -241,3 +241,5 @@ target/
 *.ipr
 
 credentials.json
+
+certifikat.p12

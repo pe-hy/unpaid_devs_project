@@ -38,6 +38,7 @@ public class ForgotPasswordController {
     private final ForgotPasswordService forgotPasswordService;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
+    @CrossOrigin
     @PostMapping("/reset")
     public String resetPassword(HttpServletRequest request,
                                 @RequestParam("email") String userEmail) {
